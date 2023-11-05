@@ -1,0 +1,9 @@
+<!-- metatypes-template.hbs -->
+<div id="metatypeTitle"></div>
+<form id="metatypeForm">
+    <div id="metatypeButtons">
+        {{#each metatypes}}
+        <button class="metatype-button" data-metatype="{{this.name}}">{{this.name}}</button>
+        {{/each}}
+    </div>
+</form>
