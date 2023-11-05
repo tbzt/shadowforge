@@ -206,7 +206,7 @@ function generateMetatypeButtons(priorite) {
 
 
     const metatypeTitle = document.getElementById("metatypeTitle");
-    metatypeTitle.innerHTML = "<h3>Choix du métatype</h3>";
+    metatypeTitle.innerHTML = '<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseMetatypes" aria-expanded="false" aria-controls="collapseMetatypes"> Choix du métatype </button>';
 
     const metatypeForm = document.getElementById("metatypeButtons");
 
@@ -290,7 +290,7 @@ function generateSpecialButtons(priorite) {
         specialForm.innerHTML = "";
     } else {
 
-        specialTitle.innerHTML = "<h3>Choix de Magie ou de Résonance</h3>";
+        specialTitle.innerHTML = '<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseSpecials" aria-expanded="false" aria-controls="collapseSpecials"> Choix de l\'attribut spécial </button>';;
 
         // Récupérer l'option de métatype sélectionnée actuellement
         const selectedSpecial = specialForm.querySelector('button.selected');
