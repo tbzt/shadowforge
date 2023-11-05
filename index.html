@@ -1,174 +1,273 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Créateur de Personnage Shadowrun 6</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Lien vers le fichier CSS -->
 
     <!-- Inclure Handlebars.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
     <!-- Ajouter votre fichier JavaScript -->
-    <script src="scriptHandlebars.js"></script> <!-- Lien vers le fichier JavaScript -->
-</head>
+    <script src="scriptHandlebars.js"></script>
+    <!-- Lien vers le fichier JavaScript -->
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1 class="mt-4 display-4">Créateur de Personnage Shadowrun 6</h1>
-        <br>
-        <div class="row">
-            <!-- Colonne de largeur 9 (col-9) pour les choix à sélection -->
-            <div class="col-9">
+      <h1 class="mt-4 display-4">Créateur de Personnage Shadowrun 6</h1>
+      <br />
+      <div class="row">
+        <!-- Colonne de largeur 9 (col-9) pour les choix à sélection -->
+        <div class="col-9">
+          <div class="row">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <button
+                class="btn btn-outline-primary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseIdentity"
+                aria-expanded="false"
+                aria-controls="collapseIdentity"
+                onclick="useButton(this)"
+              >
+                Identité
+                <span class="badge badge-light"></span>
+  <span class="sr-only">unread messages</span>
+              </button>
 
-                <div class="row">
+              <button
+                class="btn btn-outline-primary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapsePriorites"
+                aria-expanded="false"
+                aria-controls="collapsePriorites"
+                onclick="useButton(this)"
+              >
+                Table des priorités
+                <span class="badge badge-light"></span>
+  <span class="sr-only">unread messages</span>
+              </button>
 
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    Identité
-                </button>
+              <button
+                class="btn btn-outline-primary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseMetatypes"
+                aria-expanded="false"
+                aria-controls="collapseMetatypes"
+                id="metatypeTitle"
+                style="display: none"
+                onclick="useButton(this)"
+              >
+                Choix du métatype
+                <span class="badge badge-light"></span>
+  <span class="sr-only">unread messages</span>
+              </button>
 
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsePriorites"
-                    aria-expanded="false" aria-controls="collapsePriorites">
-                    Table des priorités
-                </button>
-
-                <div id="metatypeTitle"></div>
-
-                <div id="specialTitle"></div>
-                </div>
-                <div class="row">
-
-                </div>
-
-                <!-- Section : SIN -->
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="">SIN</span>
-                            </div>
-                            <input type="text" id="prenom" class="form-control" placeholder="Prénom">
-                            <input type="text" id="surnom" class="form-control" placeholder="Surnom">
-                            <input type="text" id="nom" class="form-control" placeholder="Nom">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section : Tableau de priorités -->
-
-                <div class="collapse" id="collapsePriorites">
-                    <div class="card card-body">
-                        <div class="table-responsive">
-                            <table id="prioriteTable" class="table table-bordered align-middle ">
-                                <thead>
-                                    <tr>
-                                        <th>Priorités</th>
-                                        <th>Métatypes (points d'ajustement)</th>
-                                        <th>Attributs</th>
-                                        <th>Compétences</th>
-                                        <th>Magie ou Résonance</th>
-                                        <th>Ressources</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Modèle Handlebars pour la table des priorités -->
-                                    <script id="priorite-template" type="text/x-handlebars-template">
-                                        {{#each this}}
-        <tr>
-            <td>{{@key}}</td>
-            <td id="metatypes_{{@key}}" class="selectable" onclick="selectPriorite(this, 'metatypes', '{{@key}}')">{{this.metatypes}}</td>
-            <td id="attributs_{{@key}}" class="selectable" onclick="selectPriorite(this, 'attributs', '{{@key}}')">{{this.attributs}}</td>
-            <td id="competences_{{@key}}" class="selectable" onclick="selectPriorite(this, 'competences', '{{@key}}')">{{this.competences}}</td>
-            <td id="magie_ou_resonnance_{{@key}}" class="selectable magie_ou_resonnance" onclick="selectPriorite(this, 'magie_ou_resonnance', '{{@key}}')">
-                {{#if magie_ou_resonnance1}}
-                {{this.magie_ou_resonnance1}}<br>
-                {{this.magie_ou_resonnance2}}<br>
-                {{this.magie_ou_resonnance3}}<br>
-                {{this.magie_ou_resonnance4}}<br>
-                {{else}}
-                {{this.magie_ou_resonnance}}
-                {{/if}}
-            </td>
-            <td id="ressources_{{@key}}" class="selectable" onclick="selectPriorite(this, 'ressources', '{{@key}}')">{{this.ressources}}</td>
-        </tr>
-        {{/each}}
-    </script>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section : Metatype-->
-                <div class="collapse" id="collapseMetatypes">
-                    <div class="card card-body">
-                        <form id="metatypeForm">
-                            <div id="metatypeButtons"></div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Section : Special-->
-                <div class="collapse" id="collapseSpecials">
-                    <div class="card card-body">
-                        <form id="specialForm">
-                            <div id="specialButtons"></div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Section : Choix des attributs -->
-                <div id="attributs">
-                    <br>
-                    <h3>Attributs</h3>
-                    <!-- Affiche le nombre de points d'attributs à dépenser -->
-                    <div id="attributs_depenses"></div>
-
-                    <div class="table-responsive">
-                        <table id="attributTable" class="table align-middle table-hover table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Attribut</th>
-                                    <th scope="col">Base</th>
-                                    <th scope="col">Actuel</th>
-                                    <th scope="col">Maximum</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+              <button
+                class="btn btn-outline-primary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseSpecials"
+                aria-expanded="false"
+                aria-controls="collapseSpecials"
+                id="specialTitle"
+                style="display: none"
+                onclick="useButton(this)"
+              >
+                Choix de l'attribut spécial
+                <span class="badge badge-light"></span>
+  <span class="sr-only">unread messages</span>
+              </button>
             </div>
-            <!-- Colonne de largeur 3 pour l'affichage de la génération du personnage -->
-            <div class="col-3">
-                <h3>Personnage</h3>
-                <button id="resetButton" class="btn-outline-primary btn">Réinitialiser</button>
-                <div id="identity" class="mt-4">
-                    <!-- Les résultats de l'identité seront affichés ici -->
+          </div>
+
+          <div class="row">
+            <!-- Section : SIN -->
+            <div class="collapse" id="collapseIdentity">
+              <div class="card card-body">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="">SIN</span>
+                  </div>
+                  <input
+                    type="text"
+                    id="prenom"
+                    class="form-control"
+                    placeholder="Prénom"
+                  />
+                  <input
+                    type="text"
+                    id="surnom"
+                    class="form-control"
+                    placeholder="Surnom"
+                  />
+                  <input
+                    type="text"
+                    id="nom"
+                    class="form-control"
+                    placeholder="Nom"
+                  />
                 </div>
-                <div id="resultat" class="mt-4">
-                    <!-- Les résultats seront affichés ici -->
-                </div>
+              </div>
             </div>
+
+            <!-- Section : Tableau de priorités -->
+
+            <div class="collapse" id="collapsePriorites">
+              <div class="card card-body">
+                <div class="table-responsive">
+                  <table
+                    id="prioriteTable"
+                    class="table table-bordered align-middle"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Priorités</th>
+                        <th>Métatypes (points d'ajustement)</th>
+                        <th>Attributs</th>
+                        <th>Compétences</th>
+                        <th>Magie ou Résonance</th>
+                        <th>Ressources</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Modèle Handlebars pour la table des priorités -->
+                      <script
+                        id="priorite-template"
+                        type="text/x-handlebars-template"
+                      >
+                        {{#each this}}
+                          <tr>
+                            <td>{{@key}}</td>
+                            <td
+                              id="metatypes_{{@key}}"
+                              class="selectable"
+                              onclick="selectPriorite(this, 'metatypes', '{{@key}}')"
+                            >{{this.metatypes}}</td>
+                            <td
+                              id="attributs_{{@key}}"
+                              class="selectable"
+                              onclick="selectPriorite(this, 'attributs', '{{@key}}')"
+                            >{{this.attributs}}</td>
+                            <td
+                              id="competences_{{@key}}"
+                              class="selectable"
+                              onclick="selectPriorite(this, 'competences', '{{@key}}')"
+                            >{{this.competences}}</td>
+                            <td
+                              id="magie_ou_resonnance_{{@key}}"
+                              class="selectable magie_ou_resonnance"
+                              onclick="selectPriorite(this, 'magie_ou_resonnance', '{{@key}}')"
+                            >
+                              {{#if magie_ou_resonnance1}}
+                                {{this.magie_ou_resonnance1}}<br />
+                                {{this.magie_ou_resonnance2}}<br />
+                                {{this.magie_ou_resonnance3}}<br />
+                                {{this.magie_ou_resonnance4}}<br />
+                              {{else}}
+                                {{this.magie_ou_resonnance}}
+                              {{/if}}
+                            </td>
+                            <td
+                              id="ressources_{{@key}}"
+                              class="selectable"
+                              onclick="selectPriorite(this, 'ressources', '{{@key}}')"
+                            >{{this.ressources}}</td>
+                          </tr>
+                        {{/each}}
+                      </script>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section : Metatype-->
+            <div class="collapse" id="collapseMetatypes">
+              <div class="card card-body">
+                <form id="metatypeForm">
+                  <div id="metatypeButtons"></div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Section : Special-->
+            <div class="collapse" id="collapseSpecials">
+              <div class="card card-body">
+                <form id="specialForm">
+                  <div id="specialButtons"></div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section : Choix des attributs -->
+          <div id="attributs" style="display: none;">
+            <br />
+            <h3>Attributs</h3>
+            <!-- Affiche le nombre de points d'attributs à dépenser -->
+            <div id="attributs_depenses"></div>
+
+            <div class="table-responsive">
+              <table
+                id="attributTable"
+                class="table align-middle table-hover table-striped"
+              >
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Attribut</th>
+                    <th scope="col">Base</th>
+                    <th scope="col">Actuel</th>
+                    <th scope="col">Maximum</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
         </div>
+        <!-- Colonne de largeur 3 pour l'affichage de la génération du personnage -->
+        <div class="col-3">
+          <h3>Personnage</h3>
+          <button id="resetButton" class="btn-outline-primary btn">
+            Réinitialiser
+          </button>
+          <div id="identity" class="mt-4">
+            <!-- Les résultats de l'identité seront affichés ici -->
+          </div>
+          <div id="resultat" class="mt-4">
+            <!-- Les résultats seront affichés ici -->
+          </div>
+        </div>
+      </div>
     </div>
+  </body>
 
-</body>
-
-<script src="script.js"></script> <!-- Lien vers le fichier JavaScript -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-</script>
-
+  <script src="script.js"></script>
+  <!-- Lien vers le fichier JavaScript -->
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
 </html>
