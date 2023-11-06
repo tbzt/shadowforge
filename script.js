@@ -17,6 +17,8 @@ let selectedSpecial = null;
 
 let pointsAttributsDepenses = 0;
 
+let pointsCompetencesDepenses = 0;
+
 let SIN = [];
 
 let prioriteActuelle = null; // Ajout d'une variable pour suivre la priorité actuelle
@@ -98,6 +100,124 @@ const attributsData = {
     base: 0,
     value: 1,
     max: 6,
+  },
+};
+
+// Objet pour stocker les valeurs des compétences
+const competencesData = {
+  firearms: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "agilite",
+    name: "Armes à feu"
+  },
+  exoticWeapons: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "agilite",
+    name: "Armes exotiques"
+  },
+  astral: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "intuition",
+    name: "Astral"
+  },
+  athletics: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "agilite",
+    name: "Athlétisme"
+  },
+  biotech: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "logique",
+    name: "Biotech"
+  },
+  closeCombat: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "agilite",
+    name: "Combat rapproché"
+  },
+  conjuring: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "magie",
+    name: "Cnjuration"
+  },
+  electronics: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "logique",
+    name: "Electronique"
+  },
+  stealthing: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "agilite",
+    name: "Furtivité"
+  },
+  influence: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "charisme",
+    name: "Armes à feu"
+  },
+  enchanting: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "magie",
+    name: "Enchantement"
+  },
+  con: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "charisme",
+    name: "Escroquerie"
+  },
+  engineering: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "logique",
+    name: "Ingénierie"
+  },
+  peception: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "intuition",
+    name: "Perception"
+  },
+  pilot: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "reaction",
+    name: "Pilotage"
+  },
+  cracking: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "logique",
+    name: "Piratage"
+  },
+  outdoors: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "intuition",
+    name: "Plein air"
+  },
+  sorcery: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "magie",
+    name: "Sorcellerie"
+  },
+  tasking: {
+    base: 0,
+    value: 0,
+    linkedAttribut: "resonance",
+    name: "Technomancie"
   },
 };
 
@@ -186,6 +306,19 @@ function selectPriorite(cell, categorie, priority) {
   ] = `${categories[categorie]} : ${cell.textContent} (${priority})`;
   prioriteActuelle = priority; // Mettre à jour la priorité actuelle
 
+  // Afficher les attributs si leur priorité est sélectionnée  
+  if (categorie === "attributs") {     
+    var attributTitle = document.getElementById("attributTitle");
+    attributTitle.style.display = "block"; // Afficher la section des attributs
+  }
+
+  
+  // Afficher les attributs si leur priorité est sélectionnée  
+  if (categorie === "competences") {  
+    var competenceTitle = document.getElementById("competenceTitle");
+    competenceTitle.style.display = "block"; // Afficher la section des competences
+  }
+
   // Mettre à jour le bouton de métatype sélectionné (si un bouton est déjà sélectionné)
   if (selectedMetatypeButton) {
     selectedMetatypeButton.classList.remove("selected");
@@ -263,7 +396,6 @@ function generateMetatypeButtons(priorite) {
       updateAttributsForMetatype(button.textContent);
       afficherResultats();
       metatypeSelected = true;
-      afficherAttributs();
       console.log(`Bouton de métatype cliqué : ${button.textContent}`);
     });
   });
@@ -373,24 +505,6 @@ function handleSpecialButtonClick(button, specialForm) {
   selectedSpecial = button.textContent;
   sauvegarderSelectionDansCookie();
 }
-
-// Définissez une fonction pour afficher ou masquer les attributs en fonction de la sélection de métatype.
-function afficherAttributs() {
-  var attributsSection = document.getElementById("attributs");
-
-  console.log("afficherAttributs:", metatypeSelected);
-
-  if (metatypeSelected) {
-    attributsSection.style.display = "block"; // Afficher la section des attributs
-  } else {
-    attributsSection.style.display = "none"; // Masquer la section des attributs
-  }
-}
-
-// Appelez la fonction pour afficher les attributs au chargement de la page (ou en réponse à un événement de sélection).
-window.onload = function () {
-  afficherAttributs();
-};
 
 // Fonction pour ajouter les traits automatiques en fonction du métatype
 function handleMetatypeQualities(metatype) {
