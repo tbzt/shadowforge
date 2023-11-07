@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" id="container">
         <h1 class="mt-4 display-4">Créateur de Personnage Shadowrun 6</h1>
         <br />
         <div class="row">
@@ -27,17 +27,17 @@
                 <div class="row">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse"
-                            data-target="#collapseIdentity" aria-expanded="false" aria-controls="collapseIdentity"
+                            data-target="#collapseIdentity" aria-expanded="false" aria-controls="collapseIdentity" id="identityTitle"
                             onclick="useButton(this)">
-                            Identité
+                            {{identity}}
                             <span class="badge badge-light"></span>
                             <span class="sr-only">unread messages</span>
                         </button>
 
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse"
-                            data-target="#collapsePriorites" aria-expanded="false" aria-controls="collapsePriorites"
+                            data-target="#collapsePriorities" aria-expanded="false" aria-controls="collapsePriorities"
                             onclick="useButton(this)">
-                            Table des priorités
+                            {{priorityTable}}
                             <span class="badge badge-light"></span>
                             <span class="sr-only">unread messages</span>
                         </button>
@@ -45,23 +45,23 @@
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse"
                             data-target="#collapseMetatypes" aria-expanded="false" aria-controls="collapseMetatypes"
                             id="metatypeTitle" style="display: none" onclick="useButton(this)">
-                            Choix du métatype
+                            {{metatypeChoice}}
                             <span class="badge badge-light"></span>
                             <span class="sr-only">unread messages</span>
                         </button>
 
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse"
-                            data-target="#collapseAttributs" aria-expanded="false" aria-controls="collapseAttributs"
-                            id="attributTitle" style="display: none" onclick="useButton(this)">
-                            Attributs
+                            data-target="#collapseAttributes" aria-expanded="false" aria-controls="collapseAttributes"
+                            id="attributeTitle" style="display: none" onclick="useButton(this)">
+                            {{attributesTitle}}
                             <span class="badge badge-light"></span>
                             <span class="sr-only">unread messages</span>
                         </button>                        
 
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse"
-                            data-target="#collapseCompetences" aria-expanded="false" aria-controls="collapseCompetences"
-                            id="competenceTitle" style="display: none" onclick="useButton(this)">
-                            Compétences
+                            data-target="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills"
+                            id="skillTitle" style="display: none" onclick="useButton(this)">
+                            {{skillsTitle}}
                             <span class="badge badge-light"></span>
                             <span class="sr-only">unread messages</span>
                         </button>
@@ -69,7 +69,7 @@
                         <button class="btn btn-outline-primary" type="button" data-toggle="collapse"
                             data-target="#collapseSpecials" aria-expanded="false" aria-controls="collapseSpecials"
                             id="specialTitle" style="display: none" onclick="useButton(this)">
-                            Choix de l'attribut spécial
+                            {{specialAttributeChoice}}
                             <span class="badge badge-light"></span>
                             <span class="sr-only">unread messages</span>
                         </button>
@@ -85,19 +85,19 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="">SIN</span>
                                 </div>
-                                <input type="text" id="prenom" class="form-control" placeholder="Prénom" />
-                                <input type="text" id="surnom" class="form-control" placeholder="Surnom" />
-                                <input type="text" id="nom" class="form-control" placeholder="Nom" />
+                                <input type="text" id="firstname" class="form-control" />
+                                <input type="text" id="surname" class="form-control" />
+                                <input type="text" id="name" class="form-control" />
                             </div>
                         </div>
                     </div>
 
                     <!-- Section : Tableau de priorités -->
 
-                    <div class="collapse" id="collapsePriorites">
+                    <div class="collapse" id="collapsePriorities">
                         <div class="card card-body">
                             <div class="table-responsive">
-                                <table id="prioriteTable" class="table table-bordered align-middle">
+                                <table id="priorityTable" class="table table-bordered align-middle">
                                     <thead>
                                         <tr>
                                             <th>Priorités</th>
@@ -110,44 +110,44 @@
                                     </thead>
                                     <tbody>
                                         <!-- Modèle Handlebars pour la table des priorités -->
-                                        <script id="priorite-template" type="text/x-handlebars-template">
+                                        <script id="priority-template" type="text/x-handlebars-template">
                                             {{#each this}}
                           <tr>
                             <td>{{@key}}</td>
                             <td
                               id="metatypes_{{@key}}"
                               class="selectable"
-                              onclick="selectPriorite(this, 'metatypes', '{{@key}}')"
+                              onclick="selectPriority(this, 'metatypes', '{{@key}}')"
                             >{{this.metatypes}}</td>
                             <td
-                              id="attributs_{{@key}}"
+                              id="attributes_{{@key}}"
                               class="selectable"
-                              onclick="selectPriorite(this, 'attributs', '{{@key}}')"
-                            >{{this.attributs}}</td>
+                              onclick="selectPriority(this, 'attributes', '{{@key}}')"
+                            >{{this.attributes}}</td>
                             <td
-                              id="competences_{{@key}}"
+                              id="skills_{{@key}}"
                               class="selectable"
-                              onclick="selectPriorite(this, 'competences', '{{@key}}')"
-                            >{{this.competences}}</td>
+                              onclick="selectPriority(this, 'skills', '{{@key}}')"
+                            >{{this.skills}}</td>
                             <td
-                              id="magie_ou_resonnance_{{@key}}"
-                              class="selectable magie_ou_resonnance"
-                              onclick="selectPriorite(this, 'magie_ou_resonnance', '{{@key}}')"
+                              id="magicOrResonance_{{@key}}"
+                              class="selectable magicOrResonance"
+                              onclick="selectPriority(this, 'magicOrResonance', '{{@key}}')"
                             >
-                              {{#if magie_ou_resonnance1}}
-                                {{this.magie_ou_resonnance1}}<br />
-                                {{this.magie_ou_resonnance2}}<br />
-                                {{this.magie_ou_resonnance3}}<br />
-                                {{this.magie_ou_resonnance4}}<br />
+                              {{#if magicOrResonance1}}
+                                {{this.magicOrResonance1}}<br />
+                                {{this.magicOrResonance2}}<br />
+                                {{this.magicOrResonance3}}<br />
+                                {{this.magicOrResonance4}}<br />
                               {{else}}
-                                {{this.magie_ou_resonnance}}
+                                {{this.magicOrResonance}}
                               {{/if}}
                             </td>
                             <td
-                              id="ressources_{{@key}}"
+                              id="resources_{{@key}}"
                               class="selectable"
-                              onclick="selectPriorite(this, 'ressources', '{{@key}}')"
-                            >{{this.ressources}}</td>
+                              onclick="selectPriority(this, 'resources', '{{@key}}')"
+                            >{{this.resources}}</td>
                           </tr>
                         {{/each}}
                       </script>
@@ -167,14 +167,14 @@
                     </div>
 
 
-                    <!-- Section : Choix des attributs -->
-                    <div class="collapse" id="collapseAttributs">
+                    <!-- Section : Choix des attributes -->
+                    <div class="collapse" id="collapseAttributes">
                         <div class="card card-body">
-                            <!-- Affiche le nombre de points d'attributs à dépenser -->
-                            <div id="attributs_depenses"></div>
+                            <!-- Affiche le namebre de points d'attributes à dépenser -->
+                            <div id="attributesSpent"></div>
 
                             <div class="table-responsive">
-                                <table id="attributTable" class="table align-middle table-hover table-striped">
+                                <table id="attributeTable" class="table align-middle table-hover table-striped">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">Attribut</th>
@@ -189,14 +189,14 @@
                         </div>
                     </div>
 
-                    <!-- Section : Choix des attributs -->
-                    <div class="collapse" id="collapseCompetences">
+                    <!-- Section : Choix des attributes -->
+                    <div class="collapse" id="collapseSkills">
                         <div class="card card-body">
-                            <!-- Affiche le nombre de points d'attributs à dépenser -->
-                            <div id="competences_depenses"></div>
+                            <!-- Affiche le namebre de points d'attributes à dépenser -->
+                            <div id="skillsSpent"></div>
 
                             <div class="table-responsive">
-                                <table id="competenceTable" class="table align-middle table-hover table-striped">
+                                <table id="skillTable" class="table align-middle table-hover table-striped">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">Compétence</th>

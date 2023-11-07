@@ -1,13 +1,95 @@
 document.addEventListener("DOMContentLoaded", function () {
-  chargerSelectionDepuisCookie();
+  loadCookie();
+  setLanguage("fr"); 
+  handleSIN() 
+  handleAttributes();
 });
 
-let prioritesSelectionnees = {
+
+const translations = {
+  "fr": {
+    "firstname": "prénom",
+    "name": "nom",
+    "surname": "surnom",  
+    "metatypes": "métatypes",
+    "attributes": "attributs",
+    "attributesTitle": "Attributs",
+    "skills": "compétences",
+    "skillsTitle": "Compétences",
+    "magicOrResonance": "magic ou résonance",
+    "resources": "ressources",
+    "body": "constitution",
+    "agility": "agilité",
+    "reaction": "réaction",
+    "strength": "force",
+    "willpower": "volonté",
+    "logic": "logique",
+    "intuition": "intuition",
+    "charisma": "charisme",
+    "edge": "atout",
+    "magic": "magie",
+    "resonance": "résonance",
+    "identity": "Identité",
+    "priorityTable" : "Table des priorités",
+    "metatypeChoice": "Choix du métatype",
+    "specialAttributeChoice": "Choix de l'attribut spécial",
+    "colons": " :"
+  },
+  "en": {
+    "firstname": "Firstname",
+    "name": "Name",
+    "surname": "Surname", 
+    "metatypes": "Metatypes",
+    "attributes": "attributes",
+    "attributesTitle": "Attributes",
+    "skills": "skills",
+    "skillsTitle": "Skills",
+    "magicOrResonance": "Magic or Resonance",
+    "resources": "Resources",
+    "body": "Body",
+    "agility": "Agility",
+    "reaction": "Reaction",
+    "strength": "Strength",
+    "willpower": "Willpower",
+    "logic": "Logic",
+    "intuition": "Intuition",
+    "charisma": "Charisma",
+    "edge": "Edge",
+    "magic": "Magic",
+    "resonance": "Resonance",
+    "identity": "Identity",
+    "priorityTable" : "Priority Table",
+    "metatypeChoice": "Metatype Choice",
+    "specialAttributeChoice": "Special Attribute Choice",
+    "colons": ":"
+  }
+}
+
+let terms = [];
+
+// Fonction pour changer la langue
+function setLanguage(language) {
+  // Utilisez le tableau de traduction correspondant à la langue
+  terms = translations[language];
+  console.log(terms.metatypes);
+
+  const source = document.getElementById("container").innerHTML;
+  const template = Handlebars.compile(source);
+  
+  const html = template(terms);
+  document.getElementById("container").innerHTML = html;
+
+}
+
+let isMagic = false;
+let isTechno = false;
+
+let prioritiesSelected = {
   metatypes: null,
-  attributs: null,
-  competences: null,
-  magie_ou_resonnance: null,
-  ressources: null,
+  attributes: null,
+  skills: null,
+  magicOrResonance: null,
+  resources: null,
 };
 
 let selectedMetatype = null;
@@ -15,13 +97,13 @@ let metatypeSelected = false;
 
 let selectedSpecial = null;
 
-let pointsAttributsDepenses = 0;
+let pointsAttributesSpent = 0;
 
-let pointsCompetencesDepenses = 0;
+let pointsSkillsDepenses = 0;
 
 let SIN = [];
 
-let prioriteActuelle = null; // Ajout d'une variable pour suivre la priorité actuelle
+let actualPriority = null; // Ajout d'une variable pour suivre la priorité actuelle
 
 // Ajout d'une variable pour suivre le bouton de métatype sélectionné
 let selectedMetatypeButton = null;
@@ -30,28 +112,28 @@ let selectedSpecialButton = null;
 // Variables globales pour suivre les cellules sélectionnées dans chaque catégorie
 let selectedCells = {
   metatypes: null,
-  attributs: null,
-  competences: null,
-  magie_ou_resonnance: null,
-  ressources: null,
+  attributes: null,
+  skills: null,
+  magicOrResonance: null,
+  resources: null,
 };
 
 let IDselectedCells = {
   metatypes: null,
-  attributs: null,
-  competences: null,
-  magie_ou_resonnance: null,
-  ressources: null,
+  attributes: null,
+  skills: null,
+  magicOrResonance: null,
+  resources: null,
 };
 
-// Objet pour stocker les valeurs d'attributs de base et de max en fonction du métatype
-const attributsData = {
-  constitution: {
+// Objet pour stocker les valeurs d'attributes de base et de max en fonction du métatype
+const attributesData = {
+  body: {
     base: 1,
     value: 1,
     max: 6,
   },
-  agilite: {
+  agility: {
     base: 1,
     value: 1,
     max: 6,
@@ -61,17 +143,17 @@ const attributsData = {
     value: 1,
     max: 6,
   },
-  force: {
+  strength: {
     base: 1,
     value: 1,
     max: 6,
   },
-  volonte: {
+  willpower: {
     base: 1,
     value: 1,
     max: 6,
   },
-  logique: {
+  logic: {
     base: 1,
     value: 1,
     max: 6,
@@ -81,17 +163,17 @@ const attributsData = {
     value: 1,
     max: 6,
   },
-  charisme: {
+  charisma: {
     base: 1,
     value: 1,
     max: 6,
   },
-  atout: {
+  edge: {
     base: 1,
     value: 1,
     max: 6,
   },
-  magie: {
+  magic: {
     base: 0,
     value: 1,
     max: 6,
@@ -104,147 +186,148 @@ const attributsData = {
 };
 
 // Objet pour stocker les valeurs des compétences
-const competencesData = {
+const skillsData = {
   firearms: {
     base: 0,
     value: 0,
-    linkedAttribut: "agilite",
-    name: "Armes à feu"
+    linkedAttribute: "agility",
   },
   exoticWeapons: {
     base: 0,
     value: 0,
-    linkedAttribut: "agilite",
-    name: "Armes exotiques"
+    linkedAttribute: "agility",
   },
   astral: {
     base: 0,
     value: 0,
-    linkedAttribut: "intuition",
-    name: "Astral"
+    linkedAttribute: "intuition",
   },
   athletics: {
     base: 0,
     value: 0,
-    linkedAttribut: "agilite",
-    name: "Athlétisme"
+    linkedAttribute: "agility",
   },
   biotech: {
     base: 0,
     value: 0,
-    linkedAttribut: "logique",
-    name: "Biotech"
+    linkedAttribute: "logic",
   },
   closeCombat: {
     base: 0,
     value: 0,
-    linkedAttribut: "agilite",
-    name: "Combat rapproché"
+    linkedAttribute: "agility",
   },
   conjuring: {
     base: 0,
     value: 0,
-    linkedAttribut: "magie",
-    name: "Cnjuration"
+    linkedAttribute: "magic",
   },
   electronics: {
     base: 0,
     value: 0,
-    linkedAttribut: "logique",
-    name: "Electronique"
+    linkedAttribute: "logic",
   },
   stealthing: {
     base: 0,
     value: 0,
-    linkedAttribut: "agilite",
-    name: "Furtivité"
+    linkedAttribute: "agility",
   },
   influence: {
     base: 0,
     value: 0,
-    linkedAttribut: "charisme",
-    name: "Armes à feu"
+    linkedAttribute: "charisma",
   },
   enchanting: {
     base: 0,
     value: 0,
-    linkedAttribut: "magie",
-    name: "Enchantement"
+    linkedAttribute: "magic",
   },
   con: {
     base: 0,
     value: 0,
-    linkedAttribut: "charisme",
-    name: "Escroquerie"
+    linkedAttribute: "charisma",
   },
   engineering: {
     base: 0,
     value: 0,
-    linkedAttribut: "logique",
-    name: "Ingénierie"
+    linkedAttribute: "logic",
   },
   peception: {
     base: 0,
     value: 0,
-    linkedAttribut: "intuition",
-    name: "Perception"
+    linkedAttribute: "intuition",
   },
   pilot: {
     base: 0,
     value: 0,
-    linkedAttribut: "reaction",
-    name: "Pilotage"
+    linkedAttribute: "reaction",
   },
   cracking: {
     base: 0,
     value: 0,
-    linkedAttribut: "logique",
-    name: "Piratage"
+    linkedAttribute: "logic",
   },
   outdoors: {
     base: 0,
     value: 0,
-    linkedAttribut: "intuition",
-    name: "Plein air"
+    linkedAttribute: "intuition",
   },
   sorcery: {
     base: 0,
     value: 0,
-    linkedAttribut: "magie",
-    name: "Sorcellerie"
+    linkedAttribute: "magic",
   },
   tasking: {
     base: 0,
     value: 0,
-    linkedAttribut: "resonance",
-    name: "Technomancie"
+    linkedAttribute: "resonance",
   },
 };
 
+function cap(str) {
+  if (typeof str === 'string') {
+      var result = str.charAt(0).toUpperCase() + str.slice(1);
+      return result;
+  } else {
+      console.error("La variable str n'est pas une chaîne de caractères.");
+      return str; // ou gérer autrement
+  }
+}
+
+function handleSIN() {
 // Écoutez les événements "input" sur les champs de texte
-const prenomInput = document.getElementById("prenom");
-const surnomInput = document.getElementById("surnom");
-const nomInput = document.getElementById("nom");
+console.log("handleSIN initialize");
+const firstnameInput = document.getElementById("firstname");
+const surnameInput = document.getElementById("surname");
+const nameInput = document.getElementById("name");
 const identity = document.getElementById("identity");
 
-prenomInput.addEventListener("input", afficherInformationsPersonne);
-surnomInput.addEventListener("input", afficherInformationsPersonne);
-nomInput.addEventListener("input", afficherInformationsPersonne);
+firstnameInput.placeholder = cap(terms.firstname);
+surnameInput.placeholder = cap(terms.surname);
+nameInput.placeholder = cap(terms.name);
 
-function afficherInformationsPersonne() {
-  const prenom = prenomInput.value;
-  const surnom = surnomInput.value;
-  const nom = nomInput.value;
+firstnameInput.addEventListener("input", showSINInfo);
+surnameInput.addEventListener("input", showSINInfo);
+nameInput.addEventListener("input", showSINInfo);
 
-  if (!surnom && (prenom || nom)) {
+function showSINInfo() {
+  
+console.log("showSINInfo initialize");
+  const firstname = firstnameInput.value;
+  const surname = surnameInput.value;
+  const name = nameInput.value;
+
+  console.log("firstname : ",firstname," | surname : ",surname," | name : ",name);
+
+  if (!surname && (firstname || name)) {
     identity.innerHTML = `
-            <h5>Identité :</h5>
-            <p>${prenom || ""} ${surnom || ""} ${nom || ""}</p>
+            <h5>${terms.identity}${terms.colons}</h5>
+            <p>${firstname || ""} ${surname || ""} ${name || ""}</p>
         `;
-  } else if (surnom) {
+  } else if (surname) {
     identity.innerHTML = `
-            <h5>Identité :</h5>
-            <p>${prenom || ""} ${'"' + surnom + '"' || ""} ${nom || ""}</p>
+            <h5>${terms.identity}${terms.colons}</h5>
+            <p>${firstname || ""} ${'"' + surname + '"' || ""} ${name || ""}</p>
         `;
   } else {
     identity.innerHTML = "";
@@ -253,14 +336,16 @@ function afficherInformationsPersonne() {
   // Mettez à jour le tableau SIN avec une seule entrée
   SIN = [
     {
-      prenom,
-      surnom,
-      nom,
+      firstname,
+      surname,
+      name,
     },
   ];
   console.log(JSON.stringify(SIN));
-  sauvegarderSelectionDansCookie();
+  saveInCookie();
 }
+};
+
 
 function useButton(cell) {
     if (cell.classList.contains("btn-outline-primary")) { 
@@ -274,8 +359,8 @@ function useButton(cell) {
 
 }
 
-function selectPriorite(cell, categorie, priority) {
-  console.log("selectPriorite : " + cell);
+function selectPriority(cell, categorie, priority) {
+  console.log("selectPriority : " + cell);
 
   // Obtenir la cellule précédemment sélectionnée dans la même catégorie
   let previousSelectedCell = selectedCells[categorie];
@@ -301,22 +386,22 @@ function selectPriorite(cell, categorie, priority) {
   IDselectedCells[categorie] = cell.id;
 
   // Mettre à jour la priorité sélectionnée
-  prioritesSelectionnees[
+  prioritiesSelected[
     categorie
-  ] = `${categories[categorie]} : ${cell.textContent} (${priority})`;
-  prioriteActuelle = priority; // Mettre à jour la priorité actuelle
+  ] = `${cap(terms[categorie])} : ${cell.textContent} (${priority})`;
+  actualPriority = priority; // Mettre à jour la priorité actuelle
 
-  // Afficher les attributs si leur priorité est sélectionnée  
-  if (categorie === "attributs") {     
-    var attributTitle = document.getElementById("attributTitle");
-    attributTitle.style.display = "block"; // Afficher la section des attributs
+  // Afficher les attributes si leur priorité est sélectionnée  
+  if (categorie === "attributes") {     
+    var attributeTitle = document.getElementById("attributeTitle");
+    attributeTitle.style.display = "block"; // Afficher la section des attributes
   }
 
   
-  // Afficher les attributs si leur priorité est sélectionnée  
-  if (categorie === "competences") {  
-    var competenceTitle = document.getElementById("competenceTitle");
-    competenceTitle.style.display = "block"; // Afficher la section des competences
+  // Afficher les attributes si leur priorité est sélectionnée  
+  if (categorie === "skills") {  
+    var skillTitle = document.getElementById("skillTitle");
+    skillTitle.style.display = "block"; // Afficher la section des skills
   }
 
   // Mettre à jour le bouton de métatype sélectionné (si un bouton est déjà sélectionné)
@@ -328,29 +413,20 @@ function selectPriorite(cell, categorie, priority) {
     selectedMetatypeButton = null;
   }
 
-  updateAttributsDisplay();
-  sauvegarderSelectionDansCookie();
+  updateAttributesDisplay();
+  saveInCookie();
 
   // Afficher les résultats
-  afficherResultats();
+  showResults();
   // Appeler la fonction pour générer les boutons en fonction de la priorité sélectionnée
-  if (categorie === "metatypes") generateMetatypeButtons(prioriteActuelle); // Utiliser la priorité actuelle
-  if (categorie === "magie_ou_resonnance")
-    generateSpecialButtons(prioriteActuelle); // Utiliser la priorité actuelle
+  if (categorie === "metatypes") generateMetatypeButtons(actualPriority); // Utiliser la priorité actuelle
+  if (categorie === "magicOrResonance")
+    generateSpecialButtons(actualPriority); // Utiliser la priorité actuelle
 }
 
-// Section : Initialisation des catégories
-const categories = {
-  metatypes: "Métatypes",
-  attributs: "Attributs",
-  competences: "Compétences",
-  magie_ou_resonnance: "Magie ou Résonance",
-  ressources: "Ressources",
-};
-
 // Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
-function generateMetatypeButtons(priorite) {
-  console.log("generateMetatypeButtons:", priorite);
+function generateMetatypeButtons(priority) {
+  console.log("generateMetatypeButtons:", priority);
 
   const metatypeTitle = document.getElementById("metatypeTitle");
     metatypeTitle.style.display = "block"; 
@@ -360,7 +436,7 @@ function generateMetatypeButtons(priorite) {
   // Récupérer l'option de métatype sélectionnée actuellement
   const selectedMetatype = metatypeForm.querySelector("button.selected");
 
-  const metatypes = getMetatypesForPriority(priorite);
+  const metatypes = getMetatypesForPriority(priority);
 
   // Créez des boutons en ligne pour chaque métatype
   metatypeForm.innerHTML = ""; // Supprimez les options de métatype existantes
@@ -393,8 +469,8 @@ function generateMetatypeButtons(priorite) {
     button.addEventListener("click", function (event) {
       event.preventDefault();
       handleMetatypeButtonClick(button, metatypeForm);
-      updateAttributsForMetatype(button.textContent);
-      afficherResultats();
+      updateAttributesForMetatype(button.textContent);
+      showResults();
       metatypeSelected = true;
       console.log(`Bouton de métatype cliqué : ${button.textContent}`);
     });
@@ -402,10 +478,10 @@ function generateMetatypeButtons(priorite) {
 }
 
 // Fonction pour obtenir les métatypes en fonction de la priorité
-function getMetatypesForPriority(priorite) {
-  if (priorite === "A") return ["Nain", "Ork", "Troll"];
-  if (priorite === "B") return ["Nain", "Elfe", "Ork", "Troll"];
-  if (priorite === "C" || priorite === "D" || priorite === "E")
+function getMetatypesForPriority(priority) {
+  if (priority === "A") return ["Nain", "Ork", "Troll"];
+  if (priority === "B") return ["Nain", "Elfe", "Ork", "Troll"];
+  if (priority === "C" || priority === "D" || priority === "E")
     return ["Nain", "Elfe", "Humain", "Ork", "Troll"];
   return [];
 }
@@ -423,17 +499,17 @@ function handleMetatypeButtonClick(button, metatypeForm) {
     console.log(`Bouton de métatype sélectionné : ${button.textContent}`);
   }
   selectedMetatype = button.textContent;
-  sauvegarderSelectionDansCookie();
+  saveInCookie();
 }
 
 // Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
-function generateSpecialButtons(priorite) {
-  console.log("generateSpecialButtons:", priorite);
+function generateSpecialButtons(priority) {
+  console.log("generateSpecialButtons:", priority);
 
   const specialTitle = document.getElementById("specialTitle");
   const specialForm = document.getElementById("specialButtons");
 
-  if (priorite === "E") {
+  if (priority === "E") {
     
     specialTitle.style.display = "none"; 
     specialForm.innerHTML = "";
@@ -475,14 +551,19 @@ function generateSpecialButtons(priorite) {
       ) {
         button.classList.add("selected");
         console.log(`Sélection du spécial : ${selectedSpecial.textContent}`);
+        if (selectedSpecial.textContent === "Technomancien") {
+          isTechno = true;
+        } else {
+          isMagic = true;
+        }
       }
 
       // Ajoutez un gestionnaire d'événements pour surveiller les sélections
       button.addEventListener("click", function (event) {
         event.preventDefault();
         handleSpecialButtonClick(button, specialForm);
-        updateAttributsForSpecial(button.textContent, priorite);
-        afficherResultats();
+        updateAttributesForSpecial(button.textContent, priority);
+        showResults();
         specialSelected = true;
         console.log(`Bouton de métatype cliqué : ${button.textContent}`);
       });
@@ -503,7 +584,7 @@ function handleSpecialButtonClick(button, specialForm) {
     console.log(`Bouton de spécial sélectionné : ${button.textContent}`);
   }
   selectedSpecial = button.textContent;
-  sauvegarderSelectionDansCookie();
+  saveInCookie();
 }
 
 // Fonction pour ajouter les traits automatiques en fonction du métatype
@@ -517,7 +598,7 @@ function handleMetatypeQualities(metatype) {
   return [];
 }
 
-function ajouterClassePostCookie() {
+function addClassesCookie() {
   for (var cat in IDselectedCells) {
     let cell = document.getElementById(IDselectedCells[cat]);
     if (cell) {
@@ -528,7 +609,7 @@ function ajouterClassePostCookie() {
   if (metatypeButton) metatypeButton.classList.add("selected");
 }
 
-function supprimerClassePostCookie() {
+function removeClassesCookie() {
   for (var cat in IDselectedCells) {
     let cell = document.getElementById(IDselectedCells[cat]);
     if (cell) {
@@ -537,23 +618,23 @@ function supprimerClassePostCookie() {
   }
 }
 
-function ajouterSINPostCookie() {
+function addSINCookie() {
   const identity = document.getElementById("identity");
 
   if (SIN.length > 0) {
-    const prenom = SIN[0].prenom || "";
-    const surnom = SIN[0].surnom || "";
-    const nom = SIN[0].nom || "";
+    const firstname = SIN[0].firstname || "";
+    const surname = SIN[0].surname || "";
+    const name = SIN[0].name || "";
 
-    if (!surnom && (prenom || nom)) {
+    if (!surname && (firstname || name)) {
       identity.innerHTML = `
-                <h5>Identité :</h5>
-                <p>${prenom || ""} ${surnom || ""} ${nom || ""}</p>
+                <h5>{{identity}} :</h5>
+                <p>${firstname || ""} ${surname || ""} ${name || ""}</p>
             `;
-    } else if (surnom) {
+    } else if (surname) {
       identity.innerHTML = `
-                <h5>Identité :</h5>
-                <p>${prenom || ""} ${'"' + surnom + '"' || ""} ${nom || ""}</p>
+                <h5>{{identity}} :</h5>
+                <p>${firstname || ""} ${'"' + surname + '"' || ""} ${name || ""}</p>
             `;
     } else {
       identity.innerHTML = "";
@@ -561,424 +642,405 @@ function ajouterSINPostCookie() {
   }
 }
 
-// Fonction pour mettre à jour les valeurs d'attributs en fonction du métatype
-function updateAttributsForMetatype(metatype) {
+// Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
+function updateAttributesForMetatype(metatype) {
   if (metatype === "Nain") {
-    attributsData.constitution.max = 7;
-    attributsData.agilite.max = 6;
-    attributsData.reaction.max = 5;
-    attributsData.force.max = 8;
-    attributsData.volonte.max = 7;
-    attributsData.logique.max = 6;
-    attributsData.intuition.max = 6;
-    attributsData.charisme.max = 6;
-    attributsData.atout.max = 6;
+    attributesData.body.max = 7;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 5;
+    attributesData.strength.max = 8;
+    attributesData.willpower.max = 7;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
   } else if (metatype === "Elfe") {
-    attributsData.constitution.max = 6;
-    attributsData.agilite.max = 7;
-    attributsData.reaction.max = 6;
-    attributsData.force.max = 6;
-    attributsData.volonte.max = 6;
-    attributsData.logique.max = 6;
-    attributsData.intuition.max = 6;
-    attributsData.charisme.max = 8;
-    attributsData.atout.max = 6;
+    attributesData.body.max = 6;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 6;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 8;
+    attributesData.edge.max = 6;
   } else if (metatype === "Ork") {
-    attributsData.constitution.max = 8;
-    attributsData.agilite.max = 6;
-    attributsData.reaction.max = 6;
-    attributsData.force.max = 8;
-    attributsData.volonte.max = 6;
-    attributsData.logique.max = 6;
-    attributsData.intuition.max = 6;
-    attributsData.charisme.max = 5;
-    attributsData.atout.max = 6;
+    attributesData.body.max = 8;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 8;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 5;
+    attributesData.edge.max = 6;
   } else if (metatype === "Troll") {
-    attributsData.constitution.max = 9;
-    attributsData.agilite.max = 5;
-    attributsData.reaction.max = 6;
-    attributsData.force.max = 9;
-    attributsData.volonte.max = 6;
-    attributsData.logique.max = 6;
-    attributsData.intuition.max = 6;
-    attributsData.charisme.max = 5;
-    attributsData.atout.max = 6;
+    attributesData.body.max = 9;
+    attributesData.agility.max = 5;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 9;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 5;
+    attributesData.edge.max = 6;
   } else if (metatype === "Humain") {
-    attributsData.constitution.max = 6;
-    attributsData.agilite.max = 6;
-    attributsData.reaction.max = 6;
-    attributsData.force.max = 6;
-    attributsData.volonte.max = 6;
-    attributsData.logique.max = 6;
-    attributsData.intuition.max = 6;
-    attributsData.charisme.max = 6;
-    attributsData.atout.max = 7;
+    attributesData.body.max = 6;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 6;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 7;
   }
 
-  updateAttributsDisplay();
+  updateAttributesDisplay();
 }
 
-// Fonction pour mettre à jour les valeurs d'attributs en fonction du métatype
-function updateAttributsForSpecial(special, priorite) {
-  if (priorite === "A") {
+// Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
+function updateAttributesForSpecial(special, priority) {
+  if (priority === "A") {
     if (
       special === "Magicien pur" ||
       special === "Adepte mystique" ||
       special === "Adepte"
     ) {
-      attributsData.magie.base = 4;
+      attributesData.magic.base = 4;
     } else if (special === "Magicien spécialisé") {
-      attributsData.magie.base = 5;
+      attributesData.magic.base = 5;
     } else if (special === "Technomancien") {
-      attributsData.resonance.base = 4;
+      attributesData.resonance.base = 4;
     }
   }
-  if (priorite === "B") {
+  if (priority === "B") {
     if (special === "Magicien pur") {
       if (
         special === "Magicien pur" ||
         special === "Adepte mystique" ||
         special === "Adepte"
       ) {
-        attributsData.magie.base = 3;
+        attributesData.magic.base = 3;
       } else if (special === "Magicien spécialisé") {
-        attributsData.magie.base = 4;
+        attributesData.magic.base = 4;
       } else if (special === "Technomancien") {
-        attributsData.resonance.base = 3;
+        attributesData.resonance.base = 3;
       }
     }
   }
-  if (priorite === "C") {
+  if (priority === "C") {
     if (
       special === "Magicien pur" ||
       special === "Adepte mystique" ||
       special === "Adepte"
     ) {
-      attributsData.magie.base = 2;
+      attributesData.magic.base = 2;
     } else if (special === "Magicien spécialisé") {
-      attributsData.magie.base = 3;
+      attributesData.magic.base = 3;
     } else if (special === "Technomancien") {
-      attributsData.resonance.base = 2;
+      attributesData.resonance.base = 2;
     }
   }
-  if (priorite === "D") {
+  if (priority === "D") {
     if (
       special === "Magicien pur" ||
       special === "Adepte mystique" ||
       special === "Adepte"
     ) {
-      attributsData.magie.base = 1;
+      attributesData.magic.base = 1;
     } else if (special === "Magicien spécialisé") {
-      attributsData.magie.base = 2;
+      attributesData.magic.base = 2;
     } else if (special === "Technomancien") {
-      attributsData.resonance.base = 1;
+      attributesData.resonance.base = 1;
     }
   }
+  if (special === "Technomancien") {
+    attributesData.magic.base = 0;
+  }
+  else {
+    attributesData.resonance.base = 0;
+  }
+  if (priority === "E") {
+    attributesData.magic.base = 0;
+    attributesData.resonance.base = 0;
 
-  updateAttributsDisplay();
+  }
+  handleAttributes();
+  updateAttributesDisplay();
 }
 
-function handleAttributs() {
-  // Sélectionnez le tableau des attributs par son ID
-  var attributTable = document.getElementById("attributTable");
+function handleAttributes() {
+  // Sélectionnez le tableau des attributes par son ID
+  var attributeTable = document.getElementById("attributeTable");
   // Sélectionnez le corps du tableau
-  var attributTableBody = attributTable.querySelector("tbody");
-
-  // Données JSON pour les attributs
-  var attributs = [
-    {
-      id: "constitution",
-      value: attributsData.constitution.base,
-    },
-    {
-      id: "agilite",
-      value: attributsData.agilite.base,
-    },
-    {
-      id: "reaction",
-      value: attributsData.reaction.base,
-    },
-    {
-      id: "force",
-      value: attributsData.force.base,
-    },
-    {
-      id: "volonte",
-      value: attributsData.volonte.base,
-    },
-    {
-      id: "logique",
-      value: attributsData.logique.base,
-    },
-    {
-      id: "intuition",
-      value: attributsData.intuition.base,
-    },
-    {
-      id: "charisme",
-      value: attributsData.charisme.base,
-    },
-    {
-      id: "atout",
-      value: attributsData.atout.base,
-    },
-    {
-      id: "magie",
-      value: attributsData.magie.base,
-    },
-    {
-      id: "resonance",
-      value: attributsData.resonance.base,
-    },
-  ];
+  var attributeTableBody = attributeTable.querySelector("tbody");
 
   // Générez le contenu HTML en utilisant le modèle et les données
-  var attributHTML = "";
-  attributs.forEach(function (attribut) {
-    var capitalizedId =
-      attribut.id.charAt(0).toUpperCase() + attribut.id.slice(1);
-    attributHTML += `
-            <tr>
-                <th scope="row">${capitalizedId}</th>
-                <td>
-                    <div id="${attribut.id}_base"><span>${attribut.value}</span></div>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <button class="btn btn-outline-danger btn-xs" onclick="decrementAttribut('${attribut.id}', 1)">-</button>
-                        <button class="btn btn-outline-success btn-xs" onclick="incrementAttribut('${attribut.id}', 1)">+</button>
-                    </div>
-                </td>
-                <td id="${attribut.id}_actuel"><span class="h6">${attribut.value}</span></td>
-                <td id="${attribut.id}_max"><span class="h6"></span></td>
-            </tr>
-        `;
-  });
+  var attributeHTML = "";
+  for (const attribute in attributesData) {
+ 
+    console.log("handleAttributes avant if : ",attribute);
+    // Si l'attribut doit être affiché, générez le HTML
+    if (attributesData[attribute].base > 0) {
+      console.log("handleAttributes après if : ",attribute);
+      console.log("handleAttributes terms.attribute : ",terms[attribute]);
+      var capitalizedId =
+      terms[attribute].charAt(0).toUpperCase() + terms[attribute].slice(1);
+      attributeHTML += `
+        <tr>
+            <th scope="row">${capitalizedId}</th>
+            <td>
+                <div id="${attribute}_base"><span>${attributesData[attribute].base}</span></div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <button class="btn btn-outline-danger btn-xs" onclick="decrementAttribute('${attribute}', 1)">-</button>
+                    <button class="btn btn-outline-success btn-xs" onclick="incrementAttribute('${attribute}', 1)">+</button>
+                </div>
+            </td>
+            <td id="${attribute}_actuel"><span class="h6">${attributesData[attribute].value}</span></td>
+            <td id="${attribute}_max"><span class="h6"></span></td>
+        </tr>
+      `;
+    }
+  };
 
-  // Affichez le contenu généré dans le corps du tableau des attributs
-  attributTableBody.innerHTML = attributHTML;
+  // Affichez le contenu généré dans le corps du tableau des attributes
+  attributeTableBody.innerHTML = attributeHTML;
 }
 
-// Fonction pour mettre à jour les éléments HTML en fonction des données d'attributs
-function updateAttributsDisplay() {
-  for (const attribut in attributsData) {
-    let attribut_base = document
-      .getElementById(attribut + "_base")
+// Fonction pour mettre à jour les éléments HTML en fonction des données d'attributes
+function updateAttributesDisplay() {
+  for (const attribute in attributesData) {
+    if (attributesData[attribute].base > 0) {
+    let attribute_base = document
+      .getElementById(attribute + "_base")
       .querySelector("span");
-    let attribut_actuel = document
-      .getElementById(attribut + "_actuel")
+    let attribute_actuel = document
+      .getElementById(attribute + "_actuel")
       .querySelector("span");
-    let attribut_max = document
-      .getElementById(attribut + "_max")
+    let attribute_max = document
+      .getElementById(attribute + "_max")
       .querySelector("span");
-    if (attributsData[attribut].base > attributsData[attribut].value)
-      attributsData[attribut].value = attributsData[attribut].base;
-    attribut_base.textContent = attributsData[attribut].base;
-    attribut_max.textContent = attributsData[attribut].max;
-    attribut_actuel.textContent = attributsData[attribut].value;
+    if (attributesData[attribute].base !== attributesData[attribute].value) {
+      console.log("updateAttributesDisplay if");
+      attributesData[attribute].value = attributesData[attribute].base;
+      pointsAttributesSpentPrio = 0;
+      pointsAttributesSpentAdjustement = 0;
+      selectedAttributeType = "Prio";
+    }
+    attribute_base.textContent = attributesData[attribute].base;
+    
+    console.log("updateAttributesDisplay attributesData[attribute].base: ", attributesData[attribute].base);
+    attribute_max.textContent = attributesData[attribute].max;
+    attribute_actuel.textContent = attributesData[attribute].value;
+    
+    console.log("updateAttributesDisplay attributesData[attribute].value: ", attributesData[attribute].value);
   }
 }
+}
 
-// Déclarer la variable pour stocker le type d'attribut sélectionné
-let selectedAttributType = "Prio";
+// Déclarer la variable pour stocker le type d'attribute sélectionné
+let selectedAttributeType = "Prio";
 
-// Déclarer la variable depenseAttributs en tant que variable globale
-let depenseAttributs;
+// Déclarer la variable depenseAttributes en tant que variable globale
+let depenseAttributes;
 
-// Fonction pour afficher le nombre de points d'attributs à dépenser
-function showDepenseAttribut() {
+// Fonction pour afficher le namebre de points d'attributes à dépenser
+function showDepenseAttribute() {
   console.log(
-    "showDepenseAttribut - selectedAttributType 1 :",
-    selectedAttributType
+    "showDepenseAttribute - selectedAttributeType 1 :",
+    selectedAttributeType
   );
 
-  let nbAttributsDepensePrio = getAttributsDepensePrio(
-    IDselectedCells.attributs
+  let attributesSpentNumberPrio = getAttributesDepensePrio(
+    IDselectedCells.attributes
   );
-  let nbAttributsDepenseAjustement = getAttributsDepenseAjuste(
+  let attributesSpentNumberAdjustement = getAttributesDepenseAjuste(
     IDselectedCells.metatypes
   );
 
-  depenseAttributs = document.getElementById("attributs_depenses"); // Mettre à jour la variable globale depenseAttributs
-  console.log("showDepenseAttribut - depenseAttributs 2 :", depenseAttributs);
+  depenseAttributes = document.getElementById("attributesSpent"); // Mettre à jour la variable globale depenseAttributes
+  console.log("showDepenseAttribute - depenseAttributes 2 :", depenseAttributes);
 
-  depenseAttributs.innerHTML =
-    ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">Attributs</th> <th scope="col">Ajustement</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="CellAttributsDepensePrio" class="selectable selected" onclick="selectAttributType(this, \'Prio\')"><span id="nbAttributsDepensePrio">' +
-    nbAttributsDepensePrio +
-    '</span></td> <td id="CellAttributsDepenseAjustement" class="selectable" onclick="selectAttributType(this, \'Ajustement\')"><span id="nbAttributsDepenseAjustement">' +
-    nbAttributsDepenseAjustement +
+  depenseAttributes.innerHTML =
+    ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">Attributes</th> <th scope="col">Adjustement</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="CellAttributesDepensePrio" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesSpentNumberPrio">' +
+    attributesSpentNumberPrio +
+    '</span></td> <td id="CellAttributesDepenseAdjustement" class="selectable" onclick="selectAttributeType(this, \'Adjustement\')"><span id="attributesSpentNumberAdjustement">' +
+    attributesSpentNumberAdjustement +
     "</span></td> </tr></tbody></table>";
 }
 
-// Fonction pour sélectionner le type d'attribut
-function selectAttributType(cell, type) {
-  console.log("selectAttributType : " + type);
-  const classAttributPrio = document.getElementById(`CellAttributsDepensePrio`);
-  const classAttributAjustement = document.getElementById(
-    `CellAttributsDepenseAjustement`
+// Fonction pour sélectionner le type d'attribute
+function selectAttributeType(cell, type) {
+  console.log("selectAttributeType : " + type);
+  const classAttributePrio = document.getElementById(`CellAttributesDepensePrio`);
+  const classAttributeAdjustement = document.getElementById(
+    `CellAttributesDepenseAdjustement`
   );
   if (type === "Prio") {
-    classAttributPrio.classList.add("selected");
-    if (classAttributAjustement.classList.contains("selected"))
-      classAttributAjustement.classList.remove("selected");
+    classAttributePrio.classList.add("selected");
+    if (classAttributeAdjustement.classList.contains("selected"))
+      classAttributeAdjustement.classList.remove("selected");
   }
-  if (type === "Ajustement") {
-    classAttributAjustement.classList.add("selected");
-    if (classAttributPrio.classList.contains("selected"))
-      classAttributPrio.classList.remove("selected");
+  if (type === "Adjustement") {
+    classAttributeAdjustement.classList.add("selected");
+    if (classAttributePrio.classList.contains("selected"))
+      classAttributePrio.classList.remove("selected");
   }
-  selectedAttributType = type;
+  selectedAttributeType = type;
 }
 
-// Fonction pour incrémenter une valeur attribut
-function incrementAttribut(attribut, increment) {
-  attributsData[attribut].value += increment;
-  const cell = document.getElementById(attribut + "_actuel");
+// Fonction pour incrémenter une valeur attribute
+function incrementAttribute(attribute, increment) {
+  attributesData[attribute].value += increment;
+  const cell = document.getElementById(attribute + "_actuel");
   const span = cell.querySelector("span");
-  span.textContent = attributsData[attribut].value;
+  span.textContent = attributesData[attribute].value;
 
   //checher la source
 
-  // Mettre à jour le nombre de points d'attributs dépensés
-  updateAttributsPoints("increment", increment, selectedAttributType, attribut);
+  // Mettre à jour le namebre de points d'attributes dépensés
+  updateAttributesPoints("increment", increment, selectedAttributeType, attribute);
 }
 
-// Fonction pour décrémenter une valeur attribut
-function decrementAttribut(attribut, decrement) {
-  var currentValue = attributsData[attribut].value;
-  attributsData[attribut].value -= decrement;
-  const cell = document.getElementById(attribut + "_actuel");
+// Fonction pour décrémenter une valeur attribute
+function decrementAttribute(attribute, decrement) {
+  var currentValue = attributesData[attribute].value;
+  attributesData[attribute].value -= decrement;
+  const cell = document.getElementById(attribute + "_actuel");
   const span = cell.querySelector("span");
   if (currentValue >= decrement) {
-    span.textContent = attributsData[attribut].value;
+    span.textContent = attributesData[attribute].value;
 
-    // Mettre à jour le nombre de points d'attributs dépensés
-    updateAttributsPoints(
+    // Mettre à jour le namebre de points d'attributes dépensés
+    updateAttributesPoints(
       "decrement",
       decrement,
-      selectedAttributType,
-      attribut
+      selectedAttributeType,
+      attribute
     );
   }
 }
 
-let pointsAttributsDepensesPrio = 0; // Initialisation de la réserve Prio
-let pointsAttributsDepensesAjustement = 0; // Initialisation de la réserve Ajustement
+let pointsAttributesSpentPrio = 0; // Initialisation de la réserve Prio
+let pointsAttributesSpentAdjustement = 0; // Initialisation de la réserve Adjustement
 
-function updateAttributsPoints(type, valeur, selectedAttributType, attribut) {
-  // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Ajustement)
-  let nbAttributsDepense = 0;
-  if (selectedAttributType === "Prio") {
-    nbAttributsDepense = getAttributsDepensePrio(IDselectedCells.attributs);
-  } else if (selectedAttributType === "Ajustement") {
-    nbAttributsDepense = getAttributsDepenseAjuste(IDselectedCells.metatypes);
+function updateAttributesPoints(type, valeur, selectedAttributeType, attribute) {
+  // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
+  let attributesSpentNumber = 0;
+  if (selectedAttributeType === "Prio") {
+    attributesSpentNumber = getAttributesDepensePrio(IDselectedCells.attributes);
+  } else if (selectedAttributeType === "Adjustement") {
+    attributesSpentNumber = getAttributesDepenseAjuste(IDselectedCells.metatypes);
   }
 
   if (type === "increment") {
-    // Vérifiez si l'incrémentation dépasse le maximum d'attributs
-    if (selectedAttributType === "Prio") {
-      pointsAttributsDepensesPrio -= valeur;
-    } else if (selectedAttributType === "Ajustement") {
-      pointsAttributsDepensesAjustement -= valeur;
+    // Vérifiez si l'incrémentation dépasse le maximum d'attributes
+    if (selectedAttributeType === "Prio") {
+      pointsAttributesSpentPrio -= valeur;
+    } else if (selectedAttributeType === "Adjustement") {
+      pointsAttributesSpentAdjustement -= valeur;
     }
   } else if (type === "decrement") {
-    if (selectedAttributType === "Prio") {
-      pointsAttributsDepensesPrio += valeur;
-    } else if (selectedAttributType === "Ajustement") {
-      pointsAttributsDepensesAjustement += valeur;
+    if (selectedAttributeType === "Prio") {
+      pointsAttributesSpentPrio += valeur;
+    } else if (selectedAttributeType === "Adjustement") {
+      pointsAttributesSpentAdjustement += valeur;
     }
   }
 
-  // Mettez à jour le span avec le nombre de points d'attributs dépensés en fonction du type
-  const depenseAttributs = document.getElementById(
-    `nbAttributsDepense${selectedAttributType}`
+  // Mettez à jour le span avec le namebre de points d'attributes dépensés en fonction du type
+  const depenseAttributes = document.getElementById(
+    `attributesSpentNumber${selectedAttributeType}`
   );
 
   // Mettez à jour le texte avec la nouvelle valeur
-  if (selectedAttributType === "Prio") {
-    depenseAttributs.textContent =
-      nbAttributsDepense + pointsAttributsDepensesPrio;
-  } else if (selectedAttributType === "Ajustement") {
-    depenseAttributs.textContent =
-      nbAttributsDepense + pointsAttributsDepensesAjustement;
+  if (selectedAttributeType === "Prio") {
+    depenseAttributes.textContent =
+      attributesSpentNumber + pointsAttributesSpentPrio;
+  } else if (selectedAttributeType === "Adjustement") {
+    depenseAttributes.textContent =
+      attributesSpentNumber + pointsAttributesSpentAdjustement;
   }
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
-  console.log(`${attribut}_max`);
-  const maxAttribut = document.getElementById(`${attribut}_max`);
-  if (attributsData[attribut].value > attributsData[attribut].max) {
-    maxAttribut.classList.add("maximum");
+  console.log(`${attribute}_max`);
+  const maxAttribute = document.getElementById(`${attribute}_max`);
+  if (attributesData[attribute].value > attributesData[attribute].max) {
+    maxAttribute.classList.add("maximum");
   } else {
-    maxAttribut.classList.remove("maximum");
+    maxAttribute.classList.remove("maximum");
   }
 
-  var cellDepensePrio = document.getElementById(`CellAttributsDepensePrio`);
-  var cellDepenseAjustement = document.getElementById(
-    `CellAttributsDepenseAjustement`
+  var cellDepensePrio = document.getElementById(`CellAttributesDepensePrio`);
+  var cellDepenseAdjustement = document.getElementById(
+    `CellAttributesDepenseAdjustement`
   );
 
   console.log(
-    "nbAttributsDepense Prio : ",
-    nbAttributsDepense,
-    "pointsAttributsDepensesPrio : ",
-    pointsAttributsDepensesPrio,
+    "attributesSpentNumber Prio : ",
+    attributesSpentNumber,
+    "pointsAttributesSpentPrio : ",
+    pointsAttributesSpentPrio,
     "Calcul : ",
-    nbAttributsDepense + pointsAttributsDepensesPrio
+    attributesSpentNumber + pointsAttributesSpentPrio
   );
 
-  if (nbAttributsDepense + pointsAttributsDepensesPrio < 0) {
+  if (attributesSpentNumber + pointsAttributesSpentPrio < 0) {
     console.log("Trop de dépense en prio : ", cellDepensePrio);
     cellDepensePrio.classList.add("maximum");
   } else {
     cellDepensePrio.classList.remove("maximum");
   }
 
-  if (nbAttributsDepense + pointsAttributsDepensesAjustement < 0) {
-    console.log("Trop de dépense en ajustement : ", cellDepenseAjustement);
-    cellDepenseAjustement.classList.add("maximum");
+  if (attributesSpentNumber + pointsAttributesSpentAdjustement < 0) {
+    console.log("Trop de dépense en ajustement : ", cellDepenseAdjustement);
+    cellDepenseAdjustement.classList.add("maximum");
   } else {
-    cellDepenseAjustement.classList.remove("maximum");
+    cellDepenseAdjustement.classList.remove("maximum");
   }
 }
 
-function getAttributsDepensePrio(priorite) {
-  if (priorite === "attributs_A") return 24;
-  else if (priorite === "attributs_B") return 16;
-  else if (priorite === "attributs_C") return 12;
-  else if (priorite === "attributs_D") return 8;
-  else if (priorite === "attributs_E") return 2;
+function getAttributesDepensePrio(priority) {
+  if (priority === "attributes_A") return 24;
+  else if (priority === "attributes_B") return 16;
+  else if (priority === "attributes_C") return 12;
+  else if (priority === "attributes_D") return 8;
+  else if (priority === "attributes_E") return 2;
   else
     console.log(
-      "function getAttributsDepensePrio(priorite) ne contient pas la bonne propriété en paramètre : " +
-        priorite
+      "function getAttributesDepensePrio(priority) ne contient pas la bonne propriété en paramètre : " +
+        priority
     );
 }
 
-function getAttributsDepenseAjuste(priorite) {
-  if (priorite === "metatypes_A") return 13;
-  else if (priorite === "metatypes_B") return 11;
-  else if (priorite === "metatypes_C") return 9;
-  else if (priorite === "metatypes_D") return 4;
-  else if (priorite === "metatypes_E") return 1;
+function getAttributesDepenseAjuste(priority) {
+  if (priority === "metatypes_A") return 13;
+  else if (priority === "metatypes_B") return 11;
+  else if (priority === "metatypes_C") return 9;
+  else if (priority === "metatypes_D") return 4;
+  else if (priority === "metatypes_E") return 1;
   else
     console.log(
-      "function getAttributsDepenseAjuste(priorite) ne contient pas la bonne propriété en paramètre : " +
-        priorite
+      "function getAttributesDepenseAjuste(priority) ne contient pas la bonne propriété en paramètre : " +
+        priority
     );
 }
 
 // Fonction pour afficher les résultats
-function afficherResultats() {
+function showResults() {
   const resultat = document.getElementById("resultat");
   resultat.innerHTML = "<h5>Priorités sélectionnées :</h5>";
 
-  for (const categorie in prioritesSelectionnees) {
-    const priorite = prioritesSelectionnees[categorie];
-    if (priorite) {
-      resultat.innerHTML += `<p>${priorite}</p>`;
+  for (const categorie in prioritiesSelected) {
+    const priority = prioritiesSelected[categorie];
+    if (priority) {
+      resultat.innerHTML += `<p>${priority}</p>`;
     }
   }
 
-  if (prioritesSelectionnees["attributs"]) {
-    showDepenseAttribut();
+  if (prioritiesSelected["attributes"]) {
+    showDepenseAttribute();
   }
   const metatypeForm = document.getElementById("metatypeButtons");
   const selectedMeta =
@@ -1001,13 +1063,13 @@ function afficherResultats() {
     resultat.innerHTML += "<h5>" + selectedSpecialValue + "</h5>";
   }
 
-  // Affichez la colonne des ressources avec séparation des unités et le symbole ¥
-  const ressourcesValue = prioritesSelectionnees["ressources"];
-  if (ressourcesValue) {
-    const ressources = parseInt(ressourcesValue.split(" ")[1]); // Extrait la valeur numérique
-    if (!isNaN(ressources)) {
+  // Affichez la colonne des resources avec séparation des unités et le symbole ¥
+  const resourcesValue = prioritiesSelected["resources"];
+  if (resourcesValue) {
+    const resources = parseInt(resourcesValue.split(" ")[1]); // Extrait la valeur numérique
+    if (!isNaN(resources)) {
       resultat.innerHTML += "<h5>Ressources :</h5>";
-      const formattedRessources = ressources.toLocaleString("fr-FR", {
+      const formattedRessources = resources.toLocaleString("fr-FR", {
         style: "currency",
         currency: "JPY",
       });
@@ -1017,12 +1079,12 @@ function afficherResultats() {
 }
 
 // Fonction pour sauvegarder la sélection dans un cookie
-function sauvegarderSelectionDansCookie() {
+function saveInCookie() {
   const dataToSave = JSON.stringify({
     selectedCells,
     IDselectedCells,
-    prioritesSelectionnees,
-    prioriteActuelle,
+    prioritiesSelected,
+    actualPriority,
     selectedMetatype,
     SIN,
   });
@@ -1038,7 +1100,7 @@ function sauvegarderSelectionDansCookie() {
 }
 
 // Fonction pour charger la sélection depuis un cookie
-function chargerSelectionDepuisCookie() {
+function loadCookie() {
   const cookieData = document.cookie
     .split("; ")
     .find((row) => row.startsWith("selectionData="));
@@ -1050,15 +1112,15 @@ function chargerSelectionDepuisCookie() {
     if (loadedData) {
       selectedCells = loadedData.selectedCells;
       IDselectedCells = loadedData.IDselectedCells;
-      prioritesSelectionnees = loadedData.prioritesSelectionnees;
-      prioriteActuelle = loadedData.prioriteActuelle;
+      prioritiesSelected = loadedData.prioritiesSelected;
+      actualPriority = loadedData.actualPriority;
       selectedMetatype = loadedData.selectedMetatype;
       SIN = loadedData.SIN;
-      generateMetatypeButtons(prioriteActuelle);
+      generateMetatypeButtons(actualPriority);
       handleMetatypeQualities(selectedMetatype);
-      afficherResultats();
-      ajouterClassePostCookie();
-      ajouterSINPostCookie();
+      showResults();
+      addClassesCookie();
+      addSINCookie();
     }
   }
 }
@@ -1082,36 +1144,36 @@ resetButton.addEventListener("click", function () {
       "; path=/";
 
     // Réinitialisez les valeurs
-    supprimerClassePostCookie();
-    prioritesSelectionnees = {
+    removeClassesCookie();
+    prioritiesSelected = {
       metatypes: null,
-      attributs: null,
-      competences: null,
-      magie_ou_resonnance: null,
-      ressources: null,
+      attributes: null,
+      skills: null,
+      magicOrResonance: null,
+      resources: null,
     };
     selectedMetatype = null;
-    prioriteActuelle = null;
+    actualPriority = null;
     selectedCells = {
       metatypes: null,
-      attributs: null,
-      competences: null,
-      magie_ou_resonnance: null,
-      ressources: null,
+      attributes: null,
+      skills: null,
+      magicOrResonance: null,
+      resources: null,
     };
     IDselectedCells = {
       metatypes: null,
-      attributs: null,
-      competences: null,
-      magie_ou_resonnance: null,
-      ressources: null,
+      attributes: null,
+      skills: null,
+      magicOrResonance: null,
+      resources: null,
     };
     SIN = [];
     resultat.innerHTML = "";
     identity.innerHTML = "";
-    prenomInput.value = "";
-    surnomInput.value = "";
-    nomInput.value = "";
+    firstnameInput.value = "";
+    surnameInput.value = "";
+    nameInput.value = "";
     metatypeTitle.innerHTML = "";
     metatypeForm.innerHTML = "";
     specialTitle.innerHTML = "";
