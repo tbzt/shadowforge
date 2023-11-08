@@ -14,9 +14,10 @@ const translations = {
     "metatypes": "métatypes",
     "attributes": "attributs",
     "attributesTitle": "Attributs",
+    "adjustement": "ajustement",
     "skills": "compétences",
     "skillsTitle": "Compétences",
-    "magicOrResonance": "magic ou résonance",
+    "magicOrResonance": "Magie ou Résonance",
     "resources": "ressources",
     "body": "constitution",
     "agility": "agilité",
@@ -33,7 +34,36 @@ const translations = {
     "priorityTable" : "Table des priorités",
     "metatypeChoice": "Choix du métatype",
     "specialAttributeChoice": "Choix de l'attribut spécial",
-    "colons": " :"
+    "colons": " :",
+    "firearms": "armes à feu",
+    "exoticWeapons":  "armes exotiques",
+    "astral":  "astral",
+    "athletics":  "athlétisme",
+    "biotech":  "biotech",
+    "closeCombat":  "combat rapproché",
+    "conjuring":  "invocation",
+    "electronics":  "électronique",
+    "stealthing":  "furtivité",
+    "influence":  "influence",
+    "enchanting":  "enchantement",
+    "con":  "escroquerie",
+    "engineering":  "ingénierie",
+    "peception":  "perception",
+    "pilot":  "pilotage",
+    "cracking":  "piratage",
+    "outdoors":  "plein air",
+    "sorcery":  "sorcellerie",
+    "tasking":  "technomancie",
+    "fullMagician": "magicien pur",
+    "mysticAdept": "adepte mystique",
+    "adept": "adepte",
+    "aspectedMagicien": "magicien spécialisé",
+    "technomancer": "technomancien",
+    "dwarf": "nain",
+    "ork": "ork",
+    "elf": "elfe",
+    "human": "humain",
+    "troll": "troll"
   },
   "en": {
     "firstname": "Firstname",
@@ -284,7 +314,7 @@ const skillsData = {
   },
 };
 
-function cap(str) {
+function capitalized(str) {
   if (typeof str === 'string') {
       var result = str.charAt(0).toUpperCase() + str.slice(1);
       return result;
@@ -302,9 +332,9 @@ const surnameInput = document.getElementById("surname");
 const nameInput = document.getElementById("name");
 const identity = document.getElementById("identity");
 
-firstnameInput.placeholder = cap(terms.firstname);
-surnameInput.placeholder = cap(terms.surname);
-nameInput.placeholder = cap(terms.name);
+firstnameInput.placeholder = capitalized(terms.firstname);
+surnameInput.placeholder = capitalized(terms.surname);
+nameInput.placeholder = capitalized(terms.name);
 
 firstnameInput.addEventListener("input", showSINInfo);
 surnameInput.addEventListener("input", showSINInfo);
@@ -388,7 +418,7 @@ function selectPriority(cell, categorie, priority) {
   // Mettre à jour la priorité sélectionnée
   prioritiesSelected[
     categorie
-  ] = `${cap(terms[categorie])} : ${cell.textContent} (${priority})`;
+  ] = `${capitalized(terms[categorie])} : ${cell.textContent} (${priority})`;
   actualPriority = priority; // Mettre à jour la priorité actuelle
 
   // Afficher les attributes si leur priorité est sélectionnée  
@@ -402,6 +432,7 @@ function selectPriority(cell, categorie, priority) {
   if (categorie === "skills") {  
     var skillTitle = document.getElementById("skillTitle");
     skillTitle.style.display = "block"; // Afficher la section des skills
+    handleSkills();
   }
 
   // Mettre à jour le bouton de métatype sélectionné (si un bouton est déjà sélectionné)
@@ -479,10 +510,10 @@ function generateMetatypeButtons(priority) {
 
 // Fonction pour obtenir les métatypes en fonction de la priorité
 function getMetatypesForPriority(priority) {
-  if (priority === "A") return ["Nain", "Ork", "Troll"];
-  if (priority === "B") return ["Nain", "Elfe", "Ork", "Troll"];
+  if (priority === "A") return ["dwarf", "ork", "troll"];
+  if (priority === "B") return ["dwarf", "elf", "ork", "troll"];
   if (priority === "C" || priority === "D" || priority === "E")
-    return ["Nain", "Elfe", "Humain", "Ork", "Troll"];
+    return ["dwarf", "elf", "human", "ork", "troll"];
   return [];
 }
 
@@ -519,23 +550,25 @@ function generateSpecialButtons(priority) {
     const selectedSpecial = specialForm.querySelector("button.selected");
 
     const specials = [
-      "Adepte",
-      "Adepte mystique",
-      "Magicien pur",
-      "Magicien spécialisé",
-      "Technomancien",
+      "adept",
+      "mysticAdept",
+      "fullMagician",
+      "aspectedMagicien",
+      "technomancer",
     ];
+
+    specialSorted = sort(specials);
 
     // Créez des boutons en ligne pour chaque métatype
     specialForm.innerHTML = ""; // Supprimez les options de métatype existantes
 
-    specials.forEach((special) => {
+    specialSorted.forEach((special) => {
       const button = document.createElement("button");
-      button.textContent = special;
+      button.textContent = capitalized(special.terms);
       button.classList.add("special-button");
       button.classList.add("btn-outline-primary");
       button.classList.add("btn");
-      button.setAttribute("id", special);
+      button.setAttribute("id", special.data);
 
       // Vérifiez si le type du bouton est "submit" et changez-le en "button" si nécessaire
       if (button.getAttribute("type") === "submit") {
@@ -551,7 +584,7 @@ function generateSpecialButtons(priority) {
       ) {
         button.classList.add("selected");
         console.log(`Sélection du spécial : ${selectedSpecial.textContent}`);
-        if (selectedSpecial.textContent === "Technomancien") {
+        if (selectedSpecial.textContent === "technomancer") {
           isTechno = true;
         } else {
           isMagic = true;
@@ -581,7 +614,6 @@ function handleSpecialButtonClick(button, specialForm) {
     allButtons.forEach((btn) => btn.classList.remove("selected"));
     // Sélectionner uniquement le bouton actuel
     button.classList.add("selected");
-    console.log(`Bouton de spécial sélectionné : ${button.textContent}`);
   }
   selectedSpecial = button.textContent;
   saveInCookie();
@@ -589,11 +621,11 @@ function handleSpecialButtonClick(button, specialForm) {
 
 // Fonction pour ajouter les traits automatiques en fonction du métatype
 function handleMetatypeQualities(metatype) {
-  if (metatype === "Nain")
+  if (metatype === "dwarf")
     return ["Résistance aux toxines", "Vision thermographique"];
-  if (metatype === "Elfe") return ["Vision nocturne"];
-  if (metatype === "Ork") return ["Vision nocturne", "Robuste 1"];
-  if (metatype === "Troll")
+  if (metatype === "elf") return ["Vision nocturne"];
+  if (metatype === "ork") return ["Vision nocturne", "Robuste 1"];
+  if (metatype === "troll")
     return ["Dépôts dermiques", "Vision thermographique", "Robuste 2"];
   return [];
 }
@@ -644,7 +676,7 @@ function addSINCookie() {
 
 // Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
 function updateAttributesForMetatype(metatype) {
-  if (metatype === "Nain") {
+  if (metatype === "dwarf") {
     attributesData.body.max = 7;
     attributesData.agility.max = 6;
     attributesData.reaction.max = 5;
@@ -654,7 +686,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 6;
     attributesData.edge.max = 6;
-  } else if (metatype === "Elfe") {
+  } else if (metatype === "elf") {
     attributesData.body.max = 6;
     attributesData.agility.max = 7;
     attributesData.reaction.max = 6;
@@ -664,7 +696,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 8;
     attributesData.edge.max = 6;
-  } else if (metatype === "Ork") {
+  } else if (metatype === "ork") {
     attributesData.body.max = 8;
     attributesData.agility.max = 6;
     attributesData.reaction.max = 6;
@@ -674,7 +706,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 5;
     attributesData.edge.max = 6;
-  } else if (metatype === "Troll") {
+  } else if (metatype === "troll") {
     attributesData.body.max = 9;
     attributesData.agility.max = 5;
     attributesData.reaction.max = 6;
@@ -684,7 +716,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 5;
     attributesData.edge.max = 6;
-  } else if (metatype === "Humain") {
+  } else if (metatype === "human") {
     attributesData.body.max = 6;
     attributesData.agility.max = 6;
     attributesData.reaction.max = 6;
@@ -703,59 +735,59 @@ function updateAttributesForMetatype(metatype) {
 function updateAttributesForSpecial(special, priority) {
   if (priority === "A") {
     if (
-      special === "Magicien pur" ||
-      special === "Adepte mystique" ||
-      special === "Adepte"
+      special === "fullMagician" ||
+      special === "mysticAdept" ||
+      special === "adept"
     ) {
       attributesData.magic.base = 4;
-    } else if (special === "Magicien spécialisé") {
+    } else if (special === "aspectedMagicien") {
       attributesData.magic.base = 5;
-    } else if (special === "Technomancien") {
+    } else if (special === "technomancer") {
       attributesData.resonance.base = 4;
     }
   }
   if (priority === "B") {
-    if (special === "Magicien pur") {
+    if (special === "fullMagician") {
       if (
-        special === "Magicien pur" ||
-        special === "Adepte mystique" ||
-        special === "Adepte"
+        special === "fullMagician" ||
+        special === "mysticAdept" ||
+        special === "adept"
       ) {
         attributesData.magic.base = 3;
-      } else if (special === "Magicien spécialisé") {
+      } else if (special === "aspectedMagicien") {
         attributesData.magic.base = 4;
-      } else if (special === "Technomancien") {
+      } else if (special === "technomancer") {
         attributesData.resonance.base = 3;
       }
     }
   }
   if (priority === "C") {
     if (
-      special === "Magicien pur" ||
-      special === "Adepte mystique" ||
-      special === "Adepte"
+      special === "fullMagician" ||
+      special === "mysticAdept" ||
+      special === "adept"
     ) {
       attributesData.magic.base = 2;
-    } else if (special === "Magicien spécialisé") {
+    } else if (special === "aspectedMagicien") {
       attributesData.magic.base = 3;
-    } else if (special === "Technomancien") {
+    } else if (special === "technomancer") {
       attributesData.resonance.base = 2;
     }
   }
   if (priority === "D") {
     if (
-      special === "Magicien pur" ||
-      special === "Adepte mystique" ||
-      special === "Adepte"
+      special === "fullMagician" ||
+      special === "mysticAdept" ||
+      special === "adept"
     ) {
       attributesData.magic.base = 1;
-    } else if (special === "Magicien spécialisé") {
+    } else if (special === "aspectedMagicien") {
       attributesData.magic.base = 2;
-    } else if (special === "Technomancien") {
+    } else if (special === "technomancer") {
       attributesData.resonance.base = 1;
     }
   }
-  if (special === "Technomancien") {
+  if (special === "technomancer") {
     attributesData.magic.base = 0;
   }
   else {
@@ -780,11 +812,8 @@ function handleAttributes() {
   var attributeHTML = "";
   for (const attribute in attributesData) {
  
-    console.log("handleAttributes avant if : ",attribute);
     // Si l'attribut doit être affiché, générez le HTML
     if (attributesData[attribute].base > 0) {
-      console.log("handleAttributes après if : ",attribute);
-      console.log("handleAttributes terms.attribute : ",terms[attribute]);
       var capitalizedId =
       terms[attribute].charAt(0).toUpperCase() + terms[attribute].slice(1);
       attributeHTML += `
@@ -797,7 +826,7 @@ function handleAttributes() {
                     <button class="btn btn-outline-success btn-xs" onclick="incrementAttribute('${attribute}', 1)">+</button>
                 </div>
             </td>
-            <td id="${attribute}_actuel"><span class="h6">${attributesData[attribute].value}</span></td>
+            <td id="${attribute}_actual"><span class="h6">${attributesData[attribute].value}</span></td>
             <td id="${attribute}_max"><span class="h6"></span></td>
         </tr>
       `;
@@ -815,14 +844,13 @@ function updateAttributesDisplay() {
     let attribute_base = document
       .getElementById(attribute + "_base")
       .querySelector("span");
-    let attribute_actuel = document
-      .getElementById(attribute + "_actuel")
+    let attribute_actual = document
+      .getElementById(attribute + "_actual")
       .querySelector("span");
     let attribute_max = document
       .getElementById(attribute + "_max")
       .querySelector("span");
     if (attributesData[attribute].base !== attributesData[attribute].value) {
-      console.log("updateAttributesDisplay if");
       attributesData[attribute].value = attributesData[attribute].base;
       pointsAttributesSpentPrio = 0;
       pointsAttributesSpentAdjustement = 0;
@@ -830,11 +858,9 @@ function updateAttributesDisplay() {
     }
     attribute_base.textContent = attributesData[attribute].base;
     
-    console.log("updateAttributesDisplay attributesData[attribute].base: ", attributesData[attribute].base);
     attribute_max.textContent = attributesData[attribute].max;
-    attribute_actuel.textContent = attributesData[attribute].value;
+    attribute_actual.textContent = attributesData[attribute].value;
     
-    console.log("updateAttributesDisplay attributesData[attribute].value: ", attributesData[attribute].value);
   }
 }
 }
@@ -847,10 +873,6 @@ let depenseAttributes;
 
 // Fonction pour afficher le namebre de points d'attributes à dépenser
 function showDepenseAttribute() {
-  console.log(
-    "showDepenseAttribute - selectedAttributeType 1 :",
-    selectedAttributeType
-  );
 
   let attributesSpentNumberPrio = getAttributesDepensePrio(
     IDselectedCells.attributes
@@ -858,12 +880,12 @@ function showDepenseAttribute() {
   let attributesSpentNumberAdjustement = getAttributesDepenseAjuste(
     IDselectedCells.metatypes
   );
+  console.log("showDepenseAttribute : ",attributesSpentNumberAdjustement)
 
   depenseAttributes = document.getElementById("attributesSpent"); // Mettre à jour la variable globale depenseAttributes
-  console.log("showDepenseAttribute - depenseAttributes 2 :", depenseAttributes);
 
   depenseAttributes.innerHTML =
-    ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">Attributes</th> <th scope="col">Adjustement</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="CellAttributesDepensePrio" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesSpentNumberPrio">' +
+    ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">'+ capitalized(terms.attributes) +'</th> <th scope="col">'+ capitalized(terms.adjustement) +'</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="CellAttributesDepensePrio" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesSpentNumberPrio">' +
     attributesSpentNumberPrio +
     '</span></td> <td id="CellAttributesDepenseAdjustement" class="selectable" onclick="selectAttributeType(this, \'Adjustement\')"><span id="attributesSpentNumberAdjustement">' +
     attributesSpentNumberAdjustement +
@@ -893,7 +915,7 @@ function selectAttributeType(cell, type) {
 // Fonction pour incrémenter une valeur attribute
 function incrementAttribute(attribute, increment) {
   attributesData[attribute].value += increment;
-  const cell = document.getElementById(attribute + "_actuel");
+  const cell = document.getElementById(attribute + "_actual");
   const span = cell.querySelector("span");
   span.textContent = attributesData[attribute].value;
 
@@ -907,7 +929,7 @@ function incrementAttribute(attribute, increment) {
 function decrementAttribute(attribute, decrement) {
   var currentValue = attributesData[attribute].value;
   attributesData[attribute].value -= decrement;
-  const cell = document.getElementById(attribute + "_actuel");
+  const cell = document.getElementById(attribute + "_actual");
   const span = cell.querySelector("span");
   if (currentValue >= decrement) {
     span.textContent = attributesData[attribute].value;
@@ -957,14 +979,13 @@ function updateAttributesPoints(type, valeur, selectedAttributeType, attribute) 
   // Mettez à jour le texte avec la nouvelle valeur
   if (selectedAttributeType === "Prio") {
     depenseAttributes.textContent =
-      attributesSpentNumber + pointsAttributesSpentPrio;
+      Math.max(0,attributesSpentNumber + pointsAttributesSpentPrio);
   } else if (selectedAttributeType === "Adjustement") {
     depenseAttributes.textContent =
-      attributesSpentNumber + pointsAttributesSpentAdjustement;
+    Math.max(0,attributesSpentNumber + pointsAttributesSpentAdjustement);
   }
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
-  console.log(`${attribute}_max`);
   const maxAttribute = document.getElementById(`${attribute}_max`);
   if (attributesData[attribute].value > attributesData[attribute].max) {
     maxAttribute.classList.add("maximum");
@@ -977,28 +998,18 @@ function updateAttributesPoints(type, valeur, selectedAttributeType, attribute) 
     `CellAttributesDepenseAdjustement`
   );
 
-  console.log(
-    "attributesSpentNumber Prio : ",
-    attributesSpentNumber,
-    "pointsAttributesSpentPrio : ",
-    pointsAttributesSpentPrio,
-    "Calcul : ",
-    attributesSpentNumber + pointsAttributesSpentPrio
-  );
-
   if (attributesSpentNumber + pointsAttributesSpentPrio < 0) {
-    console.log("Trop de dépense en prio : ", cellDepensePrio);
     cellDepensePrio.classList.add("maximum");
   } else {
     cellDepensePrio.classList.remove("maximum");
   }
 
   if (attributesSpentNumber + pointsAttributesSpentAdjustement < 0) {
-    console.log("Trop de dépense en ajustement : ", cellDepenseAdjustement);
     cellDepenseAdjustement.classList.add("maximum");
   } else {
     cellDepenseAdjustement.classList.remove("maximum");
   }
+  updateSkills();
 }
 
 function getAttributesDepensePrio(priority) {
@@ -1007,24 +1018,188 @@ function getAttributesDepensePrio(priority) {
   else if (priority === "attributes_C") return 12;
   else if (priority === "attributes_D") return 8;
   else if (priority === "attributes_E") return 2;
-  else
-    console.log(
-      "function getAttributesDepensePrio(priority) ne contient pas la bonne propriété en paramètre : " +
-        priority
-    );
 }
 
 function getAttributesDepenseAjuste(priority) {
+  console.log("getAttributesDepenseAjuste : ",priority)
   if (priority === "metatypes_A") return 13;
   else if (priority === "metatypes_B") return 11;
   else if (priority === "metatypes_C") return 9;
   else if (priority === "metatypes_D") return 4;
   else if (priority === "metatypes_E") return 1;
-  else
-    console.log(
-      "function getAttributesDepenseAjuste(priority) ne contient pas la bonne propriété en paramètre : " +
-        priority
-    );
+  else return "La case Métatypes n'a pas été sélectionnée."
+}
+
+function getSkillsSpent(priority) {
+  if (priority === "skills_A") return 32;
+  else if (priority === "skills_B") return 24;
+  else if (priority === "skills_C") return 20;
+  else if (priority === "skills_D") return 16;
+  else if (priority === "skills_E") return 10;
+}
+
+let skillsSort = [];
+let skillsSpentNumber = 0;
+
+function sort(array) {
+  
+  console.log("sort(array): ",array);
+  if (!Array.isArray(array)) {
+    console.log("il faut passer l'array ", array, "en Object.keys()");
+  }
+  arraySorted = [];
+  for (const key of array) {
+    console.log("data : ",array, "terms : ", terms[key]);
+    arraySorted.push({
+      data: key,
+      terms: terms[key],
+    });
+  }
+  // Triez le tableau en fonction des noms traduits
+  arraySorted.sort((a, b) => a.terms.localeCompare(b.terms));
+  return arraySorted;
+}
+
+function handleSkills() {
+
+  var skillsSort = sort(Object.keys(skillsData));
+
+  // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
+  skillsSpentNumber = getSkillsSpent(IDselectedCells.skills);
+
+  var skillsSpentTable = document.getElementById("skillsSpent"); // Mettre à jour la variable globale 
+
+  skillsSpentTable.innerHTML =
+  '<table class="table"><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="skillsSpentMax"> <span id="skillsSpentCell">' +
+    skillsSpentNumber +
+    '</span></td></tr></tbody></table>';
+
+  // Sélectionnez le tableau des attributes par son ID
+  var skillTable = document.getElementById("skillTable");
+  // Sélectionnez le corps du tableau
+  var skillTableBody = skillTable.querySelector("tbody");
+
+  // Générez le contenu HTML en utilisant le modèle et les données
+  var skillsHTML = "";  
+
+  console.log("handleSkills: ",skillsSort);
+  for (const skill of skillsSort) {
+    
+
+    if (skillsData[skill.data].linkedAttribute === "magic" && isMagic === false || skillsData[skill.data].linkedAttribute === "resonance" && isTechno === false) {
+
+    } else {      
+
+      console.log("handleSkills: passe ",skill.terms);
+
+    // Si l'attribut doit être affiché, générez le HTML
+    var capitalizedId = capitalized(skill.terms);
+    var rdd = skillsData[skill.data].value + attributesData[skillsData[skill.data].linkedAttribute].value;
+    skillsHTML += `
+      <tr>
+          <th scope="row">${capitalizedId}</th>
+          <td id="${skill.data}_max">
+              <div id="${skill.data}_actual"><span>${skillsData[skill.data].value}</span></div>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <button class="btn btn-outline-danger btn-xs" onclick="decrementSkill('${skill.data}', 1)">-</button>
+                  <button class="btn btn-outline-success btn-xs" onclick="incrementSkill('${skill.data}', 1)">+</button>
+              </div>
+          </td>
+          <td id="${skill.data}_rdd"><div><span class="h6">${rdd}</span></div><div><span class="h8">+ ${capitalized(terms[skillsData[skill.data].linkedAttribute])}</span></div></td>
+          <td id="${skill.data}_specialization"><span class="h6"></span></td>
+      </tr>
+    `;
+
+    console.log(`
+      <tr>
+          <th scope="row">${capitalizedId}</th>
+          <td id="${skill.data}_max">
+              <div id="${skill.data}_actual"><span>${skillsData[skill.data].value}</span></div>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <button class="btn btn-outline-danger btn-xs" onclick="decrementSkill('${skill.data}', 1)">-</button>
+                  <button class="btn btn-outline-success btn-xs" onclick="incrementSkill('${skill.data}', 1)">+</button>
+              </div>
+          </td>
+          <td id="${skill.data}_rdd"><div><span class="h6">${rdd}</span></div><div><span class="h8">+ ${capitalized(terms[skillsData[skill.data].linkedAttribute])}</span></div></td>
+          <td id="${skill.data}_specialization"><span class="h6"></span></td>
+      </tr>
+    `);
+
+    }
+  };
+
+  // Affichez le contenu généré dans le corps du tableau des attributes
+  skillTableBody.innerHTML = skillsHTML;
+}
+
+function updateSkills() {
+  var skillsSort = sort(Object.keys(skillsData));
+  console.log("updateSkills() : ", skillsSort);
+  for (const skill of skillsSort) { // Utilisation de for...of pour itérer sur les clés
+
+    if (skillsData[skill.data].linkedAttribute === "magic" && isMagic === false || skillsData[skill.data].linkedAttribute === "resonance" && isTechno === false) {
+
+    } else {   
+    
+    console.log("updateSkills() : ", skill.data + "_actual"," element : ", document.getElementById(skill.data + "_actual"), document.getElementById(skill.data + "_actual").querySelector("span"));
+    const cell = document.getElementById(skill.data + "_actual");
+    const span = cell.querySelector("span");
+    span.textContent = skillsData[skill.data].value;
+    var rdd = skillsData[skill.data].value + attributesData[skillsData[skill.data].linkedAttribute].value;
+    if (skillsData[skill.data].value === 0) {
+      rdd = Math.max(0, attributesData[skillsData[skill.data].linkedAttribute].value - 2)
+    }
+    const cellRdd = document.getElementById(skill.data + "_rdd").querySelector("span");
+    console.log("updateSkills() : ", skill.data + "_rdd"," element : ", cellRdd)
+    cellRdd.textContent = rdd;
+  }
+}
+}
+
+// Fonction pour incrémenter une valeur de compétence
+function incrementSkill(skill, increment) {
+  skillsData[skill].value += increment;
+  updateSkills();
+  updateSkillsPoints("increment", increment, skill);
+}
+
+// Fonction pour décrémenter une valeur compétence
+function decrementSkill(skill, decrement) {
+  skillsData[skill].value -= decrement;
+  updateSkills();
+  updateSkillsPoints("decrement", decrement, skill);
+}
+
+let pointsSkillsSpent = 0; // Initialisation de la réserve de points de compétences
+
+function updateSkillsPoints(type, valeur, skill) {
+
+  
+  console.log("BEFORE updateSkillsPoints : ",type, " & pointsSkillsSpent : ", pointsSkillsSpent, " & valeur : ", valeur)
+  if (type === "increment") {
+    pointsSkillsSpent -= valeur;
+  } else if (type === "decrement") {
+    pointsSkillsSpent += valeur;
+    }
+    
+  console.log("AFTER updateSkillsPoints : ",type, " & pointsSkillsSpent : ", pointsSkillsSpent, " & valeur : ", valeur)
+
+
+    document.getElementById("skillsSpentCell").textContent =
+    Math.max(0, skillsSpentNumber + pointsSkillsSpent);
+
+  // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
+  if (skillsData[skill].value > 7) {
+    document.getElementById(`${skill}_max`).classList.add("maximum");
+  } else {
+    document.getElementById(`${skill}_max`).classList.remove("maximum");
+  }
+  // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
+  if (skillsSpentNumber + pointsSkillsSpent < 0) {
+    document.getElementById("skillsSpentMax").classList.add("maximum");
+  } else {
+    document.getElementById("skillsSpentMax").classList.remove("maximum");
+  }
 }
 
 // Fonction pour afficher les résultats
