@@ -6,111 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-const translations = {
-  "fr": {
-    "firstname": "prénom",
-    "name": "nom",
-    "surname": "surnom",  
-    "metatypes": "métatypes",
-    "attributes": "attributs",
-    "attributesTitle": "Attributs",
-    "adjustement": "ajustement",
-    "skills": "compétences",
-    "skillsTitle": "Compétences",
-    "magicOrResonance": "Magie ou Résonance",
-    "resources": "ressources",
-    "body": "constitution",
-    "agility": "agilité",
-    "reaction": "réaction",
-    "strength": "force",
-    "willpower": "volonté",
-    "logic": "logique",
-    "intuition": "intuition",
-    "charisma": "charisme",
-    "edge": "atout",
-    "magic": "magie",
-    "resonance": "résonance",
-    "identity": "Identité",
-    "priorityTable" : "Table des priorités",
-    "metatypeChoice": "Choix du métatype",
-    "specialAttributeChoice": "Choix de l'attribut spécial",
-    "colons": " :",
-    "firearms": "armes à feu",
-    "exoticWeapons":  "armes exotiques",
-    "astral":  "astral",
-    "athletics":  "athlétisme",
-    "biotech":  "biotech",
-    "closeCombat":  "combat rapproché",
-    "conjuring":  "invocation",
-    "electronics":  "électronique",
-    "stealthing":  "furtivité",
-    "influence":  "influence",
-    "enchanting":  "enchantement",
-    "con":  "escroquerie",
-    "engineering":  "ingénierie",
-    "peception":  "perception",
-    "pilot":  "pilotage",
-    "cracking":  "piratage",
-    "outdoors":  "plein air",
-    "sorcery":  "sorcellerie",
-    "tasking":  "technomancie",
-    "fullMagician": "magicien pur",
-    "mysticAdept": "adepte mystique",
-    "adept": "adepte",
-    "aspectedMagicien": "magicien spécialisé",
-    "technomancer": "technomancien",
-    "dwarf": "nain",
-    "ork": "ork",
-    "elf": "elfe",
-    "human": "humain",
-    "troll": "troll"
-  },
-  "en": {
-    "firstname": "Firstname",
-    "name": "Name",
-    "surname": "Surname", 
-    "metatypes": "Metatypes",
-    "attributes": "attributes",
-    "attributesTitle": "Attributes",
-    "skills": "skills",
-    "skillsTitle": "Skills",
-    "magicOrResonance": "Magic or Resonance",
-    "resources": "Resources",
-    "body": "Body",
-    "agility": "Agility",
-    "reaction": "Reaction",
-    "strength": "Strength",
-    "willpower": "Willpower",
-    "logic": "Logic",
-    "intuition": "Intuition",
-    "charisma": "Charisma",
-    "edge": "Edge",
-    "magic": "Magic",
-    "resonance": "Resonance",
-    "identity": "Identity",
-    "priorityTable" : "Priority Table",
-    "metatypeChoice": "Metatype Choice",
-    "specialAttributeChoice": "Special Attribute Choice",
-    "colons": ":"
-  }
-}
-
-let terms = [];
-
-// Fonction pour changer la langue
-function setLanguage(language) {
-  // Utilisez le tableau de traduction correspondant à la langue
-  terms = translations[language];
-  console.log(terms.metatypes);
-
-  const source = document.getElementById("container").innerHTML;
-  const template = Handlebars.compile(source);
-  
-  const html = template(terms);
-  document.getElementById("container").innerHTML = html;
-
-}
-
 let isMagic = false;
 let isTechno = false;
 
@@ -156,170 +51,12 @@ let IDselectedCells = {
   resources: null,
 };
 
-// Objet pour stocker les valeurs d'attributes de base et de max en fonction du métatype
-const attributesData = {
-  body: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  agility: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  reaction: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  strength: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  willpower: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  logic: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  intuition: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  charisma: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  edge: {
-    base: 1,
-    value: 1,
-    max: 6,
-  },
-  magic: {
-    base: 0,
-    value: 1,
-    max: 6,
-  },
-  resonance: {
-    base: 0,
-    value: 1,
-    max: 6,
-  },
-};
-
-// Objet pour stocker les valeurs des compétences
-const skillsData = {
-  firearms: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "agility",
-  },
-  exoticWeapons: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "agility",
-  },
-  astral: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "intuition",
-  },
-  athletics: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "agility",
-  },
-  biotech: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "logic",
-  },
-  closeCombat: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "agility",
-  },
-  conjuring: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "magic",
-  },
-  electronics: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "logic",
-  },
-  stealthing: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "agility",
-  },
-  influence: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "charisma",
-  },
-  enchanting: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "magic",
-  },
-  con: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "charisma",
-  },
-  engineering: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "logic",
-  },
-  peception: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "intuition",
-  },
-  pilot: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "reaction",
-  },
-  cracking: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "logic",
-  },
-  outdoors: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "intuition",
-  },
-  sorcery: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "magic",
-  },
-  tasking: {
-    base: 0,
-    value: 0,
-    linkedAttribute: "resonance",
-  },
-};
-
 function capitalized(str) {
   if (typeof str === 'string') {
       var result = str.charAt(0).toUpperCase() + str.slice(1);
       return result;
   } else {
-      console.error("La variable str n'est pas une chaîne de caractères.");
+      console.error("La variable str (",str,") n'est pas une chaîne de caractères.");
       return str; // ou gérer autrement
   }
 }
@@ -390,7 +127,6 @@ function useButton(cell) {
 }
 
 function selectPriority(cell, categorie, priority) {
-  console.log("selectPriority : " + cell);
 
   // Obtenir la cellule précédemment sélectionnée dans la même catégorie
   let previousSelectedCell = selectedCells[categorie];
@@ -457,7 +193,6 @@ function selectPriority(cell, categorie, priority) {
 
 // Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
 function generateMetatypeButtons(priority) {
-  console.log("generateMetatypeButtons:", priority);
 
   const metatypeTitle = document.getElementById("metatypeTitle");
     metatypeTitle.style.display = "block"; 
@@ -469,16 +204,18 @@ function generateMetatypeButtons(priority) {
 
   const metatypes = getMetatypesForPriority(priority);
 
+  var sortMetatypes = sort(metatypes);
+
   // Créez des boutons en ligne pour chaque métatype
   metatypeForm.innerHTML = ""; // Supprimez les options de métatype existantes
 
-  metatypes.forEach((metatype) => {
+  sortMetatypes.forEach((metatype) => {
     const button = document.createElement("button");
-    button.textContent = metatype;
+    button.textContent = capitalized(metatype.terms);
     button.classList.add("metatype-button");
     button.classList.add("btn-outline-primary");
     button.classList.add("btn");
-    button.setAttribute("id", metatype);
+    button.setAttribute("id", metatype.data);
 
     // Vérifiez si le type du bouton est "submit" et changez-le en "button" si nécessaire
     if (button.getAttribute("type") === "submit") {
@@ -510,12 +247,15 @@ function generateMetatypeButtons(priority) {
 
 // Fonction pour obtenir les métatypes en fonction de la priorité
 function getMetatypesForPriority(priority) {
-  if (priority === "A") return ["dwarf", "ork", "troll"];
-  if (priority === "B") return ["dwarf", "elf", "ork", "troll"];
-  if (priority === "C" || priority === "D" || priority === "E")
-    return ["dwarf", "elf", "human", "ork", "troll"];
-  return [];
-}
+  var priorities = {
+    A: prio_A,
+    B: prio_B,
+    C: prio_C,
+    D: prio_D,
+    E: prio_E
+  };
+    return priorities[priority] || [];
+  }
 
 // Fonction pour gérer la sélection des boutons de métatype
 function handleMetatypeButtonClick(button, metatypeForm) {
@@ -535,7 +275,6 @@ function handleMetatypeButtonClick(button, metatypeForm) {
 
 // Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
 function generateSpecialButtons(priority) {
-  console.log("generateSpecialButtons:", priority);
 
   const specialTitle = document.getElementById("specialTitle");
   const specialForm = document.getElementById("specialButtons");
@@ -583,7 +322,6 @@ function generateSpecialButtons(priority) {
         button.textContent === selectedSpecial.textContent
       ) {
         button.classList.add("selected");
-        console.log(`Sélection du spécial : ${selectedSpecial.textContent}`);
         if (selectedSpecial.textContent === "technomancer") {
           isTechno = true;
         } else {
@@ -676,6 +414,7 @@ function addSINCookie() {
 
 // Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
 function updateAttributesForMetatype(metatype) {
+  var attributesData = characterData.attributes;
   if (metatype === "dwarf") {
     attributesData.body.max = 7;
     attributesData.agility.max = 6;
@@ -733,6 +472,7 @@ function updateAttributesForMetatype(metatype) {
 
 // Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
 function updateAttributesForSpecial(special, priority) {
+  var attributesData = characterData.attributes;
   if (priority === "A") {
     if (
       special === "fullMagician" ||
@@ -810,6 +550,7 @@ function handleAttributes() {
 
   // Générez le contenu HTML en utilisant le modèle et les données
   var attributeHTML = "";
+  var attributesData = characterData.attributes;
   for (const attribute in attributesData) {
  
     // Si l'attribut doit être affiché, générez le HTML
@@ -839,6 +580,7 @@ function handleAttributes() {
 
 // Fonction pour mettre à jour les éléments HTML en fonction des données d'attributes
 function updateAttributesDisplay() {
+  var attributesData = characterData.attributes;
   for (const attribute in attributesData) {
     if (attributesData[attribute].base > 0) {
     let attribute_base = document
@@ -880,7 +622,6 @@ function showDepenseAttribute() {
   let attributesSpentNumberAdjustement = getAttributesDepenseAjuste(
     IDselectedCells.metatypes
   );
-  console.log("showDepenseAttribute : ",attributesSpentNumberAdjustement)
 
   depenseAttributes = document.getElementById("attributesSpent"); // Mettre à jour la variable globale depenseAttributes
 
@@ -894,7 +635,6 @@ function showDepenseAttribute() {
 
 // Fonction pour sélectionner le type d'attribute
 function selectAttributeType(cell, type) {
-  console.log("selectAttributeType : " + type);
   const classAttributePrio = document.getElementById(`CellAttributesDepensePrio`);
   const classAttributeAdjustement = document.getElementById(
     `CellAttributesDepenseAdjustement`
@@ -914,6 +654,7 @@ function selectAttributeType(cell, type) {
 
 // Fonction pour incrémenter une valeur attribute
 function incrementAttribute(attribute, increment) {
+  var attributesData = characterData.attributes;
   attributesData[attribute].value += increment;
   const cell = document.getElementById(attribute + "_actual");
   const span = cell.querySelector("span");
@@ -927,6 +668,7 @@ function incrementAttribute(attribute, increment) {
 
 // Fonction pour décrémenter une valeur attribute
 function decrementAttribute(attribute, decrement) {
+  var attributesData = characterData.attributes;
   var currentValue = attributesData[attribute].value;
   attributesData[attribute].value -= decrement;
   const cell = document.getElementById(attribute + "_actual");
@@ -948,6 +690,8 @@ let pointsAttributesSpentPrio = 0; // Initialisation de la réserve Prio
 let pointsAttributesSpentAdjustement = 0; // Initialisation de la réserve Adjustement
 
 function updateAttributesPoints(type, valeur, selectedAttributeType, attribute) {
+  
+  var attributesData = characterData.attributes;
   // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
   let attributesSpentNumber = 0;
   if (selectedAttributeType === "Prio") {
@@ -1021,7 +765,6 @@ function getAttributesDepensePrio(priority) {
 }
 
 function getAttributesDepenseAjuste(priority) {
-  console.log("getAttributesDepenseAjuste : ",priority)
   if (priority === "metatypes_A") return 13;
   else if (priority === "metatypes_B") return 11;
   else if (priority === "metatypes_C") return 9;
@@ -1043,24 +786,28 @@ let skillsSpentNumber = 0;
 
 function sort(array) {
   
-  console.log("sort(array): ",array);
   if (!Array.isArray(array)) {
     console.log("il faut passer l'array ", array, "en Object.keys()");
   }
   arraySorted = [];
-  for (const key of array) {
-    console.log("data : ",array, "terms : ", terms[key]);
+  for (const key of array) { 
+    console.log("arraySorted : data : ",key,"/ ",terms[key]);
     arraySorted.push({
       data: key,
       terms: terms[key],
     });
   }
   // Triez le tableau en fonction des noms traduits
+  console.log("arraySorted : ",arraySorted);
   arraySorted.sort((a, b) => a.terms.localeCompare(b.terms));
   return arraySorted;
 }
 
 function handleSkills() {
+
+  
+  var attributesData = characterData.attributes;  
+  var skillsData = characterData.skills;
 
   var skillsSort = sort(Object.keys(skillsData));
 
@@ -1082,15 +829,12 @@ function handleSkills() {
   // Générez le contenu HTML en utilisant le modèle et les données
   var skillsHTML = "";  
 
-  console.log("handleSkills: ",skillsSort);
   for (const skill of skillsSort) {
     
 
     if (skillsData[skill.data].linkedAttribute === "magic" && isMagic === false || skillsData[skill.data].linkedAttribute === "resonance" && isTechno === false) {
 
     } else {      
-
-      console.log("handleSkills: passe ",skill.terms);
 
     // Si l'attribut doit être affiché, générez le HTML
     var capitalizedId = capitalized(skill.terms);
@@ -1110,20 +854,6 @@ function handleSkills() {
       </tr>
     `;
 
-    console.log(`
-      <tr>
-          <th scope="row">${capitalizedId}</th>
-          <td id="${skill.data}_max">
-              <div id="${skill.data}_actual"><span>${skillsData[skill.data].value}</span></div>
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <button class="btn btn-outline-danger btn-xs" onclick="decrementSkill('${skill.data}', 1)">-</button>
-                  <button class="btn btn-outline-success btn-xs" onclick="incrementSkill('${skill.data}', 1)">+</button>
-              </div>
-          </td>
-          <td id="${skill.data}_rdd"><div><span class="h6">${rdd}</span></div><div><span class="h8">+ ${capitalized(terms[skillsData[skill.data].linkedAttribute])}</span></div></td>
-          <td id="${skill.data}_specialization"><span class="h6"></span></td>
-      </tr>
-    `);
 
     }
   };
@@ -1133,6 +863,10 @@ function handleSkills() {
 }
 
 function updateSkills() {
+  
+  var attributesData = characterData.attributes;
+  var skillsData = characterData.skills;
+
   var skillsSort = sort(Object.keys(skillsData));
   console.log("updateSkills() : ", skillsSort);
   for (const skill of skillsSort) { // Utilisation de for...of pour itérer sur les clés
@@ -1158,6 +892,8 @@ function updateSkills() {
 
 // Fonction pour incrémenter une valeur de compétence
 function incrementSkill(skill, increment) {
+  
+  var skillsData = characterData.skills;
   skillsData[skill].value += increment;
   updateSkills();
   updateSkillsPoints("increment", increment, skill);
@@ -1165,6 +901,8 @@ function incrementSkill(skill, increment) {
 
 // Fonction pour décrémenter une valeur compétence
 function decrementSkill(skill, decrement) {
+  
+  var skillsData = characterData.skills;
   skillsData[skill].value -= decrement;
   updateSkills();
   updateSkillsPoints("decrement", decrement, skill);

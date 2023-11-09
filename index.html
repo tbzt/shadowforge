@@ -23,7 +23,7 @@
         <br />
         <div class="row">
             <!-- Colonne de largeur 9 (col-9) pour les choix à sélection -->
-            <div class="col-9">
+            <div class="col-sm-6 col-lg-9">
                 <div class="row">
                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                             <input type="checkbox" class="btn-check" id="identityBtn" autocomplete="off" data-bs-toggle="collapse"
@@ -150,6 +150,7 @@
                         </div>
                     </div>
 
+                    <div class="col-6">
                     <!-- Section : Choix des attributes -->
                     <div class="collapse" id="collapseAttributes">
                         <div class="card card-body">
@@ -171,8 +172,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Section : Choix des attributes -->
+                <div class="col-6">
+                    <!-- Section : Choix des compétences -->
                     <div class="collapse" id="collapseSkills">
                         <div class="card card-body">
                             <!-- Affiche le namebre de points d'attributes à dépenser -->
@@ -193,12 +196,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
                 </div>
 
             </div>
             <!-- Colonne de largeur 3 pour l'affichage de la génération du personnage -->
-            <div class="col-3">
+            <div class="col-sm-6 col-lg-3">
                 <h3>Personnage</h3>
                 <button id="resetButton" class="btn-outline-primary btn">
                     Réinitialiser
@@ -214,6 +218,8 @@
     </div>
 </body>
 
+<script src="translation.js"></script>
+<script src="data.js"></script>
 <script src="script.js"></script>
 <!-- Lien vers le fichier JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
