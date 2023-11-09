@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   loadCookie();
-  setLanguage("fr"); 
-  handleSIN() 
+  setLanguage("fr");
+  handleSIN();
   handleAttributes();
 });
-
 
 let isMagic = false;
 let isTechno = false;
@@ -52,82 +51,88 @@ let IDselectedCells = {
 };
 
 function capitalized(str) {
-  if (typeof str === 'string') {
-      var result = str.charAt(0).toUpperCase() + str.slice(1);
-      return result;
+  if (typeof str === "string") {
+    var result = str.charAt(0).toUpperCase() + str.slice(1);
+    return result;
   } else {
-      console.error("La variable str (",str,") n'est pas une chaîne de caractères.");
-      return str; // ou gérer autrement
+    console.error(
+      "La variable str (",
+      str,
+      ") n'est pas une chaîne de caractères."
+    );
+    return str; // ou gérer autrement
   }
 }
 
 function handleSIN() {
-// Écoutez les événements "input" sur les champs de texte
-console.log("handleSIN initialize");
-const firstnameInput = document.getElementById("firstname");
-const surnameInput = document.getElementById("surname");
-const nameInput = document.getElementById("name");
-const identity = document.getElementById("identity");
+  // Écoutez les événements "input" sur les champs de texte
+  console.log("handleSIN initialize");
+  const firstnameInput = document.getElementById("firstname");
+  const surnameInput = document.getElementById("surname");
+  const nameInput = document.getElementById("name");
+  const identity = document.getElementById("identity");
 
-firstnameInput.placeholder = capitalized(terms.firstname);
-surnameInput.placeholder = capitalized(terms.surname);
-nameInput.placeholder = capitalized(terms.name);
+  firstnameInput.placeholder = capitalized(terms.firstname);
+  surnameInput.placeholder = capitalized(terms.surname);
+  nameInput.placeholder = capitalized(terms.name);
 
-firstnameInput.addEventListener("input", showSINInfo);
-surnameInput.addEventListener("input", showSINInfo);
-nameInput.addEventListener("input", showSINInfo);
+  firstnameInput.addEventListener("input", showSINInfo);
+  surnameInput.addEventListener("input", showSINInfo);
+  nameInput.addEventListener("input", showSINInfo);
 
-function showSINInfo() {
-  
-console.log("showSINInfo initialize");
-  const firstname = firstnameInput.value;
-  const surname = surnameInput.value;
-  const name = nameInput.value;
+  function showSINInfo() {
+    console.log("showSINInfo initialize");
+    const firstname = firstnameInput.value;
+    const surname = surnameInput.value;
+    const name = nameInput.value;
 
-  console.log("firstname : ",firstname," | surname : ",surname," | name : ",name);
+    console.log(
+      "firstname : ",
+      firstname,
+      " | surname : ",
+      surname,
+      " | name : ",
+      name
+    );
 
-  if (!surname && (firstname || name)) {
-    identity.innerHTML = `
+    if (!surname && (firstname || name)) {
+      identity.innerHTML = `
             <h5>${terms.identity}${terms.colons}</h5>
             <p>${firstname || ""} ${surname || ""} ${name || ""}</p>
         `;
-  } else if (surname) {
-    identity.innerHTML = `
+    } else if (surname) {
+      identity.innerHTML = `
             <h5>${terms.identity}${terms.colons}</h5>
             <p>${firstname || ""} ${'"' + surname + '"' || ""} ${name || ""}</p>
         `;
-  } else {
-    identity.innerHTML = "";
+    } else {
+      identity.innerHTML = "";
+    }
+
+    // Mettez à jour le tableau SIN avec une seule entrée
+    SIN = [
+      {
+        firstname,
+        surname,
+        name,
+      },
+    ];
+    console.log(JSON.stringify(SIN));
+    saveInCookie();
   }
-
-  // Mettez à jour le tableau SIN avec une seule entrée
-  SIN = [
-    {
-      firstname,
-      surname,
-      name,
-    },
-  ];
-  console.log(JSON.stringify(SIN));
-  saveInCookie();
 }
-};
-
 
 function useButton(cell) {
-    if (cell.classList.contains("btn-outline-primary")) { 
-        cell.classList.add("btn-primary");
-        cell.classList.remove("btn-outline-primary");
-    }
-    else {
-        cell.classList.remove("btn-primary");
-        cell.classList.add("btn-outline-primary");
-    }
-
+  if (cell.classList.contains("btn-outline-primary")) {
+    cell.classList.add("btn-primary");
+    cell.classList.remove("btn-outline-primary");
+  } else {
+    cell.classList.remove("btn-primary");
+    cell.classList.add("btn-outline-primary");
+  }
 }
 
 function selectPriority(cell, categorie, priority) {
-
   // Obtenir la cellule précédemment sélectionnée dans la même catégorie
   let previousSelectedCell = selectedCells[categorie];
 
@@ -152,20 +157,19 @@ function selectPriority(cell, categorie, priority) {
   IDselectedCells[categorie] = cell.id;
 
   // Mettre à jour la priorité sélectionnée
-  prioritiesSelected[
-    categorie
-  ] = `${capitalized(terms[categorie])} : ${cell.textContent} (${priority})`;
+  prioritiesSelected[categorie] = `${capitalized(terms[categorie])} : ${
+    cell.textContent
+  } (${priority})`;
   actualPriority = priority; // Mettre à jour la priorité actuelle
 
-  // Afficher les attributes si leur priorité est sélectionnée  
-  if (categorie === "attributes") {     
+  // Afficher les attributes si leur priorité est sélectionnée
+  if (categorie === "attributes") {
     var attributeTitle = document.getElementById("attributeTitle");
     attributeTitle.style.display = "block"; // Afficher la section des attributes
   }
 
-  
-  // Afficher les attributes si leur priorité est sélectionnée  
-  if (categorie === "skills") {  
+  // Afficher les attributes si leur priorité est sélectionnée
+  if (categorie === "skills") {
     var skillTitle = document.getElementById("skillTitle");
     skillTitle.style.display = "block"; // Afficher la section des skills
     handleSkills();
@@ -187,16 +191,14 @@ function selectPriority(cell, categorie, priority) {
   showResults();
   // Appeler la fonction pour générer les boutons en fonction de la priorité sélectionnée
   if (categorie === "metatypes") generateMetatypeButtons(actualPriority); // Utiliser la priorité actuelle
-  if (categorie === "magicOrResonance")
-    generateSpecialButtons(actualPriority); // Utiliser la priorité actuelle
+  if (categorie === "magicOrResonance") generateSpecialButtons(actualPriority); // Utiliser la priorité actuelle
 }
 
 // Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
 function generateMetatypeButtons(priority) {
-
   const metatypeTitle = document.getElementById("metatypeTitle");
-    metatypeTitle.style.display = "block"; 
- 
+  metatypeTitle.style.display = "block";
+
   const metatypeForm = document.getElementById("metatypeButtons");
 
   // Récupérer l'option de métatype sélectionnée actuellement
@@ -252,10 +254,10 @@ function getMetatypesForPriority(priority) {
     B: prio_B,
     C: prio_C,
     D: prio_D,
-    E: prio_E
+    E: prio_E,
   };
-    return priorities[priority] || [];
-  }
+  return priorities[priority] || [];
+}
 
 // Fonction pour gérer la sélection des boutons de métatype
 function handleMetatypeButtonClick(button, metatypeForm) {
@@ -275,16 +277,14 @@ function handleMetatypeButtonClick(button, metatypeForm) {
 
 // Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
 function generateSpecialButtons(priority) {
-
   const specialTitle = document.getElementById("specialTitle");
   const specialForm = document.getElementById("specialButtons");
 
   if (priority === "E") {
-    
-    specialTitle.style.display = "none"; 
+    specialTitle.style.display = "none";
     specialForm.innerHTML = "";
   } else {
-    specialTitle.style.display = "block"; 
+    specialTitle.style.display = "block";
     // Récupérer l'option de métatype sélectionnée actuellement
     const selectedSpecial = specialForm.querySelector("button.selected");
 
@@ -404,7 +404,9 @@ function addSINCookie() {
     } else if (surname) {
       identity.innerHTML = `
                 <h5>{{identity}} :</h5>
-                <p>${firstname || ""} ${'"' + surname + '"' || ""} ${name || ""}</p>
+                <p>${firstname || ""} ${'"' + surname + '"' || ""} ${
+        name || ""
+      }</p>
             `;
     } else {
       identity.innerHTML = "";
@@ -529,14 +531,12 @@ function updateAttributesForSpecial(special, priority) {
   }
   if (special === "technomancer") {
     attributesData.magic.base = 0;
-  }
-  else {
+  } else {
     attributesData.resonance.base = 0;
   }
   if (priority === "E") {
     attributesData.magic.base = 0;
     attributesData.resonance.base = 0;
-
   }
   handleAttributes();
   updateAttributesDisplay();
@@ -552,11 +552,10 @@ function handleAttributes() {
   var attributeHTML = "";
   var attributesData = characterData.attributes;
   for (const attribute in attributesData) {
- 
     // Si l'attribut doit être affiché, générez le HTML
     if (attributesData[attribute].base > 0) {
       var capitalizedId =
-      terms[attribute].charAt(0).toUpperCase() + terms[attribute].slice(1);
+        terms[attribute].charAt(0).toUpperCase() + terms[attribute].slice(1);
       attributeHTML += `
         <tr>
             <th scope="row">${capitalizedId}</th>
@@ -572,7 +571,7 @@ function handleAttributes() {
         </tr>
       `;
     }
-  };
+  }
 
   // Affichez le contenu généré dans le corps du tableau des attributes
   attributeTableBody.innerHTML = attributeHTML;
@@ -583,28 +582,27 @@ function updateAttributesDisplay() {
   var attributesData = characterData.attributes;
   for (const attribute in attributesData) {
     if (attributesData[attribute].base > 0) {
-    let attribute_base = document
-      .getElementById(attribute + "_base")
-      .querySelector("span");
-    let attribute_actual = document
-      .getElementById(attribute + "_actual")
-      .querySelector("span");
-    let attribute_max = document
-      .getElementById(attribute + "_max")
-      .querySelector("span");
-    if (attributesData[attribute].base !== attributesData[attribute].value) {
-      attributesData[attribute].value = attributesData[attribute].base;
-      pointsAttributesSpentPrio = 0;
-      pointsAttributesSpentAdjustement = 0;
-      selectedAttributeType = "Prio";
+      let attribute_base = document
+        .getElementById(attribute + "_base")
+        .querySelector("span");
+      let attribute_actual = document
+        .getElementById(attribute + "_actual")
+        .querySelector("span");
+      let attribute_max = document
+        .getElementById(attribute + "_max")
+        .querySelector("span");
+      if (attributesData[attribute].base !== attributesData[attribute].value) {
+        attributesData[attribute].value = attributesData[attribute].base;
+        pointsAttributesSpentPrio = 0;
+        pointsAttributesSpentAdjustement = 0;
+        selectedAttributeType = "Prio";
+      }
+      attribute_base.textContent = attributesData[attribute].base;
+
+      attribute_max.textContent = attributesData[attribute].max;
+      attribute_actual.textContent = attributesData[attribute].value;
     }
-    attribute_base.textContent = attributesData[attribute].base;
-    
-    attribute_max.textContent = attributesData[attribute].max;
-    attribute_actual.textContent = attributesData[attribute].value;
-    
   }
-}
 }
 
 // Déclarer la variable pour stocker le type d'attribute sélectionné
@@ -615,7 +613,6 @@ let depenseAttributes;
 
 // Fonction pour afficher le namebre de points d'attributes à dépenser
 function showDepenseAttribute() {
-
   let attributesSpentNumberPrio = getAttributesDepensePrio(
     IDselectedCells.attributes
   );
@@ -626,7 +623,11 @@ function showDepenseAttribute() {
   depenseAttributes = document.getElementById("attributesSpent"); // Mettre à jour la variable globale depenseAttributes
 
   depenseAttributes.innerHTML =
-    ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">'+ capitalized(terms.attributes) +'</th> <th scope="col">'+ capitalized(terms.adjustement) +'</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="CellAttributesDepensePrio" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesSpentNumberPrio">' +
+    ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">' +
+    capitalized(terms.attributes) +
+    '</th> <th scope="col">' +
+    capitalized(terms.adjustement) +
+    '</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="CellAttributesDepensePrio" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesSpentNumberPrio">' +
     attributesSpentNumberPrio +
     '</span></td> <td id="CellAttributesDepenseAdjustement" class="selectable" onclick="selectAttributeType(this, \'Adjustement\')"><span id="attributesSpentNumberAdjustement">' +
     attributesSpentNumberAdjustement +
@@ -635,7 +636,9 @@ function showDepenseAttribute() {
 
 // Fonction pour sélectionner le type d'attribute
 function selectAttributeType(cell, type) {
-  const classAttributePrio = document.getElementById(`CellAttributesDepensePrio`);
+  const classAttributePrio = document.getElementById(
+    `CellAttributesDepensePrio`
+  );
   const classAttributeAdjustement = document.getElementById(
     `CellAttributesDepenseAdjustement`
   );
@@ -663,7 +666,12 @@ function incrementAttribute(attribute, increment) {
   //checher la source
 
   // Mettre à jour le namebre de points d'attributes dépensés
-  updateAttributesPoints("increment", increment, selectedAttributeType, attribute);
+  updateAttributesPoints(
+    "increment",
+    increment,
+    selectedAttributeType,
+    attribute
+  );
 }
 
 // Fonction pour décrémenter une valeur attribute
@@ -689,15 +697,23 @@ function decrementAttribute(attribute, decrement) {
 let pointsAttributesSpentPrio = 0; // Initialisation de la réserve Prio
 let pointsAttributesSpentAdjustement = 0; // Initialisation de la réserve Adjustement
 
-function updateAttributesPoints(type, valeur, selectedAttributeType, attribute) {
-  
+function updateAttributesPoints(
+  type,
+  valeur,
+  selectedAttributeType,
+  attribute
+) {
   var attributesData = characterData.attributes;
   // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
   let attributesSpentNumber = 0;
   if (selectedAttributeType === "Prio") {
-    attributesSpentNumber = getAttributesDepensePrio(IDselectedCells.attributes);
+    attributesSpentNumber = getAttributesDepensePrio(
+      IDselectedCells.attributes
+    );
   } else if (selectedAttributeType === "Adjustement") {
-    attributesSpentNumber = getAttributesDepenseAjuste(IDselectedCells.metatypes);
+    attributesSpentNumber = getAttributesDepenseAjuste(
+      IDselectedCells.metatypes
+    );
   }
 
   if (type === "increment") {
@@ -722,11 +738,15 @@ function updateAttributesPoints(type, valeur, selectedAttributeType, attribute) 
 
   // Mettez à jour le texte avec la nouvelle valeur
   if (selectedAttributeType === "Prio") {
-    depenseAttributes.textContent =
-      Math.max(0,attributesSpentNumber + pointsAttributesSpentPrio);
+    depenseAttributes.textContent = Math.max(
+      0,
+      attributesSpentNumber + pointsAttributesSpentPrio
+    );
   } else if (selectedAttributeType === "Adjustement") {
-    depenseAttributes.textContent =
-    Math.max(0,attributesSpentNumber + pointsAttributesSpentAdjustement);
+    depenseAttributes.textContent = Math.max(
+      0,
+      attributesSpentNumber + pointsAttributesSpentAdjustement
+    );
   }
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
@@ -770,7 +790,7 @@ function getAttributesDepenseAjuste(priority) {
   else if (priority === "metatypes_C") return 9;
   else if (priority === "metatypes_D") return 4;
   else if (priority === "metatypes_E") return 1;
-  else return "La case Métatypes n'a pas été sélectionnée."
+  else return "La case Métatypes n'a pas été sélectionnée.";
 }
 
 function getSkillsSpent(priority) {
@@ -785,28 +805,25 @@ let skillsSort = [];
 let skillsSpentNumber = 0;
 
 function sort(array) {
-  
   if (!Array.isArray(array)) {
     console.log("il faut passer l'array ", array, "en Object.keys()");
   }
   arraySorted = [];
-  for (const key of array) { 
-    console.log("arraySorted : data : ",key,"/ ",terms[key]);
+  for (const key of array) {
+    console.log("arraySorted : data : ", key, "/ ", terms[key]);
     arraySorted.push({
       data: key,
       terms: terms[key],
     });
   }
   // Triez le tableau en fonction des noms traduits
-  console.log("arraySorted : ",arraySorted);
+  console.log("arraySorted : ", arraySorted);
   arraySorted.sort((a, b) => a.terms.localeCompare(b.terms));
   return arraySorted;
 }
 
 function handleSkills() {
-
-  
-  var attributesData = characterData.attributes;  
+  var attributesData = characterData.attributes;
   var skillsData = characterData.skills;
 
   var skillsSort = sort(Object.keys(skillsData));
@@ -814,12 +831,12 @@ function handleSkills() {
   // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
   skillsSpentNumber = getSkillsSpent(IDselectedCells.skills);
 
-  var skillsSpentTable = document.getElementById("skillsSpent"); // Mettre à jour la variable globale 
+  var skillsSpentTable = document.getElementById("skillsSpent"); // Mettre à jour la variable globale
 
   skillsSpentTable.innerHTML =
-  '<table class="table"><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="skillsSpentMax"> <span id="skillsSpentCell">' +
+    '<table class="table"><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="skillsSpentMax"> <span id="skillsSpentCell">' +
     skillsSpentNumber +
-    '</span></td></tr></tbody></table>';
+    "</span></td></tr></tbody></table>";
 
   // Sélectionnez le tableau des attributes par son ID
   var skillTable = document.getElementById("skillTable");
@@ -827,72 +844,103 @@ function handleSkills() {
   var skillTableBody = skillTable.querySelector("tbody");
 
   // Générez le contenu HTML en utilisant le modèle et les données
-  var skillsHTML = "";  
+  var skillsHTML = "";
 
   for (const skill of skillsSort) {
-    
-
-    if (skillsData[skill.data].linkedAttribute === "magic" && isMagic === false || skillsData[skill.data].linkedAttribute === "resonance" && isTechno === false) {
-
-    } else {      
-
-    // Si l'attribut doit être affiché, générez le HTML
-    var capitalizedId = capitalized(skill.terms);
-    var rdd = skillsData[skill.data].value + attributesData[skillsData[skill.data].linkedAttribute].value;
-    skillsHTML += `
+    if (
+      (skillsData[skill.data].linkedAttribute === "magic" &&
+        isMagic === false) ||
+      (skillsData[skill.data].linkedAttribute === "resonance" &&
+        isTechno === false)
+    ) {
+    } else {
+      // Si l'attribut doit être affiché, générez le HTML
+      var capitalizedId = capitalized(skill.terms);
+      var rdd =
+        skillsData[skill.data].value +
+        attributesData[skillsData[skill.data].linkedAttribute].value;
+      skillsHTML += `
       <tr>
           <th scope="row">${capitalizedId}</th>
           <td id="${skill.data}_max">
-              <div id="${skill.data}_actual"><span>${skillsData[skill.data].value}</span></div>
+              <div id="${skill.data}_actual"><span>${
+        skillsData[skill.data].value
+      }</span></div>
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <button class="btn btn-outline-danger btn-xs" onclick="decrementSkill('${skill.data}', 1)">-</button>
-                  <button class="btn btn-outline-success btn-xs" onclick="incrementSkill('${skill.data}', 1)">+</button>
+                  <button class="btn btn-outline-danger btn-xs" onclick="decrementSkill('${
+                    skill.data
+                  }', 1)">-</button>
+                  <button class="btn btn-outline-success btn-xs" onclick="incrementSkill('${
+                    skill.data
+                  }', 1)">+</button>
               </div>
           </td>
-          <td id="${skill.data}_rdd"><div><span class="h6">${rdd}</span></div><div><span class="h8">+ ${capitalized(terms[skillsData[skill.data].linkedAttribute])}</span></div></td>
+          <td id="${
+            skill.data
+          }_rdd"><div><span class="h6">${rdd}</span></div><div><span class="h8">+ ${capitalized(
+        terms[skillsData[skill.data].linkedAttribute]
+      )}</span></div></td>
           <td id="${skill.data}_specialization"><span class="h6"></span></td>
       </tr>
     `;
-
-
     }
-  };
+  }
 
   // Affichez le contenu généré dans le corps du tableau des attributes
   skillTableBody.innerHTML = skillsHTML;
 }
 
 function updateSkills() {
-  
   var attributesData = characterData.attributes;
   var skillsData = characterData.skills;
 
   var skillsSort = sort(Object.keys(skillsData));
   console.log("updateSkills() : ", skillsSort);
-  for (const skill of skillsSort) { // Utilisation de for...of pour itérer sur les clés
+  for (const skill of skillsSort) {
+    // Utilisation de for...of pour itérer sur les clés
 
-    if (skillsData[skill.data].linkedAttribute === "magic" && isMagic === false || skillsData[skill.data].linkedAttribute === "resonance" && isTechno === false) {
-
-    } else {   
-    
-    console.log("updateSkills() : ", skill.data + "_actual"," element : ", document.getElementById(skill.data + "_actual"), document.getElementById(skill.data + "_actual").querySelector("span"));
-    const cell = document.getElementById(skill.data + "_actual");
-    const span = cell.querySelector("span");
-    span.textContent = skillsData[skill.data].value;
-    var rdd = skillsData[skill.data].value + attributesData[skillsData[skill.data].linkedAttribute].value;
-    if (skillsData[skill.data].value === 0) {
-      rdd = Math.max(0, attributesData[skillsData[skill.data].linkedAttribute].value - 2)
+    if (
+      (skillsData[skill.data].linkedAttribute === "magic" &&
+        isMagic === false) ||
+      (skillsData[skill.data].linkedAttribute === "resonance" &&
+        isTechno === false)
+    ) {
+    } else {
+      console.log(
+        "updateSkills() : ",
+        skill.data + "_actual",
+        " element : ",
+        document.getElementById(skill.data + "_actual"),
+        document.getElementById(skill.data + "_actual").querySelector("span")
+      );
+      const cell = document.getElementById(skill.data + "_actual");
+      const span = cell.querySelector("span");
+      span.textContent = skillsData[skill.data].value;
+      var rdd =
+        skillsData[skill.data].value +
+        attributesData[skillsData[skill.data].linkedAttribute].value;
+      if (skillsData[skill.data].value === 0) {
+        rdd = Math.max(
+          0,
+          attributesData[skillsData[skill.data].linkedAttribute].value - 2
+        );
+      }
+      const cellRdd = document
+        .getElementById(skill.data + "_rdd")
+        .querySelector("span");
+      console.log(
+        "updateSkills() : ",
+        skill.data + "_rdd",
+        " element : ",
+        cellRdd
+      );
+      cellRdd.textContent = rdd;
     }
-    const cellRdd = document.getElementById(skill.data + "_rdd").querySelector("span");
-    console.log("updateSkills() : ", skill.data + "_rdd"," element : ", cellRdd)
-    cellRdd.textContent = rdd;
   }
-}
 }
 
 // Fonction pour incrémenter une valeur de compétence
 function incrementSkill(skill, increment) {
-  
   var skillsData = characterData.skills;
   skillsData[skill].value += increment;
   updateSkills();
@@ -901,7 +949,6 @@ function incrementSkill(skill, increment) {
 
 // Fonction pour décrémenter une valeur compétence
 function decrementSkill(skill, decrement) {
-  
   var skillsData = characterData.skills;
   skillsData[skill].value -= decrement;
   updateSkills();
@@ -911,20 +958,33 @@ function decrementSkill(skill, decrement) {
 let pointsSkillsSpent = 0; // Initialisation de la réserve de points de compétences
 
 function updateSkillsPoints(type, valeur, skill) {
-
-  
-  console.log("BEFORE updateSkillsPoints : ",type, " & pointsSkillsSpent : ", pointsSkillsSpent, " & valeur : ", valeur)
+  console.log(
+    "BEFORE updateSkillsPoints : ",
+    type,
+    " & pointsSkillsSpent : ",
+    pointsSkillsSpent,
+    " & valeur : ",
+    valeur
+  );
   if (type === "increment") {
     pointsSkillsSpent -= valeur;
   } else if (type === "decrement") {
     pointsSkillsSpent += valeur;
-    }
-    
-  console.log("AFTER updateSkillsPoints : ",type, " & pointsSkillsSpent : ", pointsSkillsSpent, " & valeur : ", valeur)
+  }
 
+  console.log(
+    "AFTER updateSkillsPoints : ",
+    type,
+    " & pointsSkillsSpent : ",
+    pointsSkillsSpent,
+    " & valeur : ",
+    valeur
+  );
 
-    document.getElementById("skillsSpentCell").textContent =
-    Math.max(0, skillsSpentNumber + pointsSkillsSpent);
+  document.getElementById("skillsSpentCell").textContent = Math.max(
+    0,
+    skillsSpentNumber + pointsSkillsSpent
+  );
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
   if (skillsData[skill].value > 7) {
