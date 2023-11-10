@@ -5,9 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   handleAttributes();
 });
 
-let isMagic = false;
-let isTechno = false;
-
 let prioritiesSelected = {
   metatypes: null,
   attributes: null,
@@ -51,7 +48,7 @@ let IDselectedCells = {
 };
 
 function capitalized(str) {
-  if (typeof str === "string") {
+  if (typeof str === "string" && str !== undefined) {
     var result = str.charAt(0).toUpperCase() + str.slice(1);
     return result;
   } else {
@@ -60,7 +57,7 @@ function capitalized(str) {
       str,
       ") n'est pas une chaîne de caractères."
     );
-    return str; // ou gérer autrement
+    return str;
   }
 }
 
@@ -239,7 +236,7 @@ function generateMetatypeButtons(priority) {
     button.addEventListener("click", function (event) {
       event.preventDefault();
       handleMetatypeButtonClick(button, metatypeForm);
-      updateAttributesForMetatype(button.textContent);
+      updateAttributesForMetatype(button.id);
       showResults();
       metatypeSelected = true;
       console.log(`Bouton de métatype cliqué : ${button.textContent}`);
@@ -292,7 +289,7 @@ function generateSpecialButtons(priority) {
       "adept",
       "mysticAdept",
       "fullMagician",
-      "aspectedMagicien",
+      "aspectedMagician",
       "technomancer",
     ];
 
@@ -319,21 +316,18 @@ function generateSpecialButtons(priority) {
       // Si le métatype correspond à l'option précédemment sélectionnée, rétablissez la sélection
       if (
         selectedSpecial &&
-        button.textContent === selectedSpecial.textContent
+        button.id === selectedSpecial.id
       ) {
         button.classList.add("selected");
-        if (selectedSpecial.textContent === "technomancer") {
-          isTechno = true;
-        } else {
-          isMagic = true;
-        }
       }
 
       // Ajoutez un gestionnaire d'événements pour surveiller les sélections
       button.addEventListener("click", function (event) {
         event.preventDefault();
         handleSpecialButtonClick(button, specialForm);
-        updateAttributesForSpecial(button.textContent, priority);
+        updateAttributesForSpecial(button.id, priority);
+        handleSkills();
+        updateSkills();
         showResults();
         specialSelected = true;
         console.log(`Bouton de métatype cliqué : ${button.textContent}`);
@@ -353,7 +347,17 @@ function handleSpecialButtonClick(button, specialForm) {
     // Sélectionner uniquement le bouton actuel
     button.classList.add("selected");
   }
-  selectedSpecial = button.textContent;
+
+  if (button.id === "technomancer") {        
+    console.log("handleSpecialButtonClick : ",terms[button.id]);     
+      characterData.isTechno = true;
+      characterData.isMagic = false;
+    } else {
+      console.log("handleSpecialButtonClick");
+      characterData.isMagic = true;
+      characterData.isTechno = false;
+    }
+
   saveInCookie();
 }
 
@@ -365,6 +369,46 @@ function handleMetatypeQualities(metatype) {
   if (metatype === "ork") return ["Vision nocturne", "Robuste 1"];
   if (metatype === "troll")
     return ["Dépôts dermiques", "Vision thermographique", "Robuste 2"];
+  if (metatype === "dalakitnon")
+    return ["Allergie (épices, Moyenne)", "Vision nocturne"];
+  if (metatype === "dryade") return ["Éclat", "Symbiose", "Vision nocturne"];
+  if (metatype === "nocturna") return ["Allergie (lumière du soleil, moyenne)", "Nocturne", "Ouïe fine", "Pilosité étrange (pelage coloré)", "Vision nocturne"];
+  if (metatype === "wakyambi")
+    return ["Célérité", " Membres allongés", " Vision nocturne"];
+  if (metatype === "xapiri_thepe")
+    return ["Allergie (polluants, moyenne)", " Bioluminescence (spectre UV)", "Photométabolisme", "Vision nocturne"];
+  if (metatype === "nartaki") return ["Bras de Shiva (1 ou 2)","Pigmentation extraordinaire"];
+  if (metatype === "valkyrie") return ["Ailes fonctionnelles (Type 2)"];
+  if (metatype === "duende")
+    return ["Allergie (lumière du soleil, extrême)", "Pilosité étrange", "Vision nocturne", "Vision thermographique"];
+  if (metatype === "gnome")
+    return ["Néoténie", "Résistance à la magie", "Résistance aux toxines", "Vision thermographique"];
+  if (metatype === "hanuman") return [": Pattes de singe", "Pilosité étrange (Corps)", "Queue préhensile", "Résistance aux toxines"];
+  if (metatype === "koborokuru") return ["Célérité", "Pilosité étrange", "Résistance aux toxines", "Vision thermographique"];
+  if (metatype === "menehune")
+    return ["Doigts palmés", "Résistance aux toxines", "Vision sous‑marine", "Vision thermographique"];
+  if (metatype === "hobgobelin")
+    return ["Crocs", "Regard dément", "Vision nocturne"];
+  if (metatype === "ogre") return ["Boyaux d’acier", "Vision nocturne"];
+  if (metatype === "oni") return ["Pigmentation extraordinaire", "Vision nocturne"];
+  if (metatype === "satyre")
+    return ["Jambes de satyre", "Vision nocturne"];
+  if (metatype === "cyclope")
+    return ["Œil cyclopéen, Robuste 2, Vision thermographique"];
+  if (metatype === "fomori") return ["Résistance à la magie", "Robuste 2", "Vision thermographique"];
+  if (metatype === "giant") return ["Écorce", "Robuste 2", "Vision thermographique"];
+  if (metatype === "minotaur")
+    return ["Cornes perforantes", "Robuste 2", "Vision thermographique"];
+  if (metatype === "centaure")
+    return ["Arme naturelle (Coup de pied : VD 3E, 7+FOR/—/—/—/—)", "Déplacement : 10/20/+4", "Manaception", "Recherche", "Vision nocturne", "Vision thermographique"];
+  if (metatype === "naga")
+    return ["Animal à sang froid", "Arme naturelle (Morsure : VD 3P, 8+FOR/—/—/—/—)", "Armure 4", "Déplacement : 5/15/+1 (à terre)", "3/12/+2 (nage)", "Garde", "Nature duale", "Robuste 2", "Venin"];
+  if (metatype === "pixie")
+    return [" Allergie (fer, moyenne)", "Déplacement : 2/5/+1 (marche), 10/40/+2 (vol)", "Disparition", "Dissimulation (soi)", "Perception astrale"];
+  if (metatype === "sasquatch")
+    return ["Arme naturelle (Griffes : VD 3P, 7+FOR/—/—/—/—)", "Déplacement : 10/15/+1", "Imitation", "Nature duale"];
+  if (metatype === "triton")
+    return ["Biosonar", "Déplacement : 1/3/+0,5 (à terre), 10/25/+2 (nage)", "Nature duale", "Robuste 2", "Vision nocturne", "Vision sous‑marine"];
   return [];
 }
 
@@ -467,8 +511,268 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 6;
     attributesData.edge.max = 7;
+  } else if (metatype === "dalakitnon") {
+    attributesData.body.max = 6;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 6;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 8;
+    attributesData.intuition.max = 7;
+    attributesData.charisma.max = 8;
+    attributesData.edge.max = 6;
+  } else if (metatype === "dryade") {
+    attributesData.body.max = 6;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 5;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 8;
+    attributesData.edge.max = 6;
+  } else if (metatype === "nocturna") {
+    attributesData.body.max = 5;
+    attributesData.agility.max = 8;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 6;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 7;
+    attributesData.edge.max = 6;
+  } else if (metatype === "wakyambi") {
+    attributesData.body.max = 6;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 6;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 7;
+    attributesData.edge.max = 7;
+  }else if (metatype === "xapiri_thepe") {
+    attributesData.body.max = 6;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 6;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 7;
+    attributesData.edge.max = 6;
+  } else if (metatype === "nartaki") {
+    attributesData.body.max = 8;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 8;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  } else if (metatype === "valkyrie") {
+    attributesData.body.max = 7;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 7;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  } else if (metatype === "duende") {
+    attributesData.body.max = 7;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 8;
+    attributesData.strength.max = 6;
+    attributesData.willpower.max = 7;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 7;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  }else if (metatype === "gnome") {
+    attributesData.body.max = 4;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 4;
+    attributesData.willpower.max = 7;
+    attributesData.logic.max = 7;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  } else if (metatype === "hanuman") {
+    attributesData.body.max = 6;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 7;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 7;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  } else if (metatype === "koborokuru") {
+    attributesData.body.max = 7;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 7;
+    attributesData.willpower.max = 7;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  } else if (metatype === "menehune") {
+    attributesData.body.max = 7;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 5;
+    attributesData.strength.max = 7;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  }else if (metatype === "hobgobelin") {
+    attributesData.body.max = 6;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 7;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 7;
+    attributesData.edge.max = 6;
+  } else if (metatype === "ogre") {
+    attributesData.body.max = 9;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 5;
+    attributesData.strength.max = 8;
+    attributesData.willpower.max = 7;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  } else if (metatype === "oni") {
+    attributesData.body.max = 8;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 7;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 7;
+    attributesData.edge.max = 6;
+  } else if (metatype === "satyre") {
+    attributesData.body.max = 7;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 7;
+    attributesData.strength.max = 7;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+  }else if (metatype === "cyclope") {
+    attributesData.body.max = 9;
+    attributesData.agility.max = 5;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 10;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 5;
+    attributesData.edge.max = 6;
+  } else if (metatype === "fomori") {
+    attributesData.body.max = 9;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 8;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 7;
+    attributesData.edge.max = 6;
+  } else if (metatype === "giant") {
+    attributesData.body.max = 9;
+    attributesData.agility.max = 5;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 10;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 5;
+    attributesData.edge.max = 6;
+  } else if (metatype === "minotaur") {
+    attributesData.body.max = 10;
+    attributesData.agility.max = 5;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 9;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 5;
+    attributesData.edge.max = 6;
+  } else if (metatype === "centaure") {
+    attributesData.body.max = 8;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 9;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+    attributesData.magic.base = 1;
+    attributesData.magic.max = 6;
+  }else if (metatype === "naga") {
+    attributesData.body.max = 8;
+    attributesData.agility.max = 7;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 9;
+    attributesData.willpower.max = 7;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 7;
+    attributesData.edge.max = 6;
+    attributesData.magic.base = 1;
+    attributesData.magic.max = 6;
+  } else if (metatype === "pixie") {
+    attributesData.body.max = 3;
+    attributesData.agility.max = 8;
+    attributesData.reaction.max = 8;
+    attributesData.strength.max = 2;
+    attributesData.willpower.max = 8;
+    attributesData.logic.max = 7;
+    attributesData.intuition.max = 7;
+    attributesData.charisma.max = 8;
+    attributesData.edge.max = 6;
+    attributesData.magic.base = 1;
+    attributesData.magic.max = 6;
+  } else if (metatype === "sasquatch") {
+    attributesData.body.max = 10;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 10;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+    attributesData.magic.base = 1;
+    attributesData.magic.max = 6;
+  } else if (metatype === "triton") {
+    attributesData.body.max = 9;
+    attributesData.agility.max = 6;
+    attributesData.reaction.max = 6;
+    attributesData.strength.max = 9;
+    attributesData.willpower.max = 6;
+    attributesData.logic.max = 6;
+    attributesData.intuition.max = 6;
+    attributesData.charisma.max = 6;
+    attributesData.edge.max = 6;
+    attributesData.magic.base = 1;
+    attributesData.magic.max = 6;
   }
-
+  handleAttributes();
   updateAttributesDisplay();
 }
 
@@ -482,26 +786,24 @@ function updateAttributesForSpecial(special, priority) {
       special === "adept"
     ) {
       attributesData.magic.base = 4;
-    } else if (special === "aspectedMagicien") {
+    } else if (special === "aspectedMagician") {
       attributesData.magic.base = 5;
     } else if (special === "technomancer") {
       attributesData.resonance.base = 4;
     }
   }
   if (priority === "B") {
-    if (special === "fullMagician") {
       if (
         special === "fullMagician" ||
         special === "mysticAdept" ||
         special === "adept"
       ) {
         attributesData.magic.base = 3;
-      } else if (special === "aspectedMagicien") {
+      } else if (special === "aspectedMagician") {
         attributesData.magic.base = 4;
       } else if (special === "technomancer") {
         attributesData.resonance.base = 3;
       }
-    }
   }
   if (priority === "C") {
     if (
@@ -510,7 +812,7 @@ function updateAttributesForSpecial(special, priority) {
       special === "adept"
     ) {
       attributesData.magic.base = 2;
-    } else if (special === "aspectedMagicien") {
+    } else if (special === "aspectedMagician") {
       attributesData.magic.base = 3;
     } else if (special === "technomancer") {
       attributesData.resonance.base = 2;
@@ -523,7 +825,7 @@ function updateAttributesForSpecial(special, priority) {
       special === "adept"
     ) {
       attributesData.magic.base = 1;
-    } else if (special === "aspectedMagicien") {
+    } else if (special === "aspectedMagician") {
       attributesData.magic.base = 2;
     } else if (special === "technomancer") {
       attributesData.resonance.base = 1;
@@ -552,8 +854,10 @@ function handleAttributes() {
   var attributeHTML = "";
   var attributesData = characterData.attributes;
   for (const attribute in attributesData) {
+
     // Si l'attribut doit être affiché, générez le HTML
     if (attributesData[attribute].base > 0) {
+      
       var capitalizedId =
         terms[attribute].charAt(0).toUpperCase() + terms[attribute].slice(1);
       attributeHTML += `
@@ -810,14 +1114,13 @@ function sort(array) {
   }
   arraySorted = [];
   for (const key of array) {
-    console.log("arraySorted : data : ", key, "/ ", terms[key]);
+    //console.log("arraySorted : data : ", key, "/ ", terms[key]);
     arraySorted.push({
       data: key,
       terms: terms[key],
     });
   }
   // Triez le tableau en fonction des noms traduits
-  console.log("arraySorted : ", arraySorted);
   arraySorted.sort((a, b) => a.terms.localeCompare(b.terms));
   return arraySorted;
 }
@@ -849,9 +1152,9 @@ function handleSkills() {
   for (const skill of skillsSort) {
     if (
       (skillsData[skill.data].linkedAttribute === "magic" &&
-        isMagic === false) ||
+      characterData.isMagic === false) ||
       (skillsData[skill.data].linkedAttribute === "resonance" &&
-        isTechno === false)
+      characterData.isTechno === false)
     ) {
     } else {
       // Si l'attribut doit être affiché, générez le HTML
@@ -895,24 +1198,16 @@ function updateSkills() {
   var skillsData = characterData.skills;
 
   var skillsSort = sort(Object.keys(skillsData));
-  console.log("updateSkills() : ", skillsSort);
   for (const skill of skillsSort) {
     // Utilisation de for...of pour itérer sur les clés
 
     if (
       (skillsData[skill.data].linkedAttribute === "magic" &&
-        isMagic === false) ||
+      characterData.isMagic === false) ||
       (skillsData[skill.data].linkedAttribute === "resonance" &&
-        isTechno === false)
+      characterData.isTechno === false)
     ) {
     } else {
-      console.log(
-        "updateSkills() : ",
-        skill.data + "_actual",
-        " element : ",
-        document.getElementById(skill.data + "_actual"),
-        document.getElementById(skill.data + "_actual").querySelector("span")
-      );
       const cell = document.getElementById(skill.data + "_actual");
       const span = cell.querySelector("span");
       span.textContent = skillsData[skill.data].value;
@@ -928,12 +1223,6 @@ function updateSkills() {
       const cellRdd = document
         .getElementById(skill.data + "_rdd")
         .querySelector("span");
-      console.log(
-        "updateSkills() : ",
-        skill.data + "_rdd",
-        " element : ",
-        cellRdd
-      );
       cellRdd.textContent = rdd;
     }
   }
@@ -966,20 +1255,14 @@ function updateSkillsPoints(type, valeur, skill) {
     " & valeur : ",
     valeur
   );
+
+  var skillsData = characterData.skills;
+
   if (type === "increment") {
     pointsSkillsSpent -= valeur;
   } else if (type === "decrement") {
     pointsSkillsSpent += valeur;
   }
-
-  console.log(
-    "AFTER updateSkillsPoints : ",
-    type,
-    " & pointsSkillsSpent : ",
-    pointsSkillsSpent,
-    " & valeur : ",
-    valeur
-  );
 
   document.getElementById("skillsSpentCell").textContent = Math.max(
     0,
@@ -1022,7 +1305,7 @@ function showResults() {
     const selectedMetatypeValue = selectedMeta.textContent || selectedMetatype;
     resultat.innerHTML +=
       "<h5>Métatype sélectionné :</h5>" + selectedMetatypeValue;
-    const metatypeQualities = handleMetatypeQualities(selectedMetatypeValue);
+    const metatypeQualities = handleMetatypeQualities(selectedMeta.id);
     if (metatypeQualities.length > 0)
       resultat.innerHTML +=
         "<h5>Traits innés :</h5>" + metatypeQualities.join(", ");

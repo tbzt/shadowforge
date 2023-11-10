@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="container" id="container">
+    <div class="container-fluid" id="container">
         <h1 class="mt-4 display-4">Créateur de Personnage Shadowrun 6</h1>
         <br />
         <div class="row">
@@ -72,18 +72,18 @@
                     <div class="collapse" id="collapsePriorities">
                         <div class="card card-body">
                             <div class="table-responsive">
-                                <table id="priorityTable" class="table table-bordered align-middle">
+                                <table id="priorityTable" class="table align-middle table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Priorités</th>
-                                            <th>Métatypes (points d'ajustement)</th>
-                                            <th>Attributs</th>
-                                            <th>Compétences</th>
-                                            <th>Magie ou Résonance</th>
-                                            <th>Ressources</th>
+                                            <th scope="col">#</th>
+                                            <th scope="col">{{capitalized metatypes}} ({{adjustement}})</th>
+                                            <th scope="col">{{attributesTitle}}</th>
+                                            <th scope="col">{{skillsTitle}}</th>
+                                            <th scope="col">{{capitalized magic}}/{{capitalized resonance}}</th>
+                                            <th scope="col">{{capitalized resources}}</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="table-group-divider">
                                         <!-- Modèle Handlebars pour la table des priorités -->
                                         <script id="priority-template" type="text/x-handlebars-template">
                                             {{#each this}}

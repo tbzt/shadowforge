@@ -154,6 +154,8 @@ const characterData = {
       linkedAttribute: "resonance",
     },
   },
+  isMagic: false,
+  isTechno: false,
 };
 
 const tablePrioritiesMetatypes = {

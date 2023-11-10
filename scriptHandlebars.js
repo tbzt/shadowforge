@@ -9,6 +9,10 @@ function setLang(language) {
   terms = translations[language];
 }
 
+Handlebars.registerHelper("capitalized", function(item) {
+  return capitalized(item);;
+});
+
 // Fonction pour afficher les données des priorités
 function showPriorities() {
   // Sélectionnez le modèle Handlebars
@@ -54,10 +58,10 @@ function showPriorities() {
         " (12)",
       attributes: "24",
       skills: "32",
-      magicOrResonance1: "Magicien pur & adepte mystique : Magie 4, 8 formules",
-      magicOrResonance2: "Magicien spécialisé : Magie 5, 10 formules",
-      magicOrResonance3: "Adepte : Magie 4",
-      magicOrResonance4: "Technomancien : Résonance 4, 8 formes complexes",
+      magicOrResonance1: capitalized(terms.fullMagician) + " & " + capitalized(terms.mysticAdept) + terms.colons + " " + capitalized(terms.magic) + " 4, 8 " + terms.formulas,
+      magicOrResonance2: capitalized(terms.aspectedMagician) + terms.colons + " " + capitalized(terms.magic) + " 5, 10 " + terms.formulas,
+      magicOrResonance3: capitalized(terms.adept) + terms.colons + " " + capitalized(terms.magic) + " 4",
+      magicOrResonance4: capitalized(terms.technomancer) + terms.colons + " " + capitalized(terms.resonance) + " 4, 8 " + terms.complexForms,
       resources: "450000",
     },
     B: {
@@ -75,10 +79,10 @@ function showPriorities() {
         " (9)",
       attributes: "16",
       skills: "24",
-      magicOrResonance1: "Magicien pur & adepte mystique : Magie 3, 6 formules",
-      magicOrResonance2: "Magicien spécialisé : Magie 4, 8 formules",
-      magicOrResonance3: "Adepte : Magie 3",
-      magicOrResonance4: "Technomancien : Résonance 3, 6 formes complexes",
+      magicOrResonance1: capitalized(terms.fullMagician) + " & " + capitalized(terms.mysticAdept) + terms.colons + " " + capitalized(terms.magic) + " 3, 6 " + terms.formulas,
+      magicOrResonance2: capitalized(terms.aspectedMagician) + terms.colons + " " + capitalized(terms.magic) + " 4, 8 " + terms.formulas,
+      magicOrResonance3: capitalized(terms.adept) + terms.colons + " " + capitalized(terms.magic) + " 3",
+      magicOrResonance4: capitalized(terms.technomancer) + terms.colons + " " + capitalized(terms.resonance) + " 3, 6 " + terms.complexForms,
       resources: "275000",
     },
     C: {
@@ -96,10 +100,10 @@ function showPriorities() {
         " (4)",
       attributes: "12",
       skills: "20",
-      magicOrResonance1: "Magicien pur & adepte mystique : Magie 2, 4 formules",
-      magicOrResonance2: "Magicien spécialisé : Magie 3, 6 formules",
-      magicOrResonance3: "Adepte : Magie 2",
-      magicOrResonance4: "Technomancien : Résonance 2, 4 formes complexes",
+      magicOrResonance1: capitalized(terms.fullMagician) + " & " + capitalized(terms.mysticAdept) + terms.colons + " " + capitalized(terms.magic) + " 2, 4 " + terms.formulas,
+      magicOrResonance2: capitalized(terms.aspectedMagician) + terms.colons + " " + capitalized(terms.magic) + " 3, 6 " + terms.formulas,
+      magicOrResonance3: capitalized(terms.adept) + terms.colons + " " + capitalized(terms.magic) + " 2",
+      magicOrResonance4: capitalized(terms.technomancer) + terms.colons + " " + capitalized(terms.resonance) + " 2, 4 " + terms.complexForms,
       resources: "150000",
     },
     D: {
@@ -114,10 +118,10 @@ function showPriorities() {
         " (2)",
       attributes: "8",
       skills: "16",
-      magicOrResonance1: "Magicien pur & adepte mystique : Magie 1, 2 formules",
-      magicOrResonance2: "Magicien spécialisé : Magie 2, 4 formules",
-      magicOrResonance3: "Adepte : Magie 1",
-      magicOrResonance4: "Technomancien : Résonance 1, 2 formes complexes",
+      magicOrResonance1: capitalized(terms.fullMagician) + " & " + capitalized(terms.mysticAdept) + terms.colons + " " + capitalized(terms.magic) + " 1, 2 " + terms.formulas,
+      magicOrResonance2: capitalized(terms.aspectedMagician) + terms.colons + " " + capitalized(terms.magic) + " 2, 4 " + terms.formulas,
+      magicOrResonance3: capitalized(terms.adept) + terms.colons + " " + capitalized(terms.magic) + " 1",
+      magicOrResonance4: capitalized(terms.technomancer) + terms.colons + " " + capitalized(terms.resonance) + " 1, 2 " + terms.complexForms,
       resources: "50000",
     },
     E: {
@@ -125,13 +129,15 @@ function showPriorities() {
         metatype_E_1.map((item) => capitalized(item.terms)).join(", ") + " (1)",
       attributes: "2",
       skills: "10",
-      magicOrResonance: "Ordinaire",
+      magicOrResonance: capitalized(terms.mundane),
       resources: "8000",
     },
   };
 
   // Générez le contenu HTML en utilisant le modèle et les données
   var html = template(priorities);
+
+  console.log(html);
   // Affichez le contenu généré dans le corps de la table des priorités
   tableBody.innerHTML = html;
 }
