@@ -107,13 +107,13 @@ function handleSIN() {
     }
 
     // Mettez à jour le tableau SIN avec une seule entrée
-    SIN = [
+    SIN =
       {
-        firstname,
-        surname,
-        name,
-      },
-    ];
+        firstname: firstname,
+        surname: surname,
+        name: name,
+      };
+    characterData.SIN = SIN;
     console.log(JSON.stringify(SIN));
     saveInCookie();
   }
@@ -239,6 +239,7 @@ function generateMetatypeButtons(priority) {
       updateAttributesForMetatype(button.id);
       showResults();
       metatypeSelected = true;
+      characterData.metatype = button.id;
       console.log(`Bouton de métatype cliqué : ${button.textContent}`);
     });
   });
@@ -329,6 +330,7 @@ function generateSpecialButtons(priority) {
         handleSkills();
         updateSkills();
         showResults();
+        characterData.metatype = button.id;
         specialSelected = true;
         console.log(`Bouton de métatype cliqué : ${button.textContent}`);
       });
@@ -352,10 +354,12 @@ function handleSpecialButtonClick(button, specialForm) {
     console.log("handleSpecialButtonClick : ",terms[button.id]);     
       characterData.isTechno = true;
       characterData.isMagic = false;
+      characterData.magicChoice = "";
     } else {
       console.log("handleSpecialButtonClick");
       characterData.isMagic = true;
       characterData.isTechno = false;
+      characterData.magicChoice = button.id;
     }
 
   saveInCookie();
@@ -371,7 +375,7 @@ function handleMetatypeQualities(metatype) {
     return ["Dépôts dermiques", "Vision thermographique", "Robuste 2"];
   if (metatype === "dalakitnon")
     return ["Allergie (épices, Moyenne)", "Vision nocturne"];
-  if (metatype === "dryade") return ["Éclat", "Symbiose", "Vision nocturne"];
+  if (metatype === "dryad") return ["Éclat", "Symbiose", "Vision nocturne"];
   if (metatype === "nocturna") return ["Allergie (lumière du soleil, moyenne)", "Nocturne", "Ouïe fine", "Pilosité étrange (pelage coloré)", "Vision nocturne"];
   if (metatype === "wakyambi")
     return ["Célérité", " Membres allongés", " Vision nocturne"];
@@ -391,15 +395,15 @@ function handleMetatypeQualities(metatype) {
     return ["Crocs", "Regard dément", "Vision nocturne"];
   if (metatype === "ogre") return ["Boyaux d’acier", "Vision nocturne"];
   if (metatype === "oni") return ["Pigmentation extraordinaire", "Vision nocturne"];
-  if (metatype === "satyre")
+  if (metatype === "satyr")
     return ["Jambes de satyre", "Vision nocturne"];
-  if (metatype === "cyclope")
+  if (metatype === "cyclops")
     return ["Œil cyclopéen, Robuste 2, Vision thermographique"];
-  if (metatype === "fomori") return ["Résistance à la magie", "Robuste 2", "Vision thermographique"];
+  if (metatype === "fomorian") return ["Résistance à la magie", "Robuste 2", "Vision thermographique"];
   if (metatype === "giant") return ["Écorce", "Robuste 2", "Vision thermographique"];
   if (metatype === "minotaur")
     return ["Cornes perforantes", "Robuste 2", "Vision thermographique"];
-  if (metatype === "centaure")
+  if (metatype === "centaur")
     return ["Arme naturelle (Coup de pied : VD 3E, 7+FOR/—/—/—/—)", "Déplacement : 10/20/+4", "Manaception", "Recherche", "Vision nocturne", "Vision thermographique"];
   if (metatype === "naga")
     return ["Animal à sang froid", "Arme naturelle (Morsure : VD 3P, 8+FOR/—/—/—/—)", "Armure 4", "Déplacement : 5/15/+1 (à terre)", "3/12/+2 (nage)", "Garde", "Nature duale", "Robuste 2", "Venin"];
@@ -407,7 +411,7 @@ function handleMetatypeQualities(metatype) {
     return [" Allergie (fer, moyenne)", "Déplacement : 2/5/+1 (marche), 10/40/+2 (vol)", "Disparition", "Dissimulation (soi)", "Perception astrale"];
   if (metatype === "sasquatch")
     return ["Arme naturelle (Griffes : VD 3P, 7+FOR/—/—/—/—)", "Déplacement : 10/15/+1", "Imitation", "Nature duale"];
-  if (metatype === "triton")
+  if (metatype === "merrow")
     return ["Biosonar", "Déplacement : 1/3/+0,5 (à terre), 10/25/+2 (nage)", "Nature duale", "Robuste 2", "Vision nocturne", "Vision sous‑marine"];
   return [];
 }
@@ -521,7 +525,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 7;
     attributesData.charisma.max = 8;
     attributesData.edge.max = 6;
-  } else if (metatype === "dryade") {
+  } else if (metatype === "dryad") {
     attributesData.body.max = 6;
     attributesData.agility.max = 7;
     attributesData.reaction.max = 6;
@@ -661,7 +665,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 7;
     attributesData.edge.max = 6;
-  } else if (metatype === "satyre") {
+  } else if (metatype === "satyr") {
     attributesData.body.max = 7;
     attributesData.agility.max = 6;
     attributesData.reaction.max = 7;
@@ -671,7 +675,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 6;
     attributesData.edge.max = 6;
-  }else if (metatype === "cyclope") {
+  }else if (metatype === "cyclops") {
     attributesData.body.max = 9;
     attributesData.agility.max = 5;
     attributesData.reaction.max = 6;
@@ -681,7 +685,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 5;
     attributesData.edge.max = 6;
-  } else if (metatype === "fomori") {
+  } else if (metatype === "fomorian") {
     attributesData.body.max = 9;
     attributesData.agility.max = 6;
     attributesData.reaction.max = 6;
@@ -711,7 +715,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.intuition.max = 6;
     attributesData.charisma.max = 5;
     attributesData.edge.max = 6;
-  } else if (metatype === "centaure") {
+  } else if (metatype === "centaur") {
     attributesData.body.max = 8;
     attributesData.agility.max = 6;
     attributesData.reaction.max = 6;
@@ -759,7 +763,7 @@ function updateAttributesForMetatype(metatype) {
     attributesData.edge.max = 6;
     attributesData.magic.base = 1;
     attributesData.magic.max = 6;
-  } else if (metatype === "triton") {
+  } else if (metatype === "merrow") {
     attributesData.body.max = 9;
     attributesData.agility.max = 6;
     attributesData.reaction.max = 6;
@@ -858,11 +862,9 @@ function handleAttributes() {
     // Si l'attribut doit être affiché, générez le HTML
     if (attributesData[attribute].base > 0) {
       
-      var capitalizedId =
-        terms[attribute].charAt(0).toUpperCase() + terms[attribute].slice(1);
       attributeHTML += `
         <tr>
-            <th scope="row">${capitalizedId}</th>
+            <th scope="row">${capitalized(terms[attribute])}</th>
             <td>
                 <div id="${attribute}_base"><span>${attributesData[attribute].base}</span></div>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
