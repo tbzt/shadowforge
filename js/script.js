@@ -20,9 +20,7 @@ let selectedSpecial = null;
 
 let pointsAttributesSpent = 0;
 
-let pointsSkillsDepenses = 0;
-
-let SIN = [];
+let SIN = {};
 
 let actualPriority = null; // Ajout d'une variable pour suivre la priorité actuelle
 
@@ -269,7 +267,7 @@ function handleMetatypeButtonClick(button, metatypeForm) {
     button.classList.add("selected");
     console.log(`Bouton de métatype sélectionné : ${button.textContent}`);
   }
-  selectedMetatype = button.textContent;
+  selectedMetatype = button.id;
   saveInCookie();
 }
 
@@ -1345,6 +1343,7 @@ function saveInCookie() {
     actualPriority,
     selectedMetatype,
     SIN,
+    characterData,
   });
 
   console.log("dataToSave : " + dataToSave);
@@ -1374,6 +1373,7 @@ function loadCookie() {
       actualPriority = loadedData.actualPriority;
       selectedMetatype = loadedData.selectedMetatype;
       SIN = loadedData.SIN;
+      characterData = loadedData.characterData;
       generateMetatypeButtons(actualPriority);
       handleMetatypeQualities(selectedMetatype);
       showResults();
