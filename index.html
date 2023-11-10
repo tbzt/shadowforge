@@ -93,7 +93,18 @@
                               id="metatypes_{{@key}}"
                               class="selectable"
                               onclick="selectPriority(this, 'metatypes', '{{@key}}')"
-                            >{{this.metatypes}}</td>
+                            >
+                            {{#if metatypes1}}
+                            {{this.metatypes1}}<br />
+                            {{this.metatypes2}}<br />
+                            {{this.metatypes3}}<br />
+                            {{#if metatypes4}}
+                            {{this.metatypes4}}<br />
+                            {{/if}}
+                          {{else}}
+                            {{this.metatypes}}
+                          {{/if}}
+                            </td>
                             <td
                               id="attributes_{{@key}}"
                               class="selectable"

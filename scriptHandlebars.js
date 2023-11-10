@@ -20,9 +20,11 @@ function showPriorities() {
   // Sélectionnez l'élément du corps de la table des priorités
   var tableBody = document.querySelector("#priorityTable tbody");
 
+  const metatype_A_11 = sort([].concat(tablePrioritiesMetatypes["A"]["11"]));
   const metatype_A_12 = sort([].concat(tablePrioritiesMetatypes["A"]["12"]));
   const metatype_A_13 = sort([].concat(tablePrioritiesMetatypes["A"]["13"]));
   const metatype_A_14 = sort([].concat(tablePrioritiesMetatypes["A"]["14"]));
+  const metatype_B_9 = sort([].concat(tablePrioritiesMetatypes["B"]["9"]));
   const metatype_B_10 = sort([].concat(tablePrioritiesMetatypes["B"]["10"]));
   const metatype_B_11 = sort([].concat(tablePrioritiesMetatypes["B"]["11"]));
   const metatype_B_12 = sort([].concat(tablePrioritiesMetatypes["B"]["12"]));
@@ -38,12 +40,17 @@ function showPriorities() {
   // Injectez les données JSON des priorités dans le modèle Handlebars
   var priorities = {
     A: {
-      metatypes:
+      metatypes1:
         metatype_A_14.map((item) => capitalized(item.terms)).join(", ") +
-        " (14), " +
+        " (14)",
+      metatypes2:
         metatype_A_13.map((item) => capitalized(item.terms)).join(", ") +
-        " (13), " +
+        " (13)",
+      metatypes3:
         metatype_A_12.map((item) => capitalized(item.terms)).join(", ") +
+        " (12)",
+      metatypes4:
+        metatype_A_11.map((item) => capitalized(item.terms)).join(", ") +
         " (12)",
       attributes: "24",
       skills: "32",
@@ -54,13 +61,18 @@ function showPriorities() {
       resources: "450000",
     },
     B: {
-      metatypes:
+      metatypes1:
         metatype_B_12.map((item) => capitalized(item.terms)).join(", ") +
-        " (12), " +
+        " (12)",
+      metatypes2:
         metatype_B_11.map((item) => capitalized(item.terms)).join(", ") +
-        " (11), " +
+        " (11)",
+      metatypes3:
         metatype_B_10.map((item) => capitalized(item.terms)).join(", ") +
         " (10)",
+      metatypes4:
+        metatype_B_9.map((item) => capitalized(item.terms)).join(", ") +
+        " (9)",
       attributes: "16",
       skills: "24",
       magicOrResonance1: "Magicien pur & adepte mystique : Magie 3, 6 formules",
@@ -70,13 +82,16 @@ function showPriorities() {
       resources: "275000",
     },
     C: {
-      metatypes:
+      metatypes1:
         metatype_C_10.map((item) => capitalized(item.terms)).join(", ") +
-        " (10), " +
+        " (10)",
+      metatypes2:
         metatype_C_9.map((item) => capitalized(item.terms)).join(", ") +
-        " (9), " +
+        " (9)",
+      metatypes3:
         metatype_C_8.map((item) => capitalized(item.terms)).join(", ") +
-        " (8), " +
+        " (8)",
+      metatypes4:
         metatype_C_4.map((item) => capitalized(item.terms)).join(", ") +
         " (4)",
       attributes: "12",
@@ -88,11 +103,13 @@ function showPriorities() {
       resources: "150000",
     },
     D: {
-      metatypes:
+      metatypes1:
         metatype_D_5.map((item) => capitalized(item.terms)).join(", ") +
-        " (5), " +
+        " (5)",
+      metatypes2:
         metatype_D_4.map((item) => capitalized(item.terms)).join(", ") +
-        " (4), " +
+        " (4)",
+      metatypes3:
         metatype_D_2.map((item) => capitalized(item.terms)).join(", ") +
         " (2)",
       attributes: "8",
