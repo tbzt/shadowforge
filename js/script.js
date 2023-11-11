@@ -503,7 +503,7 @@ function handleAttributes() {
     // Si l'attribut doit être affiché, générez le HTML
     
   var adjustementPossible = "";
-  if (attributesData[attribute].max > 6) {
+  if (attributesData[attribute].max > 6 || attribute === "edge" || attribute === "magic" || attribute === "resonance") {
     adjustementPossible = "attributesAdjustementPossible";
   } else {    
     adjustementPossible = "attributesAdjustementImpossible";
