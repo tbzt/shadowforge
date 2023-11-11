@@ -814,11 +814,39 @@ function updatePoints(type, element, modificator) {
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
   if (type === "skills") {
-    if (characterData.skills[element].value > 7) {
+    
+    var max = 7;
+    var maxElement = characterData.alreadyMaxSkill;
+    if (maxElement) max = 6;
+
+    console.log(
+      "updatePoints : element ",
+      element, 
+      " maxElement ",
+      maxElement,
+      " max ",
+      max,
+      " document.getElementById(`${maxElement}_actual`) ",
+      document.getElementById(`${maxElement}_actual`),
+      " characterData[type][element].value ",
+      characterData[type][element].value
+    );
+
+    if (characterData.skills[element].value >= max) {
+
+      if (maxElement) document.getElementById(`${maxElement}_max`).classList.add("maximum");
       document.getElementById(`${element}_max`).classList.add("maximum");
     } else {
+      if (maxElement) document.getElementById(`${maxElement}_max`).classList.remove("maximum");
       document.getElementById(`${element}_max`).classList.remove("maximum");
     }
+
+    if (characterData[type][element].value >= 6 && characterData.alreadyMaxSkill === "") {
+      characterData.alreadyMaxSkill = element;
+    } else if (characterData.alreadyMaxSkill === element) {
+      characterData.alreadyMaxSkill = "";
+    } 
+
   }
 
   if (type === "attributes") {
@@ -827,7 +855,6 @@ function updatePoints(type, element, modificator) {
     var max = characterData.attributes[element].max;
     var maxElement = characterData.alreadyMaxAttribute;
     if (maxElement) max = characterData.attributes[element].max - 1;
-    console.log("updatePoints : alreadyMaxAttribute ", characterData.alreadyMaxAttribute, " element ", element, " max ", max, " doc ", document.getElementById(`${maxElement}_actual`));
     if (
       characterData.attributes[element].value >
       max

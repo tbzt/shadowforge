@@ -118,7 +118,7 @@ const characterData = {
       value: 0,
       linkedAttribute: "logic",
     },
-    stealthing: {
+    stealth: {
       base: 0,
       added: 0,
       value: 0,
@@ -154,7 +154,7 @@ const characterData = {
       value: 0,
       linkedAttribute: "intuition",
     },
-    pilot: {
+    piloting: {
       base: 0,
       added: 0,
       value: 0,
@@ -201,6 +201,7 @@ const characterData = {
   },
   selectAttributeType: "Prio",
   alreadyMaxAttribute: "",
+  alreadyMaxSkill: "",
   magicChoice: "",
   isMagic: false,
   isTechno: false,
