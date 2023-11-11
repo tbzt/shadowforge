@@ -105,7 +105,8 @@ const translations = {
     dices: "dès",
     specializations: "spécialisations",
     character: "personnage",
-    reinitialize: "réinitialisation"
+    reinitialize: "réinitialisation",
+    pointsToSpend: "Points à dépenser",
   },
   en: {
     firstname: "Firstname",
@@ -197,6 +198,7 @@ const translations = {
     dices: "dices",
     specializations: "specializations",
     character: "character",
-    reinitialize: "reinitialize"
+    reinitialize: "reinitialize",
+    pointsToSpend: "Points to Spend",
   },
 };

@@ -160,7 +160,7 @@ function selectPriority(cell, categorie, priority) {
     if (categorie === "attributes") {
       var attributeTitle = document.getElementById("attributeTitle");
       attributeTitle.style.display = "block"; // Afficher la section des attributes
-      showDepenseAttribute();
+      showAttributesToSpend();
     }
   
     // Afficher les attributes si leur priorité est sélectionnée
@@ -169,9 +169,6 @@ function selectPriority(cell, categorie, priority) {
       skillTitle.style.display = "block"; // Afficher la section des skills
       handleSkills();
     }
-
-    console.log("selectPriority(cell, categorie, priority) : ",selectedCells, " IDselectedCells : ",IDselectedCells, " prioritiesSelected : ",prioritiesSelected);
-
   
     if (selectedCells["attributes"]) {
       handleAttributes();
@@ -331,7 +328,32 @@ const tablePrioritiesMetatypes = {
       ],
     },
   };
+
+  const checkAdjustementByMetatype = {};
+  const checkPriorities = ["A", "B", "C", "D", "E"];
+  const checkAdjustement = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   
+  // Parcourez les priorités
+  for (const priority of checkPriorities) {
+    // Parcourez les ajustements pour chaque priorité
+    for (const adjustement of checkAdjustement) {
+      // Vérifiez si le métatype pour la priorité et l'ajustement existe
+      for (const metatype in tablePrioritiesMetatypes[priority][adjustement]) {
+        if (tablePrioritiesMetatypes[priority] && tablePrioritiesMetatypes[priority][adjustement] && tablePrioritiesMetatypes[priority][adjustement][metatype]) {  
+          // Créez un objet avec les clés nécessaires
+          const keyMetatype = tablePrioritiesMetatypes[priority][adjustement][metatype];
+  
+          if (!checkAdjustementByMetatype[keyMetatype]) {
+            checkAdjustementByMetatype[keyMetatype] = {
+              priority: priority,
+              adjustement: adjustement,
+            };
+          }
+        }
+      }
+    }
+  }
+    
   const prio_A = [].concat(...Object.values(tablePrioritiesMetatypes["A"]));
   const prio_B = [].concat(...Object.values(tablePrioritiesMetatypes["B"]));
   const prio_C = [].concat(...Object.values(tablePrioritiesMetatypes["C"]));
