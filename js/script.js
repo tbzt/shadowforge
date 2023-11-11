@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
+  setLang("fr");
+  showPriorities();
   loadCookie();
   setLanguage("fr");
   handleSIN();
@@ -127,122 +129,6 @@ function useButton(cell) {
   }
 }
 
-function selectPriority(cell, categorie, priority) {
-  // Obtenir la cellule précédemment sélectionnée dans la même catégorie
-  let previousSelectedCell = selectedCells[categorie];
-
-  // Si une cellule était précédemment sélectionnée, la désélectionner
-  if (previousSelectedCell) {
-    if (previousSelectedCell.classList) {
-      previousSelectedCell.classList.remove("selected");
-    }
-    console.log(
-      `Désélection de ${categorie} : ${previousSelectedCell.textContent}`
-    );
-  }
-
-  // Mettre à jour la sélection
-  cell.classList.add("selected");
-  console.log(`Sélection de ${categorie} : ${cell.textContent} (${priority})`);
-
-  // Mettre à jour la cellule sélectionnée dans la catégorie globale
-  selectedCells[categorie] = cell;
-
-  // Mettre à jour la cellule sélectionnée dans la catégorie globale
-  IDselectedCells[categorie] = cell.id;
-
-  // Mettre à jour la priorité sélectionnée
-  prioritiesSelected[categorie] = `${capitalized(terms[categorie])} : ${
-    cell.textContent
-  } (${priority})`;
-  actualPriority = priority; // Mettre à jour la priorité actuelle
-
-  // Afficher les attributes si leur priorité est sélectionnée
-  if (categorie === "attributes") {
-    var attributeTitle = document.getElementById("attributeTitle");
-    attributeTitle.style.display = "block"; // Afficher la section des attributes
-  }
-
-  // Afficher les attributes si leur priorité est sélectionnée
-  if (categorie === "skills") {
-    var skillTitle = document.getElementById("skillTitle");
-    skillTitle.style.display = "block"; // Afficher la section des skills
-    handleSkills();
-  }
-
-  // Mettre à jour le bouton de métatype sélectionné (si un bouton est déjà sélectionné)
-  if (selectedMetatypeButton) {
-    selectedMetatypeButton.classList.remove("selected");
-    console.log(
-      `Désélection du métatype : ${selectedMetatypeButton.textContent}`
-    );
-    selectedMetatypeButton = null;
-  }
-
-  updateAttributesDisplay();
-  saveInCookie();
-
-  // Afficher les résultats
-  showResults();
-  // Appeler la fonction pour générer les boutons en fonction de la priorité sélectionnée
-  if (categorie === "metatypes") generateMetatypeButtons(actualPriority); // Utiliser la priorité actuelle
-  if (categorie === "magicOrResonance") generateSpecialButtons(actualPriority); // Utiliser la priorité actuelle
-}
-
-// Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
-function generateMetatypeButtons(priority) {
-  const metatypeTitle = document.getElementById("metatypeTitle");
-  metatypeTitle.style.display = "block";
-
-  const metatypeForm = document.getElementById("metatypeButtons");
-
-  // Récupérer l'option de métatype sélectionnée actuellement
-  const selectedMetatype = metatypeForm.querySelector("button.selected");
-
-  const metatypes = getMetatypesForPriority(priority);
-
-  var sortMetatypes = sort(metatypes);
-
-  // Créez des boutons en ligne pour chaque métatype
-  metatypeForm.innerHTML = ""; // Supprimez les options de métatype existantes
-
-  sortMetatypes.forEach((metatype) => {
-    const button = document.createElement("button");
-    button.textContent = capitalized(metatype.terms);
-    button.classList.add("metatype-button");
-    button.classList.add("btn-outline-primary");
-    button.classList.add("btn");
-    button.setAttribute("id", metatype.data);
-
-    // Vérifiez si le type du bouton est "submit" et changez-le en "button" si nécessaire
-    if (button.getAttribute("type") === "submit") {
-      button.setAttribute("type", "button");
-    }
-
-    metatypeForm.appendChild(button);
-
-    // Si le métatype correspond à l'option précédemment sélectionnée, rétablissez la sélection
-    if (
-      selectedMetatype &&
-      button.textContent === selectedMetatype.textContent
-    ) {
-      button.classList.add("selected");
-      console.log(`Sélection du métatype : ${selectedMetatype.textContent}`);
-    }
-
-    // Ajoutez un gestionnaire d'événements pour surveiller les sélections
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-      handleMetatypeButtonClick(button, metatypeForm);
-      updateAttributesForMetatype(button.id);
-      showResults();
-      metatypeSelected = true;
-      characterData.metatype = button.id;
-      console.log(`Bouton de métatype cliqué : ${button.textContent}`);
-    });
-  });
-}
-
 // Fonction pour obtenir les métatypes en fonction de la priorité
 function getMetatypesForPriority(priority) {
   var priorities = {
@@ -255,111 +141,85 @@ function getMetatypesForPriority(priority) {
   return priorities[priority] || [];
 }
 
-// Fonction pour gérer la sélection des boutons de métatype
-function handleMetatypeButtonClick(button, metatypeForm) {
-  const wasSelected = button.classList.contains("selected");
-  const allButtons = metatypeForm.querySelectorAll(".metatype-button");
+function generateButtons(titleElement, formElement, options, type, priority) {
+  const title = document.getElementById(titleElement);
+  const form = document.getElementById(formElement);
 
-  if (!wasSelected) {
-    // Désélectionner tous les boutons
-    allButtons.forEach((btn) => btn.classList.remove("selected"));
-    // Sélectionner uniquement le bouton actuel
-    button.classList.add("selected");
-    console.log(`Bouton de métatype sélectionné : ${button.textContent}`);
-  }
-  selectedMetatype = button.id;
-  saveInCookie();
-}
-
-// Fonction pour générer des boutons en ligne en fonction de la priorité sélectionnée
-function generateSpecialButtons(priority) {
-  const specialTitle = document.getElementById("specialTitle");
-  const specialForm = document.getElementById("specialButtons");
-
-  if (priority === "E") {
-    specialTitle.style.display = "none";
-    specialForm.innerHTML = "";
+  if (priority === "E" && type === "special") {
+    title.style.display = "none";
+    form.innerHTML = "";
   } else {
-    specialTitle.style.display = "block";
-    // Récupérer l'option de métatype sélectionnée actuellement
-    const selectedSpecial = specialForm.querySelector("button.selected");
+    title.style.display = "block";
 
-    const specials = [
-      "adept",
-      "mysticAdept",
-      "fullMagician",
-      "aspectedMagician",
-      "technomancer",
-    ];
+    const selectedButton = form.querySelector("button.selected");
+    const sortedOptions = sort(options);
 
-    specialSorted = sort(specials);
+    form.innerHTML = "";
 
-    // Créez des boutons en ligne pour chaque métatype
-    specialForm.innerHTML = ""; // Supprimez les options de métatype existantes
-
-    specialSorted.forEach((special) => {
+    sortedOptions.forEach((option) => {
       const button = document.createElement("button");
-      button.textContent = capitalized(special.terms);
-      button.classList.add("special-button");
+      button.textContent = capitalized(option.terms);
+      button.classList.add(`${type}-button`);
       button.classList.add("btn-outline-primary");
       button.classList.add("btn");
-      button.setAttribute("id", special.data);
+      button.setAttribute("id", option.data);
 
-      // Vérifiez si le type du bouton est "submit" et changez-le en "button" si nécessaire
       if (button.getAttribute("type") === "submit") {
         button.setAttribute("type", "button");
       }
 
-      specialForm.appendChild(button);
+      form.appendChild(button);
 
-      // Si le métatype correspond à l'option précédemment sélectionnée, rétablissez la sélection
-      if (
-        selectedSpecial &&
-        button.id === selectedSpecial.id
-      ) {
+      if (selectedButton && button.id === selectedButton.id) {
         button.classList.add("selected");
       }
 
-      // Ajoutez un gestionnaire d'événements pour surveiller les sélections
       button.addEventListener("click", function (event) {
         event.preventDefault();
-        handleSpecialButtonClick(button, specialForm);
-        updateAttributesForSpecial(button.id, priority);
-        handleSkills();
-        updateSkills();
-        showResults();
-        characterData.metatype = button.id;
-        specialSelected = true;
-        console.log(`Bouton de métatype cliqué : ${button.textContent}`);
+        handleButtonClick(button, form, type, priority);
+        console.log(`Bouton de ${type} cliqué : ${button.textContent}`);
       });
     });
   }
 }
 
 // Fonction pour gérer la sélection des boutons de métatype
-function handleSpecialButtonClick(button, specialForm) {
+function handleButtonClick(button, form, type, priority) {
   const wasSelected = button.classList.contains("selected");
-  const allButtons = specialForm.querySelectorAll(".special-button");
+  const allButtons = form.querySelectorAll(`.${type}-button`);
 
-  if (!wasSelected) {
+  console.log("handleButtonClick wasSelected : ", wasSelected, " button ", button, " type : ", type, " characterData.metatype : ", characterData.metatype);
+
+  if (!wasSelected || characterData.metatype) {
     // Désélectionner tous les boutons
+
     allButtons.forEach((btn) => btn.classList.remove("selected"));
     // Sélectionner uniquement le bouton actuel
     button.classList.add("selected");
   }
 
-  if (button.id === "technomancer") {        
-    console.log("handleSpecialButtonClick : ",terms[button.id]);     
-      characterData.isTechno = true;
-      characterData.isMagic = false;
-      characterData.magicChoice = "";
-    } else {
-      console.log("handleSpecialButtonClick");
-      characterData.isMagic = true;
-      characterData.isTechno = false;
-      characterData.magicChoice = button.id;
-    }
+  if (type === "special") {    
+    if (button.id === "technomancer") {           
+        characterData.isTechno = true;
+        characterData.isMagic = false;
+        characterData.magicChoice = "";
+      } else {
+        characterData.isMagic = true;
+        characterData.isTechno = false;
+        characterData.magicChoice = button.id;
+      }
+  }
+  if (type === "metatype") {
+    characterData.metatype = button.id;    
+    metatypeSelected = true;
+  }
 
+  updateAttributesForSpecial(button.id, priority);
+  updateAttributesForMetatype(button.id);
+  handleSkills();
+  updateValues("skills");  
+  updateValues("attributes");
+  showResults();
   saveInCookie();
 }
 
@@ -461,325 +321,8 @@ function addSINCookie() {
 }
 
 // Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
-function updateAttributesForMetatype(metatype) {
-  var attributesData = characterData.attributes;
-  if (metatype === "dwarf") {
-    attributesData.body.max = 7;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 5;
-    attributesData.strength.max = 8;
-    attributesData.willpower.max = 7;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  } else if (metatype === "elf") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 6;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 8;
-    attributesData.edge.max = 6;
-  } else if (metatype === "ork") {
-    attributesData.body.max = 8;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 8;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 5;
-    attributesData.edge.max = 6;
-  } else if (metatype === "troll") {
-    attributesData.body.max = 9;
-    attributesData.agility.max = 5;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 9;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 5;
-    attributesData.edge.max = 6;
-  } else if (metatype === "human") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 6;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 7;
-  } else if (metatype === "dalakitnon") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 6;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 8;
-    attributesData.intuition.max = 7;
-    attributesData.charisma.max = 8;
-    attributesData.edge.max = 6;
-  } else if (metatype === "dryad") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 5;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 8;
-    attributesData.edge.max = 6;
-  } else if (metatype === "nocturna") {
-    attributesData.body.max = 5;
-    attributesData.agility.max = 8;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 6;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 7;
-    attributesData.edge.max = 6;
-  } else if (metatype === "wakyambi") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 6;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 7;
-    attributesData.edge.max = 7;
-  }else if (metatype === "xapiri_thepe") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 6;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 7;
-    attributesData.edge.max = 6;
-  } else if (metatype === "nartaki") {
-    attributesData.body.max = 8;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 8;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  } else if (metatype === "valkyrie") {
-    attributesData.body.max = 7;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 7;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  } else if (metatype === "duende") {
-    attributesData.body.max = 7;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 8;
-    attributesData.strength.max = 6;
-    attributesData.willpower.max = 7;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 7;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  }else if (metatype === "gnome") {
-    attributesData.body.max = 4;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 4;
-    attributesData.willpower.max = 7;
-    attributesData.logic.max = 7;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  } else if (metatype === "hanuman") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 7;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 7;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  } else if (metatype === "koborokuru") {
-    attributesData.body.max = 7;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 7;
-    attributesData.willpower.max = 7;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  } else if (metatype === "menehune") {
-    attributesData.body.max = 7;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 5;
-    attributesData.strength.max = 7;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  }else if (metatype === "hobgobelin") {
-    attributesData.body.max = 6;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 7;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 7;
-    attributesData.edge.max = 6;
-  } else if (metatype === "ogre") {
-    attributesData.body.max = 9;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 5;
-    attributesData.strength.max = 8;
-    attributesData.willpower.max = 7;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  } else if (metatype === "oni") {
-    attributesData.body.max = 8;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 7;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 7;
-    attributesData.edge.max = 6;
-  } else if (metatype === "satyr") {
-    attributesData.body.max = 7;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 7;
-    attributesData.strength.max = 7;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-  }else if (metatype === "cyclops") {
-    attributesData.body.max = 9;
-    attributesData.agility.max = 5;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 10;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 5;
-    attributesData.edge.max = 6;
-  } else if (metatype === "fomorian") {
-    attributesData.body.max = 9;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 8;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 7;
-    attributesData.edge.max = 6;
-  } else if (metatype === "giant") {
-    attributesData.body.max = 9;
-    attributesData.agility.max = 5;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 10;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 5;
-    attributesData.edge.max = 6;
-  } else if (metatype === "minotaur") {
-    attributesData.body.max = 10;
-    attributesData.agility.max = 5;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 9;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 5;
-    attributesData.edge.max = 6;
-  } else if (metatype === "centaur") {
-    attributesData.body.max = 8;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 9;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-    attributesData.magic.base = 1;
-    attributesData.magic.max = 6;
-  }else if (metatype === "naga") {
-    attributesData.body.max = 8;
-    attributesData.agility.max = 7;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 9;
-    attributesData.willpower.max = 7;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 7;
-    attributesData.edge.max = 6;
-    attributesData.magic.base = 1;
-    attributesData.magic.max = 6;
-  } else if (metatype === "pixie") {
-    attributesData.body.max = 3;
-    attributesData.agility.max = 8;
-    attributesData.reaction.max = 8;
-    attributesData.strength.max = 2;
-    attributesData.willpower.max = 8;
-    attributesData.logic.max = 7;
-    attributesData.intuition.max = 7;
-    attributesData.charisma.max = 8;
-    attributesData.edge.max = 6;
-    attributesData.magic.base = 1;
-    attributesData.magic.max = 6;
-  } else if (metatype === "sasquatch") {
-    attributesData.body.max = 10;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 10;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-    attributesData.magic.base = 1;
-    attributesData.magic.max = 6;
-  } else if (metatype === "merrow") {
-    attributesData.body.max = 9;
-    attributesData.agility.max = 6;
-    attributesData.reaction.max = 6;
-    attributesData.strength.max = 9;
-    attributesData.willpower.max = 6;
-    attributesData.logic.max = 6;
-    attributesData.intuition.max = 6;
-    attributesData.charisma.max = 6;
-    attributesData.edge.max = 6;
-    attributesData.magic.base = 1;
-    attributesData.magic.max = 6;
-  }
-  handleAttributes();
-  updateAttributesDisplay();
-}
-
-// Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
 function updateAttributesForSpecial(special, priority) {
+  console.log("updateAttributesForSpecial");
   var attributesData = characterData.attributes;
   if (priority === "A") {
     if (
@@ -843,7 +386,10 @@ function updateAttributesForSpecial(special, priority) {
     attributesData.resonance.base = 0;
   }
   handleAttributes();
-  updateAttributesDisplay();
+  updateValues("attributes");  
+  handleSkills();
+  updateValues("skills");  
+
 }
 
 function handleAttributes() {
@@ -859,15 +405,17 @@ function handleAttributes() {
 
     // Si l'attribut doit être affiché, générez le HTML
     if (attributesData[attribute].base > 0) {
+
+      console.log("handleAttributes : ",);
       
       attributeHTML += `
         <tr>
             <th scope="row">${capitalized(terms[attribute])}</th>
             <td>
-                <div id="${attribute}_base"><span>${attributesData[attribute].base}</span></div>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <button class="btn btn-outline-danger btn-xs" onclick="decrementAttribute('${attribute}', 1)">-</button>
-                    <button class="btn btn-outline-success btn-xs" onclick="incrementAttribute('${attribute}', 1)">+</button>
+                <div id="${attribute}_base"><span>${attributesData[attribute].added}</span></div>
+                <dupdateAttriv class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <button class="btn btn-outline-danger btn-xs" onclick="modifyValue('attributes','${attribute}', 'decrement')">-</button>
+                    <button class="btn btn-outline-success btn-xs" onclick="modifyValue('attributes','${attribute}', 'increment')">+</button>
                 </div>
             </td>
             <td id="${attribute}_actual"><span class="h6">${attributesData[attribute].value}</span></td>
@@ -881,70 +429,34 @@ function handleAttributes() {
   attributeTableBody.innerHTML = attributeHTML;
 }
 
-// Fonction pour mettre à jour les éléments HTML en fonction des données d'attributes
-function updateAttributesDisplay() {
-  var attributesData = characterData.attributes;
-  for (const attribute in attributesData) {
-    if (attributesData[attribute].base > 0) {
-      let attribute_base = document
-        .getElementById(attribute + "_base")
-        .querySelector("span");
-      let attribute_actual = document
-        .getElementById(attribute + "_actual")
-        .querySelector("span");
-      let attribute_max = document
-        .getElementById(attribute + "_max")
-        .querySelector("span");
-      if (attributesData[attribute].base !== attributesData[attribute].value) {
-        attributesData[attribute].value = attributesData[attribute].base;
-        pointsAttributesSpentPrio = 0;
-        pointsAttributesSpentAdjustement = 0;
-        selectedAttributeType = "Prio";
-      }
-      attribute_base.textContent = attributesData[attribute].base;
-
-      attribute_max.textContent = attributesData[attribute].max;
-      attribute_actual.textContent = attributesData[attribute].value;
-    }
-  }
-}
-
-// Déclarer la variable pour stocker le type d'attribute sélectionné
-let selectedAttributeType = "Prio";
-
-// Déclarer la variable depenseAttributes en tant que variable globale
-let depenseAttributes;
-
 // Fonction pour afficher le namebre de points d'attributes à dépenser
 function showDepenseAttribute() {
-  let attributesSpentNumberPrio = getAttributesDepensePrio(
+  characterData.points.Prio.base = getAttributesDepensePrio(
     IDselectedCells.attributes
   );
-  let attributesSpentNumberAdjustement = getAttributesDepenseAjuste(
+  characterData.points.Adjustement.base = getAttributesDepenseAjuste(
     IDselectedCells.metatypes
   );
 
-  depenseAttributes = document.getElementById("attributesSpent"); // Mettre à jour la variable globale depenseAttributes
-
-  depenseAttributes.innerHTML =
+  document.getElementById("attributesSpent").innerHTML =
     ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">' +
     capitalized(terms.attributes) +
     '</th> <th scope="col">' +
     capitalized(terms.adjustement) +
-    '</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="CellAttributesDepensePrio" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesSpentNumberPrio">' +
-    attributesSpentNumberPrio +
-    '</span></td> <td id="CellAttributesDepenseAdjustement" class="selectable" onclick="selectAttributeType(this, \'Adjustement\')"><span id="attributesSpentNumberAdjustement">' +
-    attributesSpentNumberAdjustement +
+    '</th></tr> </thead><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount">' +
+    characterData.points.Prio.base +
+    '</span></td> <td id="attributesAdjustement_max" class="selectable" onclick="selectAttributeType(this, \'Adjustement\')"><span id="attributesAdjustementCount">' +
+    characterData.points.Adjustement.base +
     "</span></td> </tr></tbody></table>";
 }
 
 // Fonction pour sélectionner le type d'attribute
 function selectAttributeType(cell, type) {
   const classAttributePrio = document.getElementById(
-    `CellAttributesDepensePrio`
+    `attributesPrio_max`
   );
   const classAttributeAdjustement = document.getElementById(
-    `CellAttributesDepenseAdjustement`
+    `attributesAdjustement_max`
   );
   if (type === "Prio") {
     classAttributePrio.classList.add("selected");
@@ -956,128 +468,8 @@ function selectAttributeType(cell, type) {
     if (classAttributePrio.classList.contains("selected"))
       classAttributePrio.classList.remove("selected");
   }
-  selectedAttributeType = type;
-}
-
-// Fonction pour incrémenter une valeur attribute
-function incrementAttribute(attribute, increment) {
-  var attributesData = characterData.attributes;
-  attributesData[attribute].value += increment;
-  const cell = document.getElementById(attribute + "_actual");
-  const span = cell.querySelector("span");
-  span.textContent = attributesData[attribute].value;
-
-  //checher la source
-
-  // Mettre à jour le namebre de points d'attributes dépensés
-  updateAttributesPoints(
-    "increment",
-    increment,
-    selectedAttributeType,
-    attribute
-  );
-}
-
-// Fonction pour décrémenter une valeur attribute
-function decrementAttribute(attribute, decrement) {
-  var attributesData = characterData.attributes;
-  var currentValue = attributesData[attribute].value;
-  attributesData[attribute].value -= decrement;
-  const cell = document.getElementById(attribute + "_actual");
-  const span = cell.querySelector("span");
-  if (currentValue >= decrement) {
-    span.textContent = attributesData[attribute].value;
-
-    // Mettre à jour le namebre de points d'attributes dépensés
-    updateAttributesPoints(
-      "decrement",
-      decrement,
-      selectedAttributeType,
-      attribute
-    );
-  }
-}
-
-let pointsAttributesSpentPrio = 0; // Initialisation de la réserve Prio
-let pointsAttributesSpentAdjustement = 0; // Initialisation de la réserve Adjustement
-
-function updateAttributesPoints(
-  type,
-  valeur,
-  selectedAttributeType,
-  attribute
-) {
-  var attributesData = characterData.attributes;
-  // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
-  let attributesSpentNumber = 0;
-  if (selectedAttributeType === "Prio") {
-    attributesSpentNumber = getAttributesDepensePrio(
-      IDselectedCells.attributes
-    );
-  } else if (selectedAttributeType === "Adjustement") {
-    attributesSpentNumber = getAttributesDepenseAjuste(
-      IDselectedCells.metatypes
-    );
-  }
-
-  if (type === "increment") {
-    // Vérifiez si l'incrémentation dépasse le maximum d'attributes
-    if (selectedAttributeType === "Prio") {
-      pointsAttributesSpentPrio -= valeur;
-    } else if (selectedAttributeType === "Adjustement") {
-      pointsAttributesSpentAdjustement -= valeur;
-    }
-  } else if (type === "decrement") {
-    if (selectedAttributeType === "Prio") {
-      pointsAttributesSpentPrio += valeur;
-    } else if (selectedAttributeType === "Adjustement") {
-      pointsAttributesSpentAdjustement += valeur;
-    }
-  }
-
-  // Mettez à jour le span avec le namebre de points d'attributes dépensés en fonction du type
-  const depenseAttributes = document.getElementById(
-    `attributesSpentNumber${selectedAttributeType}`
-  );
-
-  // Mettez à jour le texte avec la nouvelle valeur
-  if (selectedAttributeType === "Prio") {
-    depenseAttributes.textContent = Math.max(
-      0,
-      attributesSpentNumber + pointsAttributesSpentPrio
-    );
-  } else if (selectedAttributeType === "Adjustement") {
-    depenseAttributes.textContent = Math.max(
-      0,
-      attributesSpentNumber + pointsAttributesSpentAdjustement
-    );
-  }
-
-  // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
-  const maxAttribute = document.getElementById(`${attribute}_max`);
-  if (attributesData[attribute].value > attributesData[attribute].max) {
-    maxAttribute.classList.add("maximum");
-  } else {
-    maxAttribute.classList.remove("maximum");
-  }
-
-  var cellDepensePrio = document.getElementById(`CellAttributesDepensePrio`);
-  var cellDepenseAdjustement = document.getElementById(
-    `CellAttributesDepenseAdjustement`
-  );
-
-  if (attributesSpentNumber + pointsAttributesSpentPrio < 0) {
-    cellDepensePrio.classList.add("maximum");
-  } else {
-    cellDepensePrio.classList.remove("maximum");
-  }
-
-  if (attributesSpentNumber + pointsAttributesSpentAdjustement < 0) {
-    cellDepenseAdjustement.classList.add("maximum");
-  } else {
-    cellDepenseAdjustement.classList.remove("maximum");
-  }
-  updateSkills();
+  characterData.selectAttributeType = type ;
+  console.log("selectAttributeType : ", characterData.selectAttributeType)
 }
 
 function getAttributesDepensePrio(priority) {
@@ -1106,7 +498,6 @@ function getSkillsSpent(priority) {
 }
 
 let skillsSort = [];
-let skillsSpentNumber = 0;
 
 function sort(array) {
   if (!Array.isArray(array)) {
@@ -1132,13 +523,13 @@ function handleSkills() {
   var skillsSort = sort(Object.keys(skillsData));
 
   // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
-  skillsSpentNumber = getSkillsSpent(IDselectedCells.skills);
+  characterData.points.skills.base = getSkillsSpent(IDselectedCells.skills);
 
   var skillsSpentTable = document.getElementById("skillsSpent"); // Mettre à jour la variable globale
 
   skillsSpentTable.innerHTML =
-    '<table class="table"><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="skillsSpentMax"> <span id="skillsSpentCell">' +
-    skillsSpentNumber +
+    '<table class="table"><tbody> <tr> <th scope="row">Points à dépenser</th> <td id="skills_max"> <span id="skillsCount">' +
+    characterData.points.skills.base +
     "</span></td></tr></tbody></table>";
 
   // Sélectionnez le tableau des attributes par son ID
@@ -1150,13 +541,16 @@ function handleSkills() {
   var skillsHTML = "";
 
   for (const skill of skillsSort) {
+    console.log("handleSkills : skill ", skill, " skillsData[skill.data].linkedAttribute : ",skillsData[skill.data].linkedAttribute);
     if (
       (skillsData[skill.data].linkedAttribute === "magic" &&
       characterData.isMagic === false) ||
       (skillsData[skill.data].linkedAttribute === "resonance" &&
       characterData.isTechno === false)
-    ) {
+    ) {         
+    console.log("handleSkills : skill ", skill, " FAILED");
     } else {
+      console.log("handleSkills : skill ", skill, " PASSED");
       // Si l'attribut doit être affiché, générez le HTML
       var capitalizedId = capitalized(skill.terms);
       var rdd =
@@ -1170,12 +564,12 @@ function handleSkills() {
         skillsData[skill.data].value
       }</span></div>
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <button class="btn btn-outline-danger btn-xs" onclick="decrementSkill('${
+                  <button class="btn btn-outline-danger btn-xs" onclick="modifyValue('skills','${
                     skill.data
-                  }', 1)">-</button>
-                  <button class="btn btn-outline-success btn-xs" onclick="incrementSkill('${
+                  }', 'decrement')">-</button>
+                  <button class="btn btn-outline-success btn-xs" onclick="modifyValue('skills','${
                     skill.data
-                  }', 1)">+</button>
+                  }', 'increment')">+</button>
               </div>
           </td>
           <td id="${
@@ -1193,121 +587,168 @@ function handleSkills() {
   skillTableBody.innerHTML = skillsHTML;
 }
 
-function updateSkills() {
-  var attributesData = characterData.attributes;
-  var skillsData = characterData.skills;
 
-  var skillsSort = sort(Object.keys(skillsData));
-  for (const skill of skillsSort) {
-    // Utilisation de for...of pour itérer sur les clés
+function modifyValue(type, element, modificator) {
 
-    if (
-      (skillsData[skill.data].linkedAttribute === "magic" &&
-      characterData.isMagic === false) ||
-      (skillsData[skill.data].linkedAttribute === "resonance" &&
-      characterData.isTechno === false)
-    ) {
-    } else {
-      const cell = document.getElementById(skill.data + "_actual");
-      const span = cell.querySelector("span");
-      span.textContent = skillsData[skill.data].value;
-      var rdd =
-        skillsData[skill.data].value +
-        attributesData[skillsData[skill.data].linkedAttribute].value;
-      if (skillsData[skill.data].value === 0) {
-        rdd = Math.max(
-          0,
-          attributesData[skillsData[skill.data].linkedAttribute].value - 2
-        );
-      }
-      const cellRdd = document
-        .getElementById(skill.data + "_rdd")
-        .querySelector("span");
-      cellRdd.textContent = rdd;
-    }
+  console.log("modifyValue(type, element, modificator) type : ",type, " element : ",element," modificator ",modificator );
+
+  var selectCount = type;
+
+if (type === "attributes") {
+  var selectCount = characterData.selectAttributeType;
+}
+  var numberSpent = characterData.points[selectCount].spent;
+
+  var added = characterData[type][element].added;
+  if (modificator === "increment") {
+    characterData[type][element].added = added + 1;
+    characterData.points[selectCount].spent = numberSpent + 1 ;
   }
-}
-
-// Fonction pour incrémenter une valeur de compétence
-function incrementSkill(skill, increment) {
-  var skillsData = characterData.skills;
-  skillsData[skill].value += increment;
-  updateSkills();
-  updateSkillsPoints("increment", increment, skill);
-}
-
-// Fonction pour décrémenter une valeur compétence
-function decrementSkill(skill, decrement) {
-  var skillsData = characterData.skills;
-  skillsData[skill].value -= decrement;
-  updateSkills();
-  updateSkillsPoints("decrement", decrement, skill);
-}
-
-let pointsSkillsSpent = 0; // Initialisation de la réserve de points de compétences
-
-function updateSkillsPoints(type, valeur, skill) {
-  console.log(
-    "BEFORE updateSkillsPoints : ",
-    type,
-    " & pointsSkillsSpent : ",
-    pointsSkillsSpent,
-    " & valeur : ",
-    valeur
-  );
-
-  var skillsData = characterData.skills;
-
-  if (type === "increment") {
-    pointsSkillsSpent -= valeur;
-  } else if (type === "decrement") {
-    pointsSkillsSpent += valeur;
+  else {
+    characterData[type][element].added = Math.max(0,added - 1);
+    characterData.points[selectCount].spent = Math.max(0, numberSpent - 1) ;
   }
 
-  document.getElementById("skillsSpentCell").textContent = Math.max(
+  console.log("modifyValue(type) element :", element, " added : ", added);
+
+
+  updateValues(type);
+  updatePoints(type, element, modificator);
+}
+
+
+function updateValues(type) {
+var sorted = sort(Object.keys(characterData[type]));
+
+for (const s of sorted) {
+  if (
+    (characterData[type][s.data].linkedAttribute === "magic" &&
+  characterData.isMagic === false) ||
+  (characterData[type][s.data].linkedAttribute === "resonance" &&
+  characterData.isTechno === false) ||
+  (type === "attributes" && characterData[type][s.data].base < 1)
+) {
+} else {
+  characterData[type][s.data].value = characterData[type][s.data].base + characterData[type][s.data].added;
+  const cell = document.getElementById(s.data + "_actual");
+  console.log("updateValues : type : ",type, " s.data : ", s.data, " cell ", cell);
+  const span = cell.querySelector("span");
+  span.textContent = characterData[type][s.data].value;
+  if (type === "attributes") {
+
+    document.getElementById(s.data + "_base").querySelector("span").textContent = characterData[type][s.data].added;
+    document.getElementById(s.data + "_max").querySelector("span").textContent = characterData[type][s.data].max;    
+    if (selectedCells["skills"]) {
+      handleSkills();
+      updateValues("skills");
+    }; 
+  }
+  if (type === "skills") {    
+  var rdd =
+  characterData[type][s.data].value +
+  characterData.attributes[characterData[type][s.data].linkedAttribute].value;
+  if (characterData[type][s.data].value === 0) {
+    rdd = Math.max(
+      0,
+      characterData.attributes[characterData[type][s.data].linkedAttribute].value - 2
+    );
+  }
+  const cellRdd = document
+    .getElementById(s.data + "_rdd")
+    .querySelector("span");
+  cellRdd.textContent = rdd;
+
+  }
+}
+}
+
+};
+
+function updatePoints(type, element, modificator) {
+  
+console.log("updatePoints(type, element, modificator, selectedAttributeType) type : ",type, " element : ",element," modificator ",modificator, " selectedAttributeType ", characterData.selectAttributeType );
+
+
+var selectCount = type;
+var namePoint = type;
+
+if (type === "attributes") {
+  var selectCount = characterData.selectAttributeType;
+  var namePoint = type + selectCount;
+}
+
+  var numberBase = characterData.points[selectCount].base;
+  var numberSpent = characterData.points[selectCount].spent;
+
+  console.log("updatePoints : numberBase ",numberBase," numberSpent : ",numberSpent)
+
+  console.log(`${namePoint}Count`);
+
+  console.log(document.getElementById(`${namePoint}Count`));
+
+  document.getElementById(`${namePoint}Count`).textContent = Math.max(
     0,
-    skillsSpentNumber + pointsSkillsSpent
+    numberBase - numberSpent
   );
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
-  if (skillsData[skill].value > 7) {
-    document.getElementById(`${skill}_max`).classList.add("maximum");
-  } else {
-    document.getElementById(`${skill}_max`).classList.remove("maximum");
-  }
+  if (type === "skills") {    
+    if (characterData.skills[element].value > 7) {
+      document.getElementById(`${element}_max`).classList.add("maximum");
+    } else {
+      document.getElementById(`${element}_max`).classList.remove("maximum");
+    } 
+  
+    }
+
+  if (type === "attributes") {
+   
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
-  if (skillsSpentNumber + pointsSkillsSpent < 0) {
-    document.getElementById("skillsSpentMax").classList.add("maximum");
+  const maxAttribute = document.getElementById(`${element}_max`);
+  if (characterData.attributes[element].value > characterData.attributes[element].max) {
+    maxAttribute.classList.add("maximum");
   } else {
-    document.getElementById("skillsSpentMax").classList.remove("maximum");
+    maxAttribute.classList.remove("maximum");
   }
-}
+  }
+
+  // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
+  if (numberBase - numberSpent < 0) {
+    document.getElementById(`${namePoint}_max`).classList.add("maximum");
+  } else {
+    document.getElementById(`${namePoint}_max`).classList.remove("maximum");
+  }
+
+};
 
 // Fonction pour afficher les résultats
 function showResults() {
-  const resultat = document.getElementById("resultat");
-  resultat.innerHTML = "<h5>Priorités sélectionnées :</h5>";
+  const btn = document.getElementById("btn");
+  const collapses = document.getElementById("collapses");
+  btn.innerHTML = '<input type="checkbox" class="btn-check" id="showPrioritiesBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showPriorities" aria-expanded="false" aria-controls="showPriorities" /> <label class="btn btn-outline-success" for="showPrioritiesBtn" id="showPrioritiesTitle" >' + capitalized(terms.priorityTable) + '</label>';
+
+  collapses.innerHTML = '<div class="collapse" id="showPriorities"> <div class="card card-body"> <div id="showPrioritiesDiv"></div></div> </div>'
 
   for (const categorie in prioritiesSelected) {
     const priority = prioritiesSelected[categorie];
     if (priority) {
-      resultat.innerHTML += `<p>${priority}</p>`;
+      document.getElementById("showPrioritiesDiv").innerHTML += `<p>${capitalized(terms[categorie])}${terms.colons} ${priority}</p>`;
     }
   }
 
-  if (prioritiesSelected["attributes"]) {
-    showDepenseAttribute();
-  }
   const metatypeForm = document.getElementById("metatypeButtons");
   const selectedMeta =
     metatypeForm.querySelector("button.selected") || selectedMetatype;
   if (selectedMeta) {
     const selectedMetatypeValue = selectedMeta.textContent || selectedMetatype;
-    resultat.innerHTML +=
-      "<h5>Métatype sélectionné :</h5>" + selectedMetatypeValue;
+    btn.innerHTML +=
+    '<input type="checkbox" class="btn-check" id="showMetatypeBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showMetatype" aria-expanded="false" aria-controls="showMetatype" /> <label class="btn btn-outline-success" for="showMetatypeBtn" id="showMetatypeTitle" >' + capitalized(terms.metatypes) + capitalized(terms.colons) + ' ' + selectedMetatypeValue + '</label>';
+
+    collapses.innerHTML += '<div class="collapse" id="showMetatype"><div class="card card-body"> <div id="showMetatypeDiv"></div></div></div>'
+
     const metatypeQualities = handleMetatypeQualities(selectedMeta.id);
     if (metatypeQualities.length > 0)
-      resultat.innerHTML +=
+    document.getElementById("showMetatypeDiv").innerHTML +=
         "<h5>Traits innés :</h5>" + metatypeQualities.join(", ");
   }
 
@@ -1316,7 +757,7 @@ function showResults() {
     specialForm.querySelector("button.selected") || selectedSpecial;
   if (selectedSpe) {
     const selectedSpecialValue = selectedSpe.textContent || selectedSpecial;
-    resultat.innerHTML += "<h5>" + selectedSpecialValue + "</h5>";
+    btn.innerHTML += '<input type="checkbox" class="btn-check" id="showSpecialBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showSpecial" aria-expanded="false" aria-controls="showSpecial" /> <label class="btn btn-outline-success" for="showSpecialBtn" id="showSpecialTitle" >' + capitalized(terms.magicOrResonance) + capitalized(terms.colons) + ' ' + selectedSpecialValue + '</label>';
   }
 
   // Affichez la colonne des resources avec séparation des unités et le symbole ¥
@@ -1324,12 +765,11 @@ function showResults() {
   if (resourcesValue) {
     const resources = parseInt(resourcesValue.split(" ")[1]); // Extrait la valeur numérique
     if (!isNaN(resources)) {
-      resultat.innerHTML += "<h5>Ressources :</h5>";
       const formattedRessources = resources.toLocaleString("fr-FR", {
         style: "currency",
         currency: "JPY",
       });
-      resultat.innerHTML += `<p>${formattedRessources}</p>`;
+      btn.innerHTML += '<input type="checkbox" class="btn-check" id="showResourcesBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showResources" aria-expanded="false" aria-controls="showResources" /> <label class="btn btn-outline-success" for="showResourcesBtn" id="showResourcesTitle" >' + capitalized(terms.resources) + capitalized(terms.colons) + ' ' + formattedRessources + '</label>';
     }
   }
 }
@@ -1346,7 +786,7 @@ function saveInCookie() {
     characterData,
   });
 
-  console.log("dataToSave : " + dataToSave);
+  //console.log("dataToSave : " + dataToSave);
 
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 1); // 1 jour d'expiration
@@ -1374,7 +814,7 @@ function loadCookie() {
       selectedMetatype = loadedData.selectedMetatype;
       SIN = loadedData.SIN;
       characterData = loadedData.characterData;
-      generateMetatypeButtons(actualPriority);
+      generateButtons("metatypeTitle", "metatypeButtons", getMetatypesForPriority(actualPriority), "metatype", actualPriority);
       handleMetatypeQualities(selectedMetatype);
       showResults();
       addClassesCookie();

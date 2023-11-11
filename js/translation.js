@@ -1,8 +1,9 @@
-// Fonction pour changer la langue
-function setLanguage(language) {
+function setLang(language) {
   // Utilisez le tableau de traduction correspondant à la langue
   terms = translations[language];
+}
 
+function setLanguage(language) {
   const source = document.getElementById("container").innerHTML;
   const template = Handlebars.compile(source);
 
@@ -19,11 +20,9 @@ const translations = {
     surname: "surnom",
     metatypes: "métatypes",
     attributes: "attributs",
-    attributesTitle: "Attributs",
     adjustement: "ajustement",
     skills: "compétences",
-    skillsTitle: "Compétences",
-    magicOrResonance: "Magie ou Résonance",
+    magicOrResonance: "Magie/Résonance",
     resources: "ressources",
     body: "constitution",
     agility: "agilité",
@@ -99,7 +98,14 @@ const translations = {
     formula: "formule",
     formulas: "formules",
     complexForm: "forme complexe",
-    complexForms: "formes complexes"
+    complexForms: "formes complexes",
+    added: "ajout",
+    actual: "actuel",
+    maximum: "maximum",
+    dices: "dès",
+    specializations: "spécialisations",
+    character: "personnage",
+    reinitialize: "réinitialisation"
   },
   en: {
     firstname: "Firstname",
@@ -107,9 +113,7 @@ const translations = {
     surname: "Surname",
     metatypes: "Metatypes",
     attributes: "attributes",
-    attributesTitle: "Attributes",
     skills: "skills",
-    skillsTitle: "Skills",
     magicOrResonance: "Magic or Resonance",
     resources: "Resources",
     body: "Body",
@@ -186,6 +190,13 @@ const translations = {
     formula: "formula",
     formulas: "formulas",
     complexForm: "complex form",
-    complexForms: "complex forms"
+    complexForms: "complex forms",
+    added: "added",
+    actual: "actual",
+    maximum: "maximum",
+    dices: "dices",
+    specializations: "specializations",
+    character: "character",
+    reinitialize: "reinitialize"
   },
 };
