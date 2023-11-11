@@ -200,6 +200,7 @@ const characterData = {
     },
   },
   selectAttributeType: "Prio",
+  alreadyMaxAttribute: "",
   magicChoice: "",
   isMagic: false,
   isTechno: false,

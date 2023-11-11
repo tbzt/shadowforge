@@ -824,14 +824,27 @@ function updatePoints(type, element, modificator) {
   if (type === "attributes") {
     // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
     const maxAttribute = document.getElementById(`${element}_max`);
+    var max = characterData.attributes[element].max;
+    var maxElement = characterData.alreadyMaxAttribute;
+    if (maxElement) max = characterData.attributes[element].max - 1;
+    console.log("updatePoints : alreadyMaxAttribute ", characterData.alreadyMaxAttribute, " element ", element, " max ", max, " doc ", document.getElementById(`${maxElement}_actual`));
     if (
       characterData.attributes[element].value >
-      characterData.attributes[element].max
+      max
     ) {
+      if (maxElement) document.getElementById(`${maxElement}_actual`).classList.add("maximum");
       maxAttribute.classList.add("maximum");
     } else {
+      if (maxElement) document.getElementById(`${maxElement}_actual`).classList.remove("maximum");
       maxAttribute.classList.remove("maximum");
     }
+    
+    if (characterData[type][element].value >= characterData[type][element].max && characterData.alreadyMaxAttribute === "") {
+      characterData.alreadyMaxAttribute = element;
+    } else if (characterData.alreadyMaxAttribute === element) {
+      characterData.alreadyMaxAttribute = "";
+    } 
+  
   }
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
