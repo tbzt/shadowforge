@@ -107,6 +107,7 @@ const translations = {
     character: "personnage",
     reinitialize: "réinitialisation",
     pointsToSpend: "Points à dépenser",
+    new: "Nouvelle",
   },
   en: {
     firstname: "Firstname",
@@ -200,5 +201,6 @@ const translations = {
     character: "character",
     reinitialize: "reinitialize",
     pointsToSpend: "Points to Spend",
+    new: "new",
   },
 };

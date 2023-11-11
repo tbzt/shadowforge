@@ -187,6 +187,47 @@ function handleButtonClick(button, form, type, priority) {
   const wasSelected = button.classList.contains("selected");
   const allButtons = form.querySelectorAll(`.${type}-button`);
 
+  if (!wasSelected || characterData.metatype) {
+    // Désélectionner tous les boutons
+
+    allButtons.forEach((btn) => btn.classList.remove("selected"));
+    // Sélectionner uniquement le bouton actuel
+    button.classList.add("selected");
+  }
+
+  if (type === "special") {
+    characterData.special = button.id;
+    if (button.id === "technomancer") {
+      characterData.isTechno = true;
+      characterData.isMagic = false;
+    } else {
+      characterData.isMagic = true;
+      characterData.isTechno = false;
+    }
+  }
+
+  if (type === "metatype") {
+    characterData.metatype = button.id;
+    metatypeSelected = true;
+    var check = checkAdjustementByMetatype[characterData.metatype];
+
+    if (check && check.adjustement) {
+      characterData.points.Adjustement.base = check.adjustement;
+      console.log(
+        "handleButtonClick : checkAdjustementByMetatype[characterData.metatype]",
+        checkAdjustementByMetatype[characterData.metatype],
+        " check ",
+        check,
+        " adjustement ",
+        check.adjustement
+      );
+    } else {
+      console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
+    }
+
+    showAttributesToSpend();
+  }
+
   console.log(
     "handleButtonClick wasSelected : ",
     wasSelected,
@@ -199,43 +240,10 @@ function handleButtonClick(button, form, type, priority) {
     " priority : ",
     priority,
     " characterData.metatype : ",
-    characterData.metatype
+    characterData.metatype,
+    " characterData.special : ",
+    characterData.special
   );
-
- if (!wasSelected || characterData.metatype) {
-    // Désélectionner tous les boutons
-
-    allButtons.forEach((btn) => btn.classList.remove("selected"));
-    // Sélectionner uniquement le bouton actuel
-    button.classList.add("selected");
-  }
-
-  if (type === "special") {
-    if (button.id === "technomancer") {
-      characterData.isTechno = true;
-      characterData.isMagic = false;
-      characterData.magicChoice = "";
-    } else {
-      characterData.isMagic = true;
-      characterData.isTechno = false;
-      characterData.magicChoice = button.id;
-    }
-  }
-  if (type === "metatype") {
-    characterData.metatype = button.id;
-    metatypeSelected = true;
-    var check = checkAdjustementByMetatype[characterData.metatype];
-    
-    if (check && check.adjustement) {
-      characterData.points.Adjustement.base = check.adjustement;
-      console.log("handleButtonClick : checkAdjustementByMetatype[characterData.metatype]", checkAdjustementByMetatype[characterData.metatype], " check ", check, " adjustement ", check.adjustement);
-    } else {
-      console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
-    }
-
-    showAttributesToSpend();
-    
-  }
 
   updateAttributesForSpecial(button.id, priority);
   updateAttributesForMetatype(button.id);
@@ -501,13 +509,18 @@ function handleAttributes() {
   var attributesData = characterData.attributes;
   for (const attribute in attributesData) {
     // Si l'attribut doit être affiché, générez le HTML
-    
-  var adjustementPossible = "";
-  if (attributesData[attribute].max > 6 || attribute === "edge" || attribute === "magic" || attribute === "resonance") {
-    adjustementPossible = "attributesAdjustementPossible";
-  } else {    
-    adjustementPossible = "attributesAdjustementImpossible";
-  }
+
+    var adjustementPossible = "";
+    if (
+      attributesData[attribute].max > 6 ||
+      attribute === "edge" ||
+      attribute === "magic" ||
+      attribute === "resonance"
+    ) {
+      adjustementPossible = "attributesAdjustementPossible";
+    } else {
+      adjustementPossible = "attributesAdjustementImpossible";
+    }
 
     if (attributesData[attribute].base > 0) {
       attributeHTML += `
@@ -540,16 +553,28 @@ function showAttributesToSpend() {
   characterData.points.Prio.base = getAttributesDepensePrio(
     IDselectedCells.attributes
   );
-  
+
   var check = checkAdjustementByMetatype[characterData.metatype];
-    
+
   if (check && check.adjustement) {
     characterData.points.Adjustement.base = check.adjustement;
-    console.log("handleButtonClick : checkAdjustementByMetatype[characterData.metatype]", checkAdjustementByMetatype[characterData.metatype], " check ", check, " adjustement ", check.adjustement);
+    console.log(
+      "handleButtonClick : checkAdjustementByMetatype[characterData.metatype]",
+      checkAdjustementByMetatype[characterData.metatype],
+      " check ",
+      check,
+      " adjustement ",
+      check.adjustement
+    );
   } else {
     console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
   }
-  console.log("showAttributesToSpend : characterData.points.Prio.base ",characterData.points.Prio.base, " characterData.points.Adjustement.base ", characterData.points.Adjustement.base);
+  console.log(
+    "showAttributesToSpend : characterData.points.Prio.base ",
+    characterData.points.Prio.base,
+    " characterData.points.Adjustement.base ",
+    characterData.points.Adjustement.base
+  );
 
   document.getElementById("attributesSpent").innerHTML =
     ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">' +
@@ -571,23 +596,27 @@ function selectAttributeType(cell, type) {
   const classAttributeAdjustement = document.getElementById(
     `attributesAdjustement_max`
   );
-  const possibleElements = document.querySelectorAll('.attributesAdjustementPossible');
-  const impossibleElements = document.querySelectorAll('.attributesAdjustementImpossible');
+  const possibleElements = document.querySelectorAll(
+    ".attributesAdjustementPossible"
+  );
+  const impossibleElements = document.querySelectorAll(
+    ".attributesAdjustementImpossible"
+  );
 
   if (type === "Prio") {
-    classAttributePrio.classList.add("selected");    
-    possibleElements.forEach(element => {
-      if (element.classList.contains('table-success')) {
-        element.classList.remove('table-success');
+    classAttributePrio.classList.add("selected");
+    possibleElements.forEach((element) => {
+      if (element.classList.contains("table-success")) {
+        element.classList.remove("table-success");
       } else {
-        element.classList.add('table-success');
+        element.classList.add("table-success");
       }
     });
-    impossibleElements.forEach(element => {
-      if (element.classList.contains('table-danger')) {
-        element.classList.remove('table-danger');
+    impossibleElements.forEach((element) => {
+      if (element.classList.contains("table-danger")) {
+        element.classList.remove("table-danger");
       } else {
-        element.classList.add('table-danger');
+        element.classList.add("table-danger");
       }
     });
     if (classAttributeAdjustement.classList.contains("selected"))
@@ -595,18 +624,18 @@ function selectAttributeType(cell, type) {
   }
   if (type === "Adjustement") {
     classAttributeAdjustement.classList.add("selected");
-    possibleElements.forEach(element => {
-      if (element.classList.contains('table-success')) {
-        element.classList.remove('table-success');
+    possibleElements.forEach((element) => {
+      if (element.classList.contains("table-success")) {
+        element.classList.remove("table-success");
       } else {
-        element.classList.add('table-success');
+        element.classList.add("table-success");
       }
     });
-    impossibleElements.forEach(element => {
-      if (element.classList.contains('table-danger')) {
-        element.classList.remove('table-danger');
+    impossibleElements.forEach((element) => {
+      if (element.classList.contains("table-danger")) {
+        element.classList.remove("table-danger");
       } else {
-        element.classList.add('table-danger');
+        element.classList.add("table-danger");
       }
     });
     if (classAttributePrio.classList.contains("selected"))
@@ -651,78 +680,181 @@ function sort(array) {
 }
 
 function handleSkills() {
+  // Récupérer les données des attributs et des compétences du personnage
   var attributesData = characterData.attributes;
   var skillsData = characterData.skills;
 
+  // Trier les compétences
   var skillsSort = sort(Object.keys(skillsData));
 
-  // Obtenez le namebre d'attributes dépensés en fonction du type (Prio ou Adjustement)
+  // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustement)
   characterData.points.skills.base = getSkillsSpent(IDselectedCells.skills);
 
-  var skillsSpentTable = document.getElementById("skillsSpent"); // Mettre à jour la variable globale
+  // Sélectionner la table des compétences
+  var skillsSpentTable = $("#skillsSpent"); // Utilisez jQuery ici
 
-  skillsSpentTable.innerHTML =
+  // Mettre à jour le tableau des compétences dépensées
+  skillsSpentTable.html(
     '<table class="table"><tbody> <tr> <th scope="row">' +
-    terms.pointsToSpend +
-    '</th> <td id="skills_max"> <span id="skillsCount">' +
-    characterData.points.skills.base +
-    "</span></td></tr></tbody></table>";
+      terms.pointsToSpend +
+      '</th> <td id="skills_max"> <span id="skillsCount">' +
+      characterData.points.skills.base +
+      "</span></td></tr></tbody></table>"
+  );
 
-  // Sélectionnez le tableau des attributes par son ID
-  var skillTable = document.getElementById("skillTable");
-  // Sélectionnez le corps du tableau
-  var skillTableBody = skillTable.querySelector("tbody");
+  // Sélectionner le tableau des compétences par son ID
+  var skillTable = $("#skillTable"); // Utilisez jQuery ici
 
-  // Générez le contenu HTML en utilisant le modèle et les données
+  // Sélectionner le corps du tableau des compétences
+  var skillTableBody = skillTable.find("tbody"); // Utilisez jQuery ici
+
+  // Générer le contenu HTML en utilisant le modèle et les données
   var skillsHTML = "";
 
   for (const skill of skillsSort) {
-
+    // Vérifier si la compétence doit être affichée en fonction des attributs du personnage
     if (
       (skillsData[skill.data].linkedAttribute === "magic" &&
         characterData.isMagic === false) ||
       (skillsData[skill.data].linkedAttribute === "resonance" &&
         characterData.isTechno === false)
     ) {
-    } else {
-      // Si l'attribut doit être affiché, générez le HTML
-      var capitalizedId = capitalized(skill.terms);
-      var rdd =
-        skillsData[skill.data].value +
-        attributesData[skillsData[skill.data].linkedAttribute].value;
-      skillsHTML += `
+      continue; // Ignorer cette itération
+    }
+
+    // Si l'attribut doit être affiché, générer le HTML
+    const proposedSpecializations =
+      characterData.skills[skill.data].proposedSpecializations;
+    const existingSpecializations =
+      characterData.skills[skill.data].specializations;
+
+    // Filtrer les spécialisations disponibles
+    const availableSpecializations = proposedSpecializations.filter(
+      (specialization) => !existingSpecializations.includes(specialization)
+    );
+
+    // Construire le tableau d'options
+    var addOptions = [];
+
+    availableSpecializations.forEach((specialization) => {
+      addOptions.push(
+        `<li><a class="dropdown-item" href="#" onclick="handleSpecializationClick('${
+          skill.data
+        }', '${specialization}')">${capitalized(specialization)}</a></li>`
+      );
+    });
+
+    // Ajouter l'option "Autre"
+    addOptions.push(
+      `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${
+        skill.data
+      }Modal"">${capitalized(terms.new)}</a></li>`
+    );
+
+    console.log(`[${skill.data}] addOptions : `, addOptions);
+    console.log(`[${skill.data}] addOptions.join() : `, addOptions.join(" "));
+
+    // Ajouter les options au menu déroulant
+    DropdownOptions = addOptions.join(" ");
+    var capitalizedId = capitalized(skill.terms);
+    var rdd =
+      skillsData[skill.data].value +
+      attributesData[skillsData[skill.data].linkedAttribute].value;
+
+    skillsHTML += `
       <tr>
           <th scope="row">${capitalizedId}</th>
           <td id="${skill.data}_max">
               <div id="${skill.data}_actual"><span>${
-        skillsData[skill.data].value
-      }</span></div>
+      skillsData[skill.data].value
+    }</span></div>
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <button class="btn btn-outline-danger btn-xs" onclick="modifyValue('skills','${
+                  <button class="btn btn-outline-danger btn-xs" onclick="modifyValue('skills', '${
                     skill.data
                   }', 'decrement')">-</button>
-                  <button class="btn btn-outline-success btn-xs" onclick="modifyValue('skills','${
+                  <button class="btn btn-outline-success btn-xs" onclick="modifyValue('skills', '${
                     skill.data
                   }', 'increment')">+</button>
               </div>
           </td>
-          <td id="${
-            skill.data
-          }_rdd"><div><span class="h6">${rdd}</span></div><div><span class="h8">+ ${capitalized(
-        terms[skillsData[skill.data].linkedAttribute]
-      )}</span></div></td>
-          <td id="${skill.data}_specialization"><span class="h6"></span></td>
+          <td id="${skill.data}_rdd">
+            <div><span class="h6">${rdd}</span></div>
+            <div><span class="h8">+ ${capitalized(
+              terms[skillsData[skill.data].linkedAttribute]
+            )}</span></div>
+          </td>
+          <td id="${skill.data}_specialization">
+            <div><span class="h8">${skillsData[skill.data].specializations.join(
+              ", "
+            )}</span>
+            </div>
+            <div class="dropdown">
+              <div class="btn-group">
+                <button class="btn btn-outline-danger btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
+                <ul class="dropdown-menu" id="${skill.data}Dropdown-menu">
+                  ${DropdownOptions}
+                </ul>
+              </div>
+              <!-- Modal -->
+<div class="modal fade" id="new${
+      skill.data
+    }Modal" tabindex="-1" aria-labelledby="${
+      skill.data
+    }ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="${skill.data}ModalLabel">${
+      skill.data
+    }</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+            </div>
+          </td>
       </tr>
     `;
-    }
   }
 
-  // Affichez le contenu généré dans le corps du tableau des attributes
-  skillTableBody.innerHTML = skillsHTML;
+  // Afficher le contenu généré dans le corps du tableau des compétences
+  skillTableBody.html(skillsHTML);
+}
+
+// Fonction pour gérer le clic sur une spécialisation
+function handleSpecializationClick(skillData, specialization) {
+  characterData.skills[skillData].specializations.push(specialization);
+  updateSpecializationDisplay(skillData);
+}
+
+// Fonction pour gérer le clic sur "Autre"
+function handleCustomSpecializationClick(skillData) {
+  const customSpecialization = prompt(
+    "Entrez une spécialisation personnalisée :"
+  );
+  if (customSpecialization) {
+    characterData.skills[skillData].specializations.push(customSpecialization);
+    updateSpecializationDisplay(skillData);
+  }
+}
+
+// Fonction pour mettre à jour l'affichage des spécialisations
+function updateSpecializationDisplay(skillData) {
+  const specializationSpan = $(`#${skillData}_specialization .h8`);
+  specializationSpan.text(
+    characterData.skills[skillData].specializations.join(", ")
+  );
 }
 
 function modifyValue(type, element, modificator) {
-
   var selectCount = type;
 
   if (type === "attributes") {
@@ -795,7 +927,6 @@ function updateValues(type) {
 }
 
 function updatePoints(type, element, modificator) {
-
   var selectCount = type;
   var namePoint = type;
 
@@ -814,14 +945,13 @@ function updatePoints(type, element, modificator) {
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
   if (type === "skills") {
-    
     var max = 7;
     var maxElement = characterData.alreadyMaxSkill;
     if (maxElement) max = 6;
 
     console.log(
       "updatePoints : element ",
-      element, 
+      element,
       " maxElement ",
       maxElement,
       " max ",
@@ -833,20 +963,25 @@ function updatePoints(type, element, modificator) {
     );
 
     if (characterData.skills[element].value >= max) {
-
-      if (maxElement) document.getElementById(`${maxElement}_max`).classList.add("maximum");
+      if (maxElement)
+        document.getElementById(`${maxElement}_max`).classList.add("maximum");
       document.getElementById(`${element}_max`).classList.add("maximum");
     } else {
-      if (maxElement) document.getElementById(`${maxElement}_max`).classList.remove("maximum");
+      if (maxElement)
+        document
+          .getElementById(`${maxElement}_max`)
+          .classList.remove("maximum");
       document.getElementById(`${element}_max`).classList.remove("maximum");
     }
 
-    if (characterData[type][element].value >= 6 && characterData.alreadyMaxSkill === "") {
+    if (
+      characterData[type][element].value >= 6 &&
+      characterData.alreadyMaxSkill === ""
+    ) {
       characterData.alreadyMaxSkill = element;
     } else if (characterData.alreadyMaxSkill === element) {
       characterData.alreadyMaxSkill = "";
-    } 
-
+    }
   }
 
   if (type === "attributes") {
@@ -855,23 +990,28 @@ function updatePoints(type, element, modificator) {
     var max = characterData.attributes[element].max;
     var maxElement = characterData.alreadyMaxAttribute;
     if (maxElement) max = characterData.attributes[element].max - 1;
-    if (
-      characterData.attributes[element].value >
-      max
-    ) {
-      if (maxElement) document.getElementById(`${maxElement}_actual`).classList.add("maximum");
+    if (characterData.attributes[element].value > max) {
+      if (maxElement)
+        document
+          .getElementById(`${maxElement}_actual`)
+          .classList.add("maximum");
       maxAttribute.classList.add("maximum");
     } else {
-      if (maxElement) document.getElementById(`${maxElement}_actual`).classList.remove("maximum");
+      if (maxElement)
+        document
+          .getElementById(`${maxElement}_actual`)
+          .classList.remove("maximum");
       maxAttribute.classList.remove("maximum");
     }
-    
-    if (characterData[type][element].value >= characterData[type][element].max && characterData.alreadyMaxAttribute === "") {
+
+    if (
+      characterData[type][element].value >= characterData[type][element].max &&
+      characterData.alreadyMaxAttribute === ""
+    ) {
       characterData.alreadyMaxAttribute = element;
     } else if (characterData.alreadyMaxAttribute === element) {
       characterData.alreadyMaxAttribute = "";
-    } 
-  
+    }
   }
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
@@ -905,40 +1045,20 @@ function showResults() {
     }
   }
 
-  const metatypeForm = document.getElementById("metatypeButtons");
-  const selectedMeta =
-    metatypeForm.querySelector("button.selected") || selectedMetatype;
-  if (selectedMeta) {
-    const selectedMetatypeValue = selectedMeta.textContent || selectedMetatype;
-    btn.innerHTML +=
-      '<input type="checkbox" class="btn-check" id="showMetatypeBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showMetatype" aria-expanded="false" aria-controls="showMetatype" /> <label class="btn btn-outline-success" for="showMetatypeBtn" id="showMetatypeTitle" >' +
+  if (characterData.metatype) {
+    document.getElementById("metatypeIdentity").innerHTML =
+      "<p>" +
       capitalized(terms.metatypes) +
       capitalized(terms.colons) +
       " " +
-      selectedMetatypeValue +
-      "</label>";
-
-    collapses.innerHTML +=
-      '<div class="collapse" id="showMetatype"><div class="card card-body"> <div id="showMetatypeDiv"></div></div></div>';
-
-    const metatypeQualities = handleMetatypeQualities(selectedMeta.id);
-    if (metatypeQualities.length > 0)
-      document.getElementById("showMetatypeDiv").innerHTML +=
-        "<h5>Traits innés :</h5>" + metatypeQualities.join(", ");
+      capitalized(terms[characterData.metatype]) +
+      "</p>";
   }
 
-  const specialForm = document.getElementById("specialButtons");
-  const selectedSpe =
-    specialForm.querySelector("button.selected") || selectedSpecial;
-  if (selectedSpe) {
-    const selectedSpecialValue = selectedSpe.textContent || selectedSpecial;
-    btn.innerHTML +=
-      '<input type="checkbox" class="btn-check" id="showSpecialBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showSpecial" aria-expanded="false" aria-controls="showSpecial" /> <label class="btn btn-outline-success" for="showSpecialBtn" id="showSpecialTitle" >' +
-      capitalized(terms.magicOrResonance) +
-      capitalized(terms.colons) +
-      " " +
-      selectedSpecialValue +
-      "</label>";
+  if (characterData.special) {
+    console.log("characterData.special");
+    document.getElementById("specialIdentity").innerHTML =
+      "<p>" + capitalized(terms[characterData.special]) + "</p>";
   }
 
   // Affichez la colonne des resources avec séparation des unités et le symbole ¥
