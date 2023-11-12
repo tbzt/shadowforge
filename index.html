@@ -151,6 +151,25 @@
                 style="display: none"
                 >{{capitalized skills}}</label
               >
+
+              <input
+                type="checkbox"
+                class="btn-check"
+                id="knowledgeBtn"
+                autocomplete="off"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseKnowledge"
+                aria-expanded="false"
+                aria-controls="collapseKnowledge"
+              />
+              <label
+                class="btn btn-outline-primary"
+                for="knowledgeBtn"
+                id="knowledgeTitle"
+                style="display: none"
+                >{{capitalized knowledges}} & {{languages}}</label
+              >
+
             </div>
           </div>
           <div class="row">
@@ -272,6 +291,7 @@
               </div>
             </div>
 
+            
             <div class="col-6">
               <!-- Section : Choix des attributes -->
               <div class="collapse" id="collapseAttributes">
@@ -297,6 +317,28 @@
                   </div>
                 </div>
               </div>
+                                                      <!-- Section : Choix des connaissances -->
+                                                      <div class="collapse" id="collapseKnowledge">
+                                                        <div class="card card-body">
+                                                          <!-- Affiche le namebre de points d'attributes à dépenser -->
+                                                          <div id="knowledgeSpent"></div>
+                                        
+                                                          <div class="table-responsive">
+                                                            <table
+                                                              id="knowledgeTable"
+                                                              class="table align-middle table-hover table-striped"
+                                                            >
+                                                              <thead class="thead-dark">
+                                                                <tr>
+                                                                  <th scope="col" id="knowledgeHeader">{{capitalized knowledges}}</th>
+                                                                  <th scope="col" id="languageHeader">{{capitalized languages}}</th>
+                                                                </tr>
+                                                              </thead>
+                                                              <tbody></tbody>
+                                                            </table>
+                                                          </div>
+                                                        </div>
+                                                      </div>
             </div>
 
             <div class="col-6">
@@ -324,6 +366,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

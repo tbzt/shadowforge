@@ -106,8 +106,8 @@ td.selectable {
   }
 
   #language-switcher a img {
-    width: 50px;
-    height: 30px;    
+    width: 30px;
+    height: 20px;    
     border: 1px solid #007bff;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 

@@ -242,8 +242,14 @@ const characterData = {
       untrained: false,
     },
   },
+  knowledges: [],
+  languages: [],
   points: {
     skills: {
+      base: 0,
+      spent: 0,
+    },
+    knowledges: {
       base: 0,
       spent: 0,
     },
