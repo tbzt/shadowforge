@@ -1,20 +1,133 @@
 function setLang(language) {
   // Utilisez le tableau de traduction correspondant à la langue
+  console.log("setLang(",language,")");
+
   terms = translations[language];
+
+  console.log("setLang(",language,") : terms : ", terms);
 }
 
 function setLanguage(language) {
   const source = document.getElementById("container").innerHTML;
   const template = Handlebars.compile(source);
 
+  terms = translations[language];
+
   const html = template(terms);
   document.getElementById("container").innerHTML = html;
+}
+
+function changeLang(language) {
+  // Utilisez le tableau de traduction correspondant à la langue
+  console.log("setLang(",language,")");
+
+  setLang(language);
+  setLanguage(language);
+
+  idToUpdate = [
+    {
+      id:"title",
+      term: "title"
+    }, 
+    {
+      id:"identityTitle",
+      term: "identity"
+    }, 
+    {
+      id:"priorityTableTitle",
+      term: "priorityTable"
+    }, 
+    {
+      id:"metatypeTitle",
+      term: "metatypeChoice"
+    }, 
+    {
+      id:"specialTitle",
+      term: "specialAttributeChoice"
+    }, 
+    {
+      id:"attributeTitle",
+      term: "attributes"
+    }, 
+    {
+      id:"skillTitle",
+      term: "skills"
+    }, 
+    {
+      id:"priorityTableAttributes",
+      term: "attributes"
+    }, 
+    {
+      id:"priorityTableSkills",
+      term: "skills"
+    }, 
+    {
+      id:"priorityTableResources",
+      term: "resources"
+    }, 
+    {
+      id:"resetButton",
+      term: "reinitialize"
+    }, 
+    {
+      id:"character",
+      term: "character"
+    }, 
+    {
+      id:"attributesAttributes",
+      term: "attributes"
+    }, 
+    {
+      id:"attributesAdded",
+      term: "added"
+    }, 
+    {
+      id:"attributesActual",
+      term: "actual"
+    }, 
+    {
+      id:"attributesMaximum",
+      term: "maximum"
+    }, 
+    {
+      id:"skillsSkills",
+      term: "skills"
+    }, 
+    {
+      id:"skillsAdded",
+      term: "added"
+    }, 
+    {
+      id:"skillsDices",
+      term: "dices"
+    }, 
+    {
+      id:"skillsSpecializations",
+      term: "specializations"
+    }]
+  
+    idToUpdate.forEach((element) => {
+      document.getElementById(element.id).innerText = capitalized(terms[element.term]);
+    }); 
+  document.getElementById(priorityTableMetatpeAdjustement).innerText = capitalized(terms.metatypes) + " (" + terms.adjustement + ")"; 
+  document.getElementById(priorityTableSpecial).innerText = capitalized(terms.magic) + "/" + capitalized(terms.resonance);
+  document.getElementById("firstname").placeholder = capitalized(terms.firstname);
+  document.getElementById("surname").placeholder = capitalized(terms.surname);
+  document.getElementById("name").placeholder = capitalized(terms.name);
+    
+  handleSIN(); 
+  showPriorities();
+  handleAttributes();
+  handleSkills(); 
+
+  console.log("setLang(",language,") : terms : ", terms);
 }
 
 let terms = [];
 
 const translations = {
   fr: {
+    title: "Créateur de Personnage Shadowrun 6",
     firstname: "prénom",
     name: "nom",
     surname: "surnom",
@@ -189,6 +302,7 @@ const translations = {
     registering: "inscription",
   },
   en: {
+    title: "Shadowrun 6 Character Creator",
     firstname: "Firstname",
     name: "Name",
     surname: "Surname",
@@ -254,7 +368,7 @@ const translations = {
     satyr: "satyr",
     cyclops: "cyclops",
     fomorian: "fomorian",
-    giant: "géant",
+    giant: "giant",
     minotaur: "minotaure",
     dalakitnon: "dalakitnon",
     driad: "dryad",

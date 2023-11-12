@@ -1,8 +1,6 @@
-
+const source = document.getElementById("priority-template").innerHTML;
 // Fonction pour afficher les données des priorités
 function showPriorities() {
-    // Sélectionnez le modèle Handlebars
-    var source = document.getElementById("priority-template").innerHTML;
   
     // Compilez le modèle Handlebars
     var template = Handlebars.compile(source);
