@@ -38,8 +38,8 @@
       <h1 class="mt-4 display-4" id="title">{{title}}</h1>
       <br />
       <div class="row">
-        <!-- Colonne de largeur 9 (col-9) pour les choix à sélection -->
-        <div class="col-sm-6 col-lg-9">
+        <!-- Colonne de largeur 9 (col-sm-9) pour les choix à sélection -->
+        <div class="col-sm-9">
           <div class="row">
             <div
               class="btn-group"
@@ -191,7 +191,7 @@
 
             <div class="collapse" id="collapsePriorities">
               <div class="card card-body">
-                <div class="table-responsive">
+                <div class="table-responsive-sm">
                   <table
                     id="priorityTable"
                     class="table align-middle table-hover"
@@ -292,14 +292,14 @@
             </div>
 
             
-            <div class="col-6">
+            <div class="col-sm-6">
               <!-- Section : Choix des attributes -->
               <div class="collapse" id="collapseAttributes">
                 <div class="card card-body">
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="attributesSpent"></div>
 
-                  <div class="table-responsive">
+                  <div class="table-responsive-sm">
                     <table
                       id="attributeTable"
                       class="table align-middle table-hover table-striped"
@@ -323,15 +323,15 @@
                                                           <!-- Affiche le namebre de points d'attributes à dépenser -->
                                                           <div id="knowledgeSpent"></div>
                                         
-                                                          <div class="table-responsive">
+                                                          <div class="table-responsive-sm">
                                                             <table
                                                               id="knowledgeTable"
                                                               class="table align-middle table-hover table-striped"
                                                             >
                                                               <thead class="thead-dark">
                                                                 <tr>
-                                                                  <th scope="col" id="knowledgeHeader">{{capitalized knowledges}}</th>
-                                                                  <th scope="col" id="languageHeader">{{capitalized languages}}</th>
+                                                                  <th scope="col" id="knowledgesHeader">{{capitalized knowledges}}</th>
+                                                                  <th scope="col" id="languagesHeader">{{capitalized languages}}</th>
                                                                 </tr>
                                                               </thead>
                                                               <tbody></tbody>
@@ -341,14 +341,14 @@
                                                       </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-sm-6">
               <!-- Section : Choix des compétences -->
               <div class="collapse" id="collapseSkills">
                 <div class="card card-body">
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="skillsSpent"></div>
 
-                  <div class="table-responsive">
+                  <div class="table-responsive-sm">
                     <table
                       id="skillTable"
                       class="table align-middle table-hover table-striped"
@@ -371,7 +371,7 @@
           </div>
         </div>
         <!-- Colonne de largeur 3 pour l'affichage de la génération du personnage -->
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-3">
           <h3 id="character">{{capitalized character}}</h3>
           <button id="resetButton" class="btn-outline-danger btn">
             {{capitalized reinitialize}}

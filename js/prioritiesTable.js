@@ -168,7 +168,8 @@ function selectPriority(cell, categorie, priority) {
       var knowledge = document.getElementById("knowledgeTitle");
       knowledge.style.display = "block";
       handleSkills();
-      handleKnowledge();
+      handleDropdownModal("knowledges");
+      handleDropdownModal("languages");
     }
   
     if (selectedCells["attributes"]) {

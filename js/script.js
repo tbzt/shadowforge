@@ -878,188 +878,115 @@ function updateSpecializationDisplay(skillData) {
   updatePoints("skills", skillData);
 }
 
-function handleKnowledge() {
-console.log("Initiate handleKnowledge()");
+function handleDropdownModal(type) {
+  console.log(`Initiate handle${capitalized(type)}()`);
 
   // Récupérer les données des attributs et des compétences du personnage
   var attributesData = characterData.attributes;
   var skillsData = characterData.skills;
-  var knowledges = characterData.knowledges;
-  var languages = characterData.languages;
+  var knowledges = characterData[type]; // Utiliser le type comme clé
+  var knowledgePoints = characterData.points.knowledges;
 
   // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustment)
-  characterData.points.knowledges.base = 0;
+  knowledgePoints.base = 0;
 
   // Sélectionner la table des compétences
-  var knowledgeSpentTable = $("#knowledgeSpent"); // Utilisez jQuery ici
+  var knowledgeSpentTable = $(`#knowledgeSpent`); // Utilisez jQuery ici
 
   // Mettre à jour le tableau des compétences dépensées
   knowledgeSpentTable.html(
     '<table class="table"><tbody> <tr> <th scope="row">' +
       terms.pointsToSpend +
-      '</th> <td id="knowledge_max"> <span id="knowledgeCount">' +
-      characterData.points.knowledges.base +
-      "</span></td></tr></tbody></table>"
+      `</th> <td id="knowledge_max"> <span id="${type}Count">${knowledgePoints.base}</span></td></tr></tbody></table>`
   );
 
-  // Sélectionner le tableau des compétences par son ID
+  // Construire le tableau d'options
+  var addOptions = [];
 
-      // Construire le tableau d'options
-      var addOptionsKnowledge = [];
-      var addOptionsLanguage = []
+  // Ajouter l'option "Autre"
+  addOptions.push(
+    `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${capitalized(type)}Modal">${capitalized(terms.new)}</a></li>`
+  );
 
-      // Ajouter l'option "Autre"
-      addOptionsKnowledge.push(
-        `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#newKnowledgeModal">${capitalized(terms.new)}</a></li>`
-      );
-
-      // Ajouter l'option "Autre"
-      addOptionsLanguage.push(
-        `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#newLanguageModal">${capitalized(terms.new)}</a></li>`
-      );
-  
-    if (knowledges) {
-
-
-
-        addOptionsKnowledge.push(`<li><hr class="dropdown-divider"></li>`);
-      knowledges.forEach((knowledge) => {
-        addOptionsKnowledge.push(
-          `<li><a class="dropdown-item table-danger" href="#" onclick="removeKnowledgeClick('${knowledge}')">- ${capitalized(knowledge)}</a></li>`
-        );
-      });
-
-  }
-
-  if (languages) {
-
-
-
-      addOptionsLanguage.push(`<li><hr class="dropdown-divider"></li>`);
-    languages.forEach((language) => {
-      addOptionsLanguage.push(
-        `<li><a class="dropdown-item table-danger" href="#" onclick="removeKnowledgeClick('${language}')">- ${capitalized(language)}</a></li>`
+  if (knowledges) {
+    addOptions.push(`<li><hr class="dropdown-divider"></li>`);
+    knowledges.forEach((item) => {
+      addOptions.push(
+        `<li><a class="dropdown-item table-danger" href="#" onclick="removeKnowledgesClick('${type}','${item}')">- ${capitalized(item)}</a></li>`
       );
     });
+  }
 
+  // Ajouter les options au menu déroulant
+  var DropdownOptions = addOptions.join(" ");
+  
+  // Mettre à jour le contenu HTML avec les nouveaux termes
+  document.getElementById(`${type}Header`).innerHTML = `
+    ${capitalized(terms[type])}<div class="dropdown">
+      <div class="btn-group">
+        <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
+        <ul class="dropdown-menu" id="${type}Dropdown-menu">
+          ${DropdownOptions}
+        </ul>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="new${capitalized(type)}Modal" tabindex="-1" aria-labelledby="${type}ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="${type}ModalLabel">${capitalized(terms[type])}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <form id="add${capitalized(type)}Form">
+                  <div class="mb-3">
+                    <label for="${type}Input" class="form-label">${capitalized(terms.new)} ${terms[type]}${terms.colons}</label>
+                    <input type="text" class="form-control" id="${type}Input" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  
+  // Ajoutez ceci dans votre fonction handleSkills ou où vous créez vos événements
+  $(document).on("submit", `#add${capitalized(type)}Form`, function (e) {
+    e.preventDefault();
+
+    // Récupérez la valeur saisie par l'utilisateur
+    const newItem = $(`#${type}Input`).val();
+
+    console.log(`modal ${capitalized(type)} PING : newItem`, newItem, ` ${type}[] before `, characterData[type]);
+
+    // Assurez-vous que la spécialisation n'est pas vide
+    if (newItem.trim() !== "") {
+      // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
+      knowledges.push(newItem);
+      knowledgePoints.spent = knowledgePoints.spent + 1;
+      handleDropdownModal(type);
+      updateKnowledgeDisplay(type);
+    }
+
+    // Effacez le champ de saisie
+    $(`#${type}Input`).val("");
+  });
 }
 
-    // Ajouter les options au menu déroulant
-    DropdownOptionsKnowledge = addOptionsKnowledge.join(" ");
-    
-    DropdownOptionsLanguage = addOptionsLanguage.join(" ");
-
-    addKnowledge = 
-    `${capitalized(terms.knowledge)}<div class="dropdown">
-      <div class="btn-group">
-        <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
-        <ul class="dropdown-menu" id="knowledgeDropdown-menu">
-          ${DropdownOptionsKnowledge}
-        </ul>
-      </div>
-      <!-- Modal -->
-<div class="modal fade" id="newKnowledgeModal" tabindex="-1" aria-labelledby="knowledgeModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
-<div class="modal-header">
-<h1 class="modal-title fs-5" id="knowledgeModalLabel">
-${capitalized(terms.knowledge)}</h1>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body">
-<div>
-<form id="addKnowledgeForm">
-  <div class="mb-3">
-    <label for="knowledgeInput" class="form-label">${capitalized(terms.new)} ${terms.knowledge}${terms.colons}</label>
-    <input type="text" class="form-control" id="knowledgeInput" required>
-  </div>
-  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
-</form>
-</div>`;
-
-document.getElementById("knowledgeHeader").innerHTML = addKnowledge;
-
-    // Ajoutez ceci dans votre fonction handleSkills ou où vous créez vos événements
-    $(document).on("submit", "#addKnowledgeForm", function (e) {
-      e.preventDefault();
-
-      console.log("modal PING");
-      // Récupérez la valeur saisie par l'utilisateur
-      const newKnowledge = $("#knowledgeInput").val();
-
-      // Assurez-vous que la spécialisation n'est pas vide
-      if (newKnowledge.trim() !== "") {
-        // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
-        characterData.knowledges.push(
-          newKnowledge
-        );
-        characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1 ;
-        handleKnowledge();
-        updateKnowledgeDisplay("knowledge");
-      }
-
-      // Effacez le champ de saisie
-      $("#knowledgeInput").val("");
-    });
-
-
-    addLanguage = 
-    `${capitalized(terms.language)}<div class="dropdown">
-      <div class="btn-group">
-        <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
-        <ul class="dropdown-menu" id="languageDropdown-menu">
-          ${DropdownOptionsLanguage}
-        </ul>
-      </div>
-      <!-- Modal -->
-<div class="modal fade" id="newLanguageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content">
-<div class="modal-header">
-<h1 class="modal-title fs-5" id="languageModalLabel">
-${capitalized(terms.language)}</h1>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body">
-<div>
-<form id="addLanguageForm">
-  <div class="mb-3">
-    <label for="languageInput" class="form-label">${capitalized(terms.new)} ${terms.language}${terms.colons}</label>
-    <input type="text" class="form-control" id="languageInput" required>
-  </div>
-  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
-</form>
-</div>`;
-
-document.getElementById("languageHeader").innerHTML = addLanguage;
-
-    // Ajoutez ceci dans votre fonction handleSkills ou où vous créez vos événements
-    $(document).on("submit", "#addLanguageForm", function (e) {
-      e.preventDefault();
-
-      // Récupérez la valeur saisie par l'utilisateur
-      const newLanguage = $("#languageInput").val();
-
-
-      console.log("modal Language PING : newLanguage", newLanguage, " languages[] before ", characterData.languages);
-
-      // Assurez-vous que la spécialisation n'est pas vide
-      if (newLanguage.trim() !== "") {
-        // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
-        characterData.languages.push(
-          newLanguage
-        );
-        characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1 ;
-        handleKnowledge();
-        updateKnowledgeDisplay("language");
-      }
-
-      // Effacez le champ de saisie
-      $("#languageInput").val("");
-    });
-
-
+  function removeKnowledgesClick(type, item) {
+    // Supprimez la connaissance ou langue du tableau
+    console.log("removeKnowledgesClick(",type,", ",item,") BEFORE : ",characterData[type]);
+    const index = characterData[type].indexOf(item);
+    if (index !== -1) {
+      console.log("removeKnowledgesClick(",type,", ",item,") REMOVING ? : ",characterData[type]);
+      characterData[type].splice(index, 1);
+    }
+    console.log("removeKnowledgesClick(",type,", ",item,") AFTER : ",characterData[type]);
+  handleDropdownModal(type);
   }
+
 
   function updateKnowledgeDisplay(type) {
     console.log("updateKnowledgeDisplay(" + type + ")");
