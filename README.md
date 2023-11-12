@@ -3,7 +3,7 @@ This app is in **early alpha** at this stage.
 I'm not a professional developer, so sorry about the beauty or clarity of the code.
 I use the rules of the French version for the code, even if you put the application in English.
 
-**The aim is to facilitate the creation of Shadowrun 6 characters and their import into Foundry.**
+**The aim is to facilitate the creation of Shadowrun 6 characters and their import into (future) Foundry system.**
 
 If you'd like to participate or help out, feel free to go to issues or fork the code.
 
