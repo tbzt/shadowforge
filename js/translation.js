@@ -109,7 +109,7 @@ function changeLang(language) {
     idToUpdate.forEach((element) => {
       document.getElementById(element.id).innerText = capitalized(terms[element.term]);
     }); 
-  document.getElementById(priorityTableMetatpeAdjustement).innerText = capitalized(terms.metatypes) + " (" + terms.adjustement + ")"; 
+  document.getElementById(priorityTableMetatpeAdjustment).innerText = capitalized(terms.metatypes) + " (" + terms.adjustment + ")"; 
   document.getElementById(priorityTableSpecial).innerText = capitalized(terms.magic) + "/" + capitalized(terms.resonance);
   document.getElementById("firstname").placeholder = capitalized(terms.firstname);
   document.getElementById("surname").placeholder = capitalized(terms.surname);
@@ -133,7 +133,7 @@ const translations = {
     surname: "surnom",
     metatypes: "métatypes",
     attributes: "attributs",
-    adjustement: "ajustement",
+    adjustment: "ajustement",
     skills: "compétences",
     magicOrResonance: "Magie/Résonance",
     resources: "ressources",
@@ -307,7 +307,8 @@ const translations = {
     name: "Name",
     surname: "Surname",
     metatypes: "Metatypes",
-    attributes: "attributes",
+    attributes: "attributes",    
+    adjustment: "adjustment",
     skills: "skills",
     magicOrResonance: "Magic or Resonance",
     resources: "Resources",

@@ -209,17 +209,17 @@ function handleButtonClick(button, form, type, priority) {
   if (type === "metatype") {
     characterData.metatype = button.id;
     metatypeSelected = true;
-    var check = checkAdjustementByMetatype[characterData.metatype];
+    var check = checkAdjustmentByMetatype[characterData.metatype];
 
-    if (check && check.adjustement) {
-      characterData.points.Adjustement.base = check.adjustement;
+    if (check && check.adjustment) {
+      characterData.points.Adjustment.base = check.adjustment;
       console.log(
-        "handleButtonClick : checkAdjustementByMetatype[characterData.metatype]",
-        checkAdjustementByMetatype[characterData.metatype],
+        "handleButtonClick : checkAdjustmentByMetatype[characterData.metatype]",
+        checkAdjustmentByMetatype[characterData.metatype],
         " check ",
         check,
-        " adjustement ",
-        check.adjustement
+        " adjustment ",
+        check.adjustment
       );
     } else {
       console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
@@ -493,21 +493,21 @@ function handleAttributes() {
   for (const attribute in attributesData) {
     // Si l'attribut doit être affiché, générez le HTML
 
-    var adjustementPossible = "";
+    var adjustmentPossible = "";
     if (
       attributesData[attribute].max > 6 ||
       attribute === "edge" ||
       attribute === "magic" ||
       attribute === "resonance"
     ) {
-      adjustementPossible = "attributesAdjustementPossible";
+      adjustmentPossible = "attributesAdjustmentPossible";
     } else {
-      adjustementPossible = "attributesAdjustementImpossible";
+      adjustmentPossible = "attributesAdjustmentImpossible";
     }
 
     if (attributesData[attribute].base > 0) {
       attributeHTML += `
-        <tr class="${adjustementPossible}">
+        <tr class="${adjustmentPossible}">
             <th scope="row">${capitalized(terms[attribute])}</th>
             <td>
                 <div id="${attribute}_base"><span>${
@@ -537,17 +537,17 @@ function showAttributesToSpend() {
     IDselectedCells.attributes
   );
 
-  var check = checkAdjustementByMetatype[characterData.metatype];
+  var check = checkAdjustmentByMetatype[characterData.metatype];
 
-  if (check && check.adjustement) {
-    characterData.points.Adjustement.base = check.adjustement;
+  if (check && check.adjustment) {
+    characterData.points.Adjustment.base = check.adjustment;
     console.log(
-      "handleButtonClick : checkAdjustementByMetatype[characterData.metatype]",
-      checkAdjustementByMetatype[characterData.metatype],
+      "handleButtonClick : checkAdjustmentByMetatype[characterData.metatype]",
+      checkAdjustmentByMetatype[characterData.metatype],
       " check ",
       check,
-      " adjustement ",
-      check.adjustement
+      " adjustment ",
+      check.adjustment
     );
   } else {
     console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
@@ -557,27 +557,27 @@ function showAttributesToSpend() {
     ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">' +
     capitalized(terms.attributes) +
     '</th> <th scope="col">' +
-    capitalized(terms.adjustement) +
+    capitalized(terms.adjustment) +
     '</th></tr> </thead><tbody> <tr> <th scope="row">' +
     terms.pointsToSpend +
     '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount">' +
     characterData.points.Prio.base +
-    '</span></td> <td id="attributesAdjustement_max" class="selectable" onclick="selectAttributeType(this, \'Adjustement\')"><span id="attributesAdjustementCount">' +
-    characterData.points.Adjustement.base +
+    '</span></td> <td id="attributesAdjustment_max" class="selectable" onclick="selectAttributeType(this, \'Adjustment\')"><span id="attributesAdjustmentCount">' +
+    characterData.points.Adjustment.base +
     "</span></td> </tr></tbody></table>";
 }
 
 // Fonction pour sélectionner le type d'attribute
 function selectAttributeType(cell, type) {
   const classAttributePrio = document.getElementById(`attributesPrio_max`);
-  const classAttributeAdjustement = document.getElementById(
-    `attributesAdjustement_max`
+  const classAttributeAdjustment = document.getElementById(
+    `attributesAdjustment_max`
   );
   const possibleElements = document.querySelectorAll(
-    ".attributesAdjustementPossible"
+    ".attributesAdjustmentPossible"
   );
   const impossibleElements = document.querySelectorAll(
-    ".attributesAdjustementImpossible"
+    ".attributesAdjustmentImpossible"
   );
 
   if (type === "Prio") {
@@ -596,11 +596,11 @@ function selectAttributeType(cell, type) {
         element.classList.add("table-danger");
       }
     });
-    if (classAttributeAdjustement.classList.contains("selected"))
-      classAttributeAdjustement.classList.remove("selected");
+    if (classAttributeAdjustment.classList.contains("selected"))
+      classAttributeAdjustment.classList.remove("selected");
   }
-  if (type === "Adjustement") {
-    classAttributeAdjustement.classList.add("selected");
+  if (type === "Adjustment") {
+    classAttributeAdjustment.classList.add("selected");
     possibleElements.forEach((element) => {
       if (element.classList.contains("table-success")) {
         element.classList.remove("table-success");
@@ -672,7 +672,7 @@ function handleSkills() {
   // Trier les compétences
   var skillsSort = sort(Object.keys(skillsData));
 
-  // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustement)
+  // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustment)
   characterData.points.skills.base = getSkillsSpent(IDselectedCells.skills);
 
   // Sélectionner la table des compétences
@@ -966,31 +966,9 @@ function updatePoints(type, element, modificator) {
   var numberBase = characterData.points[selectCount].base;
   var numberSpent = characterData.points[selectCount].spent;
 
-  console.log(
-    "updatePoints : BEFORE namePoint ",
-    namePoint,
-    " document.getElementById(`${namePoint}Count`) ",
-    document.getElementById(`${namePoint}Count`),
-    " numberBase ",
-    numberBase,
-    " numberSpent ",
-    numberSpent,
-  );
-
   document.getElementById(`${namePoint}Count`).textContent = Math.max(
     0,
     numberBase - numberSpent
-  );
-
-  console.log(
-    "updatePoints AFTER : namePoint ",
-    namePoint,
-    " document.getElementById(`${namePoint}Count`) ",
-    document.getElementById(`${namePoint}Count`),
-    " numberBase ",
-    numberBase,
-    " numberSpent ",
-    numberSpent,
   );
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
@@ -1008,6 +986,7 @@ function updatePoints(type, element, modificator) {
         document
           .getElementById(`${maxElement}_max`)
           .classList.remove("maximum");
+
       document.getElementById(`${element}_max`).classList.remove("maximum");
     }
 
@@ -1027,17 +1006,26 @@ function updatePoints(type, element, modificator) {
     var max = characterData.attributes[element].max;
     var maxElement = characterData.alreadyMaxAttribute;
     if (maxElement) max = characterData.attributes[element].max - 1;
+    
+    console.log("maxElement : ", maxElement, "document.getElementById(`${maxElement}_max`) : ", document.getElementById(`${maxElement}_max`), "document.getElementById(`${maxElement}_actual`) : ", document.getElementById(`${maxElement}_actual`))
+
     if (characterData.attributes[element].value > max) {
-      if (maxElement)
+      
+      if (maxElement) {
         document
           .getElementById(`${maxElement}_actual`)
           .classList.add("maximum");
+      document.getElementById(`${maxElement}_max`).classList.add("maximum");    
+
+      }
       maxAttribute.classList.add("maximum");
     } else {
-      if (maxElement)
+      if (maxElement) {
         document
           .getElementById(`${maxElement}_actual`)
-          .classList.remove("maximum");
+          .classList.remove("maximum");          
+          document.getElementById(`${maxElement}_max`).classList.remove("maximum");  
+      } 
       maxAttribute.classList.remove("maximum");
     }
 

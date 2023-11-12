@@ -327,24 +327,24 @@ const tablePrioritiesMetatypes = {
     },
   };
 
-  const checkAdjustementByMetatype = {};
+  const checkAdjustmentByMetatype = {};
   const checkPriorities = ["A", "B", "C", "D", "E"];
-  const checkAdjustement = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  const checkAdjustment = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   
   // Parcourez les priorités
   for (const priority of checkPriorities) {
     // Parcourez les ajustements pour chaque priorité
-    for (const adjustement of checkAdjustement) {
+    for (const adjustment of checkAdjustment) {
       // Vérifiez si le métatype pour la priorité et l'ajustement existe
-      for (const metatype in tablePrioritiesMetatypes[priority][adjustement]) {
-        if (tablePrioritiesMetatypes[priority] && tablePrioritiesMetatypes[priority][adjustement] && tablePrioritiesMetatypes[priority][adjustement][metatype]) {  
+      for (const metatype in tablePrioritiesMetatypes[priority][adjustment]) {
+        if (tablePrioritiesMetatypes[priority] && tablePrioritiesMetatypes[priority][adjustment] && tablePrioritiesMetatypes[priority][adjustment][metatype]) {  
           // Créez un objet avec les clés nécessaires
-          const keyMetatype = tablePrioritiesMetatypes[priority][adjustement][metatype];
+          const keyMetatype = tablePrioritiesMetatypes[priority][adjustment][metatype];
   
-          if (!checkAdjustementByMetatype[keyMetatype]) {
-            checkAdjustementByMetatype[keyMetatype] = {
+          if (!checkAdjustmentByMetatype[keyMetatype]) {
+            checkAdjustmentByMetatype[keyMetatype] = {
               priority: priority,
-              adjustement: adjustement,
+              adjustment: adjustment,
             };
           }
         }

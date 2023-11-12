@@ -251,7 +251,7 @@ const characterData = {
       base: 0,
       spent: 0,
     },
-    Adjustement: {
+    Adjustment: {
       base: 0,
       spent: 0,
     },
