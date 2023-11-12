@@ -165,7 +165,10 @@ function selectPriority(cell, categorie, priority) {
     if (categorie === "skills") {
       var skillTitle = document.getElementById("skillTitle");
       skillTitle.style.display = "block"; // Afficher la section des skills
+      var knowledge = document.getElementById("knowledgeTitle");
+      knowledge.style.display = "block";
       handleSkills();
+      handleKnowledge();
     }
   
     if (selectedCells["attributes"]) {

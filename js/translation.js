@@ -300,6 +300,10 @@ const translations = {
     compiling: "compilation",
     decompiling: "décompilation",
     registering: "inscription",
+    knowledges: "connaissances",
+    languages: "langues",
+    knowledge: "connaissance",
+    language: "langue",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -475,5 +479,9 @@ const translations = {
     compiling: "compiling",
     decompiling: "decompiling",
     registering: "registering",
+    knowledges: "knowledges",
+    languages: "languages",
+    knowledge: "knowledge",
+    language: "language",
   },
 };
