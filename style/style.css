@@ -55,6 +55,11 @@ td.selectable {
     cursor: pointer;
 }
 
+td.starred {
+    cursor: pointer;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 .metatype-button {
     background-color: white;
     color: #007bff;

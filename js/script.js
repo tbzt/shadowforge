@@ -878,27 +878,26 @@ function updateSpecializationDisplay(skillData) {
   updatePoints("skills", skillData);
 }
 
-function handleDropdownModal(type) {
-  console.log(`Initiate handle${capitalized(type)}()`);
+function updateKnowledgePoints() {
+  characterData.points.knowledges.base = characterData.attributes.logic.value;
 
-  // Récupérer les données des attributs et des compétences du personnage
-  var attributesData = characterData.attributes;
-  var skillsData = characterData.skills;
-  var knowledges = characterData[type]; // Utiliser le type comme clé
-  var knowledgePoints = characterData.points.knowledges;
-
-  // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustment)
-  knowledgePoints.base = 0;
-
-  // Sélectionner la table des compétences
   var knowledgeSpentTable = $(`#knowledgeSpent`); // Utilisez jQuery ici
 
-  // Mettre à jour le tableau des compétences dépensées
+  var knowledgeCount = Math.max(0, characterData.points.knowledges.base - characterData.points.knowledges.spent);
+  
+  console.log("updateKnowledgePoints : knowledgeCount ", knowledgeCount, " characterData.points.knowledges.base : ", characterData.points.knowledges.base, " characterData.points.knowledges.base.spent : ", characterData.points.knowledges.spent, " max ", Math.max(0, characterData.points.knowledges.base - characterData.points.knowledges.spent))
+
   knowledgeSpentTable.html(
     '<table class="table"><tbody> <tr> <th scope="row">' +
       terms.pointsToSpend +
-      `</th> <td id="knowledge_max"> <span id="${type}Count">${knowledgePoints.base}</span></td></tr></tbody></table>`
+      `</th> <td id="knowledge_max"> <span id="knowledgeCount">${knowledgeCount}</span></td></tr></tbody></table>`
   );
+}
+
+function handleDropdownModal(type) {
+  console.log(`Initiate handle${capitalized(type)}()`);
+
+  var knowledges = characterData[type]; // Utiliser le type comme clé
 
   // Construire le tableau d'options
   var addOptions = [];
@@ -912,7 +911,7 @@ function handleDropdownModal(type) {
     addOptions.push(`<li><hr class="dropdown-divider"></li>`);
     knowledges.forEach((item) => {
       addOptions.push(
-        `<li><a class="dropdown-item table-danger" href="#" onclick="removeKnowledgesClick('${type}','${item}')">- ${capitalized(item)}</a></li>`
+        `<li><a class="dropdown-item table-danger" href="#" onclick="removeKnowledgesClick('${type}','${item.key}','${item.key}')">- ${capitalized(item.key)}</a></li>`
       );
     });
   }
@@ -957,15 +956,16 @@ function handleDropdownModal(type) {
     e.preventDefault();
 
     // Récupérez la valeur saisie par l'utilisateur
-    const newItem = $(`#${type}Input`).val();
+    const newItem = {key:$(`#${type}Input`).val(), level: 0};
 
     console.log(`modal ${capitalized(type)} PING : newItem`, newItem, ` ${type}[] before `, characterData[type]);
 
     // Assurez-vous que la spécialisation n'est pas vide
-    if (newItem.trim() !== "") {
+    if (newItem.key.trim() !== "") {
       // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
       knowledges.push(newItem);
-      knowledgePoints.spent = knowledgePoints.spent + 1;
+      characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1;
+      updateKnowledgePoints();
       handleDropdownModal(type);
       updateKnowledgeDisplay(type);
     }
@@ -975,22 +975,56 @@ function handleDropdownModal(type) {
   });
 }
 
-  function removeKnowledgesClick(type, item) {
-    // Supprimez la connaissance ou langue du tableau
-    console.log("removeKnowledgesClick(",type,", ",item,") BEFORE : ",characterData[type]);
-    const index = characterData[type].indexOf(item);
-    if (index !== -1) {
-      console.log("removeKnowledgesClick(",type,", ",item,") REMOVING ? : ",characterData[type]);
+function removeKnowledgesClick(type, item) {
+  console.log("removeKnowledgesClick(", type, ", ", item, ") BEFORE : ", characterData[type]);
+
+  const index = characterData[type].findIndex(entry =>
+      entry.key === item
+  );
+
+  console.log("removeKnowledgesClick(", type, ", ", item, ") INDEX : ", index, " key ", item.key);
+
+  if (index !== -1) {
+      console.log("removeKnowledgesClick(", type, ", ", item, ") REMOVING : ", characterData[type][index]);
       characterData[type].splice(index, 1);
-    }
-    console.log("removeKnowledgesClick(",type,", ",item,") AFTER : ",characterData[type]);
-  handleDropdownModal(type);
+  } else {
+      console.log("removeKnowledgesClick(", type, ", ", item, ") NOT FOUND");
+      console.log("Array contents: ", characterData[type]);
   }
+
+  console.log("removeKnowledgesClick(", type, ", ", item, ") AFTER : ", characterData[type]);
+  handleDropdownModal(type);
+  updateKnowledgeDisplay();
+
+  characterData.points.knowledges.spent = characterData.points.knowledges.spent - 1;
+  updateKnowledgePoints();
+}
+
+
+
+
 
 
   function updateKnowledgeDisplay(type) {
-    console.log("updateKnowledgeDisplay(" + type + ")");
-  };
+    console.log("updateKnowledgeDisplay()");
+  
+    var knowledgeTable = $("#knowledgeTable"); // Utilisez jQuery ici
+    var knowledgeTableBody = knowledgeTable.find("tbody");
+  
+    // Effacer le contenu actuel de la ligne du tableau
+    knowledgeTableBody.empty();
+  
+    // Trouver le nombre maximal d'éléments dans les deux tableaux
+    var maxItems = Math.max(characterData.knowledges.length, characterData.languages.length);
+  
+    // Ajouter chaque connaissance et chaque langue au tableau
+    for (let i = 0; i < maxItems; i++) {
+      var knowledgeCell = i < characterData.knowledges.length ? `<td class="knowledge-column">${capitalized(characterData.knowledges[i].key)}</td>` : '<td class="knowledge-column"></td>';
+      var languageCell = i < characterData.languages.length ? `<td class="language-column starred">${capitalized(characterData.languages[i].key)}</td>` : '<td class="language-column"></td>';
+      var rowHTML = `<tr>${knowledgeCell}${languageCell}</tr>`;
+      knowledgeTableBody.append(rowHTML);
+    }
+  }
 
 function modifyValue(type, element, modificator) {
   var selectCount = type;
@@ -1041,6 +1075,7 @@ function updateValues(type) {
           handleSkills();
           updateValues("skills");
         }
+        updateKnowledgePoints();
       }
       if (type === "skills") {
         var rdd =
