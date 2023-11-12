@@ -75,8 +75,9 @@ const characterData = {
       added: 0,
       value: 0,
       linkedAttribute: "agility",
-      specializations: ["joie"],
-      proposedSpecializations: ["teuf", "joie", "bigGuns"],
+      specializations: [],
+      proposedSpecializations: ["tasers", "holdOuts", "lightPistols", "machinePistols", "heavyPistols", "submachineGuns", "shotguns", "rifles", "machineGuns", "assaultCannons"],
+      untrained: true,
     },
     exoticWeapons: {
       base: 0,
@@ -85,6 +86,7 @@ const characterData = {
       linkedAttribute: "agility",
       specializations: [],
       proposedSpecializations: [],
+      untrained: false,
     },
     astral: {
       base: 0,
@@ -92,7 +94,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "intuition",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["astralCombat","astralSignatures","emotionalStates","spiritTypes"],
+      untrained: false,
     },
     athletics: {
       base: 0,
@@ -100,7 +103,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "agility",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["archery", "climbing", "flying", "gymnastics", "sprinting", "swimming", "throwing"],
+      untrained: true,
     },
     biotech: {
       base: 0,
@@ -108,7 +112,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "logic",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["biotechnology", "cybertechnology", "firstAid", "medicine"],
+      untrained: false,
     },
     closeCombat: {
       base: 0,
@@ -116,7 +121,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "agility",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["blades", "clubs", "unarmedCombat"],
+      untrained: true,
     },
     conjuring: {
       base: 0,
@@ -124,7 +130,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "magic",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["banishing", "summoning"],
+      untrained: false,
     },
     electronics: {
       base: 0,
@@ -132,7 +139,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "logic",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["computer", "hardware", "software"],
+      untrained: true,
     },
     stealth: {
       base: 0,
@@ -140,7 +148,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "agility",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["camouflage", "palming", "sneaking"],
+      untrained: true,
     },
     influence: {
       base: 0,
@@ -148,7 +157,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "charisma",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["etiquette", "instruction", "intimidation", "leadership", "negotiation"],
+      untrained: true,
     },
     enchanting: {
       base: 0,
@@ -156,7 +166,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "magic",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["alchemy", "artificing", "disenchanting"],
+      untrained: false,
     },
     con: {
       base: 0,
@@ -164,7 +175,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "charisma",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["acting", "disguise", "impersonation", "performance"],
+      untrained: true,
     },
     engineering: {
       base: 0,
@@ -172,15 +184,17 @@ const characterData = {
       value: 0,
       linkedAttribute: "logic",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["aeronauticsMechanic", "armorer", "automotiveMechanic", "demolitions", "gunnery", "industrialMechanic", "lockpicking", "nauticalMechanic"],
+      untrained: true,
     },
-    peception: {
+    perception: {
       base: 0,
       added: 0,
       value: 0,
       linkedAttribute: "intuition",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["visual", "aural", "tactile", "woods", "desert", "urbanArea"],
+      untrained: true,
     },
     piloting: {
       base: 0,
@@ -188,7 +202,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "reaction",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["groundCraft", "aircraft", "watercraft"],
+      untrained: true,
     },
     cracking: {
       base: 0,
@@ -196,7 +211,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "logic",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["cybercombat", "electronicWarfare", "hacking"],
+      untrained: false,
     },
     outdoors: {
       base: 0,
@@ -204,7 +220,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "intuition",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["navigation", "survival", "tracking", "woods", "desert", "urbanArea"],
+      untrained: true,
     },
     sorcery: {
       base: 0,
@@ -212,7 +229,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "magic",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["counterspelling", "ritualSpellcasting", "spellcasting"],
+      untrained: false,
     },
     tasking: {
       base: 0,
@@ -220,7 +238,8 @@ const characterData = {
       value: 0,
       linkedAttribute: "resonance",
       specializations: [],
-      proposedSpecializations: [],
+      proposedSpecializations: ["compiling", "decompiling", "registering"],
+      untrained: false,
     },
   },
   points: {

@@ -228,23 +228,6 @@ function handleButtonClick(button, form, type, priority) {
     showAttributesToSpend();
   }
 
-  console.log(
-    "handleButtonClick wasSelected : ",
-    wasSelected,
-    " button ",
-    button,
-    " type : ",
-    type,
-    " form : ",
-    form,
-    " priority : ",
-    priority,
-    " characterData.metatype : ",
-    characterData.metatype,
-    " characterData.special : ",
-    characterData.special
-  );
-
   updateAttributesForSpecial(button.id, priority);
   updateAttributesForMetatype(button.id);
   handleSkills();
@@ -569,12 +552,6 @@ function showAttributesToSpend() {
   } else {
     console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
   }
-  console.log(
-    "showAttributesToSpend : characterData.points.Prio.base ",
-    characterData.points.Prio.base,
-    " characterData.points.Adjustement.base ",
-    characterData.points.Adjustement.base
-  );
 
   document.getElementById("attributesSpent").innerHTML =
     ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">' +
@@ -668,11 +645,19 @@ function sort(array) {
   }
   arraySorted = [];
   for (const key of array) {
+    if (terms[key] === undefined) {
+      console.log("arraySorted key undefined : data : ", key, "/ ", terms[key]);
+      arraySorted.push({
+        data: key,
+        terms: key,
+      });
+    } else {      
     //console.log("arraySorted : data : ", key, "/ ", terms[key]);
     arraySorted.push({
       data: key,
       terms: terms[key],
     });
+    }
   }
   // Triez le tableau en fonction des noms traduits
   arraySorted.sort((a, b) => a.terms.localeCompare(b.terms));
@@ -728,31 +713,38 @@ function handleSkills() {
     const existingSpecializations =
       characterData.skills[skill.data].specializations;
 
-    // Filtrer les spécialisations disponibles
-    const availableSpecializations = proposedSpecializations.filter(
-      (specialization) => !existingSpecializations.includes(specialization)
-    );
-
     // Construire le tableau d'options
     var addOptions = [];
 
-    availableSpecializations.forEach((specialization) => {
+    proposedSpecializationsSorted = sort(proposedSpecializations);
+
+    existingSpecializationsSorted = sort(existingSpecializations);
+
+    const availableSpecializationsSorted = proposedSpecializationsSorted.filter(
+      specialization => !existingSpecializations.some(existingSpecialization => existingSpecialization === specialization.terms)
+    );
+
+    availableSpecializationsSorted.forEach((specialization) => {
       addOptions.push(
-        `<li><a class="dropdown-item" href="#" onclick="handleSpecializationClick('${
-          skill.data
-        }', '${specialization}')">${capitalized(specialization)}</a></li>`
+        `<li><a class="dropdown-item table-success" href="#" onclick="addSpecializationClick('${skill.data}', '${specialization.terms}')">+ ${capitalized(specialization.terms)}</a></li>`
       );
     });
 
     // Ajouter l'option "Autre"
     addOptions.push(
-      `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${
+      `<li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${
         skill.data
       }Modal"">${capitalized(terms.new)}</a></li>`
     );
 
-    console.log(`[${skill.data}] addOptions : `, addOptions);
-    console.log(`[${skill.data}] addOptions.join() : `, addOptions.join(" "));
+    if (existingSpecializations) {
+      addOptions.push(`<li><hr class="dropdown-divider"></li>`);
+      existingSpecializations.forEach((specialization) => {
+        addOptions.push(
+          `<li><a class="dropdown-item table-danger" href="#" onclick="removeSpecializationClick('${skill.data}', '${specialization}')">- ${capitalized(specialization)}</a></li>`
+        );
+      });
+    }
 
     // Ajouter les options au menu déroulant
     DropdownOptions = addOptions.join(" ");
@@ -784,13 +776,13 @@ function handleSkills() {
             )}</span></div>
           </td>
           <td id="${skill.data}_specialization">
-            <div><span class="h8">${skillsData[skill.data].specializations.join(
+            <div><span class="h8">${existingSpecializations.join(
               ", "
             )}</span>
             </div>
             <div class="dropdown">
               <div class="btn-group">
-                <button class="btn btn-outline-danger btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
+                <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
                 <ul class="dropdown-menu" id="${skill.data}Dropdown-menu">
                   ${DropdownOptions}
                 </ul>
@@ -804,17 +796,20 @@ function handleSkills() {
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="${skill.data}ModalLabel">${
-      skill.data
-    }</h1>
+        <h1 class="modal-title fs-5" id="${skill.data}ModalLabel">
+        ${capitalized(terms[skill.data])}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div>
+  <form id="${skill.data}AddSpecializationForm">
+    <div class="mb-3">
+      <label for="${skill.data}SpecializationInput" class="form-label">${capitalized(terms.new)} ${terms.specialization}${terms.colons}</label>
+      <input type="text" class="form-control" id="${skill.data}SpecializationInput" required>
+    </div>
+    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
+  </form>
+</div>
       </div>
     </div>
   </div>
@@ -823,6 +818,30 @@ function handleSkills() {
           </td>
       </tr>
     `;
+
+    // Ajoutez ceci dans votre fonction handleSkills ou où vous créez vos événements
+    $(document).on("submit", "#" + skill.data + "AddSpecializationForm", function (e) {
+      e.preventDefault();
+
+      // Récupérez la valeur saisie par l'utilisateur
+      const newSpecialization = $("#" + skill.data + "SpecializationInput").val();
+
+      // Assurez-vous que la spécialisation n'est pas vide
+      if (newSpecialization.trim() !== "") {
+        // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
+        characterData.skills[skill.data].specializations.push(
+          newSpecialization
+        );
+        characterData.points.skills.spent = characterData.points.skills.spent + 1 ;
+        updateSpecializationDisplay(skill.data);
+
+        // Mettez à jour l'affichage avec la nouvelle spécialisation
+        handleSkills();
+      }
+
+      // Effacez le champ de saisie
+      $("#specializationInput").val("");
+    });
   }
 
   // Afficher le contenu généré dans le corps du tableau des compétences
@@ -830,20 +849,24 @@ function handleSkills() {
 }
 
 // Fonction pour gérer le clic sur une spécialisation
-function handleSpecializationClick(skillData, specialization) {
+function addSpecializationClick(skillData, specialization) {
   characterData.skills[skillData].specializations.push(specialization);
+  characterData.points.skills.spent = characterData.points.skills.spent + 1 ;
+  handleSkills();
   updateSpecializationDisplay(skillData);
 }
 
-// Fonction pour gérer le clic sur "Autre"
-function handleCustomSpecializationClick(skillData) {
-  const customSpecialization = prompt(
-    "Entrez une spécialisation personnalisée :"
-  );
-  if (customSpecialization) {
-    characterData.skills[skillData].specializations.push(customSpecialization);
-    updateSpecializationDisplay(skillData);
-  }
+// Fonction pour gérer le clic sur une spécialisation
+function removeSpecializationClick(skillData, specialization) {
+    // Supprimez la spécialisation du tableau
+    const index = characterData.skills[skillData].specializations.indexOf(specialization);
+    if (index !== -1) {
+      characterData.skills[skillData].specializations.splice(index, 1);
+    }
+  console.log("removeSpecializationClick before : ",characterData.points.skills.spent);
+  characterData.points.skills.spent = characterData.points.skills.spent - 1 ;console.log("removeSpecializationClick after : ",characterData.points.skills.spent);
+  handleSkills();
+  updateSpecializationDisplay(skillData);
 }
 
 // Fonction pour mettre à jour l'affichage des spécialisations
@@ -851,7 +874,8 @@ function updateSpecializationDisplay(skillData) {
   const specializationSpan = $(`#${skillData}_specialization .h8`);
   specializationSpan.text(
     characterData.skills[skillData].specializations.join(", ")
-  );
+  );  
+  updatePoints("skills", skillData);
 }
 
 function modifyValue(type, element, modificator) {
@@ -910,12 +934,16 @@ function updateValues(type) {
           characterData.attributes[characterData[type][s.data].linkedAttribute]
             .value;
         if (characterData[type][s.data].value === 0) {
+          if (characterData[type][s.data].untrained) {            
           rdd = Math.max(
             0,
             characterData.attributes[
               characterData[type][s.data].linkedAttribute
-            ].value - 2
+            ].value - 1
           );
+          } else {
+            rdd = 0;
+          }
         }
         const cellRdd = document
           .getElementById(s.data + "_rdd")
@@ -938,9 +966,31 @@ function updatePoints(type, element, modificator) {
   var numberBase = characterData.points[selectCount].base;
   var numberSpent = characterData.points[selectCount].spent;
 
+  console.log(
+    "updatePoints : BEFORE namePoint ",
+    namePoint,
+    " document.getElementById(`${namePoint}Count`) ",
+    document.getElementById(`${namePoint}Count`),
+    " numberBase ",
+    numberBase,
+    " numberSpent ",
+    numberSpent,
+  );
+
   document.getElementById(`${namePoint}Count`).textContent = Math.max(
     0,
     numberBase - numberSpent
+  );
+
+  console.log(
+    "updatePoints AFTER : namePoint ",
+    namePoint,
+    " document.getElementById(`${namePoint}Count`) ",
+    document.getElementById(`${namePoint}Count`),
+    " numberBase ",
+    numberBase,
+    " numberSpent ",
+    numberSpent,
   );
 
   // Vérifiez si la valeur dépensée est supérieure au maximum et ajoutez la classe "btn btn-outline-danger"
@@ -948,19 +998,6 @@ function updatePoints(type, element, modificator) {
     var max = 7;
     var maxElement = characterData.alreadyMaxSkill;
     if (maxElement) max = 6;
-
-    console.log(
-      "updatePoints : element ",
-      element,
-      " maxElement ",
-      maxElement,
-      " max ",
-      max,
-      " document.getElementById(`${maxElement}_actual`) ",
-      document.getElementById(`${maxElement}_actual`),
-      " characterData[type][element].value ",
-      characterData[type][element].value
-    );
 
     if (characterData.skills[element].value >= max) {
       if (maxElement)
@@ -1056,7 +1093,6 @@ function showResults() {
   }
 
   if (characterData.special) {
-    console.log("characterData.special");
     document.getElementById("specialIdentity").innerHTML =
       "<p>" + capitalized(terms[characterData.special]) + "</p>";
   }
