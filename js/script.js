@@ -916,6 +916,27 @@ function handleDropdownModal(type) {
     });
   }
 
+  var chooseLevel = "";
+
+  if (type === "languages") {
+  chooseLevel = `<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel0" value="0">
+  <label class="form-check-label" for="chooseLevel0">Connaissance</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel1" value="1">
+  <label class="form-check-label" for="chooseLevel1">Spécialiste</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel2" value="2">
+  <label class="form-check-label" for="chooseLevel2">Expert</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel3" value="3">
+  <label class="form-check-label" for="chooseLevel3">Langue maternelle</label>
+</div>`
+  }
+
   // Ajouter les options au menu déroulant
   var DropdownOptions = addOptions.join(" ");
   
@@ -943,6 +964,7 @@ function handleDropdownModal(type) {
                     <label for="${type}Input" class="form-label">${capitalized(terms.new)} ${terms[type]}${terms.colons}</label>
                     <input type="text" class="form-control" id="${type}Input" required>
                   </div>
+                  ${chooseLevel}
                   <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
                 </form>
               </div>
@@ -955,8 +977,10 @@ function handleDropdownModal(type) {
   $(document).on("submit", `#add${capitalized(type)}Form`, function (e) {
     e.preventDefault();
 
+    var levelItem = 0;
+    if (type === "languages") levelItem = parseInt($("input[name='chooseLevelOptions']:checked").val()) || 0;
     // Récupérez la valeur saisie par l'utilisateur
-    const newItem = {key:$(`#${type}Input`).val(), level: 0};
+    const newItem = {key:$(`#${type}Input`).val(), level: levelItem};
 
     console.log(`modal ${capitalized(type)} PING : newItem`, newItem, ` ${type}[] before `, characterData[type]);
 
@@ -1005,8 +1029,7 @@ function removeKnowledgesClick(type, item) {
 
 
 
-  function updateKnowledgeDisplay(type) {
-    console.log("updateKnowledgeDisplay()");
+  function updateKnowledgeDisplay() {
   
     var knowledgeTable = $("#knowledgeTable"); // Utilisez jQuery ici
     var knowledgeTableBody = knowledgeTable.find("tbody");
@@ -1016,15 +1039,32 @@ function removeKnowledgesClick(type, item) {
   
     // Trouver le nombre maximal d'éléments dans les deux tableaux
     var maxItems = Math.max(characterData.knowledges.length, characterData.languages.length);
+
+    var levels = ["", " (spécialiste)", " (expert)", " (langue maternelle)"];
   
     // Ajouter chaque connaissance et chaque langue au tableau
     for (let i = 0; i < maxItems; i++) {
+      console.log("updateKnowledgeDisplay characterData.languages[",i,"]: ",characterData.languages[i])
       var knowledgeCell = i < characterData.knowledges.length ? `<td class="knowledge-column">${capitalized(characterData.knowledges[i].key)}</td>` : '<td class="knowledge-column"></td>';
-      var languageCell = i < characterData.languages.length ? `<td class="language-column starred">${capitalized(characterData.languages[i].key)}</td>` : '<td class="language-column"></td>';
+      var languageCell = i < characterData.languages.length ? `<td class="language-column starred" onclick="starredLanguage(this, '${i}')">${capitalized(characterData.languages[i].key)}${levels[characterData.languages[i].level]}</td>` : '<td class="language-column"></td>';
       var rowHTML = `<tr>${knowledgeCell}${languageCell}</tr>`;
       knowledgeTableBody.append(rowHTML);
     }
   }
+
+function starredLanguage(cell, i) {
+  var key = characterData.languages[i].key ;
+  var level = characterData.languages[i].level ;
+
+  if (level === 3) {
+    characterData.languages[i].level = 0
+  } else  {
+    characterData.languages[i].level = level + 1;
+  }
+
+  updateKnowledgeDisplay();
+
+}
 
 function modifyValue(type, element, modificator) {
   var selectCount = type;
