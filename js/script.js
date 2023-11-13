@@ -554,11 +554,11 @@ function showAttributesToSpend() {
   }
 
   document.getElementById("attributesSpent").innerHTML =
-    ' <table class="table"><thead> <tr> <th scope="col"></th> <th scope="col">' +
+    ' <table class="table table-sm table-responsive-sm table-hover table-striped"><thead class="table-light"> <tr> <th scope="col"></th> <th scope="col">' +
     capitalized(terms.attributes) +
     '</th> <th scope="col">' +
     capitalized(terms.adjustment) +
-    '</th></tr> </thead><tbody> <tr> <th scope="row">' +
+    '</th></tr> </thead><tbody class="table-group-divider"> <tr> <th scope="row">' +
     terms.pointsToSpend +
     '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount">' +
     characterData.points.Prio.base +
@@ -680,7 +680,7 @@ function handleSkills() {
 
   // Mettre à jour le tableau des compétences dépensées
   skillsSpentTable.html(
-    '<table class="table"><tbody> <tr> <th scope="row">' +
+    '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
       terms.pointsToSpend +
       '</th> <td id="skills_max"> <span id="skillsCount">' +
       characterData.points.skills.base +
@@ -888,7 +888,7 @@ function updateKnowledgePoints() {
   console.log("updateKnowledgePoints : knowledgeCount ", knowledgeCount, " characterData.points.knowledges.base : ", characterData.points.knowledges.base, " characterData.points.knowledges.base.spent : ", characterData.points.knowledges.spent, " max ", Math.max(0, characterData.points.knowledges.base - characterData.points.knowledges.spent))
 
   knowledgeSpentTable.html(
-    '<table class="table"><tbody> <tr> <th scope="row">' +
+    '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
       terms.pointsToSpend +
       `</th> <td id="knowledge_max"> <span id="knowledgeCount">${knowledgeCount}</span></td></tr></tbody></table>`
   );

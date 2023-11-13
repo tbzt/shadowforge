@@ -191,12 +191,11 @@
 
             <div class="collapse" id="collapsePriorities">
               <div class="card card-body">
-                <div class="table-responsive-sm">
                   <table
                     id="priorityTable"
-                    class="table align-middle table-hover"
+                    class="table table-sm table-responsive-sm align-middle table-hover"
                   >
-                    <thead>
+                    <thead class="table-light">
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col" id="priorityTableMetatpeAdjustment">
@@ -269,7 +268,6 @@
                       </script>
                     </tbody>
                   </table>
-                </div>
               </div>
             </div>
 
@@ -299,12 +297,12 @@
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="attributesSpent"></div>
 
-                  <div class="table-responsive-sm">
+                  
                     <table
                       id="attributeTable"
-                      class="table align-middle table-hover table-striped"
+                      class="table table-sm table-responsive-sm table-hover table-striped"
                     >
-                      <thead class="thead-dark">
+                      <thead class="table-light">
                         <tr>
                           <th scope="col" id="attributesAttributes">{{capitalized attributes}}</th>
                           <th scope="col" id="attributesAdded">{{capitalized added}}</th>
@@ -312,9 +310,8 @@
                           <th scope="col" id="attributesMaximum">{{capitalized maximum}}</th>
                         </tr>
                       </thead>
-                      <tbody></tbody>
+                      <tbody tbody class="table-group-divider"></tbody>
                     </table>
-                  </div>
                 </div>
               </div>
                                                       <!-- Section : Choix des connaissances -->
@@ -326,15 +323,15 @@
                                                           <div class="table-responsive-sm">
                                                             <table
                                                               id="knowledgeTable"
-                                                              class="table align-middle table-hover table-striped"
-                                                            >
-                                                              <thead class="thead-dark">
+                                                              class="table table-sm table-responsive-sm table-hover table-striped"
+                    >
+                      <thead class="table-light">
                                                                 <tr>
                                                                   <th scope="col" id="knowledgesHeader" class="knowledge-column">{{capitalized knowledges}}</th>
                                                                   <th scope="col" id="languagesHeader" class="language-column">{{capitalized languages}}</th>
                                                                 </tr>
                                                               </thead>
-                                                              <tbody></tbody>
+                                                              <tbody class="table-group-divider"></tbody>
                                                             </table>
                                                           </div>
                                                         </div>
@@ -348,12 +345,12 @@
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="skillsSpent"></div>
 
-                  <div class="table-responsive-sm">
+                  
                     <table
                       id="skillTable"
-                      class="table align-middle table-hover table-striped"
-                    >
-                      <thead class="thead-dark">
+                      class="table table-sm table-responsive-sm table-hover table-striped"
+                      >
+                        <thead class="table-light">
                         <tr>
                           <th scope="col" id="skillsSkills">{{capitalized skills}}</th>
                           <th scope="col" id="skillsAdded">{{capitalized added}}</th>
@@ -361,9 +358,9 @@
                           <th scope="col" id="skillsSpecializations">{{capitalized specializations}}</th>
                         </tr>
                       </thead>
-                      <tbody></tbody>
+                      <tbody class="table-group-divider"></tbody>
                     </table>
-                  </div>
+              
                 </div>
               </div>
 
