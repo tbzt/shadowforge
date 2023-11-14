@@ -161,24 +161,10 @@ function selectPriority(cell, categorie, priority) {
       showAttributesToSpend();
     }
   
-    // Afficher les attributes si leur priorité est sélectionnée
-    if (categorie === "skills") {
-      var skillTitle = document.getElementById("skillTitle");
-      skillTitle.style.display = "block"; // Afficher la section des skills
-      var knowledge = document.getElementById("knowledgeTitle");
-      knowledge.style.display = "block";
-      handleSkills();
-      updateKnowledgePoints() ;
-      handleDropdownModal("knowledges");
-      handleDropdownModal("languages");
-    }
-  
     if (selectedCells["attributes"]) {
-      handleAttributes();
       updateValues("attributes");
     }
     if (selectedCells["skills"]) {
-      handleSkills;
       updateValues("skills");
     }
     saveInCookie();

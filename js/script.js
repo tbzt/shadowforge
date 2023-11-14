@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
   setLanguage("fr");
   handleSIN();
   handleAttributes();
+  handleSkills();
+  updateKnowledgePoints() ;
+  handleDropdownModal("knowledges");
+  handleDropdownModal("languages");
 });
 
 let prioritiesSelected = {
@@ -560,9 +564,9 @@ function showAttributesToSpend() {
     capitalized(terms.adjustment) +
     '</th></tr> </thead><tbody class="table-group-divider"> <tr> <th scope="row">' +
     terms.pointsToSpend +
-    '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount">' +
+    '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount" class="h6">' +
     characterData.points.Prio.base +
-    '</span></td> <td id="attributesAdjustment_max" class="selectable" onclick="selectAttributeType(this, \'Adjustment\')"><span id="attributesAdjustmentCount">' +
+    '</span></td> <td id="attributesAdjustment_max" class="selectable" onclick="selectAttributeType(this, \'Adjustment\')"><span id="attributesAdjustmentCount" class="h6">' +
     characterData.points.Adjustment.base +
     "</span></td> </tr></tbody></table>";
 }
@@ -682,7 +686,7 @@ function handleSkills() {
   skillsSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
       terms.pointsToSpend +
-      '</th> <td id="skills_max"> <span id="skillsCount">' +
+      '</th> <td id="skills_max"> <span id="skillsCount" class="h6">' +
       characterData.points.skills.base +
       "</span></td></tr></tbody></table>"
   );
@@ -890,7 +894,7 @@ function updateKnowledgePoints() {
   knowledgeSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
       terms.pointsToSpend +
-      `</th> <td id="knowledge_max"> <span id="knowledgeCount">${knowledgeCount}</span></td></tr></tbody></table>`
+      `</th> <td id="knowledge_max"> <span id="knowledgeCount" class="h6">${knowledgeCount}</span></td></tr></tbody></table>`
   );
 }
 
@@ -919,22 +923,19 @@ function handleDropdownModal(type) {
   var chooseLevel = "";
 
   if (type === "languages") {
-  chooseLevel = `<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel0" value="0">
-  <label class="form-check-label" for="chooseLevel0">Connaissance</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel1" value="1">
-  <label class="form-check-label" for="chooseLevel1">Spécialiste</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel2" value="2">
-  <label class="form-check-label" for="chooseLevel2">Expert</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="chooseLevelOptions" id="chooseLevel3" value="3">
-  <label class="form-check-label" for="chooseLevel3">Langue maternelle</label>
-</div>`
+  chooseLevel = `<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel0" autocomplete="off" value="0" checked>
+  <label class="btn btn-outline-primary" for="chooseLevel0">${capitalized(terms.knowledge)}</label>
+
+  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel1" autocomplete="off" value="1">
+  <label class="btn btn-outline-primary" for="chooseLevel1">${capitalized(terms.specialist)}</label>
+
+  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel2" autocomplete="off" value="2">
+  <label class="btn btn-outline-primary" for="chooseLevel2">${capitalized(terms.expert)}</label>
+
+  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel3" autocomplete="off" value="3">
+  <label class="btn btn-outline-primary" for="chooseLevel3">${capitalized(terms.native)}</label>
+</div><br><br>`
   }
 
   // Ajouter les options au menu déroulant
@@ -961,7 +962,7 @@ function handleDropdownModal(type) {
               <div>
                 <form id="add${capitalized(type)}Form">
                   <div class="mb-3">
-                    <label for="${type}Input" class="form-label">${capitalized(terms.new)} ${terms[type]}${terms.colons}</label>
+                    <label for="${type}Input" class="form-label">${capitalized(terms.new)} ${terms[type].slice(0, -1)}${terms.colons}</label>
                     <input type="text" class="form-control" id="${type}Input" required>
                   </div>
                   ${chooseLevel}
@@ -1040,13 +1041,15 @@ function removeKnowledgesClick(type, item) {
     // Trouver le nombre maximal d'éléments dans les deux tableaux
     var maxItems = Math.max(characterData.knowledges.length, characterData.languages.length);
 
-    var levels = ["", " (spécialiste)", " (expert)", " (langue maternelle)"];
+    var levels = ["", "specialist", "expert", "native"];
   
     // Ajouter chaque connaissance et chaque langue au tableau
     for (let i = 0; i < maxItems; i++) {
       console.log("updateKnowledgeDisplay characterData.languages[",i,"]: ",characterData.languages[i])
+      var showLevel = ""
+      if (characterData.languages[i].level > 0) showLevel = " ("+ terms[levels[characterData.languages[i].level]] + ")";
       var knowledgeCell = i < characterData.knowledges.length ? `<td class="knowledge-column">${capitalized(characterData.knowledges[i].key)}</td>` : '<td class="knowledge-column"></td>';
-      var languageCell = i < characterData.languages.length ? `<td class="language-column starred" onclick="starredLanguage(this, '${i}')">${capitalized(characterData.languages[i].key)}${levels[characterData.languages[i].level]}</td>` : '<td class="language-column"></td>';
+      var languageCell = i < characterData.languages.length ? `<td class="language-column starred" onclick="starredLanguage(this, '${i}')">${capitalized(characterData.languages[i].key)}${showLevel}</td>` : '<td class="language-column"></td>';
       var rowHTML = `<tr>${knowledgeCell}${languageCell}</tr>`;
       knowledgeTableBody.append(rowHTML);
     }

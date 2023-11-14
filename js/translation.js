@@ -24,6 +24,17 @@ function changeLang(language) {
   setLang(language);
   setLanguage(language);
 
+  $("#define, #shape").find("input[type='checkbox']").prop('checked', false);
+  $("#container").find(".collapse").collapse('hide');
+
+  
+  handleSIN();
+  handleAttributes();
+  handleSkills();
+  updateKnowledgePoints() ;
+  handleDropdownModal("knowledges");
+  handleDropdownModal("languages");
+
   idToUpdate = [
     {
       id:"title",
@@ -102,8 +113,20 @@ function changeLang(language) {
       term: "dices"
     }, 
     {
-      id:"skillsSpecializations",
-      term: "specializations"
+      id:"qualitiesHeader",
+      term: "qualities"
+    },
+    {
+      id:"descriptionQualities",
+      term: "descriptions"
+    }, 
+    {
+      id:"typeQualities",
+      term: "types"
+    }, 
+    {
+      id:"karmaCostQualities",
+      term: "karmaCost"
     }]
   
     idToUpdate.forEach((element) => {
@@ -118,6 +141,7 @@ function changeLang(language) {
   handleSIN(); 
   showPriorities();
   handleAttributes();
+  showAttributesToSpend();
   handleSkills(); 
 
   console.log("setLang(",language,") : terms : ", terms);
@@ -304,6 +328,16 @@ const translations = {
     languages: "langues",
     knowledge: "connaissance",
     language: "langue",
+    qualities: "traits",
+    quality: "trait",
+    description: "description",
+    descriptions: "descriptions",
+    type: "type",
+    types: "types",
+    karmaCost: "coût en karma",
+    specialist: "spécialiste",
+    expert: "expert",
+    native: "langue maternelle",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -483,5 +517,15 @@ const translations = {
     languages: "languages",
     knowledge: "knowledge",
     language: "language",
+    qualities: "qualities",
+    quality: "quality",
+    description: "description",
+    descriptions: "descriptions",
+    type: "type",
+    types: "types",
+    karmaCost: "karma cost",
+    specialist: "specialist",
+    expert: "expert",
+    native: "native",
   },
 };

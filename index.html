@@ -27,24 +27,25 @@
 
   <body>
     <div id="language-switcher">
-        <a href="#" onclick="changeLang('fr')">
-          <img src="style/img/fr-flag.png" alt="French Flag">
-        </a>
-        <a href="#" onclick="changeLang('en')">
-          <img src="style/img/us-flag.png" alt="US Flag">
-        </a>
-      </div>
+      <a href="#" onclick="changeLang('fr')">
+        <img src="style/img/fr-flag.png" alt="French Flag" />
+      </a>
+      <a href="#" onclick="changeLang('en')">
+        <img src="style/img/us-flag.png" alt="US Flag" />
+      </a>
+    </div>
     <div class="container-fluid" id="container">
       <h1 class="mt-4 display-4" id="title">{{title}}</h1>
       <br />
       <div class="row">
         <!-- Colonne de largeur 9 (col-sm-9) pour les choix à sélection -->
         <div class="col-sm-9">
-          <div class="row">
+          <div class="row justify-content-center">
             <div
               class="btn-group"
               role="group"
               aria-label="Basic checkbox toggle button group"
+              id="define"
             >
               <input
                 type="checkbox"
@@ -115,7 +116,16 @@
                 style="display: none"
                 >{{specialAttributeChoice}}</label
               >
-
+            </div>
+          </div>
+          <br />
+          <div class="row justify-content-center">
+            <div
+              class="btn-group"
+              role="group"
+              aria-label="Basic checkbox toggle button group"
+              id="shape"
+            >
               <input
                 type="checkbox"
                 class="btn-check"
@@ -130,7 +140,6 @@
                 class="btn btn-outline-primary"
                 for="attributeBtn"
                 id="attributeTitle"
-                style="display: none"
                 >{{capitalized attributes}}</label
               >
 
@@ -148,7 +157,6 @@
                 class="btn btn-outline-primary"
                 for="skillBtn"
                 id="skillTitle"
-                style="display: none"
                 >{{capitalized skills}}</label
               >
 
@@ -166,12 +174,28 @@
                 class="btn btn-outline-primary"
                 for="knowledgeBtn"
                 id="knowledgeTitle"
-                style="display: none"
                 >{{capitalized knowledges}} & {{languages}}</label
               >
 
+              <input
+                type="checkbox"
+                class="btn-check"
+                id="qualitiesBtn"
+                autocomplete="off"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseQualities"
+                aria-expanded="false"
+                aria-controls="collapseQualities"
+              />
+              <label
+                class="btn btn-outline-primary"
+                for="qualitiesBtn"
+                id="qualitiesTitle"
+                >{{capitalized qualities}}</label
+              >
             </div>
           </div>
+          <br />
           <div class="row">
             <!-- Section : SIN -->
             <div class="collapse" id="collapseIdentity">
@@ -191,83 +215,89 @@
 
             <div class="collapse" id="collapsePriorities">
               <div class="card card-body">
-                  <table
-                    id="priorityTable"
-                    class="table table-sm table-responsive-sm align-middle table-hover"
-                  >
-                    <thead class="table-light">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col" id="priorityTableMetatpeAdjustment">
-                          {{capitalized metatypes}} ({{adjustment}})
-                        </th>
-                        <th scope="col" id="priorityTableAttributes">{{capitalized attributes}}</th>
-                        <th scope="col" id="priorityTableSkills">{{capitalized skills}}</th>
-                        <th scope="col" id="priorityTableSpecial">
-                          {{capitalized magic}}/{{capitalized resonance}}
-                        </th>
-                        <th scope="col" id="priorityTableResources">{{capitalized resources}}</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                      <!-- Modèle Handlebars pour la table des priorités -->
-                      <script
-                        id="priority-template"
-                        type="text/x-handlebars-template"
-                      >
-                        {{#each this}}
-                          <tr>
-                            <td>{{@key}}</td>
-                            <td
-                              id="metatypes_{{@key}}"
-                              class="selectable"
-                              onclick="selectPriority(this, 'metatypes', '{{@key}}')"
-                            >
-                              {{#if metatypes1}}
-                                {{this.metatypes1}}<br />
-                                {{this.metatypes2}}<br />
-                                {{this.metatypes3}}<br />
-                                {{#if metatypes4}}
-                                  {{this.metatypes4}}<br />
-                                {{/if}}
-                              {{else}}
-                                {{this.metatypes}}
+                <table
+                  id="priorityTable"
+                  class="table table-sm table-responsive-sm align-middle table-hover"
+                >
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col" id="priorityTableMetatpeAdjustment">
+                        {{capitalized metatypes}} ({{adjustment}})
+                      </th>
+                      <th scope="col" id="priorityTableAttributes">
+                        {{capitalized attributes}}
+                      </th>
+                      <th scope="col" id="priorityTableSkills">
+                        {{capitalized skills}}
+                      </th>
+                      <th scope="col" id="priorityTableSpecial">
+                        {{capitalized magic}}/{{capitalized resonance}}
+                      </th>
+                      <th scope="col" id="priorityTableResources">
+                        {{capitalized resources}}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-group-divider">
+                    <!-- Modèle Handlebars pour la table des priorités -->
+                    <script
+                      id="priority-template"
+                      type="text/x-handlebars-template"
+                    >
+                      {{#each this}}
+                        <tr>
+                          <td>{{@key}}</td>
+                          <td
+                            id="metatypes_{{@key}}"
+                            class="selectable"
+                            onclick="selectPriority(this, 'metatypes', '{{@key}}')"
+                          >
+                            {{#if metatypes1}}
+                              {{this.metatypes1}}<br />
+                              {{this.metatypes2}}<br />
+                              {{this.metatypes3}}<br />
+                              {{#if metatypes4}}
+                                {{this.metatypes4}}<br />
                               {{/if}}
-                            </td>
-                            <td
-                              id="attributes_{{@key}}"
-                              class="selectable"
-                              onclick="selectPriority(this, 'attributes', '{{@key}}')"
-                            >{{this.attributes}}</td>
-                            <td
-                              id="skills_{{@key}}"
-                              class="selectable"
-                              onclick="selectPriority(this, 'skills', '{{@key}}')"
-                            >{{this.skills}}</td>
-                            <td
-                              id="magicOrResonance_{{@key}}"
-                              class="selectable magicOrResonance"
-                              onclick="selectPriority(this, 'magicOrResonance', '{{@key}}')"
-                            >
-                              {{#if magicOrResonance1}}
-                                {{this.magicOrResonance1}}<br />
-                                {{this.magicOrResonance2}}<br />
-                                {{this.magicOrResonance3}}<br />
-                                {{this.magicOrResonance4}}<br />
-                              {{else}}
-                                {{this.magicOrResonance}}
-                              {{/if}}
-                            </td>
-                            <td
-                              id="resources_{{@key}}"
-                              class="selectable"
-                              onclick="selectPriority(this, 'resources', '{{@key}}')"
-                            >{{this.resources}}</td>
-                          </tr>
-                        {{/each}}
-                      </script>
-                    </tbody>
-                  </table>
+                            {{else}}
+                              {{this.metatypes}}
+                            {{/if}}
+                          </td>
+                          <td
+                            id="attributes_{{@key}}"
+                            class="selectable"
+                            onclick="selectPriority(this, 'attributes', '{{@key}}')"
+                          >{{this.attributes}}</td>
+                          <td
+                            id="skills_{{@key}}"
+                            class="selectable"
+                            onclick="selectPriority(this, 'skills', '{{@key}}')"
+                          >{{this.skills}}</td>
+                          <td
+                            id="magicOrResonance_{{@key}}"
+                            class="selectable magicOrResonance"
+                            onclick="selectPriority(this, 'magicOrResonance', '{{@key}}')"
+                          >
+                            {{#if magicOrResonance1}}
+                              {{this.magicOrResonance1}}<br />
+                              {{this.magicOrResonance2}}<br />
+                              {{this.magicOrResonance3}}<br />
+                              {{this.magicOrResonance4}}<br />
+                            {{else}}
+                              {{this.magicOrResonance}}
+                            {{/if}}
+                          </td>
+                          <td
+                            id="resources_{{@key}}"
+                            class="selectable"
+                            onclick="selectPriority(this, 'resources', '{{@key}}')"
+                          >{{this.resources}}</td>
+                        </tr>
+                      {{/each}}
+                    </script>
+                  </tbody>
+                </table>
               </div>
             </div>
 
@@ -289,7 +319,6 @@
               </div>
             </div>
 
-            
             <div class="col-sm-6">
               <!-- Section : Choix des attributes -->
               <div class="collapse" id="collapseAttributes">
@@ -297,45 +326,64 @@
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="attributesSpent"></div>
 
-                  
+                  <table
+                    id="attributeTable"
+                    class="table table-sm table-responsive-sm table-hover table-striped"
+                  >
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col" id="attributesAttributes" class="h6">
+                          {{capitalized attributes}}
+                        </th>
+                        <th scope="col" id="attributesAdded">
+                          {{capitalized added}}
+                        </th>
+                        <th scope="col" id="attributesActual">
+                          {{capitalized actual}}
+                        </th>
+                        <th scope="col" id="attributesMaximum">
+                          {{capitalized maximum}}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody tbody class="table-group-divider"></tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- Section : Choix des connaissances -->
+              <div class="collapse" id="collapseKnowledge">
+                <div class="card card-body">
+                  <!-- Affiche le namebre de points d'attributes à dépenser -->
+                  <div id="knowledgeSpent"></div>
+
+                  <div class="table-responsive-sm">
                     <table
-                      id="attributeTable"
+                      id="knowledgeTable"
                       class="table table-sm table-responsive-sm table-hover table-striped"
                     >
                       <thead class="table-light">
                         <tr>
-                          <th scope="col" id="attributesAttributes">{{capitalized attributes}}</th>
-                          <th scope="col" id="attributesAdded">{{capitalized added}}</th>
-                          <th scope="col" id="attributesActual">{{capitalized actual}}</th>
-                          <th scope="col" id="attributesMaximum">{{capitalized maximum}}</th>
+                          <th
+                            scope="col"
+                            id="knowledgesHeader"
+                            class="knowledge-column h6"
+                          >
+                            {{capitalized knowledges}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="languagesHeader"
+                            class="language-column h6"
+                          >
+                            {{capitalized languages}}
+                          </th>
                         </tr>
                       </thead>
-                      <tbody tbody class="table-group-divider"></tbody>
+                      <tbody class="table-group-divider"></tbody>
                     </table>
+                  </div>
                 </div>
               </div>
-                                                      <!-- Section : Choix des connaissances -->
-                                                      <div class="collapse" id="collapseKnowledge">
-                                                        <div class="card card-body">
-                                                          <!-- Affiche le namebre de points d'attributes à dépenser -->
-                                                          <div id="knowledgeSpent"></div>
-                                        
-                                                          <div class="table-responsive-sm">
-                                                            <table
-                                                              id="knowledgeTable"
-                                                              class="table table-sm table-responsive-sm table-hover table-striped"
-                    >
-                      <thead class="table-light">
-                                                                <tr>
-                                                                  <th scope="col" id="knowledgesHeader" class="knowledge-column">{{capitalized knowledges}}</th>
-                                                                  <th scope="col" id="languagesHeader" class="language-column">{{capitalized languages}}</th>
-                                                                </tr>
-                                                              </thead>
-                                                              <tbody class="table-group-divider"></tbody>
-                                                            </table>
-                                                          </div>
-                                                        </div>
-                                                      </div>
             </div>
 
             <div class="col-sm-6">
@@ -345,25 +393,78 @@
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="skillsSpent"></div>
 
-                  
+                  <table
+                    id="skillTable"
+                    class="table table-sm table-responsive-sm table-hover table-striped"
+                  >
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col" id="skillsSkills" class="h6">
+                          {{capitalized skills}}
+                        </th>
+                        <th scope="col" id="skillsAdded">
+                          {{capitalized added}}
+                        </th>
+                        <th scope="col" id="skillsDices">
+                          {{capitalized dices}}
+                        </th>
+                        <th scope="col" id="skillsSpecializations">
+                          {{capitalized specializations}}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider"></tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- Section : Choix des qualités -->
+              <div class="collapse" id="collapseQualities">
+                <div class="card card-body">
+                  <!-- Affiche le namebre de points d'attributes à dépenser -->
+                  <div id="qualitiesSpent"></div>
+
+                  <div class="table-responsive-sm">
                     <table
-                      id="skillTable"
+                      id="qualitiesTable"
                       class="table table-sm table-responsive-sm table-hover table-striped"
-                      >
-                        <thead class="table-light">
+                    >
+                      <thead class="table-light">
                         <tr>
-                          <th scope="col" id="skillsSkills">{{capitalized skills}}</th>
-                          <th scope="col" id="skillsAdded">{{capitalized added}}</th>
-                          <th scope="col" id="skillsDices">{{capitalized dices}}</th>
-                          <th scope="col" id="skillsSpecializations">{{capitalized specializations}}</th>
+                          <th
+                            scope="col"
+                            id="qualitiesHeader"
+                            class="name-column h6"
+                          >
+                            {{capitalized qualities}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="descriptionQualities"
+                            class="description-column"
+                          >
+                            {{capitalized descriptions}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="typeQualities"
+                            class="type-column"
+                          >
+                            {{capitalized types}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="karmaCostQualities"
+                            class="karmaCost-column"
+                          >
+                            {{capitalized karmaCost}}
+                          </th>
                         </tr>
                       </thead>
                       <tbody class="table-group-divider"></tbody>
                     </table>
-              
+                  </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -376,11 +477,11 @@
           <div id="identity" class="mt-4">
             <!-- Les résultats de l'identité seront affichés ici -->
           </div>
-          
+
           <div id="metatypeIdentity" class="mt-4">
             <!-- Les résultats de l'identité seront affichés ici -->
           </div>
-          
+
           <div id="specialIdentity" class="mt-4">
             <!-- Les résultats de l'identité seront affichés ici -->
           </div>
@@ -393,12 +494,12 @@
               <!-- Les résultats seront affichés ici -->
             </div>
             <div id="collapses" class="mt-4">
-                <!-- Les résultats seront affichés ici -->
-              </div>
-              
+              <!-- Les résultats seront affichés ici -->
+            </div>
+
             <div id="collapses" class="mt-4">
-                <!-- Les résultats seront affichés ici -->
-              </div>
+              <!-- Les résultats seront affichés ici -->
+            </div>
           </div>
         </div>
       </div>
