@@ -9,7 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
   updateKnowledgePoints() ;
   handleDropdownModal("knowledges");
   handleDropdownModal("languages");
+  handleDropdownModal("qualities");
 });
+
+
 
 let prioritiesSelected = {
   metatypes: null,
@@ -563,7 +566,7 @@ function showAttributesToSpend() {
     '</th> <th scope="col">' +
     capitalized(terms.adjustment) +
     '</th></tr> </thead><tbody class="table-group-divider"> <tr> <th scope="row">' +
-    terms.pointsToSpend +
+    capitalized(terms.pointsToSpend) +
     '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount" class="h6">' +
     characterData.points.Prio.base +
     '</span></td> <td id="attributesAdjustment_max" class="selectable" onclick="selectAttributeType(this, \'Adjustment\')"><span id="attributesAdjustmentCount" class="h6">' +
@@ -685,7 +688,7 @@ function handleSkills() {
   // Mettre à jour le tableau des compétences dépensées
   skillsSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
-      terms.pointsToSpend +
+    capitalized(terms.pointsToSpend) +
       '</th> <td id="skills_max"> <span id="skillsCount" class="h6">' +
       characterData.points.skills.base +
       "</span></td></tr></tbody></table>"
@@ -893,7 +896,7 @@ function updateKnowledgePoints() {
 
   knowledgeSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
-      terms.pointsToSpend +
+    capitalized(terms.pointsToSpend) +
       `</th> <td id="knowledge_max"> <span id="knowledgeCount" class="h6">${knowledgeCount}</span></td></tr></tbody></table>`
   );
 }
@@ -906,6 +909,15 @@ function handleDropdownModal(type) {
   // Construire le tableau d'options
   var addOptions = [];
 
+  if (type === "qualities" && characterData.catalog.qualities) {
+    characterData.catalog.qualities.forEach((quality) => {
+      addOptions.push(
+        `<li><a class="dropdown-item table-success" href="#" onclick="addQualitiesClick('${quality.key}', '${quality.description}', '${quality.type}', '${parseInt(quality.karmaCost)}')">+ ${quality.key}</a></li>`
+      );
+      console.log("forEach : ",quality);
+    });
+  }
+
   // Ajouter l'option "Autre"
   addOptions.push(
     `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${capitalized(type)}Modal">${capitalized(terms.new)}</a></li>`
@@ -915,15 +927,15 @@ function handleDropdownModal(type) {
     addOptions.push(`<li><hr class="dropdown-divider"></li>`);
     knowledges.forEach((item) => {
       addOptions.push(
-        `<li><a class="dropdown-item table-danger" href="#" onclick="removeKnowledgesClick('${type}','${item.key}','${item.key}')">- ${capitalized(item.key)}</a></li>`
+        `<li><a class="dropdown-item table-danger" href="#" onclick="removeModalClick('${type}','${item.key}','${item.key}')">- ${capitalized(item.key)}</a></li>`
       );
     });
   }
 
-  var chooseLevel = "";
+  var specificType = "";
 
   if (type === "languages") {
-  chooseLevel = `<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    specificType = `<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
   <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel0" autocomplete="off" value="0" checked>
   <label class="btn btn-outline-primary" for="chooseLevel0">${capitalized(terms.knowledge)}</label>
 
@@ -937,6 +949,27 @@ function handleDropdownModal(type) {
   <label class="btn btn-outline-primary" for="chooseLevel3">${capitalized(terms.native)}</label>
 </div><br><br>`
   }
+
+if (type === "qualities") {
+  specificType = `
+  <div class="input-group mb-3">
+    <label for="qualityDescription" class="form-label">${capitalized(terms.description)}</label>
+    <textarea class="form-control" id="qualityDescription" rows="3"></textarea>
+  </div>
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypePositive" autocomplete="off" value="positive">
+  <label class="btn btn-outline-primary" for="chooseQualityTypePositive">${capitalized(terms.positive)}</label>
+
+  <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypeNegative" autocomplete="off" value="negative">
+  <label class="btn btn-outline-primary" for="chooseQualityTypeNegative">${capitalized(terms.negative)}</label>
+</div>
+<div class="input-group mb-3">  
+<label for="qualityKarmaCost" class="form-label">${capitalized(terms.karmaCost)}</label>
+  <input type="number" class="form-control" id="qualityKarmaCost" aria-label="Karma cost for the quality">
+</div>
+
+<br><br>`
+}
 
   // Ajouter les options au menu déroulant
   var DropdownOptions = addOptions.join(" ");
@@ -965,7 +998,7 @@ function handleDropdownModal(type) {
                     <label for="${type}Input" class="form-label">${capitalized(terms.new)} ${terms[type].slice(0, -1)}${terms.colons}</label>
                     <input type="text" class="form-control" id="${type}Input" required>
                   </div>
-                  ${chooseLevel}
+                  ${specificType}
                   <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
                 </form>
               </div>
@@ -974,25 +1007,51 @@ function handleDropdownModal(type) {
         </div>
       </div>`;
   
+
   // Ajoutez ceci dans votre fonction handleSkills ou où vous créez vos événements
   $(document).on("submit", `#add${capitalized(type)}Form`, function (e) {
     e.preventDefault();
 
-    var levelItem = 0;
-    if (type === "languages") levelItem = parseInt($("input[name='chooseLevelOptions']:checked").val()) || 0;
-    // Récupérez la valeur saisie par l'utilisateur
-    const newItem = {key:$(`#${type}Input`).val(), level: levelItem};
+    var newItem = {};
 
-    console.log(`modal ${capitalized(type)} PING : newItem`, newItem, ` ${type}[] before `, characterData[type]);
+    if (type === "qualities") {
+    var qualityDescription = $("#qualityDescription").val();
+    console.log("modal ",capitalized(type)," qualityDescription: ",qualityDescription);
+
+    var qualityType = $("input[name='chooseQualityType']:checked").val();
+    console.log("modal ",capitalized(type)," qualityType: ",qualityType);
+
+    var qualityKarmaCost = parseInt($("#qualityKarmaCost").val());
+    console.log("modal ",capitalized(type)," qualityKarmaCost: ",qualityKarmaCost);
+    
+    var key = $(`#${type}Input`).val();
+    console.log("modal ",capitalized(type)," key: ",key);
+    
+    newItem = {key:$(`#${type}Input`).val(), description: qualityDescription, type: qualityType, karmaCost: qualityKarmaCost};
+
+    } else {
+      var levelItem = 0;
+      if (type === "languages") levelItem = parseInt($("input[name='chooseLevelOptions']:checked").val()) || 0;
+      // Récupérez la valeur saisie par l'utilisateur
+      newItem = {key:$(`#${type}Input`).val(), level: levelItem};
+    }
 
     // Assurez-vous que la spécialisation n'est pas vide
     if (newItem.key.trim() !== "") {
       // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
-      knowledges.push(newItem);
-      characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1;
+      
+    console.log(`modal ${capitalized(type)} PING : newItem`, newItem, ` ${type}[] before `, characterData[type]);
+
+      knowledges.push(newItem);   
+      console.log("test");   
+      updateQualitiesDisplay();
+      updateQualitiesKarma();
+      if (type !== "qualities") {
+        characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1;
       updateKnowledgePoints();
+      }
       handleDropdownModal(type);
-      updateKnowledgeDisplay(type);
+      updateKnowledgeDisplay();
     }
 
     // Effacez le champ de saisie
@@ -1000,35 +1059,34 @@ function handleDropdownModal(type) {
   });
 }
 
-function removeKnowledgesClick(type, item) {
-  console.log("removeKnowledgesClick(", type, ", ", item, ") BEFORE : ", characterData[type]);
+function removeModalClick(type, item) {
+  console.log("removeModalClick(", type, ", ", item, ") BEFORE : ", characterData[type]);
 
   const index = characterData[type].findIndex(entry =>
       entry.key === item
   );
 
-  console.log("removeKnowledgesClick(", type, ", ", item, ") INDEX : ", index, " key ", item.key);
+  console.log("removeModalClick(", type, ", ", item, ") INDEX : ", index, " key ", item.key);
 
   if (index !== -1) {
-      console.log("removeKnowledgesClick(", type, ", ", item, ") REMOVING : ", characterData[type][index]);
+      console.log("removeModalClick(", type, ", ", item, ") REMOVING : ", characterData[type][index]);
       characterData[type].splice(index, 1);
   } else {
-      console.log("removeKnowledgesClick(", type, ", ", item, ") NOT FOUND");
+      console.log("removeModalClick(", type, ", ", item, ") NOT FOUND");
       console.log("Array contents: ", characterData[type]);
   }
 
-  console.log("removeKnowledgesClick(", type, ", ", item, ") AFTER : ", characterData[type]);
+  console.log("removeModalClick(", type, ", ", item, ") AFTER : ", characterData[type]);
   handleDropdownModal(type);
   updateKnowledgeDisplay();
+  updateQualitiesDisplay();
+  updateQualitiesKarma();
 
-  characterData.points.knowledges.spent = characterData.points.knowledges.spent - 1;
+  if (type !== "qualities") {
+    characterData.points.knowledges.spent = characterData.points.knowledges.spent - 1;
   updateKnowledgePoints();
+  }
 }
-
-
-
-
-
 
   function updateKnowledgeDisplay() {
   
@@ -1055,6 +1113,50 @@ function removeKnowledgesClick(type, item) {
     }
   }
 
+  // Fonction pour gérer le clic sur une spécialisation
+function addQualitiesClick(key, description, type, karmaCost) {
+
+  console.log("addQualitiesClick : ", karmaCost);
+  
+  var quality = {key: key, description: description, type: type, karmaCost: parseInt(karmaCost)};
+
+  characterData.qualities.push(quality);
+  handleDropdownModal("qualities");
+  updateQualitiesDisplay();
+  updateQualitiesKarma();
+}
+
+  function updateQualitiesDisplay() {
+
+    console.log("Initiate updateQualitiesDisplay");
+  
+    var qualitiesTableBody = $("#qualitiesTable tbody");
+
+    // Effacez le contenu actuel du corps du tableau
+    qualitiesTableBody.empty();
+  
+    // Vérifiez si characterData.qualities existe
+    if (characterData.qualities) {
+      // Parcourez chaque qualité dans characterData.qualities
+      characterData.qualities.forEach(function (quality) {
+
+        console.log("updateQualitiesDisplay : ", quality);
+        // Générez une nouvelle ligne pour chaque qualité
+        var row = `
+          <tr>
+            <td class="name-column">${quality.key}</td>
+            <td class="description-column">${quality.description}</td>
+            <td class="type-column">${terms[quality.type]}</td>
+            <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
+          </tr>
+        `;
+  
+        // Ajoutez la ligne au corps du tableau
+        qualitiesTableBody.append(row);
+      });
+    }
+  }
+
 function starredLanguage(cell, i) {
   var key = characterData.languages[i].key ;
   var level = characterData.languages[i].level ;
@@ -1067,6 +1169,34 @@ function starredLanguage(cell, i) {
 
   updateKnowledgeDisplay();
 
+}
+
+function updateQualitiesKarma() {
+
+  var karmaCount = 0 ;
+
+  console.log("updateQualitiesKarma : ",characterData.qualities);
+
+  for (let i = 0; i < characterData.qualities.length; i++) {
+  if (characterData.qualities[i].type === "positive") karmaCount = karmaCount - parseInt(characterData.qualities[i].karmaCost) ;  
+  if (characterData.qualities[i].type === "negative") karmaCount = karmaCount + parseInt(characterData.qualities[i].karmaCost) ;
+  console.log("updateQualitiesKarma : ",characterData.qualities[i].key," karmacount ",karmaCount);
+  }
+    
+  characterData.points.karma = karmaCount;
+
+  var qualitiesSpentTable = $(`#qualitiesSpent`); // Utilisez jQuery ici
+  
+  var maximumQualities = "";
+  if (characterData.qualities.length > 6) {
+    maximumQualities = `<tr><td colspan="2" class="maximum">${terms.maximumQualities}</td></tr>`;
+  }
+
+  qualitiesSpentTable.html(
+    '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
+      capitalized(terms.karma) +
+      `</th> <td id="qualitiesKarma"> <span id="qualitiesCount" class="h6">${characterData.points.karma}</span></td></tr>${maximumQualities}</tbody></table>`
+  );
 }
 
 function modifyValue(type, element, modificator) {
