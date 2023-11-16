@@ -90,15 +90,6 @@ function handleSIN() {
     const surname = surnameInput.value;
     const name = nameInput.value;
 
-    console.log(
-      "firstname : ",
-      firstname,
-      " | surname : ",
-      surname,
-      " | name : ",
-      name
-    );
-
     if (!surname && (firstname || name)) {
       identity.innerHTML = `
             <h5>${terms.identity}${terms.colons}</h5>
@@ -220,14 +211,6 @@ function handleButtonClick(button, form, type, priority) {
 
     if (check && check.adjustment) {
       characterData.points.Adjustment.base = check.adjustment;
-      console.log(
-        "handleButtonClick : checkAdjustmentByMetatype[characterData.metatype]",
-        checkAdjustmentByMetatype[characterData.metatype],
-        " check ",
-        check,
-        " adjustment ",
-        check.adjustment
-      );
     } else {
       console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
     }
@@ -548,14 +531,6 @@ function showAttributesToSpend() {
 
   if (check && check.adjustment) {
     characterData.points.Adjustment.base = check.adjustment;
-    console.log(
-      "handleButtonClick : checkAdjustmentByMetatype[characterData.metatype]",
-      checkAdjustmentByMetatype[characterData.metatype],
-      " check ",
-      check,
-      " adjustment ",
-      check.adjustment
-    );
   } else {
     console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
   }
@@ -880,8 +855,7 @@ function removeSpecializationClick(skillData, specialization) {
     if (index !== -1) {
       characterData.skills[skillData].specializations.splice(index, 1);
     }
-  console.log("removeSpecializationClick before : ",characterData.points.skills.spent);
-  characterData.points.skills.spent = characterData.points.skills.spent - 1 ;console.log("removeSpecializationClick after : ",characterData.points.skills.spent);
+  characterData.points.skills.spent = characterData.points.skills.spent - 1 ;
   handleSkills();
   updateSpecializationDisplay(skillData);
 }
@@ -919,14 +893,13 @@ function handleDropdownModal(type) {
   // Construire le tableau d'options
   var addOptions = [];
 
-  if (type === "qualities" && catalogData.qualities) {
+  if (type === "prout" && catalogData.qualities) {
     var catalogQualitiesSorted = [] ;
     catalogQualitiesSorted = sortKeys(catalogData.qualities);
     catalogQualitiesSorted.forEach((quality) => {
       addOptions.push(
         `<li><a class="dropdown-item table-success" href="#" onclick="addQualitiesClick('${quality.key}', '${quality.description}', '${quality.type}', '${parseInt(quality.karmaCost)}')">+ ${quality.key}</a></li>`
       );
-      console.log("forEach : ",quality);
     });
   }
 
@@ -1035,16 +1008,12 @@ if (type === "qualities") {
 
     if (type === "qualities") {
     var qualityDescription = $("#qualityDescription").val();
-    console.log("modal ",capitalized(type)," qualityDescription: ",qualityDescription);
 
     var qualityType = $("input[name='chooseQualityType']:checked").val();
-    console.log("modal ",capitalized(type)," qualityType: ",qualityType);
 
     var qualityKarmaCost = parseInt($("#qualityKarmaCost").val());
-    console.log("modal ",capitalized(type)," qualityKarmaCost: ",qualityKarmaCost);
     
     var key = $(`#${type}Input`).val();
-    console.log("modal ",capitalized(type)," key: ",key);
     
     newItem = {key:$(`#${type}Input`).val(), description: qualityDescription, type: qualityType, karmaCost: qualityKarmaCost};
 
@@ -1059,10 +1028,8 @@ if (type === "qualities") {
     if (newItem.key.trim() !== "") {
       // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
       
-    console.log(`modal ${capitalized(type)} PING : newItem`, newItem, ` ${type}[] before `, characterData[type]);
 
       knowledges.push(newItem);   
-      console.log("test");   
       updateQualitiesDisplay();
       updateQualitiesKarma();
       if (type !== "qualities") {
@@ -1079,23 +1046,18 @@ if (type === "qualities") {
 }
 
 function removeModalClick(type, item) {
-  console.log("removeModalClick(", type, ", ", item, ") BEFORE : ", characterData[type]);
 
   const index = characterData[type].findIndex(entry =>
       entry.key === item
   );
 
-  console.log("removeModalClick(", type, ", ", item, ") INDEX : ", index, " key ", item.key);
 
   if (index !== -1) {
-      console.log("removeModalClick(", type, ", ", item, ") REMOVING : ", characterData[type][index]);
       characterData[type].splice(index, 1);
   } else {
-      console.log("removeModalClick(", type, ", ", item, ") NOT FOUND");
       console.log("Array contents: ", characterData[type]);
   }
 
-  console.log("removeModalClick(", type, ", ", item, ") AFTER : ", characterData[type]);
   handleDropdownModal(type);
   updateKnowledgeDisplay();
   updateQualitiesDisplay();
@@ -1143,7 +1105,6 @@ function removeModalClick(type, item) {
   // Fonction pour gérer le clic sur une spécialisation
 function addQualitiesClick(key, description, type, karmaCost) {
 
-  console.log("addQualitiesClick : ", karmaCost);
   
   var quality = {key: key, description: description, type: type, karmaCost: parseInt(karmaCost)};
 
@@ -1155,7 +1116,6 @@ function addQualitiesClick(key, description, type, karmaCost) {
 
   function updateQualitiesDisplay() {
 
-    console.log("Initiate updateQualitiesDisplay");
   
     var qualitiesTableBody = $("#qualitiesTable tbody");
 
@@ -1170,7 +1130,6 @@ function addQualitiesClick(key, description, type, karmaCost) {
 
       qualities.forEach(function (quality) {
 
-        console.log("updateQualitiesDisplay : ", quality);
         // Générez une nouvelle ligne pour chaque qualité
         var row = `
           <tr>
@@ -1191,14 +1150,17 @@ function addQualitiesClick(key, description, type, karmaCost) {
   // Sélectionnez le corps du tableau des qualités
   var catalogQualitiesTableBody = $("#catalogQualitiesTable tbody");
 
+  console.log("Initiate openCatalogModal()");
+
   // Effacez le contenu actuel du tableau du catalogue
   catalogQualitiesTableBody.empty();
 
   // Construisez le tableau avec les données du catalogue
   if (catalogData.qualities) {
     catalogData.qualities.forEach((quality) => {
+      var index = catalogData.qualities.indexOf(quality);
       var rowHTML = `
-        <tr id="catalogQuality-${quality.key}" draggable="true" ondragstart="drag(event)">
+        <tr id="catalogQuality-${index}" draggable="true">
           <td class="name-column">${quality.key}</td>
           <td class="description-column">${quality.description}</td>
           <td class="type-column">${capitalized(terms[quality.type])}</td>
@@ -1208,39 +1170,57 @@ function addQualitiesClick(key, description, type, karmaCost) {
     });
   }
 
-  // Ouvrez la modal du catalogue
   $("#catalogModal").modal("show");
 
-  document.addEventListener("dragstart", function (event) {
-    // Stockez l'ID de l'élément glissé
-    event.dataTransfer.setData("text/plain", event.target.id);
-  });
-  
-}
+let dragged = null;
 
-// Fonction de gestion de l'événement de survol lors du glisser
-function allowDrop(event) {
-  event.preventDefault();
-}
+document.addEventListener("dragstart", function (event) {
+  // Stockez l'ID de l'élément glissé
+  console.log("addEventListener(dragstart)");
+  dragged = event.target;
+  event.dataTransfer.setData("text/plain", event.target.id);
+});
 
-// Fonction de gestion de l'événement de lâcher
-function drop(event) {
+// JavaScript pour autoriser le drag and drop dans la modal
+$(".container-fluid").on("dragstart", function (e) {
+  console.log("$(.modal-content).on(dragstart)", e);
+  e.originalEvent.dataTransfer.setData("text", "anything");
+});
+
+// Utilisez la classe "modal-content" pour le drop
+$(".container-fluid").on("dragover", function (event) {
+  // prevent default to allow drop
+  console.log("modal-content.addEventListener dragover");
   event.preventDefault();
-  var data = event.dataTransfer.getData("text");
+});
+
+// Utilisez la classe "modal-content" pour le drop
+$(".container-fluid").on("drop", function (event) {
+  // prevent default action (open as link for some elements)
+  event.preventDefault();
+
+  console.log("modal-content.addEventListener drop");
+  var data = event.originalEvent.dataTransfer.getData("text");
+
+  var ID = data.split('-').pop();
+
+  characterData.qualities.push(catalogData.qualities[ID]);
+  updateQualitiesDisplay();
+  handleDropdownModal("qualities");
+  updateQualitiesKarma();
+
+  //console.log("addEventListener drop data : ", data);
   var draggedElement = $("#" + data);
 
   // Ajoutez le contenu de l'élément glissé dans le tableau des qualités
-  var qualitiesTableBody = $("#qualitiesTable tbody");
-  var rowHTML = draggedElement.html();
-  qualitiesTableBody.append("<tr>" + rowHTML + "</tr>");
+  //var qualitiesTableBody = $("#qualitiesTable tbody");
+  //var rowHTML = draggedElement.html();
+  //qualitiesTableBody.append("<tr>" + rowHTML + "</tr>");
 
   // Cachez la ligne du catalogue après le glisser-déposer
   draggedElement.hide();
-}
+});
 
-// Fonction de gestion de l'événement de début de glisser
-function drag(event) {
-  event.dataTransfer.setData("text", event.target.id);
 }
 
 
@@ -1262,12 +1242,9 @@ function updateQualitiesKarma() {
 
   var karmaCount = 0 ;
 
-  console.log("updateQualitiesKarma : ",characterData.qualities);
-
   for (let i = 0; i < characterData.qualities.length; i++) {
   if (characterData.qualities[i].type === "positive") karmaCount = karmaCount - parseInt(characterData.qualities[i].karmaCost) ;  
   if (characterData.qualities[i].type === "negative") karmaCount = karmaCount + parseInt(characterData.qualities[i].karmaCost) ;
-  console.log("updateQualitiesKarma : ",characterData.qualities[i].key," karmacount ",karmaCount);
   }
     
   characterData.points.karma = karmaCount;
@@ -1419,8 +1396,6 @@ function updatePoints(type, element, modificator) {
     var maxElement = characterData.alreadyMaxAttribute;
     if (maxElement) max = characterData.attributes[element].max - 1;
     
-    console.log("maxElement : ", maxElement, "document.getElementById(`${maxElement}_max`) : ", document.getElementById(`${maxElement}_max`), "document.getElementById(`${maxElement}_actual`) : ", document.getElementById(`${maxElement}_actual`))
-
     if (characterData.attributes[element].value > max) {
       
       if (maxElement) {

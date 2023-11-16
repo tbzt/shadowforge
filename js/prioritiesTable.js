@@ -135,14 +135,10 @@ function selectPriority(cell, categorie, priority) {
       if (previousSelectedCell.classList) {
         previousSelectedCell.classList.remove("selected");
       }
-      console.log(
-        `Désélection de ${categorie} : ${previousSelectedCell.textContent}`
-      );
     }
   
     // Mettre à jour la sélection
     cell.classList.add("selected");
-    console.log(`Sélection de ${categorie} : ${cell.textContent} (${priority})`);
   
     // Mettre à jour la cellule sélectionnée dans la catégorie globale
     selectedCells[categorie] = cell;
