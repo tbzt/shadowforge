@@ -158,7 +158,7 @@ function generateButtons(titleElement, formElement, options, type, priority) {
     title.style.display = "block";
 
     const selectedButton = form.querySelector("button.selected");
-    const sortedOptions = sort(options);
+    const sortedOptions = sortTranslated(options);
 
     form.innerHTML = "";
 
@@ -646,7 +646,7 @@ function getSkillsSpent(priority) {
 
 let skillsSort = [];
 
-function sort(array) {
+function sortTranslated(array) {
   if (!Array.isArray(array)) {
     console.log("il faut passer l'array ", array, "en Object.keys()");
   }
@@ -671,13 +671,23 @@ function sort(array) {
   return arraySorted;
 }
 
+
+function sortKeys(array) {
+  if (!Array.isArray(array)) {
+    console.log("il faut passer l'array ", array, "en Object.keys()");
+  }
+  // Triez le tableau en fonction des noms traduits
+  array.sort((a, b) => a.key.localeCompare(b.key));
+  return array;
+}
+
 function handleSkills() {
   // Récupérer les données des attributs et des compétences du personnage
   var attributesData = characterData.attributes;
   var skillsData = characterData.skills;
 
   // Trier les compétences
-  var skillsSort = sort(Object.keys(skillsData));
+  var skillsSort = sortTranslated(Object.keys(skillsData));
 
   // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustment)
   characterData.points.skills.base = getSkillsSpent(IDselectedCells.skills);
@@ -723,9 +733,9 @@ function handleSkills() {
     // Construire le tableau d'options
     var addOptions = [];
 
-    proposedSpecializationsSorted = sort(proposedSpecializations);
+    proposedSpecializationsSorted = sortTranslated(proposedSpecializations);
 
-    existingSpecializationsSorted = sort(existingSpecializations);
+    existingSpecializationsSorted = sortTranslated(existingSpecializations);
 
     const availableSpecializationsSorted = proposedSpecializationsSorted.filter(
       specialization => !existingSpecializations.some(existingSpecialization => existingSpecialization === specialization.terms)
@@ -1097,18 +1107,26 @@ function removeModalClick(type, item) {
     knowledgeTableBody.empty();
   
     // Trouver le nombre maximal d'éléments dans les deux tableaux
+      var languages = [] ;
+      languages = sortKeys(characterData.languages);
+      var knowledges = [];
+      knowledges = sortKeys(characterData.knowledges);
+
     var maxItems = Math.max(characterData.knowledges.length, characterData.languages.length);
 
     var levels = ["", "specialist", "expert", "native"];
   
     // Ajouter chaque connaissance et chaque langue au tableau
     for (let i = 0; i < maxItems; i++) {
-      console.log("updateKnowledgeDisplay characterData.languages[",i,"]: ",characterData.languages[i])
-      var showLevel = ""
-      if (characterData.languages[i].level > 0) showLevel = " ("+ terms[levels[characterData.languages[i].level]] + ")";
-      var knowledgeCell = i < characterData.knowledges.length ? `<td class="knowledge-column">${capitalized(characterData.knowledges[i].key)}</td>` : '<td class="knowledge-column"></td>';
-      var languageCell = i < characterData.languages.length ? `<td class="language-column starred" onclick="starredLanguage(this, '${i}')">${capitalized(characterData.languages[i].key)}${showLevel}</td>` : '<td class="language-column"></td>';
-      var rowHTML = `<tr>${knowledgeCell}${languageCell}</tr>`;
+      const knowledgeItem = i < knowledges.length ? knowledges[i] : null;
+      const languageItem = i < languages.length ? languages[i] : null;
+    
+      const showLevel = languageItem && languageItem.level > 0 ? " (" + terms[levels[languageItem.level]] + ")" : "";
+    
+      const knowledgeCell = knowledgeItem ? `<td class="knowledge-column">${capitalized(knowledgeItem.key)}</td>` : '<td class="knowledge-column"></td>';
+      const languageCell = languageItem ? `<td class="language-column starred" onclick="starredLanguage(this, '${i}')">${capitalized(languageItem.key)}${showLevel}</td>` : '<td class="language-column"></td>';
+    
+      const rowHTML = `<tr>${knowledgeCell}${languageCell}</tr>`;
       knowledgeTableBody.append(rowHTML);
     }
   }
@@ -1138,7 +1156,10 @@ function addQualitiesClick(key, description, type, karmaCost) {
     // Vérifiez si characterData.qualities existe
     if (characterData.qualities) {
       // Parcourez chaque qualité dans characterData.qualities
-      characterData.qualities.forEach(function (quality) {
+      var qualities = [];
+      qualities = sortKeys(characterData.qualities);
+
+      qualities.forEach(function (quality) {
 
         console.log("updateQualitiesDisplay : ", quality);
         // Générez une nouvelle ligne pour chaque qualité
@@ -1146,7 +1167,7 @@ function addQualitiesClick(key, description, type, karmaCost) {
           <tr>
             <td class="name-column">${quality.key}</td>
             <td class="description-column">${quality.description}</td>
-            <td class="type-column">${terms[quality.type]}</td>
+            <td class="type-column">${capitalized(terms[quality.type])}</td>
             <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
           </tr>
         `;
@@ -1192,10 +1213,13 @@ function updateQualitiesKarma() {
     maximumQualities = `<tr><td colspan="2" class="maximum">${terms.maximumQualities}</td></tr>`;
   }
 
+  var karma0 = "";
+  if (karmaCount < 0) karma0 = "class='maximum'"
+
   qualitiesSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
       capitalized(terms.karma) +
-      `</th> <td id="qualitiesKarma"> <span id="qualitiesCount" class="h6">${characterData.points.karma}</span></td></tr>${maximumQualities}</tbody></table>`
+      `</th> <td id="qualitiesKarma" ${karma0}> <span id="qualitiesCount" class="h6">${characterData.points.karma}</span></td></tr>${maximumQualities}</tbody></table>`
   );
 }
 
@@ -1220,7 +1244,7 @@ function modifyValue(type, element, modificator) {
 }
 
 function updateValues(type) {
-  var sorted = sort(Object.keys(characterData[type]));
+  var sorted = sortTranslated(Object.keys(characterData[type]));
 
   for (const s of sorted) {
     if (

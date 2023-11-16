@@ -8,22 +8,22 @@ function showPriorities() {
     // Sélectionnez l'élément du corps de la table des priorités
     var tableBody = document.querySelector("#priorityTable tbody");
   
-    const metatype_A_11 = sort([].concat(tablePrioritiesMetatypes["A"]["11"]));
-    const metatype_A_12 = sort([].concat(tablePrioritiesMetatypes["A"]["12"]));
-    const metatype_A_13 = sort([].concat(tablePrioritiesMetatypes["A"]["13"]));
-    const metatype_A_14 = sort([].concat(tablePrioritiesMetatypes["A"]["14"]));
-    const metatype_B_9 = sort([].concat(tablePrioritiesMetatypes["B"]["9"]));
-    const metatype_B_10 = sort([].concat(tablePrioritiesMetatypes["B"]["10"]));
-    const metatype_B_11 = sort([].concat(tablePrioritiesMetatypes["B"]["11"]));
-    const metatype_B_12 = sort([].concat(tablePrioritiesMetatypes["B"]["12"]));
-    const metatype_C_4 = sort([].concat(tablePrioritiesMetatypes["C"]["4"]));
-    const metatype_C_10 = sort([].concat(tablePrioritiesMetatypes["C"]["10"]));
-    const metatype_C_9 = sort([].concat(tablePrioritiesMetatypes["C"]["9"]));
-    const metatype_C_8 = sort([].concat(tablePrioritiesMetatypes["C"]["8"]));
-    const metatype_D_2 = sort([].concat(tablePrioritiesMetatypes["D"]["2"]));
-    const metatype_D_4 = sort([].concat(tablePrioritiesMetatypes["D"]["4"]));
-    const metatype_D_5 = sort([].concat(tablePrioritiesMetatypes["D"]["5"]));
-    const metatype_E_1 = sort([].concat(tablePrioritiesMetatypes["E"]["1"]));
+    const metatype_A_11 = sortTranslated([].concat(tablePrioritiesMetatypes["A"]["11"]));
+    const metatype_A_12 = sortTranslated([].concat(tablePrioritiesMetatypes["A"]["12"]));
+    const metatype_A_13 = sortTranslated([].concat(tablePrioritiesMetatypes["A"]["13"]));
+    const metatype_A_14 = sortTranslated([].concat(tablePrioritiesMetatypes["A"]["14"]));
+    const metatype_B_9 = sortTranslated([].concat(tablePrioritiesMetatypes["B"]["9"]));
+    const metatype_B_10 = sortTranslated([].concat(tablePrioritiesMetatypes["B"]["10"]));
+    const metatype_B_11 = sortTranslated([].concat(tablePrioritiesMetatypes["B"]["11"]));
+    const metatype_B_12 = sortTranslated([].concat(tablePrioritiesMetatypes["B"]["12"]));
+    const metatype_C_4 = sortTranslated([].concat(tablePrioritiesMetatypes["C"]["4"]));
+    const metatype_C_10 = sortTranslated([].concat(tablePrioritiesMetatypes["C"]["10"]));
+    const metatype_C_9 = sortTranslated([].concat(tablePrioritiesMetatypes["C"]["9"]));
+    const metatype_C_8 = sortTranslated([].concat(tablePrioritiesMetatypes["C"]["8"]));
+    const metatype_D_2 = sortTranslated([].concat(tablePrioritiesMetatypes["D"]["2"]));
+    const metatype_D_4 = sortTranslated([].concat(tablePrioritiesMetatypes["D"]["4"]));
+    const metatype_D_5 = sortTranslated([].concat(tablePrioritiesMetatypes["D"]["5"]));
+    const metatype_E_1 = sortTranslated([].concat(tablePrioritiesMetatypes["E"]["1"]));
   
     // Injectez les données JSON des priorités dans le modèle Handlebars
     var priorities = {
