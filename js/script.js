@@ -1210,6 +1210,12 @@ function addQualitiesClick(key, description, type, karmaCost) {
 
   // Ouvrez la modal du catalogue
   $("#catalogModal").modal("show");
+
+  document.addEventListener("dragstart", function (event) {
+    // Stockez l'ID de l'élément glissé
+    event.dataTransfer.setData("text/plain", event.target.id);
+  });
+  
 }
 
 // Fonction de gestion de l'événement de survol lors du glisser
