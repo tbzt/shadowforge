@@ -469,7 +469,8 @@
                           </th>
                         </tr>
                       </thead>
-                      <tbody class="table-group-divider"></tbody>
+                      <tbody class="table-group-divider" ondragover="allowDrop(event)" ondrop="drop(event)"></tbody>
+
                     </table>
                   </div>
                 </div>
@@ -513,10 +514,35 @@
         </div>
       </div>
     </div>
+    <!-- Modal du catalogue -->
+<div class="modal fade" id="catalogModal" tabindex="-1" aria-labelledby="catalogModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="catalogModalLabel">${capitalized(terms.catalog)}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table id="catalogQualitiesTable" class="table table-sm table-responsive-sm table-hover table-striped">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="name-column h6">${capitalized(terms.qualities)}</th>
+              <th scope="col" class="description-column">${capitalized(terms.descriptions)}</th>
+              <th scope="col" class="type-column">${capitalized(terms.types)}</th>
+              <th scope="col" class="karmaCost-column">${capitalized(terms.karmaCosts)}</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
   </body>
 
   <script src="js/translation.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/catalog.js"></script>
   <script src="js/prioritiesTable.js"></script>
   <script src="js/attributes.js"></script>
   <script src="js/script.js"></script>

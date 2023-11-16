@@ -919,8 +919,10 @@ function handleDropdownModal(type) {
   // Construire le tableau d'options
   var addOptions = [];
 
-  if (type === "qualities" && characterData.catalog.qualities) {
-    characterData.catalog.qualities.forEach((quality) => {
+  if (type === "qualities" && catalogData.qualities) {
+    var catalogQualitiesSorted = [] ;
+    catalogQualitiesSorted = sortKeys(catalogData.qualities);
+    catalogQualitiesSorted.forEach((quality) => {
       addOptions.push(
         `<li><a class="dropdown-item table-success" href="#" onclick="addQualitiesClick('${quality.key}', '${quality.description}', '${quality.type}', '${parseInt(quality.karmaCost)}')">+ ${quality.key}</a></li>`
       );
@@ -932,6 +934,13 @@ function handleDropdownModal(type) {
   addOptions.push(
     `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${capitalized(type)}Modal">${capitalized(terms.new)}</a></li>`
   );
+
+  // Ajouter l'option "Catalogue"
+  if (type === "qualities") {
+    addOptions.push(
+      `<li><a class="dropdown-item" href="#" onclick="openCatalogModal()">Catalogue</a></li>`
+    );
+  }
 
   if (knowledges) {
     addOptions.push(`<li><hr class="dropdown-divider"></li>`);
@@ -1177,6 +1186,57 @@ function addQualitiesClick(key, description, type, karmaCost) {
       });
     }
   }
+
+  function openCatalogModal() {
+  // Sélectionnez le corps du tableau des qualités
+  var catalogQualitiesTableBody = $("#catalogQualitiesTable tbody");
+
+  // Effacez le contenu actuel du tableau du catalogue
+  catalogQualitiesTableBody.empty();
+
+  // Construisez le tableau avec les données du catalogue
+  if (catalogData.qualities) {
+    catalogData.qualities.forEach((quality) => {
+      var rowHTML = `
+        <tr id="catalogQuality-${quality.key}" draggable="true" ondragstart="drag(event)">
+          <td class="name-column">${quality.key}</td>
+          <td class="description-column">${quality.description}</td>
+          <td class="type-column">${capitalized(terms[quality.type])}</td>
+          <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
+        </tr>`;
+      catalogQualitiesTableBody.append(rowHTML);
+    });
+  }
+
+  // Ouvrez la modal du catalogue
+  $("#catalogModal").modal("show");
+}
+
+// Fonction de gestion de l'événement de survol lors du glisser
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+// Fonction de gestion de l'événement de lâcher
+function drop(event) {
+  event.preventDefault();
+  var data = event.dataTransfer.getData("text");
+  var draggedElement = $("#" + data);
+
+  // Ajoutez le contenu de l'élément glissé dans le tableau des qualités
+  var qualitiesTableBody = $("#qualitiesTable tbody");
+  var rowHTML = draggedElement.html();
+  qualitiesTableBody.append("<tr>" + rowHTML + "</tr>");
+
+  // Cachez la ligne du catalogue après le glisser-déposer
+  draggedElement.hide();
+}
+
+// Fonction de gestion de l'événement de début de glisser
+function drag(event) {
+  event.dataTransfer.setData("text", event.target.id);
+}
+
 
 function starredLanguage(cell, i) {
   var key = characterData.languages[i].key ;

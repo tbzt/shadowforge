@@ -127,22 +127,30 @@ function changeLang(language) {
     {
       id:"karmaCostQualities",
       term: "karmaCost"
+    },
+    {
+      id:"qualitiesTitle",
+      term: "qualities"
     }]
   
     idToUpdate.forEach((element) => {
       document.getElementById(element.id).innerText = capitalized(terms[element.term]);
     }); 
-  document.getElementById(priorityTableMetatpeAdjustment).innerText = capitalized(terms.metatypes) + " (" + terms.adjustment + ")"; 
-  document.getElementById(priorityTableSpecial).innerText = capitalized(terms.magic) + "/" + capitalized(terms.resonance);
+  document.getElementById("priorityTableMetatpeAdjustment").innerText = capitalized(terms.metatypes) + " (" + terms.adjustment + ")"; 
+  document.getElementById("priorityTableSpecial").innerText = capitalized(terms.magic) + "/" + capitalized(terms.resonance);
   document.getElementById("firstname").placeholder = capitalized(terms.firstname);
   document.getElementById("surname").placeholder = capitalized(terms.surname);
   document.getElementById("name").placeholder = capitalized(terms.name);
+  document.getElementById("knowledgeTitle").innerText = capitalized(terms.knowledges) + " & " + terms.languages ;
     
   handleSIN(); 
   showPriorities();
   handleAttributes();
   showAttributesToSpend();
-  handleSkills(); 
+  handleSkills();
+  handleDropdownModal("knowledges");
+  handleDropdownModal("languages");
+  handleDropdownModal("qualities");
 
   console.log("setLang(",language,") : terms : ", terms);
 }
