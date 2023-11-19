@@ -28,6 +28,7 @@
 
     <!-- Inclure Handlebars.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    
     <!-- Ajouter votre fichier JavaScript -->
     <script src="js/helpers.js"></script>
     <!-- Lien vers le fichier JavaScript -->
@@ -427,7 +428,7 @@
                 </div>
               </div>
               <!-- Section : Choix des qualités -->
-              <div class="collapse" id="collapseQualities">
+              <div class="collapse" id="collapseQualities" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
                 <div class="card card-body">
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="qualitiesSpent"></div>
@@ -437,7 +438,7 @@
                       id="qualitiesTable"
                       class="table table-sm table-responsive-sm table-hover table-striped"
                     >
-                      <thead class="table-light">
+                      <thead class="table-light" id="qualitiesDrop">
                         <tr>
                           <th
                             scope="col"
@@ -469,7 +470,7 @@
                           </th>
                         </tr>
                       </thead>
-                      <tbody id="qualitiesBody">                      <div ondragover="allowDrop(event)" ondrop="drop(event)"></div></tbody>
+                      <tbody id="qualitiesBody"></tbody>
                     </table>
                   </div>
                 </div>
@@ -512,30 +513,6 @@
           </div>
         </div>
       </div>
-    <!-- Modal du catalogue -->
-<div class="modal fade" id="catalogModal" tabindex="-1" aria-labelledby="catalogModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-left">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="catalogModalLabel">Catalogue</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <table id="catalogQualitiesTable" class="table table-sm table-responsive-sm table-hover table-striped">
-          <thead class="table-light">
-            <tr>
-              <th scope="col" class="name-column h6">Qualités</th>
-              <th scope="col" class="description-column">Descriptions</th>
-              <th scope="col" class="type-column">Types</th>
-              <th scope="col" class="karmaCost-column">Karma Costs</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
 </div>
   </body>
 

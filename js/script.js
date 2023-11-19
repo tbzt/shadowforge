@@ -12,7 +12,24 @@ document.addEventListener("DOMContentLoaded", function () {
   handleDropdownModal("qualities");
 });
 
+$(document).ready(function() {
 
+  $("#collapseQualities").on("dragover", function(event) {
+    event.preventDefault();
+    console.log("dragover collapseQualities");
+  });
+  $("#collapseQualities").on("dragover", function (event) {
+    event.preventDefault();
+    $(this).css("background-color", "yellow");  // Change la couleur à jaune
+    console.log("dragover event triggered");  // Ajouté pour le débogage
+  });
+  
+  $("#collapseQualities").on("dragleave", function (event) {
+    $(this).css("background-color", "");  // Réinitialise la couleur
+    console.log("dragleave event triggered");  // Ajouté pour le débogage
+  });
+
+});
 
 let prioritiesSelected = {
   metatypes: null,
@@ -117,6 +134,7 @@ function handleSIN() {
 }
 
 function useButton(cell) {
+  console.log("useButton initialize: ", cell.classList);
   if (cell.classList.contains("btn-outline-primary")) {
     cell.classList.add("btn-primary");
     cell.classList.remove("btn-outline-primary");
@@ -542,9 +560,9 @@ function showAttributesToSpend() {
     capitalized(terms.adjustment) +
     '</th></tr> </thead><tbody class="table-group-divider"> <tr> <th scope="row">' +
     capitalized(terms.pointsToSpend) +
-    '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount" class="h6">' +
+    '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount" class="h6 count">' +
     characterData.points.Prio.base +
-    '</span></td> <td id="attributesAdjustment_max" class="selectable" onclick="selectAttributeType(this, \'Adjustment\')"><span id="attributesAdjustmentCount" class="h6">' +
+    '</span></td> <td id="attributesAdjustment_max" class="selectable" onclick="selectAttributeType(this, \'Adjustment\')"><span id="attributesAdjustmentCount" class="h6 count">' +
     characterData.points.Adjustment.base +
     "</span></td> </tr></tbody></table>";
 }
@@ -674,7 +692,7 @@ function handleSkills() {
   skillsSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
     capitalized(terms.pointsToSpend) +
-      '</th> <td id="skills_max"> <span id="skillsCount" class="h6">' +
+      '</th> <td id="skills_max"> <span id="skillsCount" class="h6 count">' +
       characterData.points.skills.base +
       "</span></td></tr></tbody></table>"
   );
@@ -762,7 +780,7 @@ function handleSkills() {
               </div>
           </td>
           <td id="${skill.data}_rdd">
-            <div><span class="h6">${rdd}</span></div>
+            <div><span class="h6 rddNumber">${rdd}</span></div>
             <div><span class="h8">+ ${capitalized(
               terms[skillsData[skill.data].linkedAttribute]
             )}</span></div>
@@ -881,7 +899,7 @@ function updateKnowledgePoints() {
   knowledgeSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
     capitalized(terms.pointsToSpend) +
-      `</th> <td id="knowledge_max"> <span id="knowledgeCount" class="h6">${knowledgeCount}</span></td></tr></tbody></table>`
+      `</th> <td id="knowledge_max"> <span id="knowledgeCount" class="h6 count">${knowledgeCount}</span></td></tr></tbody></table>`
   );
 }
 
@@ -942,26 +960,24 @@ function handleDropdownModal(type) {
 </div><br><br>`
   }
 
-if (type === "qualities") {
-  specificType = `
-  <div class="input-group mb-3">
-    <label for="qualityDescription" class="form-label">${capitalized(terms.description)}</label>
-    <textarea class="form-control" id="qualityDescription" rows="3"></textarea>
-  </div>
-  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypePositive" autocomplete="off" value="positive">
-  <label class="btn btn-outline-primary" for="chooseQualityTypePositive">${capitalized(terms.positive)}</label>
+  if (type === "qualities") {
+    specificType = `
+      <div class="d-flex align-items-center mb-2">
+        <label for="qualityDescription" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.description)}${terms.colons}</label>
+        <textarea class="form-control flex-grow-1" id="qualityDescription" rows="3"></textarea>
+      </div>
+      <div class="btn-group mb-2" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypePositive" autocomplete="off" value="positive" checked>
+        <label class="btn btn-outline-primary text-start" for="chooseQualityTypePositive">${capitalized(terms.positive)}</label>
 
-  <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypeNegative" autocomplete="off" value="negative">
-  <label class="btn btn-outline-primary" for="chooseQualityTypeNegative">${capitalized(terms.negative)}</label>
-</div>
-<div class="input-group mb-3">  
-<label for="qualityKarmaCost" class="form-label">${capitalized(terms.karmaCost)}</label>
-  <input type="number" class="form-control" id="qualityKarmaCost" aria-label="Karma cost for the quality">
-</div>
-
-<br><br>`
-}
+        <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypeNegative" autocomplete="off" value="negative">
+        <label class="btn btn-outline-primary text-start" for="chooseQualityTypeNegative">${capitalized(terms.negative)}</label>
+      </div>
+      <div class="d-flex align-items-center mb-2">  
+        <label for="qualityKarmaCost" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.karmaCost)}${terms.colons}</label>
+        <input type="number" class="form-control" id="qualityKarmaCost" aria-label="Karma cost for the quality" style="width: 3em;">
+      </div>`
+  }
 
   // Ajouter les options au menu déroulant
   var DropdownOptions = addOptions.join(" ");
@@ -1146,83 +1162,153 @@ function addQualitiesClick(key, description, type, karmaCost) {
     }
   }
 
-  function openCatalogModal() {
-  // Sélectionnez le corps du tableau des qualités
-  var catalogQualitiesTableBody = $("#catalogQualitiesTable tbody");
-
-  console.log("Initiate openCatalogModal()");
-
-  // Effacez le contenu actuel du tableau du catalogue
-  catalogQualitiesTableBody.empty();
-
-  // Construisez le tableau avec les données du catalogue
-  if (catalogData.qualities) {
-    catalogData.qualities.forEach((quality) => {
-      var index = catalogData.qualities.indexOf(quality);
-      var rowHTML = `
-        <tr id="catalogQuality-${index}" draggable="true">
-          <td class="name-column">${quality.key}</td>
-          <td class="description-column">${quality.description}</td>
-          <td class="type-column">${capitalized(terms[quality.type])}</td>
-          <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
-        </tr>`;
-      catalogQualitiesTableBody.append(rowHTML);
-    });
+  function createTable() {
+    var catalogQualitiesTableBody = $("#catalogQualitiesTable tbody");
+    catalogQualitiesTableBody.empty();
+  
+    if (catalogData.qualities) {
+      catalogData.qualities.forEach((quality, index) => {
+        var rowHTML = `
+          <tr id="catalogQuality-${index}" draggable="true">
+            <td class="name-column">${quality.key}</td>
+            <td class="description-column">${quality.description}</td>
+            <td class="type-column">${capitalized(terms[quality.type])}</td>
+            <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
+          </tr>`;
+        catalogQualitiesTableBody.append(rowHTML);
+      });
+    }
   }
+  
+  function handleDragStart(event) {
+    console.log("Drag started...", event);
+    dragged = event.target;
+    event.dataTransfer.setData("text/plain", event.target.id);
+    event.stopPropagation(); // Ajoutez cette ligne
+  }
+  
+  function handleDragOver(event) {
+    // Autorisez le dépôt uniquement si l'événement se produit dans "collapseQualities"
+    
+    console.log("Drag over... not collapseQualities ", event.target.id);
+    if (event.currentTarget.id === "collapseQualities") {
+      console.log("Drag over... collapseQualities ", event.target.id);
+      event.preventDefault();
+    }
+  }
+  
+  function handleDrop(event) {
+    console.log("Drop...", event);
+        event.preventDefault();
+    var data = event.originalEvent.dataTransfer.getData("text");
+    var ID = data.split('-').pop();
+    characterData.qualities.push(catalogData.qualities[ID]);
+    updateQualitiesDisplay();
+    handleDropdownModal("qualities");
+    updateQualitiesKarma();
+    var draggedElement = $("#" + data);
+    draggedElement.hide();
+    console.log("Drop handled.");
+    // Réinitialisez la couleur de l'élément "collapseQualities" après le dépôt
+    $("#qualitiesDrop").css("background-color", "");
+  }
+  
 
-  $("#catalogModal").modal("show");
-
-let dragged = null;
-
-document.addEventListener("dragstart", function (event) {
-  // Stockez l'ID de l'élément glissé
-  console.log("addEventListener(dragstart)");
-  dragged = event.target;
-  event.dataTransfer.setData("text/plain", event.target.id);
+  // Ajoutez un gestionnaire d'événements "dragend" pour réinitialiser la couleur de l'élément "collapseQualities" si le glisser-déposer est annulé
+document.addEventListener("dragend", function(event) {
+  $("#collapseQualities").css("background-color", "");
 });
+  
+function openCatalogModal() {
+  console.log("Opening catalog panel...");
 
-// JavaScript pour autoriser le drag and drop dans la modal
-$(".container-fluid").on("dragstart", function (e) {
-  console.log("$(.modal-content).on(dragstart)", e);
-  e.originalEvent.dataTransfer.setData("text", "anything");
-});
+  // Générer le panneau
+  var panelHTML = `
+    <div id="catalogPanel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="catalogModalLabel">${capitalized(terms.qualitiesCatalog)}</h1>
+            <button type="button" class="btn-close btn-close-white" onclick="closeCatalogPanel()" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <div class="filters">
+  <input type="text" id="nameFilter" placeholder="${capitalized(terms.filterName)}">
+  <select id="typeFilter">
+    <option value="">${capitalized(terms.all)}</option>
+    <option value="${capitalized(terms.negative)}">${capitalized(terms.negative)}</option>
+    <option value="${capitalized(terms.positive)}">${capitalized(terms.positive)}</option>
+  </select>
+  <label for="karmaCostMinFilter">Karma:</label>
+  <input type="number" id="karmaCostMinFilter" min="0" max="25" step="1" value="0"> - 
+  <input type="number" id="karmaCostMaxFilter" min="0" max="25" step="1" value="25">
+  </div>
+            <table id="catalogQualitiesTable" class="table table-sm table-responsive-sm table-hover table-striped">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="name-column h6">Qualités</th>
+                  <th scope="col" class="description-column">Descriptions</th>
+                  <th scope="col" class="type-column">Types</th>
+                  <th scope="col" class="karmaCost-column">Karma Costs</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`;
 
-// Utilisez la classe "modal-content" pour le drop
-$(".container-fluid").on("dragover", function (event) {
-  // prevent default to allow drop
-  console.log("modal-content.addEventListener dragover");
-  event.preventDefault();
-});
+  // Ajouter le panneau au corps du document
+  $("body").append(panelHTML);
 
-// Utilisez la classe "modal-content" pour le drop
-$(".container-fluid").on("drop", function (event) {
-  // prevent default action (open as link for some elements)
-  event.preventDefault();
-
-  console.log("modal-content.addEventListener drop");
-  var data = event.originalEvent.dataTransfer.getData("text");
-
-  var ID = data.split('-').pop();
-
-  characterData.qualities.push(catalogData.qualities[ID]);
-  updateQualitiesDisplay();
-  handleDropdownModal("qualities");
-  updateQualitiesKarma();
-
-  //console.log("addEventListener drop data : ", data);
-  var draggedElement = $("#" + data);
-
-  // Ajoutez le contenu de l'élément glissé dans le tableau des qualités
-  //var qualitiesTableBody = $("#qualitiesTable tbody");
-  //var rowHTML = draggedElement.html();
-  //qualitiesTableBody.append("<tr>" + rowHTML + "</tr>");
-
-  // Cachez la ligne du catalogue après le glisser-déposer
-  draggedElement.hide();
-});
-
+  createTable();
+  
+  $("#nameFilter").on("input", filterTable);
+  $("#typeFilter").on("input", filterTable);
+  $("#karmaCostMinFilter").on("input", filterTable);
+  $("#karmaCostMaxFilter").on("input", filterTable);
+  
+  // Changez la couleur de l'élément "collapseQualities" lors du début du glisser-déposer
+  $("#collapseQualities").css("background-color", "yellow");
+  openCatalogPanel();
+  let dragged = null;
+  document.addEventListener("dragstart", handleDragStart);
+  $(".container-fluid").on("dragstart", function (e) {
+    e.originalEvent.dataTransfer.setData("text", "anything");
+  });
+  $(".container-fluid").on("dragover", handleDragOver);
+  $("#collapseQualities").on("drop", handleDrop);
+  console.log("Catalog panel opened.");
 }
 
+function openCatalogPanel() {
+  document.getElementById("catalogPanel").classList.add("open");
+}
+
+function closeCatalogPanel() {
+  document.getElementById("catalogPanel").classList.remove("open");
+}
+
+function filterTable() {
+  
+  var nameFilter = $("#nameFilter").val().toLowerCase();
+  var typeFilter = $("#typeFilter").val();
+  var karmaCostMinFilter = $("#karmaCostMinFilter").val();
+  var karmaCostMaxFilter = $("#karmaCostMaxFilter").val();
+
+  $("#catalogQualitiesTable tbody tr").each(function() {
+    var name = $(this).find(".name-column").text().toLowerCase();
+    var type = $(this).find(".type-column").text();
+    var karmaCost = parseInt($(this).find(".karmaCost-column").text(), 10);
+
+    if (name.includes(nameFilter) && (!typeFilter || type === typeFilter) && (!karmaCostMinFilter || karmaCost >= karmaCostMinFilter) && (!karmaCostMaxFilter || karmaCost <= karmaCostMaxFilter)) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  });
+}
 
 function starredLanguage(cell, i) {
   var key = characterData.languages[i].key ;
@@ -1262,7 +1348,7 @@ function updateQualitiesKarma() {
   qualitiesSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
       capitalized(terms.karma) +
-      `</th> <td id="qualitiesKarma" ${karma0}> <span id="qualitiesCount" class="h6">${characterData.points.karma}</span></td></tr>${maximumQualities}</tbody></table>`
+      `</th> <td id="qualitiesKarma" ${karma0}> <span id="qualitiesCount" class="h6 count">${characterData.points.karma}</span></td></tr>${maximumQualities}</tbody></table>`
   );
 }
 

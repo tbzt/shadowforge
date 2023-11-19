@@ -350,6 +350,11 @@ const translations = {
     native: "langue maternelle",
     positive: "qualité",
     negative: "défaut",
+    qualitiesCatalog: "Catalogue des Traits",
+    filterName: "Filtrer par nom",
+    all: "tous",
+    minKarma: "Karma minimum",
+    maxKarma: "Karma maximum",
     maximumQualities: "Vous avez atteint le nombre maximum de Traits à la création (6).",
   },
   en: {
@@ -544,6 +549,11 @@ const translations = {
     native: "native",
     positive: "positive",
     negative: "negative",
+    qualitiesCatalog: "Qualities Catalog",
+    filterName: "filter by name",
+    all: "all",
+    minKarma: "minimum Karma",
+    maxKarma: "maximum Karma",
     maximumQualities: "you have reached the maximum number of Qualities for creation (6).",
   },
 };
