@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   setLang("fr");
   showPriorities();
-  loadCookie();
+  loadData();
   setLanguage("fr");
   handleSIN();
   handleAttributes();
@@ -129,7 +129,7 @@ function handleSIN() {
     };
     characterData.SIN = SIN;
     console.log(JSON.stringify(SIN));
-    saveInCookie();
+    saveData();
   }
 }
 
@@ -242,7 +242,7 @@ function handleButtonClick(button, form, type, priority) {
   updateValues("skills");
   updateValues("attributes");
   showResults();
-  saveInCookie();
+  saveData();
 }
 
 // Fonction pour ajouter les traits automatiques en fonction du métatype
@@ -373,7 +373,7 @@ function handleMetatypeQualities(metatype) {
   return [];
 }
 
-function addClassesCookie() {
+function addClassesLocalStorage() {
   for (var cat in IDselectedCells) {
     let cell = document.getElementById(IDselectedCells[cat]);
     if (cell) {
@@ -384,7 +384,7 @@ function addClassesCookie() {
   if (metatypeButton) metatypeButton.classList.add("selected");
 }
 
-function removeClassesCookie() {
+function removeClassesLocalStorage() {
   for (var cat in IDselectedCells) {
     let cell = document.getElementById(IDselectedCells[cat]);
     if (cell) {
@@ -393,7 +393,7 @@ function removeClassesCookie() {
   }
 }
 
-function addSINCookie() {
+function addSINLocalStorage() {
   const identity = document.getElementById("identity");
 
   if (SIN.length > 0) {
@@ -487,6 +487,8 @@ function updateAttributesForSpecial(special, priority) {
   updateValues("attributes");
   handleSkills();
   updateValues("skills");
+  
+  saveData();
 }
 
 function handleAttributes() {
@@ -537,6 +539,8 @@ function handleAttributes() {
 
   // Affichez le contenu généré dans le corps du tableau des attributes
   attributeTableBody.innerHTML = attributeHTML;
+  
+  saveData();
 }
 
 // Fonction pour afficher le namebre de points d'attributes à dépenser
@@ -832,7 +836,8 @@ function handleSkills() {
   }
 
   // Afficher le contenu généré dans le corps du tableau des compétences
-  skillTableBody.html(skillsHTML);
+  skillTableBody.html(skillsHTML);  
+  saveData();
 }
 
 // Fonction pour gérer le clic sur une spécialisation
@@ -852,7 +857,8 @@ function removeSpecializationClick(skillData, specialization) {
     }
   characterData.points.skills.spent = characterData.points.skills.spent - 1 ;
   handleSkills();
-  updateSpecializationDisplay(skillData);
+  updateSpecializationDisplay(skillData);  
+  saveData();
 }
 
 // Fonction pour mettre à jour l'affichage des spécialisations
@@ -1060,6 +1066,8 @@ function removeModalClick(type, item) {
     characterData.points.knowledges.spent = characterData.points.knowledges.spent - 1;
   updateKnowledgePoints();
   }
+  
+  saveData();
 }
 
   function updateKnowledgeDisplay() {
@@ -1093,6 +1101,8 @@ function removeModalClick(type, item) {
       const rowHTML = `<tr>${knowledgeCell}${languageCell}</tr>`;
       knowledgeTableBody.append(rowHTML);
     }
+    
+  saveData();
   }
 
   // Fonction pour gérer le clic sur une spécialisation
@@ -1104,7 +1114,8 @@ function addQualitiesClick(key, description, type, karmaCost) {
   characterData.qualities.push(quality);
   handleDropdownModal("qualities");
   updateQualitiesDisplay();
-  updateQualitiesKarma();
+  updateQualitiesKarma();  
+  saveData();
 }
 
   function updateQualitiesDisplay() {
@@ -1137,6 +1148,8 @@ function addQualitiesClick(key, description, type, karmaCost) {
         qualitiesTableBody.append(row);
       });
     }
+    
+  saveData();
   }
 
   function createTable() {
@@ -1202,6 +1215,8 @@ function addQualitiesClick(key, description, type, karmaCost) {
     console.log("Drop handled.");
     // Réinitialisez la couleur de l'élément "collapseQualities" après le dépôt
   $("#collapseQualities").removeClass("toDrop");
+  
+  saveData();
   }
   
 
@@ -1322,7 +1337,7 @@ function starredLanguage(cell, i) {
   }
 
   updateKnowledgeDisplay();
-
+  saveData();
 }
 
 function updateQualitiesKarma() {
@@ -1371,6 +1386,7 @@ function modifyValue(type, element, modificator) {
   }
   updateValues(type);
   updatePoints(type, element, modificator);
+  saveData();
 }
 
 function updateValues(type) {
@@ -1580,36 +1596,23 @@ function showResults() {
 }
 
 // Fonction pour sauvegarder la sélection dans un cookie
-function saveInCookie() {
-  const dataToSave = JSON.stringify({
-    selectedCells,
-    IDselectedCells,
-    prioritiesSelected,
-    actualPriority,
-    selectedMetatype,
-    SIN,
-    characterData,
-  });
-
+// Pour sauvegarder les données
+function saveData() {
+  var selectionData = { selectedCells, IDselectedCells, prioritiesSelected, actualPriority, selectedMetatype, SIN, characterData };
+  localStorage.setItem('selectionData', JSON.stringify(selectionData));
+  
   //console.log("dataToSave : " + dataToSave);
 
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 1); // 1 jour d'expiration
+};
 
-  const cookieOptions = `expires=${expirationDate.toUTCString()}; path=/`;
-  document.cookie = `selectionData=${dataToSave}; ${cookieOptions}`;
-  console.log("Sélection sauvegardée dans un cookie.");
-}
 
-// Fonction pour charger la sélection depuis un cookie
-function loadCookie() {
-  const cookieData = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("selectionData="));
-
-  if (cookieData) {
-    const dataToLoad = cookieData.split("=")[1];
-    const loadedData = JSON.parse(dataToLoad);
+// Pour charger les données
+function loadData() {
+  var storedData = localStorage.getItem('selectionData');
+  if (storedData) {
+      var loadedData = JSON.parse(storedData);
+      console.log("loadedData : " + JSON.stringify(loadedData));
+      console.log("loadedData.characterData : " + JSON.stringify(loadedData.characterData));
 
     if (loadedData) {
       selectedCells = loadedData.selectedCells;
@@ -1628,32 +1631,40 @@ function loadCookie() {
       );
       handleMetatypeQualities(selectedMetatype);
       showResults();
-      addClassesCookie();
-      addSINCookie();
+      addClassesLocalStorage();
+      addSINLocalStorage();
+      handleSkills();
+      handleAttributes();
+      updateValues("skills");
+      updateValues("attributes");
+      updateKnowledgeDisplay();
+      updateQualitiesDisplay();
+      updateQualitiesKarma();
+      handleDropdownModal("knowledges");
+      handleDropdownModal("languages");
+      handleDropdownModal("qualities");
     }
   }
 }
 
-// Sélectionnez le bouton "reset" par son ID
-const resetButton = document.getElementById("resetButton");
+document.addEventListener("DOMContentLoaded", function() {
+  // Sélectionnez le bouton "reset" par son ID
+  const resetButton = document.getElementById("resetButton");
 
-// Ajoutez un gestionnaire d'événements pour le clic sur le bouton "reset"
-resetButton.addEventListener("click", function () {
-  // Demandez une confirmation à l'utilisateur
-  const userConfirmed = confirm(
-    "Êtes-vous sûr de vouloir réinitialiser la sélection ?"
-  );
+  // Ajoutez un gestionnaire d'événements pour le clic sur le bouton "reset"
+  resetButton.addEventListener("click", function () {
+    console.log("Resetting the selection...");
+    // Demandez une confirmation à l'utilisateur
+    const userConfirmed = confirm(
+      "Êtes-vous sûr de vouloir réinitialiser la sélection ?"
+    );
 
   if (userConfirmed) {
-    // Effacez le cookie en définissant une date d'expiration passée
-    const pastExpirationDate = new Date(0);
-    document.cookie =
-      "selectionData=; expires=" +
-      pastExpirationDate.toUTCString() +
-      "; path=/";
+    // Effacez les données de localStorage
+    localStorage.removeItem('selectionData');
 
     // Réinitialisez les valeurs
-    removeClassesCookie();
+    removeClassesLocalStorage();
     prioritiesSelected = {
       metatypes: null,
       attributes: null,
@@ -1678,7 +1689,6 @@ resetButton.addEventListener("click", function () {
       resources: null,
     };
     SIN = [];
-    resultat.innerHTML = "";
     identity.innerHTML = "";
     firstnameInput.value = "";
     surnameInput.value = "";
@@ -1687,5 +1697,7 @@ resetButton.addEventListener("click", function () {
     metatypeForm.innerHTML = "";
     specialTitle.innerHTML = "";
     specialForm.innerHTML = "";
+    characterData = characterDataBackup;
   }
+});
 });

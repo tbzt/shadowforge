@@ -163,7 +163,7 @@ function selectPriority(cell, categorie, priority) {
     if (selectedCells["skills"]) {
       updateValues("skills");
     }
-    saveInCookie();
+    saveData();
   
     // Afficher les résultats
     showResults();
