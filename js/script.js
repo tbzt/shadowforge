@@ -567,34 +567,19 @@ function showAttributesToSpend() {
     "</span></td> </tr></tbody></table>";
 }
 
-// Fonction pour sélectionner le type d'attribute
 function selectAttributeType(cell, type) {
   const classAttributePrio = document.getElementById(`attributesPrio_max`);
-  const classAttributeAdjustment = document.getElementById(
-    `attributesAdjustment_max`
-  );
-  const possibleElements = document.querySelectorAll(
-    ".attributesAdjustmentPossible"
-  );
-  const impossibleElements = document.querySelectorAll(
-    ".attributesAdjustmentImpossible"
-  );
+  const classAttributeAdjustment = document.getElementById(`attributesAdjustment_max`);
+  const possibleElements = document.querySelectorAll(".attributesAdjustmentPossible");
+  const impossibleElements = document.querySelectorAll(".attributesAdjustmentImpossible");
 
   if (type === "Prio") {
     classAttributePrio.classList.add("selected");
     possibleElements.forEach((element) => {
-      if (element.classList.contains("table-success")) {
-        element.classList.remove("table-success");
-      } else {
-        element.classList.add("table-success");
-      }
+      element.style.display = "table-row"; // Afficher les éléments Possible
     });
     impossibleElements.forEach((element) => {
-      if (element.classList.contains("table-danger")) {
-        element.classList.remove("table-danger");
-      } else {
-        element.classList.add("table-danger");
-      }
+      element.style.display = "table-row"; // Cacher les éléments Impossible
     });
     if (classAttributeAdjustment.classList.contains("selected"))
       classAttributeAdjustment.classList.remove("selected");
@@ -602,18 +587,10 @@ function selectAttributeType(cell, type) {
   if (type === "Adjustment") {
     classAttributeAdjustment.classList.add("selected");
     possibleElements.forEach((element) => {
-      if (element.classList.contains("table-success")) {
-        element.classList.remove("table-success");
-      } else {
-        element.classList.add("table-success");
-      }
+      element.style.display = "table-row"; // Afficher les éléments Possible
     });
     impossibleElements.forEach((element) => {
-      if (element.classList.contains("table-danger")) {
-        element.classList.remove("table-danger");
-      } else {
-        element.classList.add("table-danger");
-      }
+      element.style.display = "none"; // Cacher les éléments Impossible
     });
     if (classAttributePrio.classList.contains("selected"))
       classAttributePrio.classList.remove("selected");
