@@ -20,7 +20,7 @@ $(document).ready(function() {
   });
   $("#collapseQualities").on("dragover", function (event) {
     event.preventDefault();
-    $(this).css("background-color", "yellow");  // Change la couleur à jaune
+    $(this).addClass("toDrop");  // Change la couleur à jaune
     console.log("dragover event triggered");  // Ajouté pour le débogage
   });
   
@@ -911,7 +911,7 @@ function handleDropdownModal(type) {
   // Construire le tableau d'options
   var addOptions = [];
 
-  if (type === "prout" && catalogData.qualities) {
+  if (type === "waiting" && catalogData.qualities) {
     var catalogQualitiesSorted = [] ;
     catalogQualitiesSorted = sortKeys(catalogData.qualities);
     catalogQualitiesSorted.forEach((quality) => {
@@ -927,7 +927,7 @@ function handleDropdownModal(type) {
   );
 
   // Ajouter l'option "Catalogue"
-  if (type === "qualities") {
+  if (type === "waiting" && catalogData.qualities) {
     addOptions.push(
       `<li><a class="dropdown-item" href="#" onclick="openCatalogModal()">Catalogue</a></li>`
     );
@@ -1163,21 +1163,35 @@ function addQualitiesClick(key, description, type, karmaCost) {
   }
 
   function createTable() {
-    var catalogQualitiesTableBody = $("#catalogQualitiesTable tbody");
-    catalogQualitiesTableBody.empty();
-  
-    if (catalogData.qualities) {
-      catalogData.qualities.forEach((quality, index) => {
-        var rowHTML = `
-          <tr id="catalogQuality-${index}" draggable="true">
-            <td class="name-column">${quality.key}</td>
-            <td class="description-column">${quality.description}</td>
-            <td class="type-column">${capitalized(terms[quality.type])}</td>
-            <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
-          </tr>`;
-        catalogQualitiesTableBody.append(rowHTML);
+      var catalogQualitiesTableBody = $("#catalogQualitiesTable tbody");
+      catalogQualitiesTableBody.empty();
+    
+      var books = [];
+    
+      if (catalogData.qualities) {
+        catalogData.qualities.forEach((quality, index) => {
+          var rowHTML = `
+            <tr id="catalogQuality-${index}" draggable="true">
+              <td class="name-column">${quality.key}</td>
+              <td class="description-column">${quality.description}</td>
+              <td class="type-column">${capitalized(terms[quality.type])}</td>
+              <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
+              <td class="book-column">${capitalized(terms[quality.book])} (p. ${quality.page})</td>
+            </tr>`;
+          catalogQualitiesTableBody.append(rowHTML);
+          
+          if (!books.includes(quality.book)) {
+            books.push(quality.book);
+          }
+        });
+      }
+    
+      var bookFilter = $("#bookFilter");
+      bookFilter.empty();
+      bookFilter.append(`<option value="">${capitalized(terms.all)}</option>`);
+      books.forEach((book) => {
+        bookFilter.append(`<option value="${capitalized(terms[book])}">${capitalized(terms[book])}</option>`);
       });
-    }
   }
   
   function handleDragStart(event) {
@@ -1210,13 +1224,13 @@ function addQualitiesClick(key, description, type, karmaCost) {
     draggedElement.hide();
     console.log("Drop handled.");
     // Réinitialisez la couleur de l'élément "collapseQualities" après le dépôt
-    $("#qualitiesDrop").css("background-color", "");
+  $("#collapseQualities").removeClass("toDrop");
   }
   
 
   // Ajoutez un gestionnaire d'événements "dragend" pour réinitialiser la couleur de l'élément "collapseQualities" si le glisser-déposer est annulé
 document.addEventListener("dragend", function(event) {
-  $("#collapseQualities").css("background-color", "");
+  $("#collapseQualities").removeClass("toDrop");
 });
   
 function openCatalogModal() {
@@ -1241,15 +1255,19 @@ function openCatalogModal() {
   </select>
   <label for="karmaCostMinFilter">Karma:</label>
   <input type="number" id="karmaCostMinFilter" min="0" max="25" step="1" value="0"> - 
-  <input type="number" id="karmaCostMaxFilter" min="0" max="25" step="1" value="25">
+  <input type="number" id="karmaCostMaxFilter" min="0" max="25" step="1" value="25">       
+  <select id="bookFilter">
+  <!-- Les options seront ajoutées ici par createTable -->
+</select>
   </div>
             <table id="catalogQualitiesTable" class="table table-sm table-responsive-sm table-hover table-striped">
               <thead class="table-light">
                 <tr>
-                  <th scope="col" class="name-column h6">Qualités</th>
-                  <th scope="col" class="description-column">Descriptions</th>
-                  <th scope="col" class="type-column">Types</th>
-                  <th scope="col" class="karmaCost-column">Karma Costs</th>
+                  <th scope="col" class="name-column h6">${capitalized(terms.qualities)}</th>
+                  <th scope="col" class="description-column">${capitalized(terms.descriptions)}</th>
+                  <th scope="col" class="type-column">${capitalized(terms.types)}</th>
+                  <th scope="col" class="karmaCost-column">${capitalized(terms.karmaCosts)}</th>
+                  <th scope="col" class="book-column">${capitalized(terms.source)}</th>
                 </tr>
               </thead>
               <tbody class="table-group-divider"></tbody>
@@ -1268,9 +1286,11 @@ function openCatalogModal() {
   $("#typeFilter").on("input", filterTable);
   $("#karmaCostMinFilter").on("input", filterTable);
   $("#karmaCostMaxFilter").on("input", filterTable);
+  $("#bookFilter").on("input", filterTable);
+
   
   // Changez la couleur de l'élément "collapseQualities" lors du début du glisser-déposer
-  $("#collapseQualities").css("background-color", "yellow");
+  $("#collapseQualities").addClass("toDrop");
   openCatalogPanel();
   let dragged = null;
   document.addEventListener("dragstart", handleDragStart);
@@ -1296,13 +1316,17 @@ function filterTable() {
   var typeFilter = $("#typeFilter").val();
   var karmaCostMinFilter = $("#karmaCostMinFilter").val();
   var karmaCostMaxFilter = $("#karmaCostMaxFilter").val();
+  var bookFilters = $("#bookFilter").val().toLowerCase() || [];
 
   $("#catalogQualitiesTable tbody tr").each(function() {
     var name = $(this).find(".name-column").text().toLowerCase();
     var type = $(this).find(".type-column").text();
     var karmaCost = parseInt($(this).find(".karmaCost-column").text(), 10);
+    var book = $(this).find(".book-column").text().split(' ')[0].toLowerCase();
 
-    if (name.includes(nameFilter) && (!typeFilter || type === typeFilter) && (!karmaCostMinFilter || karmaCost >= karmaCostMinFilter) && (!karmaCostMaxFilter || karmaCost <= karmaCostMaxFilter)) {
+    console.log("filter table : ", book, " this ", $(this).find(".book-column").text().toLowerCase(), " bookFilters ", bookFilters, " includes ", bookFilters.includes(book));
+
+    if (name.includes(nameFilter) && (!typeFilter || type === typeFilter) && (!karmaCostMinFilter || karmaCost >= karmaCostMinFilter) && (!karmaCostMaxFilter || karmaCost <= karmaCostMaxFilter) && (bookFilters.length === 0 || bookFilters.includes(book))) {
       $(this).show();
     } else {
       $(this).hide();
