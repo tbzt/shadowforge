@@ -22,6 +22,7 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="style/style.css" />
     <!-- Lien vers le fichier CSS -->
@@ -71,7 +72,8 @@
                 class="btn btn-outline-primary"
                 for="identityBtn"
                 id="identityTitle"
-                >{{identity}}</label
+                >{{identity}} 
+                <i class="bi bi-exclamation-circle"></i></label
               >
 
               <input
@@ -88,7 +90,9 @@
                 class="btn btn-outline-primary"
                 for="priorityTableBtn"
                 id="priorityTableTitle"
-                >{{priorityTable}}</label
+                >{{priorityTable}} 
+                <i class="bi bi-exclamation-circle"></i>
+                </label
               >
 
               <input
@@ -106,7 +110,8 @@
                 for="metatypeBtn"
                 id="metatypeTitle"
                 style="display: none"
-                >{{metatypeChoice}}</label
+                >{{metatypeChoice}} 
+                <i class="bi bi-exclamation-circle"></i></label
               >
 
               <input
@@ -124,7 +129,8 @@
                 for="specialBtn"
                 id="specialTitle"
                 style="display: none"
-                >{{specialAttributeChoice}}</label
+                >{{specialAttributeChoice}} 
+                <i class="bi bi-exclamation-circle"></i></label
               >
             </div>
           </div>
@@ -150,7 +156,8 @@
                 class="btn btn-outline-primary"
                 for="attributeBtn"
                 id="attributeTitle"
-                >{{capitalized attributes}}</label
+                >{{capitalized attributes}} 
+                <i class="bi bi-exclamation-circle"></i></label
               >
 
               <input
@@ -167,7 +174,8 @@
                 class="btn btn-outline-primary"
                 for="skillBtn"
                 id="skillTitle"
-                >{{capitalized skills}}</label
+                >{{capitalized skills}} 
+                <i class="bi bi-exclamation-circle"></i></label
               >
 
               <input
@@ -184,7 +192,8 @@
                 class="btn btn-outline-primary"
                 for="knowledgeBtn"
                 id="knowledgeTitle"
-                >{{capitalized knowledges}} & {{languages}}</label
+                >{{capitalized knowledges}} & {{languages}} 
+                <i class="bi bi-exclamation-circle"></i></label
               >
 
               <input
@@ -201,7 +210,8 @@
                 class="btn btn-outline-primary"
                 for="qualitiesBtn"
                 id="qualitiesTitle"
-                >{{capitalized qualities}}</label
+                >{{capitalized qualities}} 
+                <i class="bi bi-exclamation-circle"></i></label
               >
             </div>
           </div>
@@ -315,6 +325,7 @@
             <div class="collapse" id="collapseMetatypes">
               <div class="card card-body">
                 <form id="metatypeForm">
+                  <label for="metatypeButtons" class="section-title">{{metatypeChoice}}</label>
                   <div id="metatypeButtons"></div>
                 </form>
               </div>
@@ -324,6 +335,7 @@
             <div class="collapse" id="collapseSpecials">
               <div class="card card-body">
                 <form id="specialForm">
+                  <label for="specialButtons" class="section-title">{{specialAttributeChoice}}</label>
                   <div id="specialButtons"></div>
                 </form>
               </div>
@@ -416,7 +428,7 @@
                           {{capitalized added}}
                         </th>
                         <th scope="col" id="skillsDices">
-                          {{capitalized dices}}
+                          <i class="bi bi-dice-6"></i>
                         </th>
                         <th scope="col" id="skillsSpecializations">
                           {{capitalized specializations}}

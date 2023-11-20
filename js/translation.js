@@ -364,6 +364,7 @@ const translations = {
     voiesOccultes: "Voies occultes",
     feuNourri: "Feu nourri",
     source: "source",
+    new: "nouveau",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -571,5 +572,6 @@ const translations = {
     voiesOccultes: "Street Wyrd",
     feuNourri: "Firing Squad",
     source: "source",
+    new: "new",
   },
 };

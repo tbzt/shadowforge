@@ -85,27 +85,61 @@ function capitalized(str) {
   }
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+  // Sélectionnez tous les input de type checkbox
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  // Ajoutez un gestionnaire d'événements click à chaque checkbox
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', function() {
+      // Si la checkbox est cochée pour la première fois
+      if (this.checked) {
+        // Sélectionnez le label qui suit la checkbox
+        const label = this.nextElementSibling;
+        if (label) {
+          // Sélectionnez le span à l'intérieur du label
+          const i = label.querySelector('i');
+          // Masquez le span
+          if (i) {
+            i.style.display = 'none';
+          }
+        }
+      }
+    });
+  });
+});
+
 function handleSIN() {
   // Écoutez les événements "input" sur les champs de texte
   console.log("handleSIN initialize");
-  const firstnameInput = document.getElementById("firstname");
-  const surnameInput = document.getElementById("surname");
-  const nameInput = document.getElementById("name");
+  const inputs = {
+    firstname: document.getElementById("firstname"),
+    surname: document.getElementById("surname"),
+    name: document.getElementById("name"),
+  };
   const identity = document.getElementById("identity");
 
-  firstnameInput.placeholder = capitalized(terms.firstname);
-  surnameInput.placeholder = capitalized(terms.surname);
-  nameInput.placeholder = capitalized(terms.name);
+  Object.keys(inputs).forEach(key => {
+    inputs[key].placeholder = capitalized(terms[key]);
+    inputs[key].addEventListener("input", showSINInfo);
+    // Si characterData.SIN existe et contient une valeur pour cette clé, utilisez-la
+    if (characterData.SIN && characterData.SIN[key]) {
+      inputs[key].value = characterData.SIN[key];
+    }
+  });
 
-  firstnameInput.addEventListener("input", showSINInfo);
-  surnameInput.addEventListener("input", showSINInfo);
-  nameInput.addEventListener("input", showSINInfo);
+  // Affichez les informations dès le début si elles existent
+  if (characterData.SIN) {
+    showSINInfo();
+  }
 
   function showSINInfo() {
     console.log("showSINInfo initialize");
-    const firstname = firstnameInput.value;
-    const surname = surnameInput.value;
-    const name = nameInput.value;
+
+    // Utilisez characterData.SIN s'il existe, sinon utilisez les valeurs des inputs
+    const firstname = characterData.SIN?.firstname || inputs.firstname.value;
+    const surname = characterData.SIN?.surname || inputs.surname.value;
+    const name = characterData.SIN?.name || inputs.name.value;
 
     if (!surname && (firstname || name)) {
       identity.innerHTML = `
@@ -121,14 +155,13 @@ function handleSIN() {
       identity.innerHTML = "";
     }
 
-    // Mettez à jour le tableau SIN avec une seule entrée
-    SIN = {
+    // Mettez à jour characterData.SIN directement
+    characterData.SIN = {
       firstname: firstname,
       surname: surname,
       name: name,
     };
-    characterData.SIN = SIN;
-    console.log(JSON.stringify(SIN));
+    console.log(JSON.stringify(characterData.SIN));
     saveData();
   }
 }
@@ -373,51 +406,6 @@ function handleMetatypeQualities(metatype) {
   return [];
 }
 
-function addClassesLocalStorage() {
-  for (var cat in IDselectedCells) {
-    let cell = document.getElementById(IDselectedCells[cat]);
-    if (cell) {
-      cell.classList.add("selected");
-    }
-  }
-  let metatypeButton = document.getElementById(selectedMetatype);
-  if (metatypeButton) metatypeButton.classList.add("selected");
-}
-
-function removeClassesLocalStorage() {
-  for (var cat in IDselectedCells) {
-    let cell = document.getElementById(IDselectedCells[cat]);
-    if (cell) {
-      cell.classList.remove("selected");
-    }
-  }
-}
-
-function addSINLocalStorage() {
-  const identity = document.getElementById("identity");
-
-  if (SIN.length > 0) {
-    const firstname = SIN[0].firstname || "";
-    const surname = SIN[0].surname || "";
-    const name = SIN[0].name || "";
-
-    if (!surname && (firstname || name)) {
-      identity.innerHTML = `
-                <h5>{{identity}} :</h5>
-                <p>${firstname || ""} ${surname || ""} ${name || ""}</p>
-            `;
-    } else if (surname) {
-      identity.innerHTML = `
-                <h5>{{identity}} :</h5>
-                <p>${firstname || ""} ${'"' + surname + '"' || ""} ${
-        name || ""
-      }</p>
-            `;
-    } else {
-      identity.innerHTML = "";
-    }
-  }
-}
 
 // Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
 function updateAttributesForSpecial(special, priority) {
@@ -767,9 +755,7 @@ function handleSkills() {
             )}</span></div>
           </td>
           <td id="${skill.data}_specialization">
-            <div><span class="h8">${existingSpecializations.join(
-              ", "
-            )}</span>
+          <div><span class="h8">${existingSpecializations.map(capitalized).join(", ")}</span>
             </div>
             <div class="dropdown">
               <div class="btn-group">
@@ -1630,9 +1616,11 @@ function loadData() {
         actualPriority
       );
       handleMetatypeQualities(selectedMetatype);
+      generateButtons(
+        "specialTitle",
+        "specialButtons",["adept", "mysticAdept", "fullMagician", "aspectedMagician", "technomancer"], "special", actualPriority
+      );
       showResults();
-      addClassesLocalStorage();
-      addSINLocalStorage();
       handleSkills();
       handleAttributes();
       updateValues("skills");
@@ -1643,6 +1631,38 @@ function loadData() {
       handleDropdownModal("knowledges");
       handleDropdownModal("languages");
       handleDropdownModal("qualities");
+      showPriorities();
+      const buttons = document.querySelectorAll('button');
+
+      buttons.forEach(button => {
+        // Supposons que l'ID du bouton est stocké dans button.id
+        const buttonId = button.id;
+    
+        // Vérifiez si l'ID du bouton correspond à metatype ou special dans characterData
+        if (characterData.metatype === buttonId || characterData.special === buttonId) {
+          // Ajoutez la classe "selected" au bouton
+          button.classList.add('selected');
+        }
+      });
+
+      if (typeof IDselectedCells === 'object' && IDselectedCells !== null) {
+        console.log('IDselectedCells:', IDselectedCells); // Affichez la valeur de IDselectedCells
+
+        const cells = document.querySelectorAll('td');
+
+        cells.forEach(cell => {
+          const cellId = cell.id;
+          console.log('cellId:', cellId); // Affichez la valeur de cellId
+
+          // Vérifiez si l'ID de la cellule est une valeur dans IDselectedCells
+          if (Object.values(IDselectedCells).includes(cellId)) {
+            cell.classList.add('selected');
+          } else {
+            console.log('cellId not in IDselectedCells:', cellId); // Affichez les cellId qui ne sont pas dans IDselectedCells
+          }
+        });
+      }
+
     }
   }
 }
@@ -1664,7 +1684,6 @@ document.addEventListener("DOMContentLoaded", function() {
     localStorage.removeItem('selectionData');
 
     // Réinitialisez les valeurs
-    removeClassesLocalStorage();
     prioritiesSelected = {
       metatypes: null,
       attributes: null,
@@ -1688,11 +1707,6 @@ document.addEventListener("DOMContentLoaded", function() {
       magicOrResonance: null,
       resources: null,
     };
-    SIN = [];
-    identity.innerHTML = "";
-    firstnameInput.value = "";
-    surnameInput.value = "";
-    nameInput.value = "";
     metatypeTitle.innerHTML = "";
     metatypeForm.innerHTML = "";
     specialTitle.innerHTML = "";

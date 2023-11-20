@@ -15,6 +15,11 @@ table {
     overflow: auto;
 }
 
+input::placeholder {
+    color: #05f2db!important; /* Changez cette couleur pour qu'elle soit visible sur votre arrière-plan */
+    opacity: 1; /* Firefox a besoin de cela pour afficher la couleur */
+  }
+
 .card {
     background: none;
     color: #ddd;
