@@ -79,7 +79,7 @@ let characterData = {
       proposedSpecializations: ["tasers", "holdOuts", "lightPistols", "machinePistols", "heavyPistols", "submachineGuns", "shotguns", "rifles", "machineGuns", "assaultCannons"],
       untrained: true,
     },
-    exoticWeapons: {
+    exoticWeapon: {
       base: 0,
       added: 0,
       value: 0,
@@ -355,7 +355,7 @@ let characterDataBackup = {
       proposedSpecializations: ["tasers", "holdOuts", "lightPistols", "machinePistols", "heavyPistols", "submachineGuns", "shotguns", "rifles", "machineGuns", "assaultCannons"],
       untrained: true,
     },
-    exoticWeapons: {
+    exoticWeapon: {
       base: 0,
       added: 0,
       value: 0,
@@ -549,3 +549,4 @@ let characterDataBackup = {
   metatype: "",
   special: "",
 };
+

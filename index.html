@@ -375,7 +375,7 @@
               <!-- Section : Choix des connaissances -->
               <div class="collapse" id="collapseKnowledge">
                 <div class="card card-body">
-                  <!-- Affiche le namebre de points d'attributes à dépenser -->
+                  <!-- Affiche le nombre de points à dépenser -->
                   <div id="knowledgeSpent"></div>
 
                   <div class="table-responsive-sm">
@@ -414,6 +414,7 @@
                 <div class="card card-body">
                   <!-- Affiche le namebre de points d'attributes à dépenser -->
                   <div id="skillsSpent"></div>
+                  <div id="skillsTooMuchSpecializations"></div>
 
                   <table
                     id="skillTable"
@@ -496,6 +497,9 @@
           <button id="resetButton" class="btn-outline-danger btn">
             {{capitalized reinitialize}}
           </button>
+          <button id="exportButton" class="btn-outline-success btn">
+            {{capitalized exportFoundry}}
+          </button>
           <div id="identity" class="mt-4">
             <!-- Les résultats de l'identité seront affichés ici -->
           </div>
@@ -530,10 +534,10 @@
 
   <script src="js/translation.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/foundry.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/prioritiesTable.js"></script>
   <script src="js/attributes.js"></script>
   <script src="js/script.js"></script>
-  
 
 </html>

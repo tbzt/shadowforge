@@ -136,10 +136,10 @@ function handleSIN() {
   function showSINInfo() {
     console.log("showSINInfo initialize");
 
-    // Utilisez characterData.SIN s'il existe, sinon utilisez les valeurs des inputs
-    const firstname = characterData.SIN?.firstname || inputs.firstname.value;
-    const surname = characterData.SIN?.surname || inputs.surname.value;
-    const name = characterData.SIN?.name || inputs.name.value;
+    // Utilisez les valeurs des inputs s'ils existent, sinon utilisez characterData.SIN
+    const firstname = inputs.firstname.value || characterData.SIN?.firstname;
+    const surname = inputs.surname.value || characterData.SIN?.surname;
+    const name = inputs.name.value || characterData.SIN?.name;
 
     if (!surname && (firstname || name)) {
       identity.innerHTML = `
@@ -155,11 +155,14 @@ function handleSIN() {
       identity.innerHTML = "";
     }
 
+    var identitySIN = `${firstname || ""} ${'"' + surname + '"' || ""} ${name || ""}`
+
     // Mettez à jour characterData.SIN directement
     characterData.SIN = {
       firstname: firstname,
       surname: surname,
       name: name,
+      identity: identitySIN,
     };
     console.log(JSON.stringify(characterData.SIN));
     saveData();
@@ -700,12 +703,14 @@ function handleSkills() {
     existingSpecializationsSorted = sortTranslated(existingSpecializations);
 
     const availableSpecializationsSorted = proposedSpecializationsSorted.filter(
-      specialization => !existingSpecializations.some(existingSpecialization => existingSpecialization === specialization.terms)
+      specialization => !existingSpecializations.some(existingSpecialization => existingSpecialization === specialization.data)
     );
+
+    console.log("availableSpecializationsSorted : ", availableSpecializationsSorted);
 
     availableSpecializationsSorted.forEach((specialization) => {
       addOptions.push(
-        `<li><a class="dropdown-item table-success" href="#" onclick="addSpecializationClick('${skill.data}', '${specialization.terms}')">+ ${capitalized(specialization.terms)}</a></li>`
+        `<li><a class="dropdown-item table-success" href="#" onclick="addSpecializationClick('${skill.data}', '${specialization.data}')">+ ${capitalized(specialization.terms)}</a></li>`
       );
     });
 
@@ -720,7 +725,7 @@ function handleSkills() {
       addOptions.push(`<li><hr class="dropdown-divider"></li>`);
       existingSpecializations.forEach((specialization) => {
         addOptions.push(
-          `<li><a class="dropdown-item table-danger" href="#" onclick="removeSpecializationClick('${skill.data}', '${specialization}')">- ${capitalized(specialization)}</a></li>`
+          `<li><a class="dropdown-item table-danger" href="#" onclick="removeSpecializationClick('${skill.data}', '${specialization}')">- ${capitalized(terms[specialization])}</a></li>`
         );
       });
     }
@@ -755,7 +760,7 @@ function handleSkills() {
             )}</span></div>
           </td>
           <td id="${skill.data}_specialization">
-          <div><span class="h8">${existingSpecializations.map(capitalized).join(", ")}</span>
+          <div><span class="h8">${existingSpecializations.map(specialization => capitalized(terms[specialization])).join(", ")}</span>
             </div>
             <div class="dropdown">
               <div class="btn-group">
@@ -828,6 +833,10 @@ function handleSkills() {
 
 // Fonction pour gérer le clic sur une spécialisation
 function addSpecializationClick(skillData, specialization) {
+  if (characterData.skills[skillData].specializations.length >= 2) {
+    $('#skillsTooMuchSpecializations').text(`${capitalized(terms[skillData])}${terms.colons} ${terms.tooMuchSpecializations}`);
+    return;
+  }
   characterData.skills[skillData].specializations.push(specialization);
   characterData.points.skills.spent = characterData.points.skills.spent + 1 ;
   handleSkills();
@@ -847,12 +856,15 @@ function removeSpecializationClick(skillData, specialization) {
   saveData();
 }
 
-// Fonction pour mettre à jour l'affichage des spécialisations
 function updateSpecializationDisplay(skillData) {
   const specializationSpan = $(`#${skillData}_specialization .h8`);
-  specializationSpan.text(
-    characterData.skills[skillData].specializations.join(", ")
-  );  
+  
+  const specializations = characterData.skills[skillData].specializations.map(term => capitalized(terms[term])).join(", ");
+  
+  console.log(skillData, " : ", specializations);
+  
+  specializationSpan.text(specializations);
+  
   updatePoints("skills", skillData);
 }
 
@@ -1714,4 +1726,108 @@ document.addEventListener("DOMContentLoaded", function() {
     characterData = characterDataBackup;
   }
 });
+
+
+// Supposons que exportButton est votre bouton d'exportation
+const exportButton = document.querySelector('#exportButton');
+exportButton.addEventListener('click', downloadFoundryData);
+
+
 });
+
+function downloadFoundryData() {
+  console.log("downloadFoundryData()");
+
+  assignData(); // Appelez assignData ici
+
+  const dataStr = JSON.stringify(foundryData, null, 2); // Convertit foundryData en JSON avec une indentation de 2 espaces
+  const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+  const exportFileDefaultName = foundryData.name + '_foundrySR6.json';
+
+  const linkElement = document.createElement('a');
+  linkElement.setAttribute('href', dataUri);
+  linkElement.setAttribute('download', exportFileDefaultName);
+  linkElement.click();
+}
+
+
+function assignData() {
+
+  if (characterData.SIN.identity) {
+    foundryData.name = characterData.SIN.identity;
+  }
+  // attributes
+  for (let attribute in characterData.attributes) {
+    if (characterData.attributes.hasOwnProperty(attribute)) {
+      foundryData.system.attributes[attribute].natural.base = characterData.attributes[attribute].value;
+      foundryData.system.attributes[attribute].natural.max.base = characterData.attributes[attribute].max;
+    }
+  }
+
+  // skills
+  for (let skill in characterData.skills) {
+    if (characterData.skills.hasOwnProperty(skill)) {
+      console.log("skill : ", skill, " value : ", characterData.skills[skill].value);
+      foundryData.system.skills[skill].rank.base = characterData.skills[skill].value;
+      if (characterData.skills[skill].specializations) {
+        foundryData.system.skills[skill].specialization.first = characterData.skills[skill].specializations[0];
+        if(characterData.skills[skill].specializations.length > 1) {
+          foundryData.system.skills[skill].specialization.second = characterData.skills[skill].specializations[1];          
+          foundryData.system.skills[skill].specialization.secondIsShown = true;
+        }
+      }
+    }
+  }
+
+  if (characterData.qualities) {
+    for (let quality in characterData.qualities) {
+      if (characterData.qualities.hasOwnProperty(quality)) {
+        console.log("quality : ", quality);
+        var q = {
+          "name": characterData.qualities[quality].key,
+          "type": "quality",
+          "system": {
+            "info": {              
+            "description": characterData.qualities[quality].description,
+            },                  
+          "karmaCost": characterData.qualities[quality].karmaCost,          
+          "type": characterData.qualities[quality].type,
+          "isActive": true, 
+          },    
+        }
+        foundryData.items.push(q);
+      }
+    }
+  }
+
+  if (characterData.knowledges) {
+    for (let knowledge in characterData.knowledges) {
+        console.log("knowledge : ", knowledge);
+        var k = {
+          "name": characterData.knowledges[knowledge].key,  
+          "type": "knowledge",
+        }
+        foundryData.items.push(k);
+    }
+  }
+
+  if (characterData.languages) {
+    for (let language in characterData.languages) {
+      if (characterData.languages.hasOwnProperty(language)) {
+        console.log("language : ", language);
+        var l = {
+          "name": characterData.languages[language].key,
+          "type": "language",
+          "system": {
+        "isExpert": characterData.languages[language].level === 2 ? true : false,
+        "isNative": characterData.languages[language].level === 3 ? true : false,
+        "isSpecialist": characterData.languages[language].level === 1 ? true : false,
+          },    
+        }
+        foundryData.items.push(l);
+      }
+    }
+  }
+
+}
