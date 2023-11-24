@@ -1558,12 +1558,7 @@ function showResults() {
 
   if (characterData.metatype) {
     document.getElementById("metatypeIdentity").innerHTML =
-      "<p>" +
-      capitalized(terms.metatypes) +
-      capitalized(terms.colons) +
-      " " +
-      capitalized(terms[characterData.metatype]) +
-      "</p>";
+      "<p>" + capitalized(terms[characterData.metatype]) + "</p>";
   }
 
   if (characterData.special) {
