@@ -706,8 +706,6 @@ function handleSkills() {
       specialization => !existingSpecializations.some(existingSpecialization => existingSpecialization === specialization.data)
     );
 
-    console.log("availableSpecializationsSorted : ", availableSpecializationsSorted);
-
     availableSpecializationsSorted.forEach((specialization) => {
       addOptions.push(
         `<li><a class="dropdown-item table-success" href="#" onclick="addSpecializationClick('${skill.data}', '${specialization.data}')">+ ${capitalized(specialization.terms)}</a></li>`
@@ -1664,7 +1662,6 @@ function loadData() {
 
         cells.forEach(cell => {
           const cellId = cell.id;
-          console.log('cellId:', cellId); // Affichez la valeur de cellId
 
           // Vérifiez si l'ID de la cellule est une valeur dans IDselectedCells
           if (Object.values(IDselectedCells).includes(cellId)) {
