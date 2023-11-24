@@ -1669,8 +1669,6 @@ function loadData() {
           // Vérifiez si l'ID de la cellule est une valeur dans IDselectedCells
           if (Object.values(IDselectedCells).includes(cellId)) {
             cell.classList.add('selected');
-          } else {
-            console.log('cellId not in IDselectedCells:', cellId); // Affichez les cellId qui ne sont pas dans IDselectedCells
           }
         });
       }
