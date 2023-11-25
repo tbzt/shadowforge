@@ -585,6 +585,54 @@
                   </div>
                 </div>
               </div>
+              <!-- Section : Choix des Contacts -->
+              <div class="collapse" id="collapseContact" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                <div class="card card-body">
+                  <!-- Affiche le namebre de points d'attributes à dépenser -->
+                  <div id="contactsSpent"></div>
+
+                  <div class="table-responsive-sm">
+                    <table
+                      id="contactsTable"
+                      class="table table-sm table-responsive-sm table-hover table-striped"
+                    >
+                      <thead class="table-light" id="contactsDrop">
+                        <tr>
+                          <th
+                            scope="col"
+                            id="contactsHeader"
+                            class="name-column h6"
+                          >
+                            {{capitalized contacts}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="descriptionContacts"
+                            class="description-column"
+                          >
+                            {{capitalized descriptions}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="connectionContacts"
+                            class="connection-column"
+                          >
+                            {{capitalized connection}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="loyaltyContacts"
+                            class="loyalty-column"
+                          >
+                            {{capitalized loyalty}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

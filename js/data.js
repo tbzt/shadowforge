@@ -245,6 +245,7 @@ let characterData = {
   knowledges: [],
   languages: [],
   qualities: [],
+  contacts: [],
   points: {
     skills: {
       base: 0,
@@ -263,6 +264,10 @@ let characterData = {
       spent: 0,
     },
     karma: 0,
+    contacts: {
+      base: 0,
+      spent: 0, 
+    }
   },
   selectAttributeType: "Prio",
   alreadyMaxAttribute: "",
@@ -522,6 +527,7 @@ let characterDataBackup = {
   knowledges: [],
   languages: [],
   qualities: [],
+  contacts: [],
   points: {
     skills: {
       base: 0,
@@ -540,6 +546,10 @@ let characterDataBackup = {
       spent: 0,
     },
     karma: 0,
+    contacts: {
+      base: 0,
+      spent: 0, 
+    }
   },
   selectAttributeType: "Prio",
   alreadyMaxAttribute: "",

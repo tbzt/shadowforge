@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   handleDropdownModal("knowledges");
   handleDropdownModal("languages");
   handleDropdownModal("qualities");
+  handleDropdownModal("contacts");
+  updateContactDisplay();
 });
 
 $(document).ready(function() {
@@ -150,17 +152,21 @@ function handleSIN() {
     const special = capitalized(terms[characterData.special]);
 
     let identityParts = [];
+    let identity = [];
 
     if (firstname) {
       identityParts.push(firstname);
+      identity.push(firstname);
     }
 
     if (surname) {
       identityParts.push(" " + '"' + surname + '"');
+      identity.push(" " + '"' + surname + '"');
     }
 
     if (name) {
       identityParts.push(" " + name);
+      identity.push(" " + name);
     }
 
     if (metatype && identityParts.length > 0) {
@@ -176,6 +182,7 @@ function handleSIN() {
     }
 
     let identitySIN = identityParts.join("");
+    let identity4Foundry = identity.join("");
 
     if (identitySIN) {
       identity.innerHTML = `
@@ -191,6 +198,7 @@ function handleSIN() {
       firstname: firstname,
       surname: surname,
       name: name,
+      identity: identity4Foundry,
     };
     console.log(JSON.stringify(characterData.SIN));
     saveData();
@@ -636,6 +644,7 @@ function getSkillsSpent(priority) {
   else if (priority === "skills_E") return 10;
 }
 
+
 let skillsSort = [];
 
 function sortTranslated(array) {
@@ -912,7 +921,9 @@ function updateKnowledgePoints() {
 function handleDropdownModal(type) {
   console.log(`Initiate handle${capitalized(type)}()`);
 
-  var knowledges = characterData[type]; // Utiliser le type comme clé
+  var items = characterData[type];
+  
+  console.log("items : ", items)
 
   // Construire le tableau d'options
   var addOptions = [];
@@ -939,9 +950,9 @@ function handleDropdownModal(type) {
     );
   }
 
-  if (knowledges) {
+  if (items) {
     addOptions.push(`<li><hr class="dropdown-divider"></li>`);
-    knowledges.forEach((item) => {
+    items.forEach((item) => {
       addOptions.push(
         `<li><a class="dropdown-item table-danger" href="#" onclick="removeModalClick('${type}','${item.key}','${item.key}')">- ${capitalized(item.key)}</a></li>`
       );
@@ -983,6 +994,20 @@ function handleDropdownModal(type) {
         <label for="qualityKarmaCost" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.karmaCost)}${terms.colons}</label>
         <input type="number" class="form-control" id="qualityKarmaCost" aria-label="Karma cost for the quality" style="width: 3em;">
       </div>`
+  }
+
+  if (type === "contacts") {
+    specificType = `
+      <div class="d-flex align-items-center mb-2">
+        <label for="contactDescription" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.description)}${terms.colons}</label>
+        <textarea class="form-control flex-grow-1" id="contactDescription" rows="3"></textarea>
+      </div><div class="d-flex align-items-center mb-2">  
+  <label for="contactConnection" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.connection)}${terms.colons}</label>
+  <input type="number" class="form-control" id="contactConnection" aria-label="Connections" style="width: 3em;" value=0>
+
+  <label for="contactLoyalty" class="form-label text-start me-2 ms-3" style="white-space: nowrap;">${capitalized(terms.loyalty)}${terms.colons}</label>
+  <input type="number" class="form-control" id="contactLoyalty" aria-label="Loyalties" style="width: 3em;" value=0>
+</div>`
   }
 
   // Ajouter les options au menu déroulant
@@ -1037,9 +1062,20 @@ function handleDropdownModal(type) {
     
     var key = $(`#${type}Input`).val();
     
-    newItem = {key:$(`#${type}Input`).val(), description: qualityDescription, type: qualityType, karmaCost: qualityKarmaCost};
+    newItem = {key: key, description: qualityDescription, type: qualityType, karmaCost: qualityKarmaCost};
 
-    } else {
+    } else  if (type === "contacts") {
+      var contactDescription = $("#contactDescription").val();
+  
+      var contactConnection = parseInt($("#contactConnection").val());
+  
+      var contactLoyalty = parseInt($("#contactLoyalty").val());
+      
+      var key = $(`#${type}Input`).val();
+      
+      newItem = {key: key, description: contactDescription, connection: contactConnection, loyalty: contactLoyalty};
+  
+      } else {
       var levelItem = 0;
       if (type === "languages") levelItem = parseInt($("input[name='chooseLevelOptions']:checked").val()) || 0;
       // Récupérez la valeur saisie par l'utilisateur
@@ -1050,8 +1086,8 @@ function handleDropdownModal(type) {
     if (newItem.key.trim() !== "") {
       // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
       
-
-      knowledges.push(newItem);   
+      console.log("newItem : ", newItem, " type : ", type, " items : ", items);
+      items.push(newItem);   
       updateQualitiesDisplay();
       updateQualitiesKarma();
       if (type !== "qualities") {
@@ -1060,6 +1096,7 @@ function handleDropdownModal(type) {
       }
       handleDropdownModal(type);
       updateKnowledgeDisplay();
+      updateContactDisplay();
     }
 
     // Effacez le champ de saisie
@@ -1084,6 +1121,7 @@ function removeModalClick(type, item) {
   updateKnowledgeDisplay();
   updateQualitiesDisplay();
   updateQualitiesKarma();
+  updateContactDisplay();
 
   if (type !== "qualities") {
     characterData.points.knowledges.spent = characterData.points.knowledges.spent - 1;
@@ -1123,6 +1161,85 @@ function removeModalClick(type, item) {
     
       const rowHTML = `<tr>${knowledgeCell}${languageCell}</tr>`;
       knowledgeTableBody.append(rowHTML);
+    }
+    
+  saveData();
+  }
+
+  function updateContactDisplay() {
+  
+    var contactsTable = $("#contactsTable"); // Utilisez jQuery ici
+    var contactsTableBody = contactsTable.find("tbody");
+  
+    // Effacer le contenu actuel de la ligne du tableau
+    contactsTableBody.empty();
+  
+    if (characterData.contacts) {
+      var contacts = [] ;
+      contacts = sortKeys(characterData.contacts);
+    }
+
+        // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustment)
+  characterData.points.contacts.base = characterData.attributes.charisma.value * 6;
+
+  // Sélectionner la table des compétences
+  var contactsSpentTable = $("#contactsSpent"); // Utilisez jQuery ici
+
+  // Mettre à jour le tableau des compétences dépensées
+  contactsSpentTable.html(
+    '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
+    capitalized(terms.pointsToSpend) +
+      '</th> <td id="contacts_max"> <span id="contactsCount" class="h6 count">' +
+      Math.max(0, characterData.points.contacts.base - characterData.points.contacts.spent) +
+      "</span></td></tr></tbody></table>"
+  );
+
+  
+    // Ajouter chaque contact au tableau
+    for (let i = 0; i < contacts.length; i++) {
+      const contactItem = i < contacts.length ? contacts[i] : null;
+
+      let max = "", maxLoyalty = "", maxConnection = "";
+      if (contactItem.loyalty > characterData.attributes.charisma.value || contactItem.connection > characterData.attributes.charisma.value) {
+        var maximumAlert = `<tr><td colspan="2" class="maximum">${terms.tooMuchConnectionLoyalty}  ${contactItem.key}</td></tr>`;
+        contactsSpentTable.append(maximumAlert);
+      } 
+
+      if (contactItem.loyalty > characterData.attributes.charisma.value) {
+        maxLoyalty = "maximum";
+      } else {  
+        maxLoyalty = "";
+      }
+
+      if (contactItem.connection > characterData.attributes.charisma.value) {
+        maxConnection = "maximum";
+      } else {  
+        maxConnection = "";
+      }
+
+      const keyCell = contactItem ? `<td class="name-column h6">${capitalized(contactItem.key)}</td>` : '<td class="name-column h6"></td>';
+      const descriptionCell = contactItem ? `<td class="description-column">${contactItem.description}</td>` : '<td class="description-column"></td>';
+      const connectionCell = contactItem ? `<td class="connection-column ${maxConnection}"><div>${Math.min(characterData.attributes.charisma.value, contactItem.connection)}</div>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <button class="btn btn-outline-danger btn-xs" onclick="modifyContact('connection', '${
+            i
+          }', 'decrement')">-</button>
+          <button class="btn btn-outline-success btn-xs" onclick="modifyContact('connection', '${
+            i
+          }', 'increment')">+</button>
+      </div></td>` : '<td class="connection-column"></td>';
+      const loyaltyCell = contactItem ? `<td class="loyalty-column ${maxLoyalty}"><div>${Math.min(characterData.attributes.charisma.value, contactItem.loyalty)}</div>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <button class="btn btn-outline-danger btn-xs" onclick="modifyContact('loyalty', '${
+            i
+          }', 'decrement')">-</button>
+          <button class="btn btn-outline-success btn-xs" onclick="modifyContact('loyalty', '${
+            i
+          }', 'increment')">+</button>
+      </div></td>` : '<td class="loyalty-column"></td>';
+
+      const rowHTML = `<tr>${keyCell}${descriptionCell}${connectionCell}${loyaltyCell}</tr>`;
+      contactsTableBody.append(rowHTML);
     }
     
   saveData();
@@ -1391,6 +1508,25 @@ function updateQualitiesKarma() {
   );
 }
 
+function modifyContact(type, contact, modificator) {
+
+  console.log("modifyContact : ", type, " contact ", JSON.stringify(contact), " modificator ", modificator);
+
+  var contactSpent = characterData.points.contacts.spent;
+
+  var base = characterData.contacts[contact][type];
+  if (modificator === "increment") {
+    characterData.contacts[contact][type] = base + 1;
+    characterData.points.contacts.spent = contactSpent + 1;
+  } else {
+    characterData.contacts[contact][type] = Math.max(0, base - 1);
+    characterData.points.contacts.spent = Math.max(0, contactSpent - 1);
+  }
+  updateContactDisplay();
+  updatePoints("contacts");
+  saveData();
+}
+
 function modifyValue(type, element, modificator) {
   var selectCount = type;
 
@@ -1441,7 +1577,8 @@ function updateValues(type) {
           handleSkills();
           updateValues("skills");
         }
-        updateKnowledgePoints();
+        updateKnowledgePoints();        
+        updateContactDisplay();
       }
       if (type === "skills") {
         var rdd =
@@ -1635,6 +1772,7 @@ function loadData() {
       handleDropdownModal("knowledges");
       handleDropdownModal("languages");
       handleDropdownModal("qualities");
+      handleDropdownModal("contacts");
       showPriorities();
       const buttons = document.querySelectorAll('button');
 
@@ -1832,6 +1970,26 @@ function assignData() {
           },    
         }
         foundryData.items.push(l);
+      }
+    }
+  }
+
+  if (characterData.contacts) {
+    for (let contact in characterData.contacts) {
+      if (characterData.contacts.hasOwnProperty(contact)) {
+        console.log("contact : ", contact);
+        var c = {
+          "name": characterData.contacts[contact].key,
+          "type": "contact",
+          "system": {
+            "info": {              
+            "description": characterData.contacts[contact].description,
+            },     
+            "connection": characterData.contacts[contact].connection,
+            "loyalty": characterData.contacts[contact].loyalty, 
+        }
+      }
+        foundryData.items.push(c);
       }
     }
   }

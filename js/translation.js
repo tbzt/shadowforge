@@ -373,6 +373,9 @@ const translations = {
     lifeStuff: "équipement de vie",
     contact: "contact",
     contacts: "contacts",
+    connection: "réseau",
+    loyalty: "loyauté",
+    tooMuchConnectionLoyalty: "Vous avez dépassé le maximum pour le réseau ou la loyauté à la création (Charisme) pour ",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -589,5 +592,8 @@ const translations = {
     lifeStuff: "life stuff",
     contact: "contact",
     contacts: "contacts",
+    connection: "connection",
+    loyalty: "loyalty",
+    tooMuchConnectionLoyalty: "You have exceeded the maximum for connection or loyalty at creation (Charisma) on ",
   },
 };
