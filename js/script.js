@@ -121,7 +121,7 @@ function handleSIN() {
 
   Object.keys(inputs).forEach(key => {
     inputs[key].placeholder = capitalized(terms[key]);
-    inputs[key].addEventListener("input", showSINInfo);
+    inputs[key].addEventListener("input", updateSINInfo);
     // Si characterData.SIN existe et contient une valeur pour cette clé, utilisez-la
     if (characterData.SIN && characterData.SIN[key]) {
       inputs[key].value = characterData.SIN[key];
@@ -130,44 +130,71 @@ function handleSIN() {
 
   // Affichez les informations dès le début si elles existent
   if (characterData.SIN) {
-    showSINInfo();
+    updateSINInfo();
   }
+}
 
-  function showSINInfo() {
-    console.log("showSINInfo initialize");
+  function updateSINInfo() {
+    console.log("updateSINInfo initialize");
 
+    const inputs = {
+      firstname: document.getElementById("firstname"),
+      surname: document.getElementById("surname"),
+      name: document.getElementById("name"),
+    };
     // Utilisez les valeurs des inputs s'ils existent, sinon utilisez characterData.SIN
     const firstname = inputs.firstname.value || characterData.SIN?.firstname;
     const surname = inputs.surname.value || characterData.SIN?.surname;
     const name = inputs.name.value || characterData.SIN?.name;
+    const metatype = capitalized(terms[characterData.metatype]);
+    const special = capitalized(terms[characterData.special]);
 
-    if (!surname && (firstname || name)) {
+    let identityParts = [];
+
+    if (firstname) {
+      identityParts.push(firstname);
+    }
+
+    if (surname) {
+      identityParts.push(" " + '"' + surname + '"');
+    }
+
+    if (name) {
+      identityParts.push(" " + name);
+    }
+
+    if (metatype && identityParts.length > 0) {
+      identityParts.push(", " + metatype);
+    } else if (metatype) {
+      identityParts.push(metatype);
+    }
+
+    if (special && identityParts.length > 0) {
+      identityParts.push(", " + special);
+    } else if (special) {
+      identityParts.push(special);
+    }
+
+    let identitySIN = identityParts.join("");
+
+    if (identitySIN) {
       identity.innerHTML = `
-            <h5>${terms.identity}${terms.colons}</h5>
-            <p>${firstname || ""} ${surname || ""} ${name || ""}</p>
-        `;
-    } else if (surname) {
-      identity.innerHTML = `
-            <h5>${terms.identity}${terms.colons}</h5>
-            <p>${firstname || ""} ${'"' + surname + '"' || ""} ${name || ""}</p>
-        `;
+        <h5>${terms.identity}${terms.colons}</h5>
+        <p>${identitySIN}</p>
+      `;
     } else {
       identity.innerHTML = "";
     }
-
-    var identitySIN = `${firstname || ""} ${'"' + surname + '"' || ""} ${name || ""}`
 
     // Mettez à jour characterData.SIN directement
     characterData.SIN = {
       firstname: firstname,
       surname: surname,
       name: name,
-      identity: identitySIN,
     };
     console.log(JSON.stringify(characterData.SIN));
     saveData();
   }
-}
 
 function useButton(cell) {
   console.log("useButton initialize: ", cell.classList);
@@ -1535,53 +1562,25 @@ function updatePoints(type, element, modificator) {
 
 // Fonction pour afficher les résultats
 function showResults() {
-  const btn = document.getElementById("btn");
-  const collapses = document.getElementById("collapses");
-  btn.innerHTML =
-    '<input type="checkbox" class="btn-check" id="showPrioritiesBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showPriorities" aria-expanded="false" aria-controls="showPriorities" /> <label class="btn btn-outline-success" for="showPrioritiesBtn" id="showPrioritiesTitle" >' +
-    capitalized(terms.priorityTable) +
-    "</label>";
 
-  collapses.innerHTML =
-    '<div class="collapse" id="showPriorities"> <div class="card card-body"> <div id="showPrioritiesDiv"></div></div> </div>';
-
-  for (const categorie in prioritiesSelected) {
-    const priority = prioritiesSelected[categorie];
-    if (priority) {
-      document.getElementById(
-        "showPrioritiesDiv"
-      ).innerHTML += `<p>${capitalized(terms[categorie])}${
-        terms.colons
-      } ${priority}</p>`;
-    }
-  }
-
-  if (characterData.metatype) {
-    document.getElementById("metatypeIdentity").innerHTML =
-      "<p>" + capitalized(terms[characterData.metatype]) + "</p>";
-  }
-
-  if (characterData.special) {
-    document.getElementById("specialIdentity").innerHTML =
-      "<p>" + capitalized(terms[characterData.special]) + "</p>";
+  if (characterData.metatype || characterData.special) {
+    updateSINInfo();
   }
 
   // Affichez la colonne des resources avec séparation des unités et le symbole ¥
   const resourcesValue = prioritiesSelected["resources"];
   if (resourcesValue) {
-    const resources = parseInt(resourcesValue.split(" ")[1]); // Extrait la valeur numérique
+    console.log("resourcesValue : ", resourcesValue);
+    const resources = parseInt(characterData.resources); // Extrait la valeur numérique
     if (!isNaN(resources)) {
-      const formattedRessources = resources.toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "JPY",
-      });
-      btn.innerHTML +=
-        '<input type="checkbox" class="btn-check" id="showResourcesBtn" autocomplete="off" data-bs-toggle="collapse" data-bs-target="#showResources" aria-expanded="false" aria-controls="showResources" /> <label class="btn btn-outline-success" for="showResourcesBtn" id="showResourcesTitle" >' +
+      const formattedRessources = resources.toLocaleString("fr-FR");
+      document.getElementById("resourcesShow").innerHTML =
+        '<div class="h8">' +
         capitalized(terms.resources) +
         capitalized(terms.colons) +
         " " +
-        formattedRessources +
-        "</label>";
+        formattedRessources + " ¥" +
+        "</div>";
     }
   }
 }
@@ -1681,47 +1680,64 @@ document.addEventListener("DOMContentLoaded", function() {
       "Êtes-vous sûr de vouloir réinitialiser la sélection ?"
     );
 
-  if (userConfirmed) {
-    // Effacez les données de localStorage
-    localStorage.removeItem('selectionData');
+    if (userConfirmed) {
+      // Effacez les données de localStorage
+      localStorage.removeItem('selectionData');
 
-    // Réinitialisez les valeurs
-    prioritiesSelected = {
-      metatypes: null,
-      attributes: null,
-      skills: null,
-      magicOrResonance: null,
-      resources: null,
-    };
-    selectedMetatype = null;
-    actualPriority = null;
-    selectedCells = {
-      metatypes: null,
-      attributes: null,
-      skills: null,
-      magicOrResonance: null,
-      resources: null,
-    };
-    IDselectedCells = {
-      metatypes: null,
-      attributes: null,
-      skills: null,
-      magicOrResonance: null,
-      resources: null,
-    };
-    metatypeTitle.innerHTML = "";
-    metatypeForm.innerHTML = "";
-    specialTitle.innerHTML = "";
-    specialForm.innerHTML = "";
-    characterData = characterDataBackup;
-  }
+      // Réinitialisez les valeurs
+      prioritiesSelected = {
+        metatypes: null,
+        attributes: null,
+        skills: null,
+        magicOrResonance: null,
+        resources: null,
+      };
+      selectedMetatype = null;
+      actualPriority = null;
+      selectedCells = {
+        metatypes: null,
+        attributes: null,
+        skills: null,
+        magicOrResonance: null,
+        resources: null,
+      };
+      IDselectedCells = {
+        metatypes: null,
+        attributes: null,
+        skills: null,
+        magicOrResonance: null,
+        resources: null,
+      };
+      metatypeTitle.innerHTML = "";
+      metatypeForm.innerHTML = "";
+      specialTitle.innerHTML = "";
+      specialForm.innerHTML = "";
+      characterData = characterDataBackup;
+
+      // Réinitialisez les boutons et les cellules
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(button => {
+        if (button.classList.contains('btn-primary')) {
+          button.classList.remove('btn-primary');
+        }
+      });
+
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach(cell => {
+        if (cell.classList.contains('selected')) {
+          cell.classList.remove('selected');
+        }
+      });
+
+      // Rechargez la page
+      window.location.reload();
+    }
 });
 
 
 // Supposons que exportButton est votre bouton d'exportation
 const exportButton = document.querySelector('#exportButton');
 exportButton.addEventListener('click', downloadFoundryData);
-
 
 });
 

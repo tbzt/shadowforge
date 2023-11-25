@@ -134,7 +134,6 @@
               >
             </div>
               <!-- Attributs --> 
-          <div class="row justify-content-center">
             <div
               class="btn-group"
               role="group"
@@ -212,10 +211,8 @@
                 >{{capitalized qualities}} 
                 <i class="bi bi-exclamation-circle"></i></label
               >
-            </div>
-            </div>  
+            </div> 
             <!-- Stuff -->
-            <div class="row justify-content-center">
               <div
                 class="btn-group"
                 role="group"
@@ -254,6 +251,7 @@
                   class="btn btn-outline-primary"
                   for="magicStuffBtn"
                   id="magicStuffTitle"
+                  style="display: none"
                   >{{capitalized magicStuff}} 
                   <i class="bi bi-exclamation-circle"></i></label
                 >
@@ -266,12 +264,13 @@
                   data-bs-toggle="collapse"
                   data-bs-target="#collapseMatrixStuff"
                   aria-expanded="false"
-                  aria-controls="collapseMatrixStuff"
+                  aria-controls="collapseMatrixStuff" 
                 />
                 <label
                   class="btn btn-outline-primary"
                   for="matrixStuffBtn"
                   id="matrixStuffTitle"
+                  style="display: none"
                   >{{capitalized matrixStuff}} 
                   <i class="bi bi-exclamation-circle"></i></label
                 >
@@ -308,10 +307,9 @@
                   class="btn btn-outline-primary"
                   for="contactBtn"
                   id="contactTitle"
-                  >{{capitalized contact}} 
+                  >{{capitalized contacts}} 
                   <i class="bi bi-exclamation-circle"></i></label
                 >
-              </div>
               </div>
           </div>
           <br />
@@ -604,27 +602,11 @@
           </div>
 
           <div id="metatypeIdentity" class="mt-4">
-            <!-- Les résultats de l'identité seront affichés ici -->
           </div>
 
           <div id="specialIdentity" class="mt-4">
-            <!-- Les résultats de l'identité seront affichés ici -->
           </div>
-          <div
-            class="btn-group-vertical"
-            role="group"
-            aria-label="Vertical Basic checkbox toggle button group"
-          >
-            <div id="btn" class="mt-4">
-              <!-- Les résultats seront affichés ici -->
-            </div>
-            <div id="collapses" class="mt-4">
-              <!-- Les résultats seront affichés ici -->
-            </div>
-
-            <div id="collapses" class="mt-4">
-              <!-- Les résultats seront affichés ici -->
-            </div>
+          <div id="resourcesShow" class="mt-4">
           </div>
         </div>
       </div>

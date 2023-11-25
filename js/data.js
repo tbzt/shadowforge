@@ -272,6 +272,7 @@ let characterData = {
   isTechno: false,
   metatype: "",
   special: "",
+  resources: 0,
 };
 
 // Objet pour stocker les valeurs d'attributes de base et de max en fonction du métatype
@@ -548,5 +549,6 @@ let characterDataBackup = {
   isTechno: false,
   metatype: "",
   special: "",
+  resources: 0,
 };
 
