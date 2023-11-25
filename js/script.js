@@ -1070,6 +1070,8 @@ function handleDropdownModal(type) {
       var contactConnection = parseInt($("#contactConnection").val());
   
       var contactLoyalty = parseInt($("#contactLoyalty").val());
+
+      characterData.points.contacts.spent = characterData.points.contacts.spent + contactConnection + contactLoyalty;
       
       var key = $(`#${type}Input`).val();
       
