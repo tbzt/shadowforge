@@ -376,6 +376,7 @@ const translations = {
     connection: "réseau",
     loyalty: "loyauté",
     tooMuchConnectionLoyalty: "Vous avez dépassé le maximum pour le réseau ou la loyauté à la création (Charisme) pour ",
+    legalDisclaimer: "Shadowrun et tous les logos et personnages associés sont la propriété de Topps Company, Inc. © 2020 Topps Company, Inc. Les traductions en français sont la propriété de Black Book Editions. Tous droits réservés. Ce site web n'est pas affilié, approuvé, sponsorisé ou approuvé par Topps Company, Inc., Black Book Editions ou l'une de leurs sociétés affiliées ou filiales. Si ce site web enfreint une marque ou une propriété, veuillez me contacter sur Github.",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -595,5 +596,6 @@ const translations = {
     connection: "connection",
     loyalty: "loyalty",
     tooMuchConnectionLoyalty: "You have exceeded the maximum for connection or loyalty at creation (Charisma) on ",
+    legalDisclaimer: "Shadowrun and all related marks, logos and characters are owned by Topps Company, Inc. © 2020 Topps Company, Inc. All Rights Reserved. This website is not affiliated with, endorsed, sponsored, or specifically approved by Topps Company, Inc. or any of its affiliates or subsidiaries. If this website infringes on any of Topps trademarks, please contact me on Github.",
   },
 };
