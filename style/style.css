@@ -112,6 +112,15 @@ td.selectable, td.starred {
     }
 }
 
+row { 
+    display: flex;
+    align-items: center; /* Aligne verticalement les éléments dans le conteneur */
+    justify-content: flex-end; /* Aligne horizontalement les éléments à la fin du conteneur */
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
 .rddNumber {
     color: #05f2db;
     font-weight: bold;
