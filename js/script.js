@@ -798,7 +798,7 @@ function handleSkills() {
             </div>
             <div class="dropdown">
               <div class="btn-group">
-                <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
+                <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" data-bs-placement="top" type="button">+</button>
                 <ul class="dropdown-menu" id="${skill.data}Dropdown-menu">
                   ${DropdownOptions}
                 </ul>
@@ -1048,7 +1048,7 @@ function handleDropdownModal(type) {
   document.getElementById(`${type}Header`).innerHTML = `
     ${capitalized(terms[type])}<div class="dropdown">
       <div class="btn-group">
-        <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" type="button">+</button>
+        <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" placement="right" type="button">+</button>
         <ul class="dropdown-menu" id="${type}Dropdown-menu">
           ${DropdownOptions}
         </ul>
