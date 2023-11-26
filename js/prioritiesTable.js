@@ -288,6 +288,10 @@ function selectPriority(cell, categorie, priority) {
   }
   if (categorie === "resources") {
     characterData.resources = parseFloat(cell.innerHTML);
+    var moneyElement = document.querySelector('.money');
+    if (moneyElement) {
+    updateMoney(characterData.resources);
+    }
   }
   saveData();
 

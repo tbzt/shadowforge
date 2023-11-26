@@ -5,6 +5,21 @@ background-color: #0a0f25;
 color: rgba(242, 5, 135, 0.75);
 }
 
+.label {    
+    position: fixed;
+    top: 50px;
+    right: -70px;
+    transform: rotate(45deg) translate(0, 0);
+    background: rgba(242, 5, 135, 0.9);
+    color: #ddd;
+    padding: 10px 100px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    font-size: 1em;
+    border-radius: 2px;
+    text-align: center;
+    border: 2px dotted #05f2db;
+}
+
 table {
     border-collapse: separate;
     border-spacing: 0;
@@ -352,4 +367,19 @@ select:focus {
     background-color: rgba(88, 2, 89, 0.75);
     box-shadow: 0 0 20px rgba(242, 5, 135, 0.85); /* Utilisez une couleur plus claire pour le halo */
     transition: box-shadow .3s ease-in-out, background-color .3s ease-in-out;
+}
+
+.money {
+    color: #ddd;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    50% { opacity: 0; } /* change opacity mid-animation */
+    100% { opacity: 1; } /* end with full opacity */
+}
+
+@keyframes rollDown {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
 }

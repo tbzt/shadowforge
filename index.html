@@ -44,6 +44,10 @@
       <a href="#" onclick="changeLang('en')">
         <img src="style/img/us-flag.png" alt="US Flag" />
       </a>
+      
+    <div class="label">
+      Version Beta          
+    </div>
     </div>
     <div class="container-fluid" id="container">
       <h1 class="mt-4 display-4" id="title">{{title}}</h1>
@@ -638,12 +642,12 @@
         </div>
         <!-- Colonne de largeur 3 pour l'affichage de la génération du personnage -->
         <div class="col-sm-3">
-          <h3 id="character">{{capitalized character}}</h3>
+          <h3 id="character">{{capitalized character}} <i class="bi bi-incognito"></i></h3>
           <button id="resetButton" class="btn-outline-danger btn">
-            {{capitalized reinitialize}}
+            {{capitalized reinitialize}} <i class="bi bi-eraser"></i>
           </button>
           <button id="exportButton" class="btn-outline-success btn">
-            {{capitalized exportFoundry}}
+            {{capitalized exportFoundry}} <i class="bi bi-file-earmark-binary"></i>
           </button>
           <div id="identity" class="mt-4">
             <!-- Les résultats de l'identité seront affichés ici -->
@@ -660,17 +664,23 @@
       </div>
 
   </body>
-  <footer style="position: fixed; bottom: 0; width: 100%;">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <p class="text-center small">
-            {{legalDisclaimer}}
-          </p>
+  <body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- Votre contenu ici -->
+
+    <div style="flex-grow: 1;"></div>
+
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-9">
+            <p class="text-center small">
+              {{legalDisclaimer}}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </body>
 </div>
   <script src="js/translation.js"></script>
   <script src="js/data.js"></script>

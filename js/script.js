@@ -1706,23 +1706,62 @@ function showResults() {
     updateSINInfo();
   }
 
-  // Affichez la colonne des resources avec séparation des unités et le symbole ¥
-  const resourcesValue = prioritiesSelected["resources"];
-  if (resourcesValue) {
-    console.log("resourcesValue : ", resourcesValue);
-    const resources = parseInt(characterData.resources); // Extrait la valeur numérique
-    if (!isNaN(resources)) {
-      const formattedRessources = resources.toLocaleString("fr-FR");
-      document.getElementById("resourcesShow").innerHTML =
-        '<div class="h8">' +
-        capitalized(terms.resources) +
-        capitalized(terms.colons) +
-        " " +
-        formattedRessources + " ¥" +
-        "</div>";
+// Affichez la colonne des resources avec séparation des unités et le symbole ¥
+const resourcesValue = prioritiesSelected["resources"];
+if (resourcesValue) {
+  console.log("resourcesValue : ", resourcesValue);
+  const resources = parseInt(characterData.resources); // Extrait la valeur numérique
+  console.log("resources : ", resources);
+  if (!isNaN(resources)) {
+    const formattedRessources = resources.toLocaleString("fr-FR");
+    let moneyCount = document.querySelector('.moneyCount');
+    if (!moneyCount) {
+      moneyCount = document.createElement('div');
+      moneyCount.className = 'h4 moneyCount';
+      const icon = document.createElement('i');
+      icon.className = 'bi bi-piggy-bank';
+      moneyCount.appendChild(icon);
+      const moneyElement = document.createElement('span');
+      moneyElement.className = 'money';
+      moneyElement.textContent = formattedRessources;
+      moneyCount.appendChild(moneyElement);
+      const symbol = document.createTextNode(' ¥');
+      moneyCount.appendChild(symbol);
+      document.getElementById("resourcesShow").appendChild(moneyCount);
+    } else {
+      const moneyElement = moneyCount.querySelector('.money');
+      if (moneyElement) {
+        moneyElement.textContent = formattedRessources;
+      }
     }
   }
 }
+}
+
+function updateMoney(newMoneyValue) {
+  let moneyCount = document.querySelector('.moneyCount');
+  let moneyElement = moneyCount.querySelector('.money');
+  const oldText = moneyElement.textContent.replace(/\D/g, ''); // remove non-digit characters
+  const newText = newMoneyValue.toString();
+
+  for (let i = 0; i < newText.length; i++) {
+    let currentNumber = parseInt(oldText[i]) || 0;
+    const targetNumber = parseInt(newText[i]);
+
+    const interval = setInterval(() => {
+      if (currentNumber < targetNumber) {
+        currentNumber++;
+      } else if (currentNumber > targetNumber) {
+        currentNumber--;
+      } else {
+        clearInterval(interval);
+        return;
+      }
+      moneyElement.textContent = moneyElement.textContent.substring(0, i) + currentNumber + moneyElement.textContent.substring(i + 1);
+    }, 100);
+  }
+}
+
 
 // Fonction pour sauvegarder la sélection dans un cookie
 // Pour sauvegarder les données
