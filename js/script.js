@@ -119,7 +119,6 @@ function handleSIN() {
     surname: document.getElementById("surname"),
     name: document.getElementById("name"),
   };
-  const identity = document.getElementById("identity");
 
   Object.keys(inputs).forEach(key => {
     inputs[key].placeholder = capitalized(terms[key]);
@@ -145,11 +144,13 @@ function handleSIN() {
       name: document.getElementById("name"),
     };
     // Utilisez les valeurs des inputs s'ils existent, sinon utilisez characterData.SIN
+    
+  const identityShow = document.getElementById("identity");
     const firstname = inputs.firstname.value || characterData.SIN?.firstname;
     const surname = inputs.surname.value || characterData.SIN?.surname;
     const name = inputs.name.value || characterData.SIN?.name;
-    const metatype = capitalized(terms[characterData.metatype]);
-    const special = capitalized(terms[characterData.special]);
+    const metatype = characterData.metatype ? capitalized(terms[characterData.metatype]) : "";
+    const special = characterData.special ? capitalized(terms[characterData.special]) : "";
 
     let identityParts = [];
     let identity = [];
@@ -185,12 +186,12 @@ function handleSIN() {
     let identity4Foundry = identity.join("");
 
     if (identitySIN) {
-      identity.innerHTML = `
+      identityShow.innerHTML = `
         <h5>${terms.identity}${terms.colons}</h5>
         <p>${identitySIN}</p>
       `;
     } else {
-      identity.innerHTML = "";
+      identityShow.innerHTML = "";
     }
 
     // Mettez à jour characterData.SIN directement
@@ -200,7 +201,7 @@ function handleSIN() {
       name: name,
       identity: identity4Foundry,
     };
-    console.log(JSON.stringify(characterData.SIN));
+    
     saveData();
   }
 
@@ -296,10 +297,12 @@ function handleButtonClick(button, form, type, priority) {
   if (type === "metatype") {
     characterData.metatype = button.id;
     metatypeSelected = true;
-    var check = checkAdjustmentByMetatype[characterData.metatype];
+    console.log("metatypeSelected: ", prioritiesSelected["metatypes"], characterData.metatype);
+    var check = getPriorityValue(prioritiesSelected["metatypes"], characterData.metatype);
+    console.log("getPriorityValue: ", check);
 
-    if (check && check.adjustment) {
-      characterData.points.Adjustment.base = check.adjustment;
+    if (check) {
+      characterData.points.Adjustment.base = check;
     } else {
       console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
     }
@@ -315,6 +318,49 @@ function handleButtonClick(button, form, type, priority) {
   showResults();
   saveData();
 }
+
+
+function getMetatypeGlobal(metatype) {
+switch (metatype) { 
+case "dwarf": 
+case "duende": 
+case "gnome": 
+case "hanuman": 
+case "koborokuru": 
+case "menehune": 
+return "dwarf";
+break;
+case "elf": 
+case "dalatiknon": 
+case "dryad": 
+case "nocturna": 
+case "wakyambi": 
+case "xapiri_thepe": 
+return "elf";
+break;
+case "human": 
+case "nartaki": 
+case "valkyrie": 
+return "human";
+break;
+case "ork": 
+case "hogboblin": 
+case "ogre": 
+case "oni": 
+case "satyr": 
+return "ork";
+break;
+case "troll": 
+case "cyclops": 
+case "fomorian": 
+case "giant": 
+case "minotaur": 
+return "troll";
+break;
+default:
+  console.log("Metatype non identified: ", metatype);
+}
+};
 
 // Fonction pour ajouter les traits automatiques en fonction du métatype
 function handleMetatypeQualities(metatype) {
@@ -445,75 +491,96 @@ function handleMetatypeQualities(metatype) {
 }
 
 
-// Fonction pour mettre à jour les valeurs d'attributes en fonction du métatype
 function updateAttributesForSpecial(special, priority) {
   var attributesData = characterData.attributes;
-  if (priority === "A") {
-    if (
-      special === "fullMagician" ||
-      special === "mysticAdept" ||
-      special === "adept"
-    ) {
-      attributesData.magic.base = 4;
-    } else if (special === "aspectedMagician") {
-      attributesData.magic.base = 5;
-    } else if (special === "technomancer") {
-      attributesData.resonance.base = 4;
-    }
+
+  switch (priority) {
+    case "A":
+      switch (special) {
+        case "fullMagician":
+        case "mysticAdept":
+        case "adept":
+          attributesData.magic.base = 4;
+          break;
+        case "aspectedMagicianSorcery":
+        case "aspectedMagicianConjuring":
+        case "aspectedMagicianEnchanting":
+          attributesData.magic.base = 5;
+          break;
+        case "technomancer":
+          attributesData.resonance.base = 4;
+          break;
+      }
+      break;
+    case "B":
+      switch (special) {
+        case "fullMagician":
+        case "mysticAdept":
+        case "adept":
+          attributesData.magic.base = 3;
+          break;
+        case "aspectedMagicianSorcery":
+        case "aspectedMagicianConjuring":
+        case "aspectedMagicianEnchanting":
+          attributesData.magic.base = 4;
+          break;
+        case "technomancer":
+          attributesData.resonance.base = 3;
+          break;
+      }
+      break;
+    case "C":
+      switch (special) {
+        case "fullMagician":
+        case "mysticAdept":
+        case "adept":
+          attributesData.magic.base = 2;
+          break;
+        case "aspectedMagicianSorcery":
+        case "aspectedMagicianConjuring":
+        case "aspectedMagicianEnchanting":
+          attributesData.magic.base = 3;
+          break;
+        case "technomancer":
+          attributesData.resonance.base = 2;
+          break;
+      }
+      break;
+    case "D":
+      switch (special) {
+        case "fullMagician":
+        case "mysticAdept":
+        case "adept":
+          attributesData.magic.base = 1;
+          break;
+        case "aspectedMagicianSorcery":
+        case "aspectedMagicianConjuring":
+        case "aspectedMagicianEnchanting":
+          attributesData.magic.base = 2;
+          break;
+        case "technomancer":
+          attributesData.resonance.base = 1;
+          break;
+      }
+      break;
   }
-  if (priority === "B") {
-    if (
-      special === "fullMagician" ||
-      special === "mysticAdept" ||
-      special === "adept"
-    ) {
-      attributesData.magic.base = 3;
-    } else if (special === "aspectedMagician") {
-      attributesData.magic.base = 4;
-    } else if (special === "technomancer") {
-      attributesData.resonance.base = 3;
-    }
-  }
-  if (priority === "C") {
-    if (
-      special === "fullMagician" ||
-      special === "mysticAdept" ||
-      special === "adept"
-    ) {
-      attributesData.magic.base = 2;
-    } else if (special === "aspectedMagician") {
-      attributesData.magic.base = 3;
-    } else if (special === "technomancer") {
-      attributesData.resonance.base = 2;
-    }
-  }
-  if (priority === "D") {
-    if (
-      special === "fullMagician" ||
-      special === "mysticAdept" ||
-      special === "adept"
-    ) {
-      attributesData.magic.base = 1;
-    } else if (special === "aspectedMagician") {
-      attributesData.magic.base = 2;
-    } else if (special === "technomancer") {
-      attributesData.resonance.base = 1;
-    }
-  }
+
   if (special === "technomancer") {
     attributesData.magic.base = 0;
   } else {
     attributesData.resonance.base = 0;
   }
+
   if (priority === "E") {
     attributesData.magic.base = 0;
     attributesData.resonance.base = 0;
   }
+
   handleAttributes();
   updateValues("attributes");
   handleSkills();
   updateValues("skills");
-  
+
   saveData();
 }
 
@@ -554,7 +621,7 @@ function handleAttributes() {
                     <button class="btn btn-outline-success btn-xs" onclick="modifyValue('attributes','${attribute}', 'increment')">+</button>
                 </div>
             </td>
-            <td id="${attribute}_actual"><span class="h6">${
+            <td id="${attribute}_actual"><span class="h4 rddNumber">${
         attributesData[attribute].value
       }</span></td>
             <td id="${attribute}_max"><span class="h6"></span></td>
@@ -715,12 +782,18 @@ function handleSkills() {
   var skillsHTML = "";
 
   for (const skill of skillsSort) {
+
+    const skillsToIgnoreMap = {
+      "aspectMagicianSorcery": ["conjuring", "enchanting"],
+      "aspectedMagicianConjuring": ["sorcery", "enchanting"],
+      "aspectedMagicianEnchanting": ["conjuring", "sorcery"]
+    };
+
     // Vérifier si la compétence doit être affichée en fonction des attributs du personnage
     if (
-      (skillsData[skill.data].linkedAttribute === "magic" &&
-        characterData.isMagic === false) ||
-      (skillsData[skill.data].linkedAttribute === "resonance" &&
-        characterData.isTechno === false)
+      (skillsData[skill.data].linkedAttribute === "magic" && characterData.isMagic === false) ||
+      (skillsData[skill.data].linkedAttribute === "resonance" && characterData.isTechno === false) ||
+      (skillsToIgnoreMap[characterData.special] && skillsToIgnoreMap[characterData.special].includes(skill.data))
     ) {
       continue; // Ignorer cette itération
     }
@@ -911,8 +984,6 @@ function updateKnowledgePoints() {
 
   var knowledgeCount = Math.max(0, characterData.points.knowledges.base - characterData.points.knowledges.spent);
   
-  console.log("updateKnowledgePoints : knowledgeCount ", knowledgeCount, " characterData.points.knowledges.base : ", characterData.points.knowledges.base, " characterData.points.knowledges.base.spent : ", characterData.points.knowledges.spent, " max ", Math.max(0, characterData.points.knowledges.base - characterData.points.knowledges.spent))
-
   knowledgeSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
     capitalized(terms.pointsToSpend) +
@@ -932,8 +1003,6 @@ function handleDropdownModal(type) {
     newType = terms.newe;
   };
   
-  console.log("items : ", items)
-
   // Construire le tableau d'options
   var addOptions = [];
 
@@ -1280,7 +1349,7 @@ function removeModalClick(type, item) {
           }', 'increment')">+</button>
       </div></td>` : '<td class="loyalty-column"></td>';
 
-      const rowHTML = `<tr>${keyCell}${descriptionCell}${connectionCell}${loyaltyCell}</tr>`;
+      const rowHTML = `<tr>${keyCell}${typeCell}${descriptionCell}${connectionCell}${loyaltyCell}</tr>`;
       contactsTableBody.append(rowHTML);
     }
     
@@ -1315,17 +1384,16 @@ function addQualitiesClick(key, description, type, karmaCost) {
       qualities = sortKeys(characterData.qualities);
 
       qualities.forEach(function (quality) {
-
         // Générez une nouvelle ligne pour chaque qualité
         var row = `
-          <tr>
+          <tr class="${quality.type === 'positive' ? 'positive' : ''}">
             <td class="name-column">${quality.key}</td>
             <td class="description-column">${quality.description}</td>
             <td class="type-column">${capitalized(terms[quality.type])}</td>
             <td class="karmaCost-column">${parseInt(quality.karmaCost)}</td>
           </tr>
         `;
-  
+
         // Ajoutez la ligne au corps du tableau
         qualitiesTableBody.append(row);
       });
@@ -1746,6 +1814,11 @@ function showResults() {
     updateSINInfo();
   }
 
+  if (characterData.metatype) {
+    characterData.SIN.metatype = getMetatypeGlobal(characterData.metatype);
+    characterData.SIN.metatypeVariant = characterData.metatype;
+  }
+
 // Affichez la colonne des resources avec séparation des unités et le symbole ¥
 const resourcesValue = prioritiesSelected["resources"];
 if (resourcesValue) {
@@ -1840,7 +1913,7 @@ function loadData() {
       handleMetatypeQualities(selectedMetatype);
       generateButtons(
         "specialTitle",
-        "specialButtons",["adept", "mysticAdept", "fullMagician", "aspectedMagician", "technomancer"], "special", actualPriority
+        "specialButtons",["adept", "mysticAdept", "fullMagician", "aspectedMagicianSorcery", "aspectedMagicianConjuring","aspectedMagicianEnchanting","technomancer"], "special", actualPriority
       );
       showResults();
       handleSkills();
@@ -1979,9 +2052,51 @@ function downloadFoundryData() {
 
 function assignData() {
 
+  let today = new Date();
+  let day = String(today.getDate()).padStart(2, '0');
+  let month = String(today.getMonth() + 1).padStart(2, '0'); // Les mois sont indexés à partir de 0 en JavaScript
+  let year = today.getFullYear();
+
+  let dateToday = `${day}/${month}/${year}`;
+
   if (characterData.SIN.identity) {
     foundryData.name = characterData.SIN.identity;
+    foundryData.system.biography.metatype = characterData.SIN.metatype;
+    foundryData.system.biography.metatypeVariant = capitalized(terms[characterData.SIN.metatypeVariant]);
   }
+
+  if (characterData.resources) {
+        console.log("resources : ", characterData.resources);
+
+        var nuyen = {
+          "name": "Nouveau gain",
+          "type": "nuyen",
+          "system": {            
+              "type": "gain",
+              "amount": characterData.resources,              
+              "date": dateToday
+        }
+      }
+        foundryData.items.push(nuyen);
+      }
+  
+
+  if (characterData.isMagic) {
+    foundryData.system.magic.type = characterData.special;
+  }
+
+  if (characterData.isTechno) {
+    
+    var persona = {
+      "name": terms.livingPersona,
+      "type": "device",
+      "system": {            
+          "type": "livingPersona"
+    }
+  }
+    foundryData.items.push(persona);
+  }
+
   // attributes
   for (let attribute in characterData.attributes) {
     if (characterData.attributes.hasOwnProperty(attribute)) {
@@ -2075,5 +2190,7 @@ function assignData() {
       }
     }
   }
+
+
 
 }

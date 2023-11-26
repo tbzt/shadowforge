@@ -143,13 +143,17 @@ row {
 }
 
 .rddNumber {
-    color: #05f2db;
+    color: #DDD;
     font-weight: bold;
 }
 
 .count {
     color: white;
     font-weight: bold;
+}
+
+tr.positive td {
+    color: #05f2db;
 }
 
 .btn-outline-primary {

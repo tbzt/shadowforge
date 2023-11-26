@@ -315,7 +315,9 @@ function selectPriority(cell, categorie, priority) {
         "adept",
         "mysticAdept",
         "fullMagician",
-        "aspectedMagician",
+        "aspectedMagicianSorcery",
+        "aspectedMagicianConjuring",
+        "aspectedMagicianEnchanting",
         "technomancer",
       ],
       "special",
@@ -498,3 +500,21 @@ const prio_B = [].concat(...Object.values(tablePrioritiesMetatypes["B"]));
 const prio_C = [].concat(...Object.values(tablePrioritiesMetatypes["C"]));
 const prio_D = [].concat(...Object.values(tablePrioritiesMetatypes["D"]));
 const prio_E = [].concat(...Object.values(tablePrioritiesMetatypes["E"]));
+
+function getPriorityValue(priority, metatype) {
+  console.log("getPriorityValue : ", priority, metatype);
+  switch (priority) {
+    case 'A':
+      return Object.keys(tablePrioritiesMetatypes.A).find(key => tablePrioritiesMetatypes.A[key].includes(metatype));
+    case 'B':
+      return Object.keys(tablePrioritiesMetatypes.B).find(key => tablePrioritiesMetatypes.B[key].includes(metatype));
+    case 'C':
+      return Object.keys(tablePrioritiesMetatypes.C).find(key => tablePrioritiesMetatypes.C[key].includes(metatype));
+    case 'D':
+      return Object.keys(tablePrioritiesMetatypes.D).find(key => tablePrioritiesMetatypes.D[key].includes(metatype));
+    case 'E':
+      return Object.keys(tablePrioritiesMetatypes.E).find(key => tablePrioritiesMetatypes.E[key].includes(metatype));
+    default:
+      return null;
+  }
+}
