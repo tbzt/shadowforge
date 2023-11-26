@@ -49,6 +49,7 @@ input::placeholder {
     color: #05f2db;
     --bs-modal-bg: #0a0f25;
     --bs-modal-border-color: #05f2db;
+    --bs-modal-footer-border-width: 3px;
     --bs-modal-header-border-color: rgba(242, 5, 135, 0.75);
 }
 
@@ -107,6 +108,11 @@ td.selectable, td.starred {
     cursor: pointer;
     color: #fff;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* Styles pour les cellules sélectionnables et étoilées */
+td.knowledge-column {
+    color: #fff;
 }
 
 /* Styles pour les écrans de taille moyenne */

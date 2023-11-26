@@ -752,7 +752,7 @@ function handleSkills() {
     addOptions.push(
       `<li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${
         skill.data
-      }Modal"">${capitalized(terms.new)}</a></li>`
+      }Modal"">${capitalized(terms.newe)}</a></li>`
     );
 
     if (existingSpecializations) {
@@ -814,14 +814,16 @@ function handleSkills() {
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="${skill.data}ModalLabel">
         ${capitalized(terms[skill.data])}</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
       <div>
   <form id="${skill.data}AddSpecializationForm">
-    <div class="mb-3">
-      <label for="${skill.data}SpecializationInput" class="form-label">${capitalized(terms.new)} ${terms.specialization}${terms.colons}</label>
+  <div class="form-group row align-items-center mb-2">
+      <label for="${skill.data}SpecializationInput" class="col-sm-3 col-form-label">${capitalized(terms.newe)} ${terms.specialization}${terms.colons}</label>
+      <div class="col-sm-9">
       <input type="text" class="form-control" id="${skill.data}SpecializationInput" required>
+      </div>
     </div>
     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
   </form>
@@ -922,6 +924,13 @@ function handleDropdownModal(type) {
   console.log(`Initiate handle${capitalized(type)}()`);
 
   var items = characterData[type];
+
+  var newType = terms.new;
+  
+
+  if (type === "knowledges" || type === "specializations" || type === "languages") {
+    newType = terms.newe;
+  };
   
   console.log("items : ", items)
 
@@ -940,7 +949,7 @@ function handleDropdownModal(type) {
 
   // Ajouter l'option "Autre"
   addOptions.push(
-    `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${capitalized(type)}Modal">${capitalized(terms.new)}</a></li>`
+    `<li><a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#new${capitalized(type)}Modal">${capitalized(newType)}</a></li>`
   );
 
   // Ajouter l'option "Catalogue"
@@ -962,52 +971,74 @@ function handleDropdownModal(type) {
   var specificType = "";
 
   if (type === "languages") {
-    specificType = `<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel0" autocomplete="off" value="0" checked>
-  <label class="btn btn-outline-primary" for="chooseLevel0">${capitalized(terms.knowledge)}</label>
+    specificType = `
+    <div class="form-group row align-items-center mb-2 mt-3">
+      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel0" autocomplete="off" value="0" checked>
+        <label class="btn btn-outline-primary" for="chooseLevel0">${capitalized(terms.knowledge)}</label>
 
-  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel1" autocomplete="off" value="1">
-  <label class="btn btn-outline-primary" for="chooseLevel1">${capitalized(terms.specialist)}</label>
+        <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel1" autocomplete="off" value="1">
+        <label class="btn btn-outline-primary" for="chooseLevel1">${capitalized(terms.specialist)}</label>
 
-  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel2" autocomplete="off" value="2">
-  <label class="btn btn-outline-primary" for="chooseLevel2">${capitalized(terms.expert)}</label>
+        <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel2" autocomplete="off" value="2">
+        <label class="btn btn-outline-primary" for="chooseLevel2">${capitalized(terms.expert)}</label>
 
-  <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel3" autocomplete="off" value="3">
-  <label class="btn btn-outline-primary" for="chooseLevel3">${capitalized(terms.native)}</label>
-</div><br><br>`
+        <input type="radio" class="btn-check" name="chooseLevelOptions" id="chooseLevel3" autocomplete="off" value="3">
+        <label class="btn btn-outline-primary" for="chooseLevel3">${capitalized(terms.native)}</label>
+      </div>
+    </div>`
   }
 
   if (type === "qualities") {
     specificType = `
-      <div class="d-flex align-items-center mb-2">
-        <label for="qualityDescription" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.description)}${terms.colons}</label>
+    <div class="form-group row align-items-center mb-2">
+        <label for="qualityDescription" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(terms.description)}${terms.colons}</label>
+        <div class="col-sm-9">
         <textarea class="form-control flex-grow-1" id="qualityDescription" rows="3"></textarea>
+        </div>
       </div>
-      <div class="btn-group mb-2" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypePositive" autocomplete="off" value="positive" checked>
-        <label class="btn btn-outline-primary text-start" for="chooseQualityTypePositive">${capitalized(terms.positive)}</label>
+      <div class="form-group row align-items-center mb-2">
+        <label for="qualityType" class="col-sm-3 col-form-label">${capitalized(terms.type)}${terms.colons}</label>
+        <div class="col-sm-9 d-flex align-items-center">
+          <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypePositive" value="positive" checked>
+          <label class="btn btn-outline-primary" for="chooseQualityTypePositive">${capitalized(terms.positive)}</label>
 
-        <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypeNegative" autocomplete="off" value="negative">
-        <label class="btn btn-outline-primary text-start" for="chooseQualityTypeNegative">${capitalized(terms.negative)}</label>
+          <input type="radio" class="btn-check" name="chooseQualityType" id="chooseQualityTypeNegative" value="negative">
+          <label class="btn btn-outline-primary" for="chooseQualityTypeNegative">${capitalized(terms.negative)}</label>
+        </div>
       </div>
-      <div class="d-flex align-items-center mb-2">  
-        <label for="qualityKarmaCost" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.karmaCost)}${terms.colons}</label>
+      <div class="form-group row align-items-center mb-2">
+        <label for="qualityKarmaCost" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(terms.karmaCost)}${terms.colons}</label>
+        <div class="col-sm-3">
         <input type="number" class="form-control" id="qualityKarmaCost" aria-label="Karma cost for the quality" style="width: 3em;">
+        </div>
       </div>`
   }
 
   if (type === "contacts") {
     specificType = `
-      <div class="d-flex align-items-center mb-2">
-        <label for="contactDescription" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.description)}${terms.colons}</label>
-        <textarea class="form-control flex-grow-1" id="contactDescription" rows="3"></textarea>
-      </div><div class="d-flex align-items-center mb-2">  
-  <label for="contactConnection" class="form-label text-start me-2" style="white-space: nowrap;">${capitalized(terms.connection)}${terms.colons}</label>
-  <input type="number" class="form-control" id="contactConnection" aria-label="Connections" style="width: 3em;" value=0>
-
-  <label for="contactLoyalty" class="form-label text-start me-2 ms-3" style="white-space: nowrap;">${capitalized(terms.loyalty)}${terms.colons}</label>
-  <input type="number" class="form-control" id="contactLoyalty" aria-label="Loyalties" style="width: 3em;" value=0>
-</div>`
+    <div class="form-group row align-items-center mb-2">
+        <label for="contactType" class="col-sm-3 col-form-label">${capitalized(terms.type)}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="contactType" rows="1"></textarea>
+        </div>
+    </div>
+    <div class="form-group row align-items-center mb-4">
+        <label for="contactDescription" class="col-sm-3 col-form-label">${capitalized(terms.description)}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="contactDescription" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group row align-items-center mb-2">  
+        <label for="contactConnection" class="col-sm-3 col-form-label">${capitalized(terms.connection)}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="contactConnection" aria-label="Connections" value=0>
+        </div>
+        <label for="contactLoyalty" class="col-sm-3 col-form-label">${capitalized(terms.loyalty)}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="contactLoyalty" aria-label="Loyalties" value=0>
+        </div>
+    </div>`
   }
 
   // Ajouter les options au menu déroulant
@@ -1027,19 +1058,24 @@ function handleDropdownModal(type) {
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="${type}ModalLabel">${capitalized(terms[type])}</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h1 class="modal-title fs-5" id="${type}ModalLabel">${capitalized(newType)} ${terms[type].slice(0, -1)}</h1>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <div>
                 <form id="add${capitalized(type)}Form">
-                  <div class="mb-3">
-                    <label for="${type}Input" class="form-label">${capitalized(terms.new)} ${terms[type].slice(0, -1)}${terms.colons}</label>
+                  
+    <div class="form-group row align-items-center mb-2">
+                    <label for="${type}Input" class="col-sm-3 col-form-label">${capitalized(terms.name)}${terms.colons}</label>
+                    <div class="col-sm-9">
                     <input type="text" class="form-control" id="${type}Input" required>
+                    </div>
                   </div>
                   ${specificType}
+                  <br>
                   <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(terms.addTo)}</button>
                 </form>
+
               </div>
             </div>
           </div>
@@ -1065,6 +1101,10 @@ function handleDropdownModal(type) {
     newItem = {key: key, description: qualityDescription, type: qualityType, karmaCost: qualityKarmaCost};
 
     } else  if (type === "contacts") {
+
+      
+      var contactType = $("#contactType").val();
+
       var contactDescription = $("#contactDescription").val();
   
       var contactConnection = parseInt($("#contactConnection").val());
@@ -1075,7 +1115,7 @@ function handleDropdownModal(type) {
       
       var key = $(`#${type}Input`).val();
       
-      newItem = {key: key, description: contactDescription, connection: contactConnection, loyalty: contactLoyalty};
+      newItem = {key: key, type: contactType, description: contactDescription, connection: contactConnection, loyalty: contactLoyalty};
   
       } else {
       var levelItem = 0;
@@ -1181,13 +1221,12 @@ function removeModalClick(type, item) {
       contacts = sortKeys(characterData.contacts);
     }
 
-        // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustment)
   characterData.points.contacts.base = characterData.attributes.charisma.value * 6;
 
-  // Sélectionner la table des compétences
-  var contactsSpentTable = $("#contactsSpent"); // Utilisez jQuery ici
+  // Sélectionner la table
+  var contactsSpentTable = $("#contactsSpent");
 
-  // Mettre à jour le tableau des compétences dépensées
+  // Mettre à jour le tableau
   contactsSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
     capitalized(terms.pointsToSpend) +
@@ -1220,6 +1259,7 @@ function removeModalClick(type, item) {
       }
 
       const keyCell = contactItem ? `<td class="name-column h6">${capitalized(contactItem.key)}</td>` : '<td class="name-column h6"></td>';
+      const typeCell = contactItem ? `<td class="type-column">${contactItem.type}</td>` : '<td class="type-column"></td>';
       const descriptionCell = contactItem ? `<td class="description-column">${contactItem.description}</td>` : '<td class="description-column"></td>';
       const connectionCell = contactItem ? `<td class="connection-column ${maxConnection}"><div>${Math.min(characterData.attributes.charisma.value, contactItem.connection)}</div>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -2025,7 +2065,8 @@ function assignData() {
           "system": {
             "info": {              
             "description": characterData.contacts[contact].description,
-            },     
+            },  
+            "type": characterData.contacts[contact].type,   
             "connection": characterData.contacts[contact].connection,
             "loyalty": characterData.contacts[contact].loyalty, 
         }
