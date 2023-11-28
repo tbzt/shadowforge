@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   updateContactDisplay();
 });
 
+const currentVersion = '0.0.5'; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
+
 $(document).ready(function() {
 
   $("#collapseQualities").on("dragover", function(event) {
@@ -1879,7 +1881,7 @@ function updateMoney(newMoneyValue) {
 // Fonction pour sauvegarder la sélection dans un cookie
 // Pour sauvegarder les données
 function saveData() {
-  var selectionData = { selectedCells, IDselectedCells, prioritiesSelected, actualPriority, selectedMetatype, SIN, characterData };
+  var selectionData = {version: currentVersion, selectedCells, IDselectedCells, prioritiesSelected, actualPriority, selectedMetatype, SIN, characterData };
   localStorage.setItem('selectionData', JSON.stringify(selectionData));
   
   //console.log("dataToSave : " + dataToSave);
@@ -1894,6 +1896,17 @@ function loadData() {
       var loadedData = JSON.parse(storedData);
       console.log("loadedData : " + JSON.stringify(loadedData));
       console.log("loadedData.characterData : " + JSON.stringify(loadedData.characterData));
+
+      if (loadedData.version !== currentVersion) {
+        showVersionMismatchModal(loadedData); // Affiche la modal
+        return; // Arrête l'exécution de la fonction
+      }
+
+      continueLoadData(loadedData);
+    }
+  }
+
+  function continueLoadData(loadedData) {  // Le reste de votre code ici
 
     if (loadedData) {
       selectedCells = loadedData.selectedCells;
@@ -1958,8 +1971,42 @@ function loadData() {
 
     }
   }
-}
 
+function showVersionMismatchModal(loadedData) {
+  const modalHTML = `
+    <div class="modal fade" id="versionMismatchModal" tabindex="-1" aria-labelledby="versionMismatchModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="margin-top: 20%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="versionMismatchModalLabel"><i class="bi bi-info-circle-fill"></i> ${terms.mismatchVersionTitle}${terms.colons} ${loadedData.version} <i class="bi bi-arrow-right-short"></i> ${currentVersion}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body">
+            ${terms.mismatchVersion}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            <button type="button" class="btn btn-primary" id="continueButton">Continuer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+  var myModal = new bootstrap.Modal(document.getElementById('versionMismatchModal'), {});
+  myModal.show();
+
+  document.getElementById('continueButton').addEventListener('click', function() {
+    myModal.hide();
+    var storedData = localStorage.getItem('selectionData');
+    if (storedData) {
+      var loadedData = JSON.parse(storedData);
+      continueLoadData(loadedData);
+    }
+  });
+}
 document.addEventListener("DOMContentLoaded", function() {
   // Sélectionnez le bouton "reset" par son ID
   const resetButton = document.getElementById("resetButton");
