@@ -649,13 +649,17 @@
         </div>
         <!-- Colonne de largeur 3 pour l'affichage de la génération du personnage -->
         <div class="col-sm-3">
-          <h3 id="character">{{capitalized character}} <i class="bi bi-incognito"></i></h3>
-          <button id="resetButton" class="btn-outline-danger btn">
-            {{capitalized reinitialize}} <i class="bi bi-eraser"></i>
-          </button>
-          <button id="exportButton" class="btn-outline-success btn">
-            {{capitalized exportFoundry}} <i class="bi bi-file-earmark-binary"></i>
-          </button>
+            <button id="resetButton" class="btn-outline-danger btn  mr-2 mb-3">
+              {{capitalized globalReinitialize}} <i class="bi bi-eraser"></i>
+            </button>
+        
+        <h3 id="character">{{capitalized thisCharacter}} <i class="bi bi-incognito"></i></h3>
+        
+        <button id="exportButton" class="btn-outline-success btn">
+          {{capitalized exportFoundry}} <i class="bi bi-file-earmark-binary"></i>
+        </button>
+        
+        <button type="button" class="btn btn-outline-primary" onclick="saveCharacterData(characterData)">Sauvegarder ce personnage</button>
           <div id="identity" class="mt-4">
             <!-- Les résultats de l'identité seront affichés ici -->
           </div>
@@ -667,6 +671,31 @@
           </div>
           <div id="resourcesShow" class="mt-4">
           </div>
+
+          
+
+
+            <h3 id="characters">{{capitalized shadows}}<i class="bi bi-incognito"></i></h3>
+
+
+          <div id="characterList">
+            <!-- Les personnages seront insérés ici -->
+          </div>
+          
+          <!-- Modèle de personnage -->
+          <template id="characterTemplate">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text"></p>
+                <a href="#" class="btn btn-primary load-button" data-bs-toggle="tooltip" title="Charger le personnage"><i class="bi bi-upload"></i></a>
+                <a href="#" class="btn btn-secondary export-button" data-bs-toggle="tooltip" title="Exporter vers Foundry"><i class="bi bi-box-arrow-up"></i></a>
+                <a href="#" class="btn btn-danger delete-button" data-bs-toggle="tooltip" title="Supprimer le personnage"><i class="bi bi-trash"></i></a>
+              </div>
+            </div>
+          </template>
+
+
         </div>
       </div>
 
@@ -693,6 +722,7 @@
   <script src="js/data.js"></script>
   <script src="js/foundry.js"></script>
   <script src="js/catalog.js"></script>
+  <script src="js/characters.js"></script>
   <script src="js/prioritiesTable.js"></script>
   <script src="js/attributes.js"></script>
   <script src="js/script.js"></script>

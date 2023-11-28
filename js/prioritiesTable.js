@@ -251,7 +251,7 @@ function showPriorities() {
 
 function selectPriority(cell, categorie, priority) {
   // Obtenir la cellule précédemment sélectionnée dans la même catégorie
-  let previousSelectedCell = selectedCells[categorie];
+  let previousSelectedCell = characterData.selectedCells[categorie];
 
   // Si une cellule était précédemment sélectionnée, la désélectionner
   if (previousSelectedCell) {
@@ -264,14 +264,14 @@ function selectPriority(cell, categorie, priority) {
   cell.classList.add("selected");
 
   // Mettre à jour la cellule sélectionnée dans la catégorie globale
-  selectedCells[categorie] = cell;
+  characterData.selectedCells[categorie] = cell;
 
   // Mettre à jour la cellule sélectionnée dans la catégorie globale
-  IDselectedCells[categorie] = cell.id;
+  characterData.IDselectedCells[categorie] = cell.id;
 
   // Mettre à jour la priorité sélectionnée
-  prioritiesSelected[categorie] = `${priority}`;
-  actualPriority = priority; // Mettre à jour la priorité actuelle
+  characterData.prioritiesSelected[categorie] = `${priority}`;
+  characterData.actualPriority = priority; // Mettre à jour la priorité actuelle
 
   // Afficher les attributes si leur priorité est sélectionnée
   if (categorie === "attributes") {
@@ -280,10 +280,10 @@ function selectPriority(cell, categorie, priority) {
     showAttributesToSpend();
   }
 
-  if (selectedCells["attributes"]) {
+  if (characterData.selectedCells["attributes"]) {
     updateValues("attributes");
   }
-  if (selectedCells["skills"]) {
+  if (characterData.selectedCells["skills"]) {
     updateValues("skills");
   }
   if (categorie === "resources") {
@@ -303,9 +303,9 @@ function selectPriority(cell, categorie, priority) {
     generateButtons(
       "metatypeTitle",
       "metatypeButtons",
-      getMetatypesForPriority(actualPriority),
+      getMetatypesForPriority(characterData.prioritiesSelected.metatypes),
       "metatype",
-      actualPriority
+      characterData.prioritiesSelected.metatypes
     ); // Utiliser la priorité actuelle
   if (categorie === "magicOrResonance")
     generateButtons(
@@ -321,7 +321,7 @@ function selectPriority(cell, categorie, priority) {
         "technomancer",
       ],
       "special",
-      actualPriority
+      characterData.prioritiesSelected.magicOrResonance
     ); // Utiliser la priorité actuelle
 }
 

@@ -78,11 +78,11 @@ function changeLang(language) {
     }, 
     {
       id:"resetButton",
-      term: "reinitialize"
+      term: "globalReinitialize"
     }, 
     {
       id:"character",
-      term: "character"
+      term: "thisCharacter"
     }, 
     {
       id:"attributesAttributes",
@@ -254,8 +254,8 @@ const translations = {
     dices: "dès",
     specialization: "spécialisation",
     specializations: "spécialisations",
-    character: "personnage",
-    reinitialize: "réinitialisation",
+    thisCharacter: "ce personnage",
+    globalReinitialize: "réinitialisation globale",
     pointsToSpend: "points à dépenser",
     new: "nouveau",    
     newe: "nouvelle",
@@ -382,7 +382,8 @@ const translations = {
     legalDisclaimer: "Shadowrun et tous les logos et personnages associés sont la propriété de Topps Company, Inc. © 2020 Topps Company, Inc. Les traductions en français sont la propriété de Black Book Editions. Tous droits réservés. Ce site web n'est pas affilié, approuvé, sponsorisé ou approuvé par Topps Company, Inc., Black Book Editions ou l'une de leurs sociétés affiliées ou filiales. Si ce site web enfreint une marque ou une propriété, veuillez me contacter sur Github.",
     livingPersona: "persona incarné",
     mismatchVersion: "La version de l'application a été modifiée. Votre personnage pourrait ne pas se charger correctement, si c'est le cas, cliquez sur le bouton rouge de réinitialisation.",
-    mismatchVersionTitle: "Différence de version"
+    mismatchVersionTitle: "Différence de version",
+    shadows: "ombres portées",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -477,8 +478,8 @@ const translations = {
     dices: "dices",
     specialization: "specialization",
     specializations: "specializations",
-    character: "character",
-    reinitialize: "reinitialize",
+    thisCharacter: "this character",
+    globalReinitialize: "global reinitialize",
     pointsToSpend: "Points to Spend",
     new: "new",
     newe: "new",
@@ -605,6 +606,7 @@ const translations = {
     legalDisclaimer: "Shadowrun and all related marks, logos and characters are owned by Topps Company, Inc. © 2020 Topps Company, Inc. All Rights Reserved. This website is not affiliated with, endorsed, sponsored, or specifically approved by Topps Company, Inc. or any of its affiliates or subsidiaries. If this website infringes on any of Topps trademarks, please contact me on Github.",    
     livingPersona: "living persona",
     mismatchVersion: "The version of the application has been modified. Your character may not load correctly, if so, click on the red reset button.",
-    mismatchVersionTitle: "Version mismatch"
+    mismatchVersionTitle: "Version mismatch",
+    shadows: "shadows",
   },
 };
