@@ -235,7 +235,8 @@ function handleButtonClick(button, form, type, priority) {
   }
 
   if (type === "special") {
-    characterData.special = button.id;
+    characterData.special = button.id;    
+  saveData();
     if (button.id === "technomancer") {
       characterData.isTechno = true;
       characterData.isMagic = false;
@@ -247,6 +248,7 @@ function handleButtonClick(button, form, type, priority) {
 
   if (type === "metatype") {
     characterData.metatype = button.id;
+  saveData();
     metatypeSelected = true;
     var check = getPriorityValue(characterData.prioritiesSelected["metatypes"], characterData.metatype);
 
@@ -941,8 +943,6 @@ function handleDropdownModal(type) {
   var items = characterData[type];
 
   console.log("items : ", characterData[type]);
-  console.log("characterData.contacts : ", characterData.contacts);
-
   var newType = terms.new;
   
 
@@ -1141,21 +1141,28 @@ function handleDropdownModal(type) {
       newItem = {key:$(`#${type}Input`).val(), level: levelItem};
     }
 
-    // Assurez-vous que la spécialisation n'est pas vide
     if (newItem.key.trim() !== "") {
-      // Ajoutez la nouvelle spécialisation à characterData.skills[skillData].specializations
       
       console.log("newItem : ", newItem, " type : ", type, " items : ", items);
-      items.push(newItem);   
+      if (type === "qualities") {   
+        console.log("handleDropdownModal qualities initialize");  
+        
+      characterData.qualities.push(newItem);   
       updateQualitiesDisplay();      
-      updateKnowledgeDisplay();
-      updateContactDisplay();
       updateQualitiesKarma();
-      if (type !== "qualities") {
-        characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1;
-      updateKnowledgePoints();
       }
+      if (type === "contacts") {  
+      characterData.contacts.push(newItem);      
+      updateContactDisplay();
+      }  
+      if (type === "knowledges" || type === "languages") { 
+        characterData[type].push(newItem);       
+        updateKnowledgeDisplay();        
+        characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1;
+      updateKnowledgePoints()
+      } 
       handleDropdownModal(type);
+      saveData();
     }
 
     // Effacez le champ de saisie
@@ -1180,12 +1187,15 @@ function removeModalClick(type, item) {
   }
 
   handleDropdownModal(type);
-  updateKnowledgeDisplay();
-  updateQualitiesDisplay();
-  updateQualitiesKarma();
-  updateContactDisplay();
-
-  if (type !== "qualities") {
+  if (type === "qualities") {  
+    updateQualitiesDisplay();
+    updateQualitiesKarma();
+  }
+  if (type === "contacts") {
+      updateContactDisplay();
+  }
+  if (type === "knowledges" || type === "languages") {
+    updateKnowledgeDisplay();
     characterData.points.knowledges.spent = characterData.points.knowledges.spent - 1;
   updateKnowledgePoints();
   }
@@ -1316,7 +1326,7 @@ function removeModalClick(type, item) {
   // Fonction pour gérer le clic sur une spécialisation
 function addQualitiesClick(key, description, type, karmaCost) {
 
-  
+  console.log("addQualitiesClick initialize : ", key, description, type, karmaCost);
   var quality = {key: key, description: description, type: type, karmaCost: parseInt(karmaCost)};
 
   characterData.qualities.push(quality);
@@ -1328,7 +1338,8 @@ function addQualitiesClick(key, description, type, karmaCost) {
 
   function updateQualitiesDisplay() {
 
-  
+  console.log("updateQualitiesDisplay initialize : ", characterData.qualities);
+
     var qualitiesTableBody = $("#qualitiesTable tbody");
 
     // Effacez le contenu actuel du corps du tableau
@@ -1629,9 +1640,14 @@ function updateValues(type) {
     } else {
       characterData[type][s.data].value =
         characterData[type][s.data].base + characterData[type][s.data].added;
+      try {
       const cell = document.getElementById(s.data + "_actual");
       const span = cell.querySelector("span");
       span.textContent = characterData[type][s.data].value;
+      }
+        catch (error) {
+          console.error(`Une erreur est survenue lors de la mise à jour de la valeur de "${s.data}" :`, error);
+        }
       if (type === "attributes") {
         document
           .getElementById(s.data + "_base")
@@ -1837,6 +1853,7 @@ function updateMoney(newMoneyValue) {
 // Fonction pour sauvegarder la sélection dans un cookie
 // Pour sauvegarder les données
 function saveData() {
+  console.log("saveData initialize");
   var selectionData = {version: currentVersion, SIN, characterData };
   localStorage.setItem('selectionData', JSON.stringify(selectionData));
   var characters = JSON.parse(localStorage.getItem('characters')) || [];
@@ -1917,6 +1934,10 @@ function newCharacterData() {
       "specialButtons",["adept", "mysticAdept", "fullMagician", "aspectedMagicianSorcery", "aspectedMagicianConjuring","aspectedMagicianEnchanting","technomancer"], "special", characterData.prioritiesSelected.magicOrResonance
     );
   }
+
+  
+  const metatypeButtons = document.querySelectorAll('#metatypeForm button');
+  const specialButtons = document.querySelectorAll('#specialForm button');
     handleSIN();
     updateSINInfo()
     showResults();
@@ -1929,10 +1950,13 @@ function newCharacterData() {
     updateKnowledgePoints() ;
     updateQualitiesDisplay();
     updateQualitiesKarma();
+    console.log("characterData.special : ", characterData.special);
     if (characterData.special) {
+  updateButtonSelection(specialButtons, characterData.special);
     updateAttributesForSpecial(characterData.special, characterData.prioritiesSelected["magicOrResonance"]);
     }
     if (characterData.metatype) {
+      updateButtonSelection(metatypeButtons, characterData.metatype);
     updateAttributesForMetatype(characterData.metatype);
     }// Vérifiez les données d'entrée
 if (characterData.knowledges && characterData.languages && characterData.qualities && characterData.contacts) {
@@ -1947,15 +1971,6 @@ if (characterData.knowledges && characterData.languages && characterData.qualiti
     updateContactDisplay();
     showPriorities();    
     const buttons = document.querySelectorAll('button');
-
-    // Utilisez const au lieu de var pour déclarer les variables
-  const metatypeButtons = document.querySelectorAll('#metatypeForm button');
-  const specialButtons = document.querySelectorAll('#specialForm button');
-
-  // Créez une fonction pour mettre à jour la sélection des boutons
-  updateButtonSelection(metatypeButtons, characterData.metatype);
-  updateButtonSelection(specialButtons, characterData.special);
-
     
     if (typeof characterData.IDselectedCells === 'object' && characterData.IDselectedCells !== null) {
 
