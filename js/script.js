@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   updateContactDisplay();
 });
 
-const currentVersion = '0.0.6'; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
+const currentVersion = '0.1.0'; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
 
 $(document).ready(function() {
 
@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function handleSIN() {
-  // Écoutez les événements "input" sur les champs de texte
   console.log("handleSIN initialize");
+
   const inputs = {
     firstname: document.getElementById("firstname"),
     surname: document.getElementById("surname"),
@@ -95,90 +95,69 @@ function handleSIN() {
   Object.keys(inputs).forEach(key => {
     inputs[key].placeholder = capitalized(terms[key]);
     inputs[key].addEventListener("input", updateSINInfo);
-    // Si characterData.SIN existe et contient une valeur pour cette clé, utilisez-la
-    if (characterData.SIN && characterData.SIN[key]) {
-      inputs[key].value = characterData.SIN[key];
-    }
+    inputs[key].value = characterData.SIN?.[key] || '';
   });
 
-  // Affichez les informations dès le début si elles existent
-  if (characterData.SIN) {
-    updateSINInfo();
-  }
+  updateSINInfo();
 }
 
-  function updateSINInfo() {
-    console.log("updateSINInfo initialize");
+function updateSINInfo() {
+  console.log("updateSINInfo initialize");
 
-    const inputs = {
-      firstname: document.getElementById("firstname"),
-      surname: document.getElementById("surname"),
-      name: document.getElementById("name"),
-    };
-    // Utilisez les valeurs des inputs s'ils existent, sinon utilisez characterData.SIN
-    
+  const inputs = {
+    firstname: document.getElementById("firstname"),
+    surname: document.getElementById("surname"),
+    name: document.getElementById("name"),
+  };
+
   const identityShow = document.getElementById("identity");
-    const firstname = inputs.firstname.value || characterData.SIN?.firstname;
-    const surname = inputs.surname.value || characterData.SIN?.surname;
-    const name = inputs.name.value || characterData.SIN?.name;
-    const metatype = characterData.metatype ? capitalized(terms[characterData.metatype]) : "";
-    const special = characterData.special ? capitalized(terms[characterData.special]) : "";
+  const metatype = characterData.metatype ? capitalized(terms[characterData.metatype]) : "";
+  const special = characterData.special ? capitalized(terms[characterData.special]) : "";
 
-    let identityParts = [];
-    let identity = [];
+  let identityParts = [];
+  let identity = [];
 
-    if (firstname) {
-      identityParts.push(firstname);
-      identity.push(firstname);
+  Object.keys(inputs).forEach((key, index) => {
+    const value = inputs[key].value || characterData.SIN?.[key];
+    if (value) {
+      let formattedValue = value;
+      if (key === 'surname') {
+        formattedValue = `"${value}"`; // Mettez le surnom entre guillemets
+      }
+      if (index !== 0) {
+        formattedValue = ' ' + formattedValue; // Ajoutez un espace avant chaque partie sauf la première
+      }
+      identityParts.push(formattedValue);
+      identity.push(value);
+      characterData.SIN[key] = value;
     }
-
-    if (surname) {
-      identityParts.push(" " + '"' + surname + '"');
-      identity.push(" " + '"' + surname + '"');
-    }
-
-    if (name) {
-      identityParts.push(" " + name);
-      identity.push(" " + name);
-    }
-
-    if (metatype && identityParts.length > 0) {
-      identityParts.push(", " + metatype);
-    } else if (metatype) {
-      identityParts.push(metatype);
-    }
-
-    if (special && identityParts.length > 0) {
-      identityParts.push(", " + special);
-    } else if (special) {
-      identityParts.push(special);
-    }
-
-    let identitySIN = identityParts.join("");
-    let identity4Foundry = identity.join("");
-
-    if (identitySIN) {
-      identityShow.innerHTML = `
-        <h5>${terms.identity}${terms.colons}</h5>
-        <p>${identitySIN}</p>
-      `;
-    } else {
-      identityShow.innerHTML = "";
-    }
-
-    // Mettez à jour characterData.SIN directement
-    characterData.SIN = {
-      firstname: firstname,
-      surname: surname,
-      name: name,
-      identity: identity4Foundry,
-    };
-    
-    saveData();
+  });
+  if (metatype) {
+    identityParts.push(", " + metatype);
   }
 
+  if (special) {
+    identityParts.push(", " + special);
+  }
+
+  let identitySIN = identityParts.join("");
+  let identity4Foundry = identity.join("");
+
+  identityShow.innerHTML = identitySIN ? `
+    <h5>${terms.identity}${terms.colons}</h5>
+    <p>${identitySIN}</p>
+  ` : "";
+
+  characterData.SIN = {
+    ...characterData.SIN,
+    identitySIN: identitySIN,
+    identity: identity4Foundry,
+  };
+
+  saveData();
+}
+
 function useButton(cell) {
-  console.log("useButton initialize: ", cell.classList);
   if (cell.classList.contains("btn-outline-primary")) {
     cell.classList.add("btn-primary");
     cell.classList.remove("btn-outline-primary");
@@ -269,22 +248,19 @@ function handleButtonClick(button, form, type, priority) {
   if (type === "metatype") {
     characterData.metatype = button.id;
     metatypeSelected = true;
-    console.log("metatypeSelected: ", characterData.prioritiesSelected["metatypes"], characterData.metatype);
     var check = getPriorityValue(characterData.prioritiesSelected["metatypes"], characterData.metatype);
-    console.log("getPriorityValue: ", check);
 
     if (check) {
       characterData.points.Adjustment.base = check;
       console.log("Adjustement : ", characterData.points.Adjustment);
     } else {
-      console.log("Aucun ajustement trouvé pour le métatype sélectionné.");
+      console.log("No check for metatype : ", characterData.metatype);
     }
 
     showAttributesToSpend();
   }
 
   updateAttributesForSpecial(button.id, priority);
-  updateAttributesForMetatype(button.id);
   handleSkills();
   updateValues("skills");
   updateValues("attributes");
@@ -294,7 +270,6 @@ function handleButtonClick(button, form, type, priority) {
 
 
 function getMetatypeGlobal(metatype) {
-  console.log("getMetatypeGlobal: ", metatype);
 switch (metatype) { 
 case "dwarf": 
 case "duende": 
@@ -559,6 +534,8 @@ function updateAttributesForSpecial(special, priority) {
 }
 
 function handleAttributes() {
+
+  console.log("handleAttributes initialize");
   // Sélectionnez le tableau des attributes par son ID
   var attributeTable = document.getElementById("attributeTable");
   // Sélectionnez le corps du tableau
@@ -726,7 +703,7 @@ function handleSkills() {
   var skillsSort = sortTranslated(Object.keys(skillsData));
 
   // Obtenez le nombre d'attributs dépensés en fonction du type (Prio ou Adjustment)
-  characterData.points.skills.base = getSkillsSpent(characterData.selectedCells["skills"]);
+  characterData.points.skills.base = getSkillsSpent(characterData.IDselectedCells["skills"]);
 
   // Sélectionner la table des compétences
   var skillsSpentTable = $("#skillsSpent"); // Utilisez jQuery ici
@@ -937,9 +914,7 @@ function updateSpecializationDisplay(skillData) {
   const specializationSpan = $(`#${skillData}_specialization .h8`);
   
   const specializations = characterData.skills[skillData].specializations.map(term => capitalized(terms[term])).join(", ");
-  
-  console.log(skillData, " : ", specializations);
-  
+    
   specializationSpan.text(specializations);
   
   updatePoints("skills", skillData);
@@ -960,9 +935,13 @@ function updateKnowledgePoints() {
 }
 
 function handleDropdownModal(type) {
+  try {
   console.log(`Initiate handle${capitalized(type)}()`);
 
   var items = characterData[type];
+
+  console.log("items : ", characterData[type]);
+  console.log("characterData.contacts : ", characterData.contacts);
 
   var newType = terms.new;
   
@@ -1053,6 +1032,7 @@ function handleDropdownModal(type) {
   }
 
   if (type === "contacts") {
+    console.log("contacts");
     specificType = `
     <div class="form-group row align-items-center mb-2">
         <label for="contactType" class="col-sm-3 col-form-label">${capitalized(terms.type)}${terms.colons}</label>
@@ -1167,20 +1147,23 @@ function handleDropdownModal(type) {
       
       console.log("newItem : ", newItem, " type : ", type, " items : ", items);
       items.push(newItem);   
-      updateQualitiesDisplay();
+      updateQualitiesDisplay();      
+      updateKnowledgeDisplay();
+      updateContactDisplay();
       updateQualitiesKarma();
       if (type !== "qualities") {
         characterData.points.knowledges.spent = characterData.points.knowledges.spent + 1;
       updateKnowledgePoints();
       }
       handleDropdownModal(type);
-      updateKnowledgeDisplay();
-      updateContactDisplay();
     }
 
     // Effacez le champ de saisie
     $(`#${type}Input`).val("");
   });
+} catch (error) {
+  console.error(`Une erreur est survenue lors du traitement des données de type "${type}" :`, error);
+}
 }
 
 function removeModalClick(type, item) {
@@ -1246,6 +1229,9 @@ function removeModalClick(type, item) {
   }
 
   function updateContactDisplay() {
+
+    console.log("updateContactDisplay initialize");
+
   
     var contactsTable = $("#contactsTable"); // Utilisez jQuery ici
     var contactsTableBody = contactsTable.find("tbody");
@@ -1257,6 +1243,9 @@ function removeModalClick(type, item) {
       var contacts = [] ;
       contacts = sortKeys(characterData.contacts);
     }
+
+    
+    console.log("updateContactDisplay initialize : ", contacts);
 
   characterData.points.contacts.base = characterData.attributes.charisma.value * 6;
 
@@ -1866,7 +1855,7 @@ function loadData() {
   var storedData = localStorage.getItem('selectionData');
   if (storedData) {
 
-    console.log("storedData : ", storedData);
+    //console.log("storedData : ", storedData);
 
       var loadedData = JSON.parse(storedData);
 
@@ -1886,155 +1875,110 @@ function loadData() {
   function continueLoadData(loadedData) {  // Le reste de votre code ici
 
     if (loadedData) {
-      SIN = loadedData.SIN;
       characterData = loadedData.characterData;
-
-      console.log("characterData.prioritiesSelected : ", characterData.prioritiesSelected);
-
-      if (characterData.prioritiesSelected.metatypes) {
-      generateButtons(
-        "metatypeTitle",
-        "metatypeButtons",
-        getMetatypesForPriority(characterData.prioritiesSelected.metatypes),
-        "metatype",
-        characterData.prioritiesSelected.metatypes
-      );
-      handleMetatypeQualities(characterData.metatypeVariant);
-      }
-      if (characterData.prioritiesSelected.magicOrResonance) {
-      generateButtons(
-        "specialTitle",
-        "specialButtons",["adept", "mysticAdept", "fullMagician", "aspectedMagicianSorcery", "aspectedMagicianConjuring","aspectedMagicianEnchanting","technomancer"], "special", characterData.prioritiesSelected.magicOrResonance
-      );
-      }
-      showResults();      
-      handleSIN();
-      handleSkills();
-      handleAttributes();
-      updateValues("skills");
-      updateValues("attributes");
-      updateKnowledgeDisplay();
-      updateQualitiesDisplay();
-      updateQualitiesKarma();
-      handleDropdownModal("knowledges");
-      handleDropdownModal("languages");
-      handleDropdownModal("qualities");
-      handleDropdownModal("contacts");
-      showPriorities();
-      const buttons = document.querySelectorAll('button');
-
-      // Récupérez tous les boutons dans les formulaires metatypeForm et specialForm
-      var metatypeButtons = document.querySelectorAll('#metatypeForm button');
-      var specialButtons = document.querySelectorAll('#specialForm button');
-
-      // Parcourez tous les boutons et enlevez la classe "selected"
-      metatypeButtons.forEach(function(button) {
-        button.classList.remove('selected');
-      });
-      specialButtons.forEach(function(button) {
-        button.classList.remove('selected');
-      });
-
-      // Parcourez tous les boutons et vérifiez si l'ID du bouton correspond à metatype ou special dans characterData
-      metatypeButtons.forEach(function(button) {
-        var buttonId = button.getAttribute('id');
-        if (characterData.metatype === buttonId) {
-          // Ajoutez la classe "selected" au bouton
-          button.classList.add('selected');
-        }
-      });
-      specialButtons.forEach(function(button) {
-        var buttonId = button.getAttribute('id');
-        if (characterData.special === buttonId) {
-          // Ajoutez la classe "selected" au bouton
-          button.classList.add('selected');
-        }
-      });
-
-      if (typeof characterData.IDselectedCells === 'object' && characterData.IDselectedCells !== null) {
-        console.log('IDselectedCells:', characterData.IDselectedCells); // Affichez la valeur de IDselectedCells
-
-        const cells = document.querySelectorAll('td');
-
-        cells.forEach(cell => {
-          const cellId = cell.id;
-
-          // Vérifiez si l'ID de la cellule est une valeur dans IDselectedCells
-          if (Object.values(characterData.IDselectedCells).includes(cellId)) {
-            cell.classList.add('selected');
-          }
-        });
-      }
-
+      handleCharacterData(characterData);
     }
   }
 
   
   function loadDataCharacter(character) {  // Le reste de votre code ici
 
-    console.log("loadDataCharacter : ", character);
+    //console.log("loadDataCharacter : ", character);
     if (character) {
       characterData = character;
-      if (characterData.prioritiesSelected.metatypes) {
-        generateButtons(
-          "metatypeTitle",
-          "metatypeButtons",
-          getMetatypesForPriority(characterData.prioritiesSelected.metatypes),
-          "metatype",
-          characterData.prioritiesSelected.metatypes
-        );
-        handleMetatypeQualities(characterData.metatypeVariant);
-        }
-        if (characterData.prioritiesSelected.magicOrResonance) {
-        generateButtons(
-          "specialTitle",
-          "specialButtons",["adept", "mysticAdept", "fullMagician", "aspectedMagicianSorcery", "aspectedMagicianConjuring","aspectedMagicianEnchanting","technomancer"], "special", characterData.prioritiesSelected.magicOrResonance
-        );
-        }
-      handleSIN();
-      showResults();
-      handleSkills();
-      handleAttributes();
-      updateValues("skills");
-      updateValues("attributes");
-      updateKnowledgeDisplay();
-      updateQualitiesDisplay();
-      updateQualitiesKarma();
-      handleDropdownModal("knowledges");
-      handleDropdownModal("languages");
-      handleDropdownModal("qualities");
-      handleDropdownModal("contacts");
-      showPriorities();
-      const buttons = document.querySelectorAll('button');
 
-      // Récupérez tous les boutons dans les formulaires metatypeForm et specialForm
-      var metatypeButtons = document.querySelectorAll('#metatypeForm button');
-      var specialButtons = document.querySelectorAll('#specialForm button');
+      handleCharacterData(characterData);
+  }
+}
 
-      // Parcourez tous les boutons et enlevez la classe "selected"
-      metatypeButtons.forEach(function(button) {
-        button.classList.remove('selected');
-      });
-      specialButtons.forEach(function(button) {
-        button.classList.remove('selected');
-      });
+function newCharacterData() {
 
-      // Parcourez tous les boutons et vérifiez si l'ID du bouton correspond à metatype ou special dans characterData
-      metatypeButtons.forEach(function(button) {
-        var buttonId = button.getAttribute('id');
-        if (characterData.metatype === buttonId) {
-          // Ajoutez la classe "selected" au bouton
-          button.classList.add('selected');
-        }
-      });
-      specialButtons.forEach(function(button) {
-        var buttonId = button.getAttribute('id');
-        if (characterData.special === buttonId) {
-          // Ajoutez la classe "selected" au bouton
-          button.classList.add('selected');
+    characterData = characterDataBackup;
+
+    handleCharacterData(characterData);
+}
+
+  function handleCharacterData(characterData) {
+
+  // Vérifiez si les propriétés existent avant d'y accéder
+  if (characterData.prioritiesSelected && characterData.prioritiesSelected.metatypes) {
+    generateButtons(
+      "metatypeTitle",
+      "metatypeButtons",
+      getMetatypesForPriority(characterData.prioritiesSelected.metatypes),
+      "metatype",
+      characterData.prioritiesSelected.metatypes
+    );
+    handleMetatypeQualities(characterData.metatypeVariant);
+  }
+  if (characterData.prioritiesSelected && characterData.prioritiesSelected.magicOrResonance) {
+    generateButtons(
+      "specialTitle",
+      "specialButtons",["adept", "mysticAdept", "fullMagician", "aspectedMagicianSorcery", "aspectedMagicianConjuring","aspectedMagicianEnchanting","technomancer"], "special", characterData.prioritiesSelected.magicOrResonance
+    );
+  }
+    handleSIN();
+    updateSINInfo()
+    showResults();
+    showAttributesToSpend();
+    handleSkills();
+    handleAttributes();
+    updateValues("skills");
+    updateValues("attributes");
+    updateKnowledgeDisplay();      
+    updateKnowledgePoints() ;
+    updateQualitiesDisplay();
+    updateQualitiesKarma();
+    if (characterData.special) {
+    updateAttributesForSpecial(characterData.special, characterData.prioritiesSelected["magicOrResonance"]);
+    }
+    if (characterData.metatype) {
+    updateAttributesForMetatype(characterData.metatype);
+    }// Vérifiez les données d'entrée
+if (characterData.knowledges && characterData.languages && characterData.qualities && characterData.contacts) {
+  handleDropdownModal("knowledges");
+  handleDropdownModal("languages");
+  handleDropdownModal("qualities");
+  handleDropdownModal("contacts");
+} else {
+  console.log('Certaines données sont manquantes dans characterData :', characterData);
+}
+    updatePoints("contacts");   
+    updateContactDisplay();
+    showPriorities();    
+    const buttons = document.querySelectorAll('button');
+
+    // Utilisez const au lieu de var pour déclarer les variables
+  const metatypeButtons = document.querySelectorAll('#metatypeForm button');
+  const specialButtons = document.querySelectorAll('#specialForm button');
+
+  // Créez une fonction pour mettre à jour la sélection des boutons
+  updateButtonSelection(metatypeButtons, characterData.metatype);
+  updateButtonSelection(specialButtons, characterData.special);
+
+    
+    if (typeof characterData.IDselectedCells === 'object' && characterData.IDselectedCells !== null) {
+
+      const cells = document.querySelectorAll('td');
+
+      cells.forEach(cell => {
+        const cellId = cell.id;
+
+        // Vérifiez si l'ID de la cellule est une valeur dans IDselectedCells
+        if (Object.values(characterData.IDselectedCells).includes(cellId)) {
+          cell.classList.add('selected');
         }
       });
     }
+  }
+
+  function updateButtonSelection(buttons, selectedValue) {
+    buttons.forEach(function(button) {
+      button.classList.remove('selected');
+      if (button.getAttribute('id') === selectedValue) {
+        button.classList.add('selected');
+      }
+    });
   }
 
 function showVersionMismatchModal(loadedData) {
@@ -2157,7 +2101,6 @@ function assignData() {
   }
 
   if (characterData.resources) {
-        console.log("resources : ", characterData.resources);
 
         var nuyen = {
           "name": "Nouveau gain",
@@ -2199,7 +2142,6 @@ function assignData() {
   // skills
   for (let skill in characterData.skills) {
     if (characterData.skills.hasOwnProperty(skill)) {
-      console.log("skill : ", skill, " value : ", characterData.skills[skill].value);
       foundryData.system.skills[skill].rank.base = characterData.skills[skill].value;
       if (characterData.skills[skill].specializations) {
         foundryData.system.skills[skill].specialization.first = characterData.skills[skill].specializations[0];
@@ -2214,7 +2156,6 @@ function assignData() {
   if (characterData.qualities) {
     for (let quality in characterData.qualities) {
       if (characterData.qualities.hasOwnProperty(quality)) {
-        console.log("quality : ", quality);
         var q = {
           "name": characterData.qualities[quality].key,
           "type": "quality",
@@ -2234,7 +2175,6 @@ function assignData() {
 
   if (characterData.knowledges) {
     for (let knowledge in characterData.knowledges) {
-        console.log("knowledge : ", knowledge);
         var k = {
           "name": characterData.knowledges[knowledge].key,  
           "type": "knowledge",
@@ -2246,7 +2186,6 @@ function assignData() {
   if (characterData.languages) {
     for (let language in characterData.languages) {
       if (characterData.languages.hasOwnProperty(language)) {
-        console.log("language : ", language);
         var l = {
           "name": characterData.languages[language].key,
           "type": "language",
@@ -2264,7 +2203,6 @@ function assignData() {
   if (characterData.contacts) {
     for (let contact in characterData.contacts) {
       if (characterData.contacts.hasOwnProperty(contact)) {
-        console.log("contact : ", contact);
         var c = {
           "name": characterData.contacts[contact].key,
           "type": "contact",

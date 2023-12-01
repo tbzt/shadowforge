@@ -260,14 +260,15 @@ function selectPriority(cell, categorie, priority) {
     }
   }
 
-  // Mettre à jour la sélection
-  cell.classList.add("selected");
-
   // Mettre à jour la cellule sélectionnée dans la catégorie globale
   characterData.selectedCells[categorie] = cell;
 
   // Mettre à jour la cellule sélectionnée dans la catégorie globale
   characterData.IDselectedCells[categorie] = cell.id;
+
+  
+  // Mettre à jour la sélection
+  characterData.selectedCells[categorie].classList.add("selected");
 
   // Mettre à jour la priorité sélectionnée
   characterData.prioritiesSelected[categorie] = `${priority}`;
@@ -502,7 +503,6 @@ const prio_D = [].concat(...Object.values(tablePrioritiesMetatypes["D"]));
 const prio_E = [].concat(...Object.values(tablePrioritiesMetatypes["E"]));
 
 function getPriorityValue(priority, metatype) {
-  console.log("getPriorityValue : ", priority, metatype);
   switch (priority) {
     case 'A':
       return Object.keys(tablePrioritiesMetatypes.A).find(key => tablePrioritiesMetatypes.A[key].includes(metatype));

@@ -10,7 +10,7 @@ function saveCharacterData(characterData) {
     
         // Recherchez le personnage existant avec le même SIN.identity
         var existingCharacterIndex = characters.findIndex(function(character) {
-            return character.SIN && character.SIN.identity === characterData.SIN.identity;
+            return character.SIN && character.SIN.identitySIN === characterData.SIN.identitySIN;
         });
 
         if (existingCharacterIndex !== -1) {
@@ -34,7 +34,7 @@ function saveCharacterDataLongTerm(characterData) {
 
     // Recherchez le personnage existant avec le même SIN.identity
     var existingCharacterIndex = characters.findIndex(function(character) {
-        return character.SIN && character.SIN.identity === characterData.SIN.identity;
+        return character.SIN && character.SIN.identitySIN === characterData.SIN.identitySIN;
     });
 
     if (existingCharacterIndex !== -1) {
@@ -50,7 +50,6 @@ function saveCharacterDataLongTerm(characterData) {
 
   function loadCharacter(characterId) {
 
-    console.log("loadCharacter : ", characterId)
     // Récupérez le tableau de personnages du localStorage
     var characters = JSON.parse(localStorage.getItem('characters')) || [];
   
@@ -58,8 +57,6 @@ function saveCharacterDataLongTerm(characterData) {
     var character = characters.find(function(character) {
       return character.id === characterId;
     });
-
-    console.log("loadCharacter : ", characterId,character);
   
     // Si le personnage existe, chargez ses données
     if (character) {
@@ -75,7 +72,6 @@ function saveCharacterDataLongTerm(characterData) {
       return character.id !== characterId;
     });
 
-    console.log("deleteCharacter : ", characterId,characters);
   
     // Sauvegardez le tableau mis à jour dans le localStorage
     localStorage.setItem('characters', JSON.stringify(characters));
@@ -90,14 +86,11 @@ function saveCharacterDataLongTerm(characterData) {
 
 function updateCharacterList() {
 
-    console.log("updateCharacterList");
     // Récupérez le tableau de personnages du localStorage
     var characters = JSON.parse(localStorage.getItem('characters')) || [];
 
   // Récupérez le tableau de personnages du localStorage
   var characters = JSON.parse(localStorage.getItem('characters')) || [];
-
-  console.log("characters : ", characters);
 
 
   // Récupérez le modèle de personnage et la liste de personnages
@@ -111,11 +104,10 @@ function updateCharacterList() {
   // Pour chaque personnage, créez une carte et ajoutez-la à la liste de personnages
   characters.forEach(function(character) {
 
-    console.log(character);
     var characterCard = document.importNode(characterTemplate.content, true);
 
     // Mettez à jour le titre et le texte de la carte
-    characterCard.querySelector('.card-title').textContent = character.SIN.identity;
+    characterCard.querySelector('.card-title').textContent = character.SIN.identitySIN;
 
     // Ajoutez des gestionnaires d'événements pour les boutons de chargement, d'exportation et de suppression
     characterCard.querySelector('.load-button').addEventListener('click', function() {
@@ -135,6 +127,15 @@ function updateCharacterList() {
   // Activez les infobulles Bootstrap
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
+    var tooltip = new bootstrap.Tooltip(tooltipTriggerEl)
+
+    // Cachez le tooltip après 3 secondes
+    tooltipTriggerEl.addEventListener('shown.bs.tooltip', () => {
+      setTimeout(() => {
+        tooltip.hide();
+      }, 3000);  // Changez cette valeur pour ajuster la durée d'affichage du tooltip
+    });
+
+    return tooltip;
+  });
 }
