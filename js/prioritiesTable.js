@@ -282,9 +282,11 @@ function selectPriority(cell, categorie, priority) {
   }
 
   if (characterData.selectedCells["attributes"]) {
+    handleAttributes();
     updateValues("attributes");
   }
   if (characterData.selectedCells["skills"]) {
+    handleSkills();
     updateValues("skills");
   }
   if (categorie === "resources") {

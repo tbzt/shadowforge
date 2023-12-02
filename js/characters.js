@@ -10,7 +10,7 @@ function saveCharacterData(characterData) {
     
         // Recherchez le personnage existant avec le même SIN.identity
         var existingCharacterIndex = characters.findIndex(function(character) {
-            return character.SIN && character.SIN.identitySIN === characterData.SIN.identitySIN;
+            return character.SIN && character.SIN.identityCatalog === characterData.SIN.identityCatalog;
         });
 
         if (existingCharacterIndex !== -1) {
@@ -34,7 +34,7 @@ function saveCharacterDataLongTerm(characterData) {
 
     // Recherchez le personnage existant avec le même SIN.identity
     var existingCharacterIndex = characters.findIndex(function(character) {
-        return character.SIN && character.SIN.identitySIN === characterData.SIN.identitySIN;
+        return character.SIN && character.SIN.identityCatalog === characterData.SIN.identityCatalog;
     });
 
     if (existingCharacterIndex !== -1) {
@@ -107,7 +107,7 @@ function updateCharacterList() {
     var characterCard = document.importNode(characterTemplate.content, true);
 
     // Mettez à jour le titre et le texte de la carte
-    characterCard.querySelector('.card-title').textContent = character.SIN.identitySIN;
+    characterCard.querySelector('.card-title').textContent = character.SIN.identityCatalog;
 
     // Ajoutez des gestionnaires d'événements pour les boutons de chargement, d'exportation et de suppression
     characterCard.querySelector('.load-button').addEventListener('click', function() {
