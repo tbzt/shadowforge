@@ -261,12 +261,6 @@ function handleButtonClick(button, form, type, priority) {
     showAttributesToSpend();
     updateAttributesForMetatype(button.id);
   }
-
-<<<<<<< Updated upstream
-  updateAttributesForSpecial(button.id, priority);
-  updateAttributesForMetatype(button.id);
-=======
->>>>>>> Stashed changes
   handleSkills();
   updateValues("skills");
   handleAttributes();
