@@ -278,6 +278,28 @@ let characterData = {
   metatype: "",
   special: "",
   resources: 0,
+  prioritiesSelected: {
+    metatypes: null,
+    attributes: null,
+    skills: null,
+    magicOrResonance: null,
+    resources: null,
+  },
+  actualPriority: null,
+  selectedCells: {
+    metatypes: null,
+    attributes: null,
+    skills: null,
+    magicOrResonance: null,
+    resources: null,
+  },
+  IDselectedCells: {
+    metatypes: null,
+    attributes: null,
+    skills: null,
+    magicOrResonance: null,
+    resources: null,
+  },
 };
 
 // Objet pour stocker les valeurs d'attributes de base et de max en fonction du métatype
@@ -560,5 +582,27 @@ let characterDataBackup = {
   metatype: "",
   special: "",
   resources: 0,
+  prioritiesSelected: {
+    metatypes: null,
+    attributes: null,
+    skills: null,
+    magicOrResonance: null,
+    resources: null,
+  },
+  actualPriority: null,
+  selectedCells: {
+    metatypes: null,
+    attributes: null,
+    skills: null,
+    magicOrResonance: null,
+    resources: null,
+  },
+  IDselectedCells: {
+    metatypes: null,
+    attributes: null,
+    skills: null,
+    magicOrResonance: null,
+    resources: null,
+  },
 };
 
