@@ -35,6 +35,27 @@ input::placeholder {
     opacity: 1; /* Firefox a besoin de cela pour afficher la couleur */
   }
 
+.card-body.characterCard {
+    margin: 2px;
+    padding: 0;
+}
+
+.card.characterCard {
+    background: none;
+    color: #ddd;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.showTitle {
+    color: #05f2db;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
 .card {
     background: none;
     color: #ddd;
@@ -44,6 +65,7 @@ input::placeholder {
     height: auto;
     overflow: auto;
 }
+
 
 .modal {
     color: #05f2db;

@@ -78,12 +78,28 @@ function changeLang(language) {
     }, 
     {
       id:"resetButton",
-      term: "reinitialize"
+      term: "globalReinitialize"
     }, 
     {
       id:"character",
-      term: "character"
+      term: "thisCharacter"
     }, 
+    {
+      id:"exportButton",
+      term: "exportFoundry"
+    },  
+    {
+      id:"saveCharacter",
+      term: "saveCharacter"
+    },  
+    {
+      id:"newCharacter",
+      term: "newCharacter"
+    },  
+    {
+      id:"characters",
+      term: "shadows"
+    },
     {
       id:"attributesAttributes",
       term: "attributes"
@@ -134,7 +150,12 @@ function changeLang(language) {
     }]
   
     idToUpdate.forEach((element) => {
+      try {        
       document.getElementById(element.id).innerText = capitalized(terms[element.term]);
+      }
+      catch (error) {
+        console.log("error : ", error, " for ", element);
+      }
     }); 
   document.getElementById("priorityTableMetatpeAdjustment").innerText = capitalized(terms.metatypes) + " (" + terms.adjustment + ")"; 
   document.getElementById("priorityTableSpecial").innerText = capitalized(terms.magic) + "/" + capitalized(terms.resonance);
@@ -142,7 +163,16 @@ function changeLang(language) {
   document.getElementById("surname").placeholder = capitalized(terms.surname);
   document.getElementById("name").placeholder = capitalized(terms.name);
   document.getElementById("knowledgeTitle").innerText = capitalized(terms.knowledges) + " & " + terms.languages ;
-    
+function setButtonTitle(selector, title) {
+  var buttons = document.querySelectorAll(selector);
+  buttons.forEach(function(button) {
+    button.title = capitalized(title);
+  });
+}
+
+setButtonTitle('a.load-button', terms.loadCharacter);
+setButtonTitle('a.export-button', terms.exportFoundry);
+setButtonTitle('a.delete-button', terms.deleteCharacter);
   handleSIN(); 
   showPriorities();
   handleAttributes();
@@ -151,8 +181,8 @@ function changeLang(language) {
   handleDropdownModal("knowledges");
   handleDropdownModal("languages");
   handleDropdownModal("qualities");
+  handleDropdownModal("contacts");
 
-  console.log("setLang(",language,") : terms : ", terms);
 }
 
 let terms = [];
@@ -254,8 +284,8 @@ const translations = {
     dices: "dès",
     specialization: "spécialisation",
     specializations: "spécialisations",
-    character: "personnage",
-    reinitialize: "réinitialisation",
+    thisCharacter: "ce personnage",
+    globalReinitialize: "réinitialisation globale",
     pointsToSpend: "points à dépenser",
     new: "nouveau",    
     newe: "nouvelle",
@@ -382,7 +412,12 @@ const translations = {
     legalDisclaimer: "Shadowrun et tous les logos et personnages associés sont la propriété de Topps Company, Inc. © 2020 Topps Company, Inc. Les traductions en français sont la propriété de Black Book Editions. Tous droits réservés. Ce site web n'est pas affilié, approuvé, sponsorisé ou approuvé par Topps Company, Inc., Black Book Editions ou l'une de leurs sociétés affiliées ou filiales. Si ce site web enfreint une marque ou une propriété, veuillez me contacter sur Github.",
     livingPersona: "persona incarné",
     mismatchVersion: "La version de l'application a été modifiée. Votre personnage pourrait ne pas se charger correctement, si c'est le cas, cliquez sur le bouton rouge de réinitialisation.",
-    mismatchVersionTitle: "Différence de version"
+    mismatchVersionTitle: "Différence de version",
+    shadows: "ombres portées",
+    loadCharacter: "Charger le personnage",
+    deleteCharacter: "Effacer le personnage",
+    saveCharacter: "Enregistrer",
+    newCharacter: "Nouveau",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -477,8 +512,8 @@ const translations = {
     dices: "dices",
     specialization: "specialization",
     specializations: "specializations",
-    character: "character",
-    reinitialize: "reinitialize",
+    thisCharacter: "this character",
+    globalReinitialize: "global reinitialize",
     pointsToSpend: "Points to Spend",
     new: "new",
     newe: "new",
@@ -605,6 +640,11 @@ const translations = {
     legalDisclaimer: "Shadowrun and all related marks, logos and characters are owned by Topps Company, Inc. © 2020 Topps Company, Inc. All Rights Reserved. This website is not affiliated with, endorsed, sponsored, or specifically approved by Topps Company, Inc. or any of its affiliates or subsidiaries. If this website infringes on any of Topps trademarks, please contact me on Github.",    
     livingPersona: "living persona",
     mismatchVersion: "The version of the application has been modified. Your character may not load correctly, if so, click on the red reset button.",
-    mismatchVersionTitle: "Version mismatch"
+    mismatchVersionTitle: "Version mismatch",
+    shadows: "shadows",
+    loadCharacter: "load character",
+    deleteCharacter: "delete character",
+    saveCharacter: "save",
+    newCharacter: "new",
   },
 };
