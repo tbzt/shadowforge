@@ -294,6 +294,7 @@ function handleButtonClick(button, form, type, priority) {
       characterData.isMagic = true;
       characterData.isTechno = false;
     }
+    updateAttributesForSpecial(button.id, priority);
   }
 
   if (type === "metatype") {
@@ -310,10 +311,14 @@ function handleButtonClick(button, form, type, priority) {
     }
 
     showAttributesToSpend();
+    updateAttributesForMetatype(button.id);
   }
 
+<<<<<<< Updated upstream
   updateAttributesForSpecial(button.id, priority);
   updateAttributesForMetatype(button.id);
+=======
+>>>>>>> Stashed changes
   handleSkills();
   updateValues("skills");
   updateValues("attributes");
