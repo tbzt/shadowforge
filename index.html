@@ -336,6 +336,11 @@
 
             <div class="collapse" id="collapsePriorities">
               <div class="card card-body">
+                <div id="sumToTen">
+                  <label for="sumToTenCount" class="section-title" id="sumToTenTitle">{{sumToTen}}{{colons}} </label>
+                  <div id="sumToTenCount"></div>
+                </div>
+                <br>
                 <table
                   id="priorityTable"
                   class="table table-sm table-responsive-sm align-middle table-hover"
@@ -368,7 +373,7 @@
                     >
                       {{#each this}}
                         <tr>
-                          <td>{{@key}}</td>
+                          <td>{{@key}} ({{this.sumToTen}})</td>
                           <td
                             id="metatypes_{{@key}}"
                             class="selectable"

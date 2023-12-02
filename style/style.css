@@ -310,6 +310,10 @@ td.selectable:hover, .btn-outline-primary:hover, .metatype-button:hover, .specia
     max-width: 50%;
 }
 
+#sumToTenTitle, #sumToTenCount {
+    display: inline-block;
+  }
+
 .filters {
     display: flex;
     text-align: center;

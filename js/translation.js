@@ -147,6 +147,10 @@ function changeLang(language) {
     {
       id:"qualitiesTitle",
       term: "qualities"
+    }, 
+    {
+      id:"sumToTenTitle",
+      term: "sumToTen"
     }]
   
     idToUpdate.forEach((element) => {
@@ -418,6 +422,7 @@ const translations = {
     deleteCharacter: "Effacer le personnage",
     saveCharacter: "Enregistrer",
     newCharacter: "Nouveau",
+    sumToTen: "Système à 10 points",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -646,5 +651,6 @@ const translations = {
     deleteCharacter: "delete character",
     saveCharacter: "save",
     newCharacter: "new",
+    sumToTen: "Sum to Ten",
   },
 };

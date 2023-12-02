@@ -263,13 +263,17 @@ let characterData = {
       base: 0,
       spent: 0,
     },
-    karma: 0,
+    Karma: {
+      base: 50,
+      spent: 0,
+    },
     contacts: {
       base: 0,
       spent: 0, 
     }
   },
   selectAttributeType: "Prio",
+  selectSkillsType: "Skills",
   alreadyMaxAttribute: "",
   alreadyMaxSkill: "",
   magicChoice: "",
@@ -567,13 +571,17 @@ let characterDataBackup = {
       base: 0,
       spent: 0,
     },
-    karma: 0,
+    Karma: {
+      base: 50,
+      spent: 0,
+    },
     contacts: {
       base: 0,
       spent: 0, 
     }
   },
   selectAttributeType: "Prio",
+  selectSkillsType: "Skills",
   alreadyMaxAttribute: "",
   alreadyMaxSkill: "",
   magicChoice: "",

@@ -59,6 +59,7 @@ function showPriorities() {
   // Injectez les données JSON des priorités dans le modèle Handlebars
   var priorities = {
     A: {
+      sumToTen: "4",
       metatypes1:
         metatype_A_14.map((item) => capitalized(item.terms)).join(", ") +
         " (14)",
@@ -105,6 +106,7 @@ function showPriorities() {
       resources: "450000",
     },
     B: {
+      sumToTen: "3",
       metatypes1:
         metatype_B_12.map((item) => capitalized(item.terms)).join(", ") +
         " (12)",
@@ -150,6 +152,7 @@ function showPriorities() {
       resources: "275000",
     },
     C: {
+      sumToTen: "2",
       metatypes1:
         metatype_C_10.map((item) => capitalized(item.terms)).join(", ") +
         " (10)",
@@ -193,6 +196,7 @@ function showPriorities() {
       resources: "150000",
     },
     D: {
+      sumToTen: "1",
       metatypes1:
         metatype_D_5.map((item) => capitalized(item.terms)).join(", ") + " (5)",
       metatypes2:
@@ -233,6 +237,7 @@ function showPriorities() {
       resources: "50000",
     },
     E: {
+      sumToTen: "0",
       metatypes:
         metatype_E_1.map((item) => capitalized(item.terms)).join(", ") + " (1)",
       attributes: "2",
@@ -297,6 +302,7 @@ function selectPriority(cell, categorie, priority) {
     }
   }
   saveData();
+  countSumToTen();
 
   // Afficher les résultats
   showResults();
@@ -327,6 +333,32 @@ function selectPriority(cell, categorie, priority) {
       characterData.prioritiesSelected.magicOrResonance
     ); // Utiliser la priorité actuelle
 }
+function countSumToTen() {
+  var sumToTenCount = document.getElementById('sumToTenCount');
+  var sumMetatype = getSumToTen(characterData.prioritiesSelected.metatypes);
+  var sumAttributes = getSumToTen(characterData.prioritiesSelected.attributes);
+  var sumSkills = getSumToTen(characterData.prioritiesSelected.skills);
+  var sumMagicOrResonance = getSumToTen(characterData.prioritiesSelected.magicOrResonance);
+  var sumResources = getSumToTen(characterData.prioritiesSelected.resources);
+  sumToTenCount.innerText = 10 - sumMetatype - sumAttributes - sumSkills - sumMagicOrResonance - sumResources;
+};
+
+function getSumToTen(priority) {
+  switch (priority) {
+    case 'A':
+      return 4;
+    case 'B':
+      return 3;
+    case 'C':
+      return 2;
+    case 'D':
+      return 1;
+    case 'E':
+      return 0;
+    default:
+      return 0;
+}
+};
 
 const tablePrioritiesMetatypes = {
   A: {

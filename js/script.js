@@ -414,7 +414,7 @@ function handleMetatypeQualities(metatype) {
     ];
   if (metatype === "pixie")
     return [
-      " Allergie (fer, moyenne)",
+      "Allergie (fer, moyenne)",
       "Déplacement : 2/5/+1 (marche), 10/40/+2 (vol)",
       "Disparition",
       "Dissimulation (soi)",
@@ -548,6 +548,12 @@ function handleAttributes() {
   var attributesData = characterData.attributes;
   for (const attribute in attributesData) {
     // Si l'attribut doit être affiché, générez le HTML
+    if (attribute === "magic" && !characterData.isMagic) {
+      continue;
+    }
+    if (attribute === "resonance" && !characterData.isTechno) {
+      continue;
+    }
 
     var adjustmentPossible = "";
     if (
@@ -570,8 +576,8 @@ function handleAttributes() {
         attributesData[attribute].added
       }</span></div>
                 <dupdateAttriv class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <button class="btn btn-outline-danger btn-xs" onclick="modifyValue('attributes','${attribute}', 'decrement')">-</button>
-                    <button class="btn btn-outline-success btn-xs" onclick="modifyValue('attributes','${attribute}', 'increment')">+</button>
+                    <button class="btn btn-outline-danger btn-xs" onclick="modifyValue('attributes','${attribute}', 'decrement','${characterData.selectAttributeType}')">-</button>
+                    <button class="btn btn-outline-success btn-xs" onclick="modifyValue('attributes','${attribute}', 'increment','${characterData.selectAttributeType}')">+</button>
                 </div>
             </td>
             <td id="${attribute}_actual"><span class="h4 rddNumber">${
@@ -600,19 +606,24 @@ function showAttributesToSpend() {
     capitalized(terms.attributes) +
     '</th> <th scope="col">' +
     capitalized(terms.adjustment) +
+    '</th><th scope="col">' +
+    capitalized(terms.karma) +
     '</th></tr> </thead><tbody class="table-group-divider"> <tr> <th scope="row">' +
     capitalized(terms.pointsToSpend) +
     '</th> <td id="attributesPrio_max" class="selectable selected" onclick="selectAttributeType(this, \'Prio\')"><span id="attributesPrioCount" class="h6 count">' +
     characterData.points.Prio.base +
     '</span></td> <td id="attributesAdjustment_max" class="selectable" onclick="selectAttributeType(this, \'Adjustment\')"><span id="attributesAdjustmentCount" class="h6 count">' +
     characterData.points.Adjustment.base +
-    "</span></td> </tr></tbody></table>";
+    '</span></td><td id="attributesKarma_max" class="selectable" onclick="selectAttributeType(this, \'Karma\')"><span id="attributesKarmaCount" class="h6 count">' +
+    (characterData.points.Karma.base - characterData.points.Karma.spent) +
+    "</span></td></tr></tbody></table>";
 }
 
 function selectAttributeType(cell, type) {
   console.log("selectAttributeType initialize : ", cell, " / ", type);
   const classAttributePrio = document.getElementById(`attributesPrio_max`);
   const classAttributeAdjustment = document.getElementById(`attributesAdjustment_max`);
+  const classAttributeKarma = document.getElementById(`attributesKarma_max`);
   const possibleElements = document.querySelectorAll(".attributesAdjustmentPossible");
   const impossibleElements = document.querySelectorAll(".attributesAdjustmentImpossible");
 
@@ -626,6 +637,8 @@ function selectAttributeType(cell, type) {
     });
     if (classAttributeAdjustment.classList.contains("selected"))
       classAttributeAdjustment.classList.remove("selected");
+    if (classAttributeKarma.classList.contains("selected"))
+    classAttributeKarma.classList.remove("selected");
   }
   if (type === "Adjustment") {
     classAttributeAdjustment.classList.add("selected");
@@ -637,8 +650,43 @@ function selectAttributeType(cell, type) {
     });
     if (classAttributePrio.classList.contains("selected"))
       classAttributePrio.classList.remove("selected");
+      if (classAttributeKarma.classList.contains("selected"))
+      classAttributeKarma.classList.remove("selected");
+  }
+  if (type === "Karma") {
+    classAttributeKarma.classList.add("selected");    
+    possibleElements.forEach((element) => {
+      element.style.display = "table-row"; // Afficher les éléments Possible
+    });
+    impossibleElements.forEach((element) => {
+      element.style.display = "table-row"; // Cacher les éléments Impossible
+    });
+    if (classAttributePrio.classList.contains("selected"))
+      classAttributePrio.classList.remove("selected");
+    if (classAttributeAdjustment.classList.contains("selected"))
+      classAttributeAdjustment.classList.remove("selected");
   }
   characterData.selectAttributeType = type;
+  console.log("characterData.selectAttributeType : ", characterData.selectAttributeType);
+}
+
+function selectSkillsType(cell, type) {
+  console.log("selectSkillsType initialize : ", cell, " / ", type);
+  const classSkills = document.getElementById(`skills_max`);
+  const classKarma = document.getElementById(`skills_karma_max`);
+
+  if (type === "Skills") {
+    classSkills.classList.add("selected");
+    if (classKarma.classList.contains("selected"))
+    classKarma.classList.remove("selected");
+  }
+  if (type === "Karma") {
+    classKarma.classList.add("selected");
+    if (classSkills.classList.contains("selected"))
+    classSkills.classList.remove("selected");
+  }
+  characterData.selectSkillsType = type;
+  console.log("characterData.selectSkillsType : ", characterData.selectSkillsType);
 }
 
 function getAttributesDepensePrio(priority) {
@@ -712,11 +760,21 @@ function handleSkills() {
 
   // Mettre à jour le tableau des compétences dépensées
   skillsSpentTable.html(
-    '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
+    '<table class="table table-sm table-responsive-sm table-hover table-striped">' +
+    '<thead> <tr>' +
+    '<th scope="col"></th>' + // Colonne vide pour aligner avec "points à dépenser"
+    '<th scope="col">' + capitalized(terms.skills) + '</th>' +
+    '<th scope="col">' + capitalized(terms.karma) + '</th></tr> </thead><tbody class="table-group-divider"> <tr> <th scope="row">' +
     capitalized(terms.pointsToSpend) +
-      '</th> <td id="skills_max"> <span id="skillsCount" class="h6 count">' +
-      characterData.points.skills.base +
-      "</span></td></tr></tbody></table>"
+    '</th><td id="skills_max" class="selectable selected" onclick="selectSkillsType(this, \'Skills\')"> <span id="skillsCount" class="h6 count">' +
+    characterData.points.skills.base +
+    '</span></td>' +
+    '<td id="skills_karma_max" class="selectable" onclick="selectSkillsType(this, \'Karma\')"> <span id="skillsKarmaCount" class="h6 count">' +
+    (characterData.points.Karma.base - characterData.points.Karma.spent) +
+    "</span></td>" +
+    '</tr>' +
+    '</tbody>' +
+    '</table>'
   );
 
   // Sélectionner le tableau des compétences par son ID
@@ -733,7 +791,8 @@ function handleSkills() {
     const skillsToIgnoreMap = {
       "aspectMagicianSorcery": ["conjuring", "enchanting"],
       "aspectedMagicianConjuring": ["sorcery", "enchanting"],
-      "aspectedMagicianEnchanting": ["conjuring", "sorcery"]
+      "aspectedMagicianEnchanting": ["conjuring", "sorcery"],
+      "adept": ["conjuring", "enchanting", "sorcery"],
     };
 
     // Vérifier si la compétence doit être affichée en fonction des attributs du personnage
@@ -801,10 +860,14 @@ function handleSkills() {
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <button class="btn btn-outline-danger btn-xs" onclick="modifyValue('skills', '${
                     skill.data
-                  }', 'decrement')">-</button>
+                  }', 'decrement', '${
+                    characterData.selectSkillsType
+                  }')">-</button>
                   <button class="btn btn-outline-success btn-xs" onclick="modifyValue('skills', '${
                     skill.data
-                  }', 'increment')">+</button>
+                  }', 'increment', '${
+                    characterData.selectSkillsType
+                  }')">+</button>
               </div>
           </td>
           <td id="${skill.data}_rdd">
@@ -870,11 +933,15 @@ function handleSkills() {
         characterData.skills[skill.data].specializations.push(
           newSpecialization
         );
-        characterData.points.skills.spent = characterData.points.skills.spent + 1 ;
-        updateSpecializationDisplay(skill.data);
-
+        if (selectSkillsType === "Karma") {
+        characterData.points.Karma.spent = characterData.points.Karma.spent + 5 ;
+        updatePoints("Karma");
+        } else {          
+        characterData.points.skills.spent = characterData.points.skills.spent + 1 ;      
         // Mettez à jour l'affichage avec la nouvelle spécialisation
         handleSkills();
+        }
+        updateSpecializationDisplay(skill.data);
       }
 
       // Effacez le champ de saisie
@@ -894,8 +961,14 @@ function addSpecializationClick(skillData, specialization) {
     return;
   }
   characterData.skills[skillData].specializations.push(specialization);
+  
+  if (selectSkillsType === "Karma") {
+    characterData.points.Karma.spent = characterData.points.Karma.spent + 5 ;
+    updatePoints("Karma");
+  } else {
   characterData.points.skills.spent = characterData.points.skills.spent + 1 ;
-  handleSkills();
+  handleSkills();  
+}
   updateSpecializationDisplay(skillData);
 }
 
@@ -906,8 +979,15 @@ function removeSpecializationClick(skillData, specialization) {
     if (index !== -1) {
       characterData.skills[skillData].specializations.splice(index, 1);
     }
+    
+    if (selectSkillsType === "Karma") {
+      characterData.points.Karma.spent = characterData.points.Karma.spent - 5 ;
+      updatePoints("Karma");
+    } else {
   characterData.points.skills.spent = characterData.points.skills.spent - 1 ;
+  
   handleSkills();
+    }
   updateSpecializationDisplay(skillData);  
   saveData();
 }
@@ -1548,13 +1628,14 @@ function starredLanguage(cell, i) {
 function updateQualitiesKarma() {
 
   var karmaCount = 0 ;
+  var karmaInit = characterData.points.Karma.base;
 
   for (let i = 0; i < characterData.qualities.length; i++) {
-  if (characterData.qualities[i].type === "positive") karmaCount = karmaCount - parseInt(characterData.qualities[i].karmaCost) ;  
-  if (characterData.qualities[i].type === "negative") karmaCount = karmaCount + parseInt(characterData.qualities[i].karmaCost) ;
+  if (characterData.qualities[i].type === "positive") karmaCount = karmaCount + parseInt(characterData.qualities[i].karmaCost) ;  
+  if (characterData.qualities[i].type === "negative") karmaCount = karmaCount - parseInt(characterData.qualities[i].karmaCost) ;
   }
     
-  characterData.points.karma = karmaCount;
+  characterData.points.Karma.spent =+ karmaCount;
 
   var qualitiesSpentTable = $(`#qualitiesSpent`); // Utilisez jQuery ici
   
@@ -1564,12 +1645,12 @@ function updateQualitiesKarma() {
   }
 
   var karma0 = "";
-  if (karmaCount < 0) karma0 = "class='maximum'"
+  if (characterData.points.Karma.base - characterData.points.Karma.spent < 0) karma0 = "class='maximum'"
 
   qualitiesSpentTable.html(
     '<table class="table table-sm table-responsive-sm table-hover table-striped"><tbody> <tr> <th scope="row">' +
       capitalized(terms.karma) +
-      `</th> <td id="qualitiesKarma" ${karma0}> <span id="qualitiesCount" class="h6 count">${characterData.points.karma}</span></td></tr>${maximumQualities}</tbody></table>`
+      `</th> <td id="qualitiesKarma" ${karma0}> <span id="qualitiesCount" class="h6 count">${characterData.points.Karma.base - characterData.points.Karma.spent}</span></td></tr>${maximumQualities}</tbody></table>`
   );
 }
 
@@ -1592,26 +1673,40 @@ function modifyContact(type, contact, modificator) {
   saveData();
 }
 
-function modifyValue(type, element, modificator) {
+function modifyValue(type, element, modificator, typeKarma) {
   var selectCount = type;
 
   if (type === "attributes") {
     var selectCount = characterData.selectAttributeType;
   }
+
   var numberSpent = characterData.points[selectCount].spent;
+
+  var rank = characterData[type][element].added + 1;
+  var increment = 1;
+
+  if ((type === "attributes" && characterData.selectAttributeType === "Karma") || (type === "skills" && characterData.selectSkillsType === "Karma")) {
+  selectCount = "Karma";
+  numberSpent = characterData.points.Karma.spent;
+  increment = rank * 5;
+  };  
+
+  console.log("modifyValue : ", type, " characterData.selectAttributeType ", characterData.selectAttributeType, " characterData.selectSkillsType ", characterData.selectSkillsType, " typeKarma ", typeKarma, " selectCount ", selectCount);
 
   var added = characterData[type][element].added;
   if (modificator === "increment") {
     characterData[type][element].added = added + 1;
-    characterData.points[selectCount].spent = numberSpent + 1;
+    characterData.points[selectCount].spent = numberSpent + increment;
   } else {
     characterData[type][element].added = Math.max(0, added - 1);
-    characterData.points[selectCount].spent = Math.max(0, numberSpent - 1);
+    characterData.points[selectCount].spent = Math.max(0, numberSpent - increment);
   }
-  handleSkills();
   updateValues(type);
   updatePoints(type, element, modificator);
+  if ((type === "skills" && characterData.selectSkillsType === "Karma")) 
+  updatePoints("Karma", element, modificator);
   saveData();
+  console.log("Karma : ",(characterData.points.Karma.base - characterData.points.Karma.spent));
 }
 
 function updateValues(type) {
@@ -1619,12 +1714,13 @@ function updateValues(type) {
 
   for (const s of sorted) {
 
+
     const skillsToIgnoreMap = {
       "aspectMagicianSorcery": ["conjuring", "enchanting"],
       "aspectedMagicianConjuring": ["sorcery", "enchanting"],
-      "aspectedMagicianEnchanting": ["conjuring", "sorcery"]
+      "aspectedMagicianEnchanting": ["conjuring", "sorcery"],
+      "adept": ["conjuring", "enchanting", "sorcery"],
     };
-
 
     if (
       (characterData[type][s.data].linkedAttribute === "magic" &&
@@ -1694,6 +1790,8 @@ function updatePoints(type, element, modificator) {
     var selectCount = characterData.selectAttributeType;
     var namePoint = type + selectCount;
   }
+
+  if (type === "Karma") namePoint = "skillsKarma";
 
   var numberBase = characterData.points[selectCount].base;
   var numberSpent = characterData.points[selectCount].spent;
