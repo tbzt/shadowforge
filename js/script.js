@@ -257,7 +257,6 @@ function handleButtonClick(button, form, type, priority) {
     } else {
       console.log("No check for metatype : ", characterData.metatype);
     }
-
     showAttributesToSpend();
     updateAttributesForMetatype(button.id);
   }
@@ -611,6 +610,7 @@ function showAttributesToSpend() {
 }
 
 function selectAttributeType(cell, type) {
+  console.log("selectAttributeType initialize : ", cell, " / ", type);
   const classAttributePrio = document.getElementById(`attributesPrio_max`);
   const classAttributeAdjustment = document.getElementById(`attributesAdjustment_max`);
   const possibleElements = document.querySelectorAll(".attributesAdjustmentPossible");
@@ -729,8 +729,6 @@ function handleSkills() {
   var skillsHTML = "";
 
   for (const skill of skillsSort) {
-
-    console.log("skill : ", skill);
 
     const skillsToIgnoreMap = {
       "aspectMagicianSorcery": ["conjuring", "enchanting"],
@@ -1611,7 +1609,6 @@ function modifyValue(type, element, modificator) {
     characterData.points[selectCount].spent = Math.max(0, numberSpent - 1);
   }
   handleSkills();
-  handleAttributes();
   updateValues(type);
   updatePoints(type, element, modificator);
   saveData();
@@ -1964,7 +1961,6 @@ updateButtonSelection(specialButtons, characterData.special);
   }
   if (characterData.metatype) {
     updateButtonSelection(metatypeButtons, characterData.metatype);
-  updateAttributesForMetatype(characterData.metatype);
   }
   
   showPriorities();    
@@ -1990,6 +1986,8 @@ updateButtonSelection(specialButtons, characterData.special);
     showAttributesToSpend();
     handleSkills();
     handleAttributes();
+    
+  updateAttributesForMetatype(characterData.metatype);
     updateValues("skills");
     updateValues("attributes");
     updateKnowledgeDisplay();      
