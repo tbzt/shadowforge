@@ -314,6 +314,15 @@ td.selectable:hover, .btn-outline-primary:hover, .metatype-button:hover, .specia
     display: inline-block;
   }
 
+.stuffCard {
+    background: rgba(0, 0, 0, 0.25);
+    color: #ddd;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    border: dashed 1px #05f2db;
+}
+
 .filters {
     display: flex;
     text-align: center;

@@ -228,10 +228,10 @@
                   class="btn-check"
                   id="stuffBtn"
                   autocomplete="off"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseStuff"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasStuff"
                   aria-expanded="false"
-                  aria-controls="collapseStuff"
+                  aria-controls="offcanvasStuff"
                 />
                 <label
                   class="btn btn-outline-primary"
@@ -240,6 +240,18 @@
                   >{{capitalized stuff}} 
                   <i class="bi bi-exclamation-circle"></i></label
                 >
+
+                
+
+              <!-- Section : OffCanva stuff -->
+              <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasStuff" aria-labelledby="offcanvasStuffLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasStuffLabel">{{capitalized stuff}}</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                </div>
+              </div>
   
                 <input
                   type="checkbox"
@@ -594,6 +606,304 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Section : Choix des Combats & Armes -->
+
+              <div class="collapse" id="collapseCombatWeapons" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+
+                <label for="combatWeapons" class="section-title">{{capitalized combatWeapons}}{{colons}} </label>
+                <div class="card card-body stuffCard mb-3" id="combatWeapons">
+                
+              <!-- Section : Choix des Armes à distance -->
+              <div class="collapse" id="collapseRangedWeapons" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                <div class="card card-body">
+                  
+                  <label for="rangedWeaponsTable" class="section-title">{{capitalized rangedWeapons}}{{colons}} </label>
+
+                  <div class="table-responsive-sm">
+                    <table
+                      id="rangedWeaponsTable"
+                      class="table table-sm table-responsive-sm table-hover table-striped"
+                    >
+                      <thead class="table-light" id="contactsDrop">
+                        <tr>
+                          <th
+                            scope="col"
+                            id="contactsHeader"
+                            class="name-column h6"
+                          >
+                            {{capitalized contacts}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="typeContacts"
+                            class="type-column"
+                          >
+                            {{capitalized types}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="descriptionContacts"
+                            class="description-column"
+                          >
+                            {{capitalized descriptions}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="connectionContacts"
+                            class="connection-column"
+                          >
+                            {{capitalized connection}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="loyaltyContacts"
+                            class="loyalty-column"
+                          >
+                            {{capitalized loyalty}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section : Choix des Armes de mêlée-->
+              <div class="collapse" id="collapseMeleeWeapons" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                <div class="card card-body">
+                  
+                  
+                  <label for="meleeWeaponsTable" class="section-title">{{capitalized meleeWeapons}}{{colons}} </label>
+
+                  <div class="table-responsive-sm">
+                    <table
+                      id="meleeWeaponsTable"
+                      class="table table-sm table-responsive-sm table-hover table-striped"
+                    >
+                      <thead class="table-light" id="contactsDrop">
+                        <tr>
+                          <th
+                            scope="col"
+                            id="contactsHeader"
+                            class="name-column h6"
+                          >
+                            {{capitalized contacts}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="typeContacts"
+                            class="type-column"
+                          >
+                            {{capitalized types}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="descriptionContacts"
+                            class="description-column"
+                          >
+                            {{capitalized descriptions}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="connectionContacts"
+                            class="connection-column"
+                          >
+                            {{capitalized connection}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="loyaltyContacts"
+                            class="loyalty-column"
+                          >
+                            {{capitalized loyalty}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section : Choix des Grenades -->
+              <div class="collapse" id="collapseGrenades" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                <div class="card card-body">
+                  
+                  
+                  <label for="grenadesTable" class="section-title">{{capitalized grenades}}{{colons}} </label>
+
+                  <div class="table-responsive-sm">
+                    <table
+                      id="grenadesTable"
+                      class="table table-sm table-responsive-sm table-hover table-striped"
+                    >
+                      <thead class="table-light" id="contactsDrop">
+                        <tr>
+                          <th
+                            scope="col"
+                            id="contactsHeader"
+                            class="name-column h6"
+                          >
+                            {{capitalized contacts}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="typeContacts"
+                            class="type-column"
+                          >
+                            {{capitalized types}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="descriptionContacts"
+                            class="description-column"
+                          >
+                            {{capitalized descriptions}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="connectionContacts"
+                            class="connection-column"
+                          >
+                            {{capitalized connection}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="loyaltyContacts"
+                            class="loyalty-column"
+                          >
+                            {{capitalized loyalty}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section : Choix des Protection -->
+              <div class="collapse" id="collapseProtections" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                <div class="card card-body">
+                  
+                  
+                  <label for="protectionsTable" class="section-title">{{capitalized protections}}{{colons}} </label>
+
+                  <div class="table-responsive-sm">
+                    <table
+                      id="protectionsTable"
+                      class="table table-sm table-responsive-sm table-hover table-striped"
+                    >
+                      <thead class="table-light" id="contactsDrop">
+                        <tr>
+                          <th
+                            scope="col"
+                            id="contactsHeader"
+                            class="name-column h6"
+                          >
+                            {{capitalized contacts}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="typeContacts"
+                            class="type-column"
+                          >
+                            {{capitalized types}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="descriptionContacts"
+                            class="description-column"
+                          >
+                            {{capitalized descriptions}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="connectionContacts"
+                            class="connection-column"
+                          >
+                            {{capitalized connection}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="loyaltyContacts"
+                            class="loyalty-column"
+                          >
+                            {{capitalized loyalty}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section : Choix des Munitions -->
+              <div class="collapse" id="collapseAmmunitions" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                <div class="card card-body">
+                  
+                  
+                  <label for="ammunitionsTable" class="section-title">{{capitalized ammunitions}}{{colons}} </label>
+
+                  <div class="table-responsive-sm">
+                    <table
+                      id="ammunitionsTable"
+                      class="table table-sm table-responsive-sm table-hover table-striped"
+                    >
+                      <thead class="table-light" id="contactsDrop">
+                        <tr>
+                          <th
+                            scope="col"
+                            id="contactsHeader"
+                            class="name-column h6"
+                          >
+                            {{capitalized contacts}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="typeContacts"
+                            class="type-column"
+                          >
+                            {{capitalized types}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="descriptionContacts"
+                            class="description-column"
+                          >
+                            {{capitalized descriptions}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="connectionContacts"
+                            class="connection-column"
+                          >
+                            {{capitalized connection}}
+                          </th>
+                          <th
+                            scope="col"
+                            id="loyaltyContacts"
+                            class="loyalty-column"
+                          >
+                            {{capitalized loyalty}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+              </div>
+              </div>  
+
+              
+
               <!-- Section : Choix des Contacts -->
               <div class="collapse" id="collapseContact" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
                 <div class="card card-body">

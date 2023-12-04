@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   handleDropdownModal("qualities");
   handleDropdownModal("contacts");
   updateContactDisplay();
+  menuSectionGenerate();
 });
 
 const currentVersion = '0.1.0'; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
@@ -1875,6 +1876,139 @@ function updatePoints(type, element, modificator) {
   }
 }
 
+// Liste des éléments de menu
+// Structure de données pour les sections et les éléments de menu
+function menuSectionGenerate(){
+var sectionsStuffs = [
+  {
+    label: 'combatWeapons',    
+    target: 'collapseCombatWeapons',
+    items: [
+      { id: 'buttonRangedWeapons', target: 'collapseRangedWeapons', label: 'rangedWeapons' },
+      { id: 'buttonMeleeWeapons', target: 'collapseMeleeWeapons', label: 'meleeWeapons' },
+      { id: 'buttonGrenades', target: 'collapseGrenades', label: 'grenades' },
+      { id: 'buttonProtections', target: 'collapseProtections', label: 'protections' },
+      { id: 'buttonAmmunitions', target: 'collapseAmmunitions', label: 'ammunitions' },
+    ]
+  },
+  {
+    label: 'vehicles',    
+    target: 'collapseVehicles',
+    items: [
+      { id: 'buttonVehicles', target: 'collapseVehicles', label: 'vehicles' },
+    ]
+  },
+  {
+    label: 'augmentations',    
+    target: 'collapseAugmentations',
+    items: [
+      { id: 'buttonAugmentations', target: 'collapseAugmentations', label: 'augmentations' },
+    ]
+  },
+  {
+    label: 'otherStuff',    
+    target: 'collapseOtherStuff',
+    items: [
+      { id: 'buttonDrugs', target: 'collapseDrugs', label: 'drugs' },
+      { id: 'buttonLifestyle', target: 'collapseLifestyle', label: 'lifestyle' },
+      { id: 'buttonSINS', target: 'collapseSINS', label: 'SINS' },
+      { id: 'buttonStuffs', target: 'collapseStuffs', label: 'stuffs' },
+      { id: 'buttonAmmunitions', target: 'collapseAmmunitions', label: 'ammunitions' },
+    ]
+  },
+];
+
+// Vérifier que tous les labels existent dans l'objet terms
+sectionsStuffs.forEach(section => {
+  if (!terms[section.label]) {
+    console.error('Label non trouvé :', section.label);
+  }
+  section.items.forEach(item => {
+    if (!terms[item.label]) {
+      console.error('Label non trouvé :', item.label);
+    }
+  });
+});
+
+
+// Trier les items de chaque section par label
+sectionsStuffs.forEach(section => {
+  section.items.sort((a, b) => terms[a.label].localeCompare(terms[b.label]));
+});
+
+// Trier les sections par label
+//sectionsStuffs.sort((a, b) => terms[a.label].localeCompare(terms[b.label]));
+
+// Générer le HTML pour chaque section
+var sectionsHtml = sectionsStuffs.map(generateSectionHtml).join('');
+
+// Insérer le HTML dans le offcanvas-body
+document.querySelector('.offcanvas-body').innerHTML = sectionsHtml;
+
+}
+
+// Fonction pour générer le HTML pour un élément de menu
+function generateMenuItemHtml(item, sectionTarget) {
+  var targets = ['#' + item.target, '#' + sectionTarget].join(' ');
+  return '<li><a class="dropdown-item" href="#' + item.target + '" id="' + item.id + '" data-bs-toggle="collapse" data-bs-target="' + targets + '" aria-expanded="false" aria-controls="' + targets + '">' + capitalized(terms[item.label]) + '</a></li>';
+}
+
+// Fonction pour générer le HTML pour une section
+function generateSectionHtml(section) {
+  var itemsHtml = section.items.map(item => generateMenuItemHtml(item, section.target)).join('');
+  return '<div class="dropdown mt-3">' +
+    '<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">' +
+    capitalized(terms[section.label]) +
+    '</button>' +
+    '<ul class="dropdown-menu">' +
+    itemsHtml +
+    '</ul>' +
+    '</div>';
+}
+
+$(document).ready(function() {
+  // Initialiser les compteurs pour chaque collapse de label
+  var counters = {};
+  $('.dropdown-item').each(function() {
+    var targets = $(this).data('bs-target');
+    if (targets) {
+      targets = targets.split(' ');
+      var labelTarget = targets[1];
+      counters[labelTarget] = 0;
+    }
+  });
+
+  $('.dropdown-item').on('click', function() {
+    var targets = $(this).data('bs-target');
+    if (targets) {
+      targets = targets.split(' ');
+      var itemTarget = targets[0];
+      var labelTarget = targets[1];
+
+      // Supprimer les gestionnaires d'événements précédents
+      $(itemTarget).off('shown.bs.collapse');
+      $(itemTarget).off('hidden.bs.collapse');
+
+      $(itemTarget).on('shown.bs.collapse', function () {
+        counters[labelTarget]++;
+        if (counters[labelTarget] > 0) {
+          $(labelTarget).collapse('show');
+        }
+      });
+
+      $(itemTarget).on('hidden.bs.collapse', function () {
+        counters[labelTarget]--;
+        if (counters[labelTarget] === 0) {
+          $(labelTarget).collapse('hide');
+        }
+      });
+
+      // Trigger the collapse
+      $(itemTarget).collapse('toggle');
+    }
+  });
+});
+
 // Fonction pour afficher les résultats
 function showResults() {
 
@@ -2227,9 +2361,11 @@ function assignData() {
   let dateToday = `${day}/${month}/${year}`;
 
   if (characterData.SIN.identity) {
-    foundryData.name = characterData.SIN.identity;
+    foundryData.name = characterData.SIN.identityCatalog;
     foundryData.system.biography.metatype = characterData.SIN.metatype;
     foundryData.system.biography.metatypeVariant = capitalized(terms[characterData.SIN.metatypeVariant]);
+    foundryData.system.biography.alias = characterData.SIN.surname;
+    foundryData.system.biography.realName = characterData.SIN.firstname + " " + characterData.SIN.name;
   }
 
   if (characterData.resources) {
