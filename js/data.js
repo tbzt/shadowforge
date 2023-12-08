@@ -578,6 +578,10 @@ let characterDataBackup = {
     contacts: {
       base: 0,
       spent: 0, 
+    },
+    essence: {
+      base: 0,
+      spent: 0, 
     }
   },
   selectAttributeType: "Prio",

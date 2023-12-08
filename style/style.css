@@ -281,6 +281,12 @@ td.selectable:hover, .btn-outline-primary:hover, .metatype-button:hover, .specia
     margin-left: 0;
 }
 
+.offcanvas {
+    background-color: #333;
+    opacity: 0.75;    
+    color: #ddd;
+}
+
 #catalogPanel {
     height: 90%;
     width: 0;

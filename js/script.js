@@ -1892,17 +1892,17 @@ var sectionsStuffs = [
     ]
   },
   {
-    label: 'vehicles',    
-    target: 'collapseVehicles',
-    items: [
-      { id: 'buttonVehicles', target: 'collapseVehicles', label: 'vehicles' },
-    ]
-  },
-  {
     label: 'augmentations',    
     target: 'collapseAugmentations',
     items: [
       { id: 'buttonAugmentations', target: 'collapseAugmentations', label: 'augmentations' },
+    ]
+  },
+  {
+    label: 'vehicles',    
+    target: 'collapseVehicles',
+    items: [
+      { id: 'buttonVehicles', target: 'collapseVehicles', label: 'vehicles' },
     ]
   },
   {
@@ -1913,7 +1913,6 @@ var sectionsStuffs = [
       { id: 'buttonLifestyle', target: 'collapseLifestyle', label: 'lifestyle' },
       { id: 'buttonSINS', target: 'collapseSINS', label: 'SINS' },
       { id: 'buttonStuffs', target: 'collapseStuffs', label: 'stuffs' },
-      { id: 'buttonAmmunitions', target: 'collapseAmmunitions', label: 'ammunitions' },
     ]
   },
 ];
@@ -1955,9 +1954,17 @@ function generateMenuItemHtml(item, sectionTarget) {
 
 // Fonction pour générer le HTML pour une section
 function generateSectionHtml(section) {
+  if (section.items.length === 1) {
+    console.log("section.items[0].id : ", section.items[0].id, " section.items[0].target : ", section.items[0].target, " section.items[0].label : ", section.items[0].label);
+    return '<div class="dropdown mt-3">' +
+    '<button class="btn btn-outline-primary" type="button" id="' + section.items[0].id + '" data-bs-toggle="collapse" data-bs-target="#' + section.items[0].target + '" aria-expanded="false" aria-controls="' + section.items[0].target + '">'
+    + capitalized(terms[section.items[0].label]) +
+    '</button>' +
+    '</div>';
+  }
   var itemsHtml = section.items.map(item => generateMenuItemHtml(item, section.target)).join('');
   return '<div class="dropdown mt-3">' +
-    '<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">' +
+    '<button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">' +
     capitalized(terms[section.label]) +
     '</button>' +
     '<ul class="dropdown-menu">' +
