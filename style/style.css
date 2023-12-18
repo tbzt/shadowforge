@@ -66,13 +66,32 @@ input::placeholder {
     overflow: auto;
 }
 
-
 .modal {
-    color: #05f2db;
+    color: #ddd;
     --bs-modal-bg: #0a0f25;
     --bs-modal-border-color: #05f2db;
     --bs-modal-footer-border-width: 3px;
     --bs-modal-header-border-color: rgba(242, 5, 135, 0.75);
+}
+
+.modal .form-control {
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+.SR6-Select {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(242, 5, 135, 0.5);
+}
+
+.modal select {
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: .875rem;
+    line-height: 1.5;
 }
 
 .modal-header {
@@ -176,6 +195,26 @@ row {
 
 tr.positive td {
     color: #05f2db;
+}
+
+.xxs {
+    font-size: xx-small;
+}
+
+.SR6_headline {
+    height: calc(14px + 6px);
+    line-height: calc(14px + 4px);
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 0 4px;
+    min-width: 0;
+    background: rgba(88, 2, 89, 0.75);
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: #05f2db;
+    overflow: auto;
 }
 
 .btn-outline-primary {
