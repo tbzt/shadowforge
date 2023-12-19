@@ -8,8 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   handleSkills();
   updateKnowledgePoints();
   handleModals();
-  updateContactDisplay();
-  updateRangedWeaponsDisplay();
+  updateDisplay();
   menuSectionGenerate();
 });
 
@@ -1134,6 +1133,41 @@ function handleModals() {
 function modalConstruct(type, newType, method) {
   var specificType = "";
 
+  const weaponDamageType = ["physical", "stun"];
+  weaponDamageType.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+  const weaponDamageTypeOptions = weaponDamageType
+    .map(
+      (type) => `<option value="${type}">${capitalized(terms[type])}</option>`
+    )
+    .join("\n");
+
+  const weaponSpecialDamageType = [
+    "acid",
+    "cold",
+    "electricity",
+    "fire",
+    "sound",
+    "toxin",
+    "water",
+  ];
+  weaponSpecialDamageType.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+  const weaponSpecialDamageTypeOptions = weaponSpecialDamageType
+    .map(
+      (type) => `<option value="${type}">${capitalized(terms[type])}</option>`
+    )
+    .join("\n");
+
+  const legality = ["forbidden", "legal", "restricted"];
+  legality.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+  const legalityOptions = legality
+    .map(
+      (type) => `<option value="${type}">${capitalized(terms[type])}</option>`
+    )
+    .join("\n");
+
   var idForm = `${method}${capitalized(type)}Form`;
 
   switch (type) {
@@ -1170,7 +1204,7 @@ function modalConstruct(type, newType, method) {
             terms.description
           )}${terms.colons}</label>
           <div class="col-sm-9">
-          <textarea class="form-control flex-grow-1" id="qualitiesDescription" rows="3"></textarea>
+          <textarea class="form-control flex-grow-1" id="qualitiesDescription" rows="4"></textarea>
           </div>
         </div>
         <div class="form-group row align-items-center mb-2">
@@ -1205,7 +1239,7 @@ function modalConstruct(type, newType, method) {
             terms.type
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <textarea class="form-control" id="contactsType" rows="1"></textarea>
+            <textarea class="form-control" id="contactsType" rows="4"></textarea>
           </div>
       </div>
       <div class="form-group row align-items-center mb-4">
@@ -1213,7 +1247,7 @@ function modalConstruct(type, newType, method) {
             terms.description
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <textarea class="form-control" id="contactsDescription" rows="3"></textarea>
+            <textarea class="form-control" id="contactsDescription" rows="4"></textarea>
           </div>
       </div>
       <div class="form-group row align-items-center mb-2">  
@@ -1234,6 +1268,10 @@ function modalConstruct(type, newType, method) {
     case "rangedWeapons":
       const weaponTypes = [
         "assaultCannon",
+        "crossbowHeavy",
+        "crossbowLight",
+        "crossbowMedium",
+        "bow",
         "launcher",
         "machineGunHeavy",
         "machineGunLight",
@@ -1266,34 +1304,6 @@ function modalConstruct(type, newType, method) {
       weaponSkills.sort((a, b) => terms[a].localeCompare(terms[b]));
 
       const weaponSkillOptions = weaponSkills
-        .map(
-          (type) =>
-            `<option value="${type}">${capitalized(terms[type])}</option>`
-        )
-        .join("\n");
-
-      const weaponDamageType = ["physical", "stun"];
-      weaponDamageType.sort((a, b) => terms[a].localeCompare(terms[b]));
-
-      const weaponDamageTypeOptions = weaponDamageType
-        .map(
-          (type) =>
-            `<option value="${type}">${capitalized(terms[type])}</option>`
-        )
-        .join("\n");
-
-      const weaponSpecialDamageType = [
-        "acid",
-        "cold",
-        "electricity",
-        "fire",
-        "sound",
-        "toxin",
-        "water",
-      ];
-      weaponSpecialDamageType.sort((a, b) => terms[a].localeCompare(terms[b]));
-
-      const weaponSpecialDamageTypeOptions = weaponSpecialDamageType
         .map(
           (type) =>
             `<option value="${type}">${capitalized(terms[type])}</option>`
@@ -1337,16 +1347,6 @@ function modalConstruct(type, newType, method) {
           </label>
         </div>
       `
-        )
-        .join("\n");
-
-      const legality = ["forbidden", "legal", "restricted"];
-      legality.sort((a, b) => terms[a].localeCompare(terms[b]));
-
-      const legalityOptions = legality
-        .map(
-          (type) =>
-            `<option value="${type}">${capitalized(terms[type])}</option>`
         )
         .join("\n");
 
@@ -1420,19 +1420,19 @@ function modalConstruct(type, newType, method) {
             
             <div class="col-sm-9">
             <div class="row">
-            <label for="rangedWeaponsAttackRatingCloseAR" class="col-sm-2 col-form-label xxs mx-1 px-1">${capitalized(
+            <label for="rangedWeaponsAttackRatingCloseAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.closeAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingNearAR" class="col-sm-2 col-form-label xxs mx-1 px-1">${capitalized(
+            <label for="rangedWeaponsAttackRatingNearAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.nearAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingMediumAR" class="col-sm-2 col-form-label xxs mx-1 px-1">${capitalized(
+            <label for="rangedWeaponsAttackRatingMediumAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.mediumAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingFarAR" class="col-sm-2 col-form-label xxs mx-1 px-1">${capitalized(
+            <label for="rangedWeaponsAttackRatingFarAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.farAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingExtremeAR" class="col-sm-2 col-form-label xxs mx-1 px-1">${capitalized(
+            <label for="rangedWeaponsAttackRatingExtremeAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.extremeAR
             )}</label>
             </div>
@@ -1528,11 +1528,184 @@ function modalConstruct(type, newType, method) {
             terms.description
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <textarea class="form-control" id="rangedWeaponsDescription" rows="3"></textarea>
+            <textarea class="form-control" id="rangedWeaponsDescription" rows="4"></textarea>
           </div>
       </div>`;
       break;
     case "meleeWeapons":
+      const meleeWeaponTypes = ["blade", "club", "meleeSpecial", "unarmed"];
+      meleeWeaponTypes.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const meleeWeaponTypesOptions = meleeWeaponTypes
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const meleeWeaponSkills = ["exoticWeapon", "athletics", "closeCombat"];
+      meleeWeaponSkills.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const meleeWeaponSkillsOptions = meleeWeaponSkills
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `
+        <div class="form-group row align-items-center mb-2">
+          <label for="meleeWeaponsType" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
+            terms.type
+          )}${terms.colons}</label>
+          <div class="col-sm-9 SR6_Select">
+            <select class="form-control" id="meleeWeaponsType">
+              <option value="">${capitalized(terms.select)}</option>
+              ${meleeWeaponTypesOptions}
+            </select>
+          </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">
+          <label for="meleeWeaponsSkill" class="col-sm-3 col-form-label">${capitalized(
+            terms.skill
+          )}${terms.colons}</label>
+          <div class="col-sm-9">
+            <select class="form-control SR6-Select" id="meleeWeaponsSkill">
+              <option value="">${capitalized(terms.select)}</option>
+              ${meleeWeaponSkillsOptions}
+            </select>
+          </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="meleeWeaponsBaseConcealability" class="col-sm-3 col-form-label">${capitalized(
+              terms.baseConcealability
+            )}${terms.colons}</label>
+            <div class="col-sm-2">
+              <input type="number" class="form-control" id="meleeWeaponsBaseConcealability" aria-label="baseConcealability" value=0>
+            </div>
+        </div>
+        <div class="SR6_headline mb-2">${allCapitalized(terms.damages)}</div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="meleeWeaponsDamageValue" class="col-sm-3 col-form-label">${capitalized(
+              terms.damageValue
+            )}${terms.colons}</label>
+            <div class="col-sm-2">
+              <input type="number" class="form-control" id="meleeWeaponsDamageValue" aria-label="damageValue" value=0>
+            </div>
+            <label for="meleeWeaponsDamageType" class="col-sm-3 col-form-label">${capitalized(
+              terms.damageType
+            )}${terms.colons}</label>
+            <div class="col-sm-4">
+            <select class="form-control" id="meleeWeaponsDamageType">
+              <option value="">${capitalized(terms.select)}</option>
+              ${weaponDamageTypeOptions}
+            </select>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">
+          <label for="meleeWeaponsSpecialDamageType" class="col-sm-3 col-form-label">${capitalized(
+            terms.specialDamageType
+          )}${terms.colons}</label>
+          <div class="col-sm-9">
+            <select class="form-control" id="meleeWeaponsSpecialDamageType">
+              <option value="">${capitalized(terms.select)}</option>
+              ${weaponSpecialDamageTypeOptions}
+            </select>
+          </div>
+        </div>        
+        <div class="SR6_headline mb-2">${allCapitalized(
+          terms.attackRating
+        )}</div>
+        <div class="form-group row align-items-center">  
+            <label for="meleeWeaponsAttackRating" class="col-sm-3 col-form-label">${capitalized(
+              terms.attackRating
+            )}${terms.colons}</label>
+            
+            <div class="col-sm-9">
+            <div class="row">
+            <label for="meleeWeaponsAttackRatingCloseAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+              terms.closeAR
+            )}</label>
+            <label for="meleeWeaponsAttackRatingNearAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+              terms.nearAR
+            )}</label>
+            <label for="meleeWeaponsAttackRatingMediumAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+              terms.mediumAR
+            )}</label>
+            <label for="meleeWeaponsAttackRatingFarAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+              terms.farAR
+            )}</label>
+            <label for="meleeWeaponsAttackRatingExtremeAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+              terms.extremeAR
+            )}</label>
+            </div>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">
+            <div class="row smaller">
+            
+            <div class="col-sm-2 mx-1 px-1">
+              <input type="number" class="form-control" name="meleeWeaponsAttackRating" 
+              id="meleeWeaponsAttackRatingCloseAR" aria-label="meleeWeaponsAttackRating" value=0>
+            </div>
+            <div class="col-sm-2 mx-1 px-1">
+              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
+              id="meleeWeaponsAttackRatingNearAR" aria-label="meleeWeaponsAttackRating" value=0>
+            </div>
+            <div class="col-sm-2 mx-1 px-1">
+              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
+              id="meleeWeaponsAttackRatingMediumAR" aria-label="meleeWeaponsAttackRating" value=0>
+            </div>
+            <div class="col-sm-2 mx-1 px-1">
+              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
+              id="meleeWeaponsAttackRatingFarAR" aria-label="meleeWeaponsAttackRating" value=0>
+            </div>    
+            <div class="col-sm-2 mx-1 px-1">
+              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
+              id="meleeWeaponsAttackRatingExtremeAR" aria-label="meleeWeaponsAttackRating" value=0>
+            </div>
+
+            </div>
+            </div>
+        </div>
+        <div class="SR6_headline mb-2">${allCapitalized(
+          terms.priceAndAvailability
+        )}</div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="meleeWeaponsPrice" class="col-sm-3 col-form-label">${capitalized(
+              terms.price
+            )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="meleeWeaponsPrice" aria-label="price" value=0>
+            </div>
+            <label for="meleeWeaponsLegality" class="col-sm-2 col-form-label ">${capitalized(
+              terms.legality
+            )}${terms.colons}</label>
+            <div class="col-sm-4">
+            <select class="form-control" id="meleeWeaponsLegality">
+              <option value="">${capitalized(terms.select)}</option>
+              ${legalityOptions}
+            </select>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="meleeWeaponsAvailability" class="col-sm-3 col-form-label">${capitalized(
+              terms.availability
+            )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="meleeWeaponsAvailability" aria-label="price" value=0>
+            </div>
+      </div>
+      <div class="form-group row align-items-center mb-4">
+          <label for="meleeWeaponsDescription" class="col-sm-3 col-form-label">${capitalized(
+            terms.description
+          )}${terms.colons}</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" id="meleeWeaponsDescription" rows="4"></textarea>
+          </div>
+      </div>`;
       break;
     case "ammunitions":
       break;
@@ -1619,7 +1792,8 @@ function handleDropdownModal(type) {
       type === "knowledges" ||
       type === "specializations" ||
       type === "languages" ||
-      type === "rangedWeapons"
+      type === "rangedWeapons" ||
+      type === "meleeWeapons"
     ) {
       newType = terms.newe;
     }
@@ -1818,6 +1992,50 @@ function handleDropdownModal(type) {
         console.log("newItem : ", newItem);
       }
 
+      if (type === "meleeWeapons") {
+        var weaponType = getValue("Type", type);
+        var skill = getValue("Skill", type);
+        var baseConcealability = getValue("BaseConcealability", type, true);
+        var damageValue = getValue("DamageValue", type, true);
+        var damageType = getValue("DamageType", type);
+        var specialDamageType = getValue("SpecialDamageType", type);
+        var closeAR = getValue("AttackRatingCloseAR", type, true);
+        var nearAR = getValue("AttackRatingNearAR", type, true);
+        var mediumAR = getValue("AttackRatingMediumAR", type, true);
+        var farAR = getValue("AttackRatingFarAR", type, true);
+        var extremeAR = getValue("AttackRatingExtremeAR", type, true);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          type: weaponType,
+          skill: skill,
+          baseConcealability: baseConcealability,
+          damage: {
+            value: damageValue,
+            type: damageType,
+            special: specialDamageType,
+          },
+          AR: {
+            closeAR: closeAR,
+            nearAR: nearAR,
+            mediumAR: mediumAR,
+            farAR: farAR,
+            extremeAR: extremeAR,
+          },
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+
+        console.log("newItem : ", newItem);
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -1840,6 +2058,10 @@ function handleDropdownModal(type) {
         if (type === "rangedWeapons") {
           characterData.rangedWeapons.push(newItem);
           updateRangedWeaponsDisplay();
+        }
+        if (type === "meleeWeapons") {
+          characterData.meleeWeapons.push(newItem);
+          updateMeleeWeaponsDisplay();
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -1987,6 +2209,44 @@ function handleItemClick(type, indexItem) {
       characterData[type][indexItem].firingModes.burstFire;
     modalContainer.querySelector(`#fullAutomatic`).checked =
       characterData[type][indexItem].firingModes.fullAutomatic;
+  }
+
+  if (type === "meleeWeapons") {
+    console.log("meleeWeapons : ", type);
+
+    const fields = [
+      "Type",
+      "Skill",
+      "BaseConcealability",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+
+    modalContainer.querySelector(`#meleeWeaponsDamageValue`).value =
+      characterData[type][indexItem].damage.value;
+    modalContainer.querySelector(`#meleeWeaponsDamageType`).value =
+      characterData[type][indexItem].damage.type;
+    modalContainer.querySelector(`#meleeWeaponsSpecialDamageType`).value =
+      characterData[type][indexItem].damage.special;
+    modalContainer.querySelector(`#meleeWeaponsAttackRatingCloseAR`).value =
+      characterData[type][indexItem].AR.closeAR;
+    modalContainer.querySelector(`#meleeWeaponsAttackRatingNearAR`).value =
+      characterData[type][indexItem].AR.nearAR;
+    modalContainer.querySelector(`#meleeWeaponsAttackRatingMediumAR`).value =
+      characterData[type][indexItem].AR.mediumAR;
+    modalContainer.querySelector(`#meleeWeaponsAttackRatingFarAR`).value =
+      characterData[type][indexItem].AR.farAR;
+    modalContainer.querySelector(`#meleeWeaponsAttackRatingExtremeAR`).value =
+      characterData[type][indexItem].AR.extremeAR;
   }
 
   if (type === "languages") {
@@ -2162,6 +2422,52 @@ function handleItemClick(type, indexItem) {
           updateRangedWeaponsDisplay();
         }
 
+        if (type === "meleeWeapons") {
+          console.log("meleeWeapons : ", type);
+
+          const fields = [
+            "Type",
+            "Skill",
+            "BaseConcealability",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          modalContainer.querySelector(`#meleeWeaponsDamageValue`).value =
+            characterData[type][indexItem].damage.value;
+          modalContainer.querySelector(`#meleeWeaponsDamageType`).value =
+            characterData[type][indexItem].damage.type;
+          modalContainer.querySelector(`#meleeWeaponsSpecialDamageType`).value =
+            characterData[type][indexItem].damage.special;
+          modalContainer.querySelector(
+            `#meleeWeaponsAttackRatingCloseAR`
+          ).value = characterData[type][indexItem].AR.closeAR;
+          modalContainer.querySelector(
+            `#meleeWeaponsAttackRatingNearAR`
+          ).value = characterData[type][indexItem].AR.nearAR;
+          modalContainer.querySelector(
+            `#meleeWeaponsAttackRatingMediumAR`
+          ).value = characterData[type][indexItem].AR.mediumAR;
+          modalContainer.querySelector(`#meleeWeaponsAttackRatingFarAR`).value =
+            characterData[type][indexItem].AR.farAR;
+          modalContainer.querySelector(
+            `#meleeWeaponsAttackRatingExtremeAR`
+          ).value = characterData[type][indexItem].AR.extremeAR;
+
+          updateMeleeWeaponsDisplay();
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -2204,6 +2510,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "rangedWeapons") {
     updateRangedWeaponsDisplay();
+  }
+  if (type === "meleeWeapons") {
+    updateMeleeWeaponsDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -2402,6 +2711,14 @@ function addQualitiesClick(key, description, type, karmaCost) {
   saveData();
 }
 
+function updateDisplay() {
+  updateQualitiesDisplay();
+  updateQualitiesKarma();
+  updateContactDisplay();
+  updateRangedWeaponsDisplay();
+  updateMeleeWeaponsDisplay();
+}
+
 function updateRangedWeaponsDisplay() {
   var rangedWeaponsTableBody = $("#rangedWeaponsTable tbody");
 
@@ -2445,6 +2762,55 @@ function updateRangedWeaponsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       rangedWeaponsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateMeleeWeaponsDisplay() {
+  var meleeWeaponsTableBody = $("#meleeWeaponsTable tbody");
+
+  // Effacez le contenu actuel du corps du tableau
+  meleeWeaponsTableBody.empty();
+
+  // Vérifiez si characterData.qualities existe
+  if (characterData.meleeWeapons) {
+    // Parcourez chaque qualité dans characterData.qualities
+    var meleeWeapons = [];
+    meleeWeapons = sortKeys(characterData.meleeWeapons);
+
+    meleeWeapons.forEach(function (weapon) {
+      // Générez une nouvelle ligne pour chaque qualité
+      var row = `
+      <tr>
+          <td class="name-column">${weapon.key}</td>
+          <td class="type-column">${capitalized(terms[weapon.type])}</td>
+          <td class="damageValue-column">${weapon.damage.value}${
+        terms[weapon.damage.type + "_short"]
+      }</td>
+          <td class="attackRating-column">${parseInt(
+            weapon.AR.closeAR
+          )}/${parseInt(weapon.AR.nearAR)}/${parseInt(
+        weapon.AR.mediumAR
+      )}/${parseInt(weapon.AR.farAR)}/${parseInt(weapon.AR.extremeAR)}</td>
+          <td class="price-column">${parseInt(weapon.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('meleeWeapons','${characterData.meleeWeapons.indexOf(
+        weapon
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('meleeWeapons','${characterData.meleeWeapons.indexOf(
+        weapon
+      )}')"></i>
+      <div id="modalContainermeleeWeapons${characterData.meleeWeapons.indexOf(
+        weapon
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      meleeWeaponsTableBody.append(row);
     });
   }
 
@@ -3553,8 +3919,7 @@ function handleCharacterData(characterData) {
     );
   }
   updatePoints("contacts");
-  updateContactDisplay();
-  updateRangedWeaponsDisplay();
+  updateDisplay();
 }
 
 function updateButtonSelection(buttons, selectedValue) {
@@ -3902,6 +4267,68 @@ function assignData() {
                 weaponsToSpecializations[
                   characterData.rangedWeapons[weapon].type
                 ],
+            },
+          },
+        };
+        foundryData.items.push(w);
+      }
+    }
+  }
+
+  if (characterData.meleeWeapons) {
+    for (let weapon in characterData.meleeWeapons) {
+      if (characterData.Weapons.hasOwnProperty(weapon)) {
+        var item = characterData.meleeWeapons[weapon];
+
+        var w = {
+          name: item.key,
+          type: "weapon",
+          system: {
+            info: {
+              description: item.description,
+            },
+            conceablity: {
+              base: item.baseConcealability,
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+            },
+            legality: item.legality,
+            type: "meleeWeapon",
+            typeSub: item.type,
+            attackRating: {
+              range: {
+                close: {
+                  base: item.AR.closeAR,
+                },
+                near: {
+                  base: item.AR.nearAR,
+                },
+                medium: {
+                  base: item.AR.mediumAR,
+                },
+                far: {
+                  base: item.AR.farAR,
+                },
+                extreme: {
+                  base: item.AR.extremeAR,
+                },
+              },
+            },
+            damage: {
+              value: {
+                base: item.damage.value,
+              },
+              type: item.damage.type,
+            },
+            test: {
+              linkedSkill: item.skill,
+              linkedSpecialization: weaponsToSpecializations[item.type],
             },
           },
         };

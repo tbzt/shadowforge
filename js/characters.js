@@ -195,7 +195,7 @@ function loadFromJSON(event) {
       var characterData = {
         ...characterDataBackup,
         SIN: {
-          firtname: JSONData.system.biography.realName,
+          firstname: JSONData.system.biography.realName,
           identityCatalog: JSONData.name,
           surname: JSONData.system.biography.alias,
           metatype: JSONData.system.biography.metatype,
@@ -206,6 +206,8 @@ function loadFromJSON(event) {
         },
         resources: JSONData.system.nuyen.actual.total,
       };
+
+      //ATTRIBUTES
 
       for (let attributesKey in JSONData.system.attributes) {
         if (attributesKey !== "essence") {
@@ -219,6 +221,8 @@ function loadFromJSON(event) {
         }
       }
 
+      //SKILLS
+
       for (let skillsKey in JSONData.system.skills) {
         characterData.skills[skillsKey].added =
           JSONData.system.skills[skillsKey].rank.base;
@@ -226,10 +230,151 @@ function loadFromJSON(event) {
           JSONData.system.skills[skillsKey].test.total;
       }
 
+      //ITEMS
+      var itemsByType = {
+        augmentation: [],
+        gear: [],
+        weapon: [],
+        armor: [],
+        vehicle: [],
+        ammunition: [],
+        SIN: [],
+        lifestyle: [],
+        contact: [],
+        spell: [],
+        complexForm: [],
+        quality: [],
+        spirit: [],
+        sprite: [],
+      };
+
+      for (let item in JSONData.items) {
+        let itemType = JSONData.items[item].type;
+        if (itemsByType.hasOwnProperty(itemType)) {
+          itemsByType[itemType].push(JSONData.items[item]);
+        }
+      }
+
+      //QUALITIES
+
+      for (let quality in itemsByType.quality) {
+        var q = {
+          key: itemsByType.quality[quality].name,
+          description: itemsByType.quality[quality].system.info.description,
+          type: itemsByType.quality[quality].system.type,
+          karmaCost: itemsByType.quality[quality].system.karmaCost.base,
+        };
+        characterData.qualities.push(q);
+      }
+
+      //CONTACTS
+
+      for (let contact in itemsByType.contact) {
+        var c = {
+          key: itemsByType.contact[contact].name,
+          description: itemsByType.contact[contact].system.info.description,
+          connection: itemsByType.contact[contact].system.connection,
+          loyalty: itemsByType.contact[contact].system.loyalty,
+          type: itemsByType.contact[contact].system.type,
+        };
+        characterData.contacts.push(c);
+      }
+
+      //WEAPONS
+
+      for (let weapon in itemsByType.weapon) {
+        console.log(itemsByType.weapon[weapon]);
+        if (itemsByType.weapon[weapon].system.type === "rangedWeapon") {
+          console.log(itemsByType.weapon[weapon]);
+          var rangedWeapon = {
+            key: itemsByType.weapon[weapon].name,
+            description: itemsByType.weapon[weapon].system.info.description,
+            skill: itemsByType.weapon[weapon].system.test.linkedSkill,
+            baseConcealability: itemsByType.weapon[weapon].system.concealability.base,
+            price: itemsByType.weapon[weapon].system.goods.price.base,
+            availability:
+              itemsByType.weapon[weapon].system.goods.availability.base,
+            legality: itemsByType.weapon[weapon].system.legality,
+            type: itemsByType.weapon[weapon].system.typeSub,
+            AR: {
+              closeAR:
+                itemsByType.weapon[weapon].system.attackRating.range.close.base,
+              nearAR:
+                itemsByType.weapon[weapon].system.attackRating.range.near.base,
+              mediumAR:
+                itemsByType.weapon[weapon].system.attackRating.range.medium
+                  .base,
+              farAR:
+                itemsByType.weapon[weapon].system.attackRating.range.far.base,
+              extremeAR:
+                itemsByType.weapon[weapon].system.attackRating.range.extreme
+                  .base,
+            },
+            damage: {
+              value: itemsByType.weapon[weapon].system.damage.value.base,
+              type: itemsByType.weapon[weapon].system.damage.type,
+            },
+            ammunitionMax: itemsByType.weapon[weapon].system.ammo.max,
+            loadingMechanism:
+              itemsByType.weapon[weapon].system.ammo.loadingMechanism,
+            firingModes: {
+              singleShot:
+                itemsByType.weapon[weapon].system.firingMode.singleShot
+                  .available,
+              semiAutomatic:
+                itemsByType.weapon[weapon].system.firingMode.semiAutomatic
+                  .available,
+              burstFire:
+                itemsByType.weapon[weapon].system.firingMode.burstFire
+                  .available,
+              fullAutomatic:
+                itemsByType.weapon[weapon].system.firingMode.fullyAutomatic
+                  .available,
+            },
+          };
+
+          characterData.rangedWeapons.push(rangedWeapon);
+        }
+        if (itemsByType.weapon[weapon].system.type === "meleeWeapon") {
+          console.log(itemsByType.weapon[weapon]);
+          var meleeWeapon = {
+            key: itemsByType.weapon[weapon].name,
+            description: itemsByType.weapon[weapon].system.info.description,
+            skill: itemsByType.weapon[weapon].system.test.linkedSkill,
+            baseConcealability: itemsByType.weapon[weapon].system.concealability.base,
+            price: itemsByType.weapon[weapon].system.goods.price.base,
+            availability:
+              itemsByType.weapon[weapon].system.goods.availability.base,
+            legality: itemsByType.weapon[weapon].system.legality,
+            type: itemsByType.weapon[weapon].system.typeSub,
+            AR: {
+              closeAR:
+                itemsByType.weapon[weapon].system.attackRating.range.close.base,
+              nearAR:
+                itemsByType.weapon[weapon].system.attackRating.range.near.base,
+              mediumAR:
+                itemsByType.weapon[weapon].system.attackRating.range.medium
+                  .base,
+              farAR:
+                itemsByType.weapon[weapon].system.attackRating.range.far.base,
+              extremeAR:
+                itemsByType.weapon[weapon].system.attackRating.range.extreme
+                  .base,
+            },
+            damage: {
+              value: itemsByType.weapon[weapon].system.damage.value.base,
+              type: itemsByType.weapon[weapon].system.damage.type,
+            },
+          };
+
+          characterData.meleeWeapons.push(meleeWeapon);
+        }
+      }
+
       console.log("loadFromJSON characterData : ", characterData);
 
       // Chargez les données du personnage
-      loadDataCharacter(characterData);
+      saveCharacterData(characterData);
     };
 
     // Lisez le fichier en tant que texte
