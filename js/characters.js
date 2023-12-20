@@ -290,7 +290,8 @@ function loadFromJSON(event) {
             key: itemsByType.weapon[weapon].name,
             description: itemsByType.weapon[weapon].system.info.description,
             skill: itemsByType.weapon[weapon].system.test.linkedSkill,
-            baseConcealability: itemsByType.weapon[weapon].system.concealability.base,
+            baseConcealability:
+              itemsByType.weapon[weapon].system.concealability.base,
             price: itemsByType.weapon[weapon].system.goods.price.base,
             availability:
               itemsByType.weapon[weapon].system.goods.availability.base,
@@ -341,7 +342,8 @@ function loadFromJSON(event) {
             key: itemsByType.weapon[weapon].name,
             description: itemsByType.weapon[weapon].system.info.description,
             skill: itemsByType.weapon[weapon].system.test.linkedSkill,
-            baseConcealability: itemsByType.weapon[weapon].system.concealability.base,
+            baseConcealability:
+              itemsByType.weapon[weapon].system.concealability.base,
             price: itemsByType.weapon[weapon].system.goods.price.base,
             availability:
               itemsByType.weapon[weapon].system.goods.availability.base,
@@ -366,8 +368,41 @@ function loadFromJSON(event) {
               type: itemsByType.weapon[weapon].system.damage.type,
             },
           };
-
           characterData.meleeWeapons.push(meleeWeapon);
+        }
+        if (itemsByType.weapon[weapon].system.type === "grenade") {
+          console.log(itemsByType.weapon[weapon]);
+          var grenade = {
+            key: itemsByType.weapon[weapon].name,
+            description: itemsByType.weapon[weapon].system.info.description,
+            skill: itemsByType.weapon[weapon].system.test.linkedSkill,
+            baseConcealability:
+              itemsByType.weapon[weapon].system.concealability.base,
+            price: itemsByType.weapon[weapon].system.goods.price.base,
+            availability:
+              itemsByType.weapon[weapon].system.goods.availability.base,
+            legality: itemsByType.weapon[weapon].system.legality,
+            type: itemsByType.weapon[weapon].system.typeSub,
+            AR: {
+              closeAR:
+                itemsByType.weapon[weapon].system.attackRating.range.close.base,
+              nearAR:
+                itemsByType.weapon[weapon].system.attackRating.range.near.base,
+              mediumAR:
+                itemsByType.weapon[weapon].system.attackRating.range.medium
+                  .base,
+              farAR:
+                itemsByType.weapon[weapon].system.attackRating.range.far.base,
+              extremeAR:
+                itemsByType.weapon[weapon].system.attackRating.range.extreme
+                  .base,
+            },
+            damage: {
+              value: itemsByType.weapon[weapon].system.damage.value.base,
+              type: itemsByType.weapon[weapon].system.damage.type,
+            },
+          };
+          characterData.grenades.push(grenade);
         }
       }
 

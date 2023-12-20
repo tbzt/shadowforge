@@ -575,6 +575,13 @@ const translations = {
     crossbowLight: "arbalète légère",
     crossbowMedium: "arbalète moyenne",
     bow: "arc",
+    grenadeFlashPack: "Grenade (Flash-pak)",
+    grenadeFragmentation: "Grenade (Fragmentation)",
+    grenadeGas: "Grenade (Gaz)",
+    grenadeHighExplosive: "Grenade (Explosive)",
+    grenadeSmoke: "Grenade (Fumigène)",
+    grenadeSmokeThermal: "Grenade (Fumigène thermique)",
+    grenadeStun: "Grenade (Incapacitante)",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -950,6 +957,13 @@ const translations = {
     crossbowLight: "light crossbow",
     crossbowMedium: "medium crossbow",
     bow: "bow",
+    grenadeFlashPack: "Grenade (Flash-pak)",
+    grenadeFragmentation: "Grenade (Fragmentation)",
+    grenadeGas: "Grenade (Gas)",
+    grenadeHighExplosive: "Grenade (High Explosive)",
+    grenadeSmoke: "Grenade (Smoke)",
+    grenadeSmokeThermal: "Grenade (Thermal smoke)",
+    grenadeStun: "Grenade (Stun)",
   },
 };
 

@@ -1266,44 +1266,67 @@ function modalConstruct(type, newType, method) {
       </div>`;
       break;
     case "rangedWeapons":
-      const weaponTypes = [
-        "assaultCannon",
-        "crossbowHeavy",
-        "crossbowLight",
-        "crossbowMedium",
-        "bow",
-        "launcher",
-        "machineGunHeavy",
-        "machineGunLight",
-        "machineGunMedium",
-        "pistolMachine",
-        "pistolHeavy",
-        "pistolHoldOut",
-        "pistolLight",
-        "rifle",
-        "shotgun",
-        "rangedSpecial",
-        "submachineGun",
-        "taser",
-      ];
-      weaponTypes.sort((a, b) => terms[a].localeCompare(terms[b]));
+    case "meleeWeapons":
+    case "grenades":
+      const weaponTypesByType = {
+        rangedWeapons: [
+          "assaultCannon",
+          "crossbowHeavy",
+          "crossbowLight",
+          "crossbowMedium",
+          "bow",
+          "launcher",
+          "machineGunHeavy",
+          "machineGunLight",
+          "machineGunMedium",
+          "pistolMachine",
+          "pistolHeavy",
+          "pistolHoldOut",
+          "pistolLight",
+          "rifle",
+          "shotgun",
+          "rangedSpecial",
+          "submachineGun",
+          "taser",
+        ],
+        meleeWeapons: ["blade", "club", "meleeSpecial", "unarmed"],
+        grenades: [
+          "grenadeFlashPack",
+          "grenadeFragmentation",
+          "grenadeGas",
+          "grenadeHighExplosive",
+          "grenadeSmoke",
+          "grenadeSmokeThermal",
+          "grenadeStun",
+        ],
+      };
 
-      const weaponTypesOptions = weaponTypes
+      Object.keys(weaponTypesByType).forEach((type) => {
+        weaponTypesByType[type].sort((a, b) =>
+          terms[a].localeCompare(terms[b])
+        );
+      });
+
+      const weaponTypesOptions = weaponTypesByType[type]
         .map(
           (type) =>
             `<option value="${type}">${capitalized(terms[type])}</option>`
         )
         .join("\n");
 
-      const weaponSkills = [
-        "exoticWeapon",
-        "firearms",
-        "athletics",
-        "closeCombat",
-      ];
-      weaponSkills.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const weaponSkillsByType = {
+        rangedWeapons: ["exoticWeapon", "firearms", "athletics", "closeCombat"],
+        meleeWeapons: ["exoticWeapon", "athletics", "closeCombat"],
+        grenades: ["exoticWeapon", "athletics"],
+      };
 
-      const weaponSkillOptions = weaponSkills
+      Object.keys(weaponSkillsByType).forEach((type) => {
+        weaponSkillsByType[type].sort((a, b) =>
+          terms[a].localeCompare(terms[b])
+        );
+      });
+
+      const weaponSkillOptions = weaponSkillsByType[type]
         .map(
           (type) =>
             `<option value="${type}">${capitalized(terms[type])}</option>`
@@ -1353,8 +1376,8 @@ function modalConstruct(type, newType, method) {
       specificType = `
         <div class="form-group row align-items-center mb-2">
           <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
-            terms.type
-          )}${terms.colons}</label>
+        terms.type
+      )}${terms.colons}</label>
           <div class="col-sm-9 SR6_Select">
             <select class="form-control" id="${type}Type">
               <option value="">${capitalized(terms.select)}</option>
@@ -1364,8 +1387,8 @@ function modalConstruct(type, newType, method) {
         </div>
         <div class="form-group row align-items-center mb-2">
           <label for="${type}Skill" class="col-sm-3 col-form-label">${capitalized(
-            terms.skill
-          )}${terms.colons}</label>
+        terms.skill
+      )}${terms.colons}</label>
           <div class="col-sm-9">
             <select class="form-control SR6-Select" id="${type}Skill">
               <option value="">${capitalized(terms.select)}</option>
@@ -1375,8 +1398,8 @@ function modalConstruct(type, newType, method) {
         </div>
         <div class="form-group row align-items-center mb-2">  
             <label for="${type}BaseConcealability" class="col-sm-3 col-form-label">${capitalized(
-              terms.baseConcealability
-            )}${terms.colons}</label>
+        terms.baseConcealability
+      )}${terms.colons}</label>
             <div class="col-sm-2">
               <input type="number" class="form-control" id="${type}BaseConcealability" aria-label="baseConcealability" value=0>
             </div>
@@ -1384,14 +1407,14 @@ function modalConstruct(type, newType, method) {
         <div class="SR6_headline mb-2">${allCapitalized(terms.damages)}</div>
         <div class="form-group row align-items-center mb-2">  
             <label for="${type}DamageValue" class="col-sm-3 col-form-label">${capitalized(
-              terms.damageValue
-            )}${terms.colons}</label>
+        terms.damageValue
+      )}${terms.colons}</label>
             <div class="col-sm-2">
               <input type="number" class="form-control" id="${type}DamageValue" aria-label="damageValue" value=0>
             </div>
             <label for="${type}DamageType" class="col-sm-3 col-form-label">${capitalized(
-              terms.damageType
-            )}${terms.colons}</label>
+        terms.damageType
+      )}${terms.colons}</label>
             <div class="col-sm-4">
             <select class="form-control" id="${type}DamageType">
               <option value="">${capitalized(terms.select)}</option>
@@ -1401,8 +1424,8 @@ function modalConstruct(type, newType, method) {
         </div>
         <div class="form-group row align-items-center mb-2">
           <label for="${type}SpecialDamageType" class="col-sm-3 col-form-label">${capitalized(
-            terms.specialDamageType
-          )}${terms.colons}</label>
+        terms.specialDamageType
+      )}${terms.colons}</label>
           <div class="col-sm-9">
             <select class="form-control" id="${type}SpecialDamageType">
               <option value="">${capitalized(terms.select)}</option>
@@ -1415,26 +1438,26 @@ function modalConstruct(type, newType, method) {
         )}</div>
         <div class="form-group row align-items-center">  
             <label for="${type}AttackRating" class="col-sm-3 col-form-label">${capitalized(
-              terms.attackRating
-            )}${terms.colons}</label>
+        terms.attackRating
+      )}${terms.colons}</label>
             
             <div class="col-sm-9">
             <div class="row">
             <label for="${type}AttackRatingCloseAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.closeAR
-            )}</label>
+        terms.closeAR
+      )}</label>
             <label for="${type}AttackRatingNearAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.nearAR
-            )}</label>
+        terms.nearAR
+      )}</label>
             <label for="${type}AttackRatingMediumAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.mediumAR
-            )}</label>
+        terms.mediumAR
+      )}</label>
             <label for="${type}AttackRatingFarAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.farAR
-            )}</label>
+        terms.farAR
+      )}</label>
             <label for="${type}AttackRatingExtremeAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.extremeAR
-            )}</label>
+        terms.extremeAR
+      )}</label>
             </div>
             </div>
         </div>
@@ -1467,47 +1490,51 @@ function modalConstruct(type, newType, method) {
             </div>
             </div>
         </div>
-        <div class="SR6_headline mb-2">${allCapitalized(
-          terms.firingModes
-        )}</div>
-        <div class="form-group row align-items-center mb-2">
-          <label for="${type}FiringMods" class="col-sm-3 col-form-label">${capitalized(
-            terms.firingModes
-          )}${terms.colons}</label>
-          <div class="col-sm-9" id="${type}FiringMods">
-              ${weaponfiringModesOptions}
-          </div>
-        </div>
-        <div class="form-group row align-items-center mb-2">  
-            <label for="${type}AmmunitionMax" class="col-sm-3 col-form-label">${capitalized(
-              terms.ammunitionMax
-            )}${terms.colons}</label>
-            <div class="col-sm-2">
-              <input type="number" class="form-control" id="${type}AmmunitionMax" aria-label="ammunitionMax" value=0>
-            </div>
-            <label for="${type}LoadingMechanism" class="col-sm-3 col-form-label">${capitalized(
-              terms.loadingMechanism
-            )}${terms.colons}</label>
-            <div class="col-sm-4">
-            <select class="form-control" id="${type}LoadingMechanism">
-              <option value="">${capitalized(terms.select)}</option>
-              ${weaponloadingMechanismOptions}
-            </select>
-            </div>
-        </div>
+        ${
+          type === "rangedWeapons"
+            ? `<div class="SR6_headline mb-2">${allCapitalized(
+                terms.firingModes
+              )}</div>
+                <div class="form-group row align-items-center mb-2">
+                  <label for="${type}FiringMods" class="col-sm-3 col-form-label">${capitalized(
+                terms.firingModes
+              )}${terms.colons}</label>
+                  <div class="col-sm-9" id="${type}FiringMods">
+                      ${weaponfiringModesOptions}
+                  </div>
+                </div>
+                <div class="form-group row align-items-center mb-2">  
+                    <label for="${type}AmmunitionMax" class="col-sm-3 col-form-label">${capitalized(
+                terms.ammunitionMax
+              )}${terms.colons}</label>
+                    <div class="col-sm-2">
+                      <input type="number" class="form-control" id="${type}AmmunitionMax" aria-label="ammunitionMax" value=0>
+                    </div>
+                    <label for="${type}LoadingMechanism" class="col-sm-3 col-form-label">${capitalized(
+                terms.loadingMechanism
+              )}${terms.colons}</label>
+                    <div class="col-sm-4">
+                    <select class="form-control" id="${type}LoadingMechanism">
+                      <option value="">${capitalized(terms.select)}</option>
+                      ${weaponloadingMechanismOptions}
+                    </select>
+                    </div>
+                </div>`
+            : ""
+        }
         <div class="SR6_headline mb-2">${allCapitalized(
           terms.priceAndAvailability
         )}</div>
         <div class="form-group row align-items-center mb-2">  
             <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
-              terms.price
-            )}${terms.colons}</label>
+        terms.price
+      )}${terms.colons}</label>
             <div class="col-sm-3">
               <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
             </div>
             <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
-              terms.legality
-            )}${terms.colons}</label>
+        terms.legality
+      )}${terms.colons}</label>
             <div class="col-sm-4">
             <select class="form-control" id="${type}Legality">
               <option value="">${capitalized(terms.select)}</option>
@@ -1517,193 +1544,18 @@ function modalConstruct(type, newType, method) {
         </div>
         <div class="form-group row align-items-center mb-2">  
             <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
-              terms.availability
-            )}${terms.colons}</label>
+        terms.availability
+      )}${terms.colons}</label>
             <div class="col-sm-3">
               <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
             </div>
       </div>
       <div class="form-group row align-items-center mb-4">
           <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
-            terms.description
-          )}${terms.colons}</label>
+        terms.description
+      )}${terms.colons}</label>
           <div class="col-sm-9">
             <textarea class="form-control" id="${type}Description" rows="4"></textarea>
-          </div>
-      </div>`;
-      break;
-    case "meleeWeapons":
-      const meleeWeaponTypes = ["blade", "club", "meleeSpecial", "unarmed"];
-      meleeWeaponTypes.sort((a, b) => terms[a].localeCompare(terms[b]));
-
-      const meleeWeaponTypesOptions = meleeWeaponTypes
-        .map(
-          (type) =>
-            `<option value="${type}">${capitalized(terms[type])}</option>`
-        )
-        .join("\n");
-
-      const meleeWeaponSkills = ["exoticWeapon", "athletics", "closeCombat"];
-      meleeWeaponSkills.sort((a, b) => terms[a].localeCompare(terms[b]));
-
-      const meleeWeaponSkillsOptions = meleeWeaponSkills
-        .map(
-          (type) =>
-            `<option value="${type}">${capitalized(terms[type])}</option>`
-        )
-        .join("\n");
-
-      specificType = `
-        <div class="form-group row align-items-center mb-2">
-          <label for="meleeWeaponsType" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
-            terms.type
-          )}${terms.colons}</label>
-          <div class="col-sm-9 SR6_Select">
-            <select class="form-control" id="meleeWeaponsType">
-              <option value="">${capitalized(terms.select)}</option>
-              ${meleeWeaponTypesOptions}
-            </select>
-          </div>
-        </div>
-        <div class="form-group row align-items-center mb-2">
-          <label for="meleeWeaponsSkill" class="col-sm-3 col-form-label">${capitalized(
-            terms.skill
-          )}${terms.colons}</label>
-          <div class="col-sm-9">
-            <select class="form-control SR6-Select" id="meleeWeaponsSkill">
-              <option value="">${capitalized(terms.select)}</option>
-              ${meleeWeaponSkillsOptions}
-            </select>
-          </div>
-        </div>
-        <div class="form-group row align-items-center mb-2">  
-            <label for="meleeWeaponsBaseConcealability" class="col-sm-3 col-form-label">${capitalized(
-              terms.baseConcealability
-            )}${terms.colons}</label>
-            <div class="col-sm-2">
-              <input type="number" class="form-control" id="meleeWeaponsBaseConcealability" aria-label="baseConcealability" value=0>
-            </div>
-        </div>
-        <div class="SR6_headline mb-2">${allCapitalized(terms.damages)}</div>
-        <div class="form-group row align-items-center mb-2">  
-            <label for="meleeWeaponsDamageValue" class="col-sm-3 col-form-label">${capitalized(
-              terms.damageValue
-            )}${terms.colons}</label>
-            <div class="col-sm-2">
-              <input type="number" class="form-control" id="meleeWeaponsDamageValue" aria-label="damageValue" value=0>
-            </div>
-            <label for="meleeWeaponsDamageType" class="col-sm-3 col-form-label">${capitalized(
-              terms.damageType
-            )}${terms.colons}</label>
-            <div class="col-sm-4">
-            <select class="form-control" id="meleeWeaponsDamageType">
-              <option value="">${capitalized(terms.select)}</option>
-              ${weaponDamageTypeOptions}
-            </select>
-            </div>
-        </div>
-        <div class="form-group row align-items-center mb-2">
-          <label for="meleeWeaponsSpecialDamageType" class="col-sm-3 col-form-label">${capitalized(
-            terms.specialDamageType
-          )}${terms.colons}</label>
-          <div class="col-sm-9">
-            <select class="form-control" id="meleeWeaponsSpecialDamageType">
-              <option value="">${capitalized(terms.select)}</option>
-              ${weaponSpecialDamageTypeOptions}
-            </select>
-          </div>
-        </div>        
-        <div class="SR6_headline mb-2">${allCapitalized(
-          terms.attackRating
-        )}</div>
-        <div class="form-group row align-items-center">  
-            <label for="meleeWeaponsAttackRating" class="col-sm-3 col-form-label">${capitalized(
-              terms.attackRating
-            )}${terms.colons}</label>
-            
-            <div class="col-sm-9">
-            <div class="row">
-            <label for="meleeWeaponsAttackRatingCloseAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.closeAR
-            )}</label>
-            <label for="meleeWeaponsAttackRatingNearAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.nearAR
-            )}</label>
-            <label for="meleeWeaponsAttackRatingMediumAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.mediumAR
-            )}</label>
-            <label for="meleeWeaponsAttackRatingFarAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.farAR
-            )}</label>
-            <label for="meleeWeaponsAttackRatingExtremeAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
-              terms.extremeAR
-            )}</label>
-            </div>
-            </div>
-        </div>
-        <div class="form-group row align-items-center mb-2">  
-            <div class="col-sm-3"></div>
-            <div class="col-sm-9">
-            <div class="row smaller">
-            
-            <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="meleeWeaponsAttackRating" 
-              id="meleeWeaponsAttackRatingCloseAR" aria-label="meleeWeaponsAttackRating" value=0>
-            </div>
-            <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
-              id="meleeWeaponsAttackRatingNearAR" aria-label="meleeWeaponsAttackRating" value=0>
-            </div>
-            <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
-              id="meleeWeaponsAttackRatingMediumAR" aria-label="meleeWeaponsAttackRating" value=0>
-            </div>
-            <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
-              id="meleeWeaponsAttackRatingFarAR" aria-label="meleeWeaponsAttackRating" value=0>
-            </div>    
-            <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="meleeWeaponsAttackRating"  
-              id="meleeWeaponsAttackRatingExtremeAR" aria-label="meleeWeaponsAttackRating" value=0>
-            </div>
-
-            </div>
-            </div>
-        </div>
-        <div class="SR6_headline mb-2">${allCapitalized(
-          terms.priceAndAvailability
-        )}</div>
-        <div class="form-group row align-items-center mb-2">  
-            <label for="meleeWeaponsPrice" class="col-sm-3 col-form-label">${capitalized(
-              terms.price
-            )}${terms.colons}</label>
-            <div class="col-sm-3">
-              <input type="number" class="form-control" id="meleeWeaponsPrice" aria-label="price" value=0>
-            </div>
-            <label for="meleeWeaponsLegality" class="col-sm-2 col-form-label ">${capitalized(
-              terms.legality
-            )}${terms.colons}</label>
-            <div class="col-sm-4">
-            <select class="form-control" id="meleeWeaponsLegality">
-              <option value="">${capitalized(terms.select)}</option>
-              ${legalityOptions}
-            </select>
-            </div>
-        </div>
-        <div class="form-group row align-items-center mb-2">  
-            <label for="meleeWeaponsAvailability" class="col-sm-3 col-form-label">${capitalized(
-              terms.availability
-            )}${terms.colons}</label>
-            <div class="col-sm-3">
-              <input type="number" class="form-control" id="meleeWeaponsAvailability" aria-label="price" value=0>
-            </div>
-      </div>
-      <div class="form-group row align-items-center mb-4">
-          <label for="meleeWeaponsDescription" class="col-sm-3 col-form-label">${capitalized(
-            terms.description
-          )}${terms.colons}</label>
-          <div class="col-sm-9">
-            <textarea class="form-control" id="meleeWeaponsDescription" rows="4"></textarea>
           </div>
       </div>`;
       break;
@@ -1793,7 +1645,8 @@ function handleDropdownModal(type) {
       type === "specializations" ||
       type === "languages" ||
       type === "rangedWeapons" ||
-      type === "meleeWeapons"
+      type === "meleeWeapons" ||
+      type === "grenades"
     ) {
       newType = terms.newe;
     }
@@ -1992,7 +1845,7 @@ function handleDropdownModal(type) {
         console.log("newItem : ", newItem);
       }
 
-      if (type === "meleeWeapons") {
+      if (type === "meleeWeapons" || type === "grenades") {
         var weaponType = getValue("Type", type);
         var skill = getValue("Skill", type);
         var baseConcealability = getValue("BaseConcealability", type, true);
@@ -2055,13 +1908,13 @@ function handleDropdownModal(type) {
           characterData.contacts.push(newItem);
           updateContactDisplay();
         }
-        if (type === "rangedWeapons") {
-          characterData.rangedWeapons.push(newItem);
-          updateRangedWeaponsDisplay();
-        }
-        if (type === "meleeWeapons") {
-          characterData.meleeWeapons.push(newItem);
-          updateMeleeWeaponsDisplay();
+        if (
+          type === "rangedWeapons" ||
+          type === "meleeWeapons" ||
+          type === "grenades"
+        ) {
+          characterData[type].push(newItem);
+          updateWeaponsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -2094,10 +1947,11 @@ function handleItemClick(type, indexItem) {
     type === "knowledges" ||
     type === "specializations" ||
     type === "languages" ||
-    type === "rangesWeapons"
-  ) {
+    type === "rangedWeapons" ||
+    type === "meleeWeapons" ||
+    type === "grenades"
+  )
     newType = terms.newe;
-  }
 
   // Générer la modale
   var modal = modalConstruct(type, newType, "modify");
@@ -2162,58 +2016,11 @@ function handleItemClick(type, indexItem) {
     }
   }
 
-  if (type === "rangedWeapons") {
-    console.log("rangedWeapons : ", type);
-
-    const fields = [
-      "Type",
-      "Skill",
-      "BaseConcealability",
-      "AmmunitionMax",
-      "loadingMechanism",
-      "Legality",
-      "Availability",
-      "Price",
-      "Description",
-    ];
-
-    fields.forEach((field) => {
-      var element = modalContainer.querySelector(`#${type}${field}`);
-      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
-        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
-      }
-    });
-
-    modalContainer.querySelector(`#rangedWeaponsDamageValue`).value =
-      characterData[type][indexItem].damage.value;
-    modalContainer.querySelector(`#rangedWeaponsDamageType`).value =
-      characterData[type][indexItem].damage.type;
-    modalContainer.querySelector(`#rangedWeaponsSpecialDamageType`).value =
-      characterData[type][indexItem].damage.special;
-    modalContainer.querySelector(`#rangedWeaponsAttackRatingCloseAR`).value =
-      characterData[type][indexItem].AR.closeAR;
-    modalContainer.querySelector(`#rangedWeaponsAttackRatingNearAR`).value =
-      characterData[type][indexItem].AR.nearAR;
-    modalContainer.querySelector(`#rangedWeaponsAttackRatingMediumAR`).value =
-      characterData[type][indexItem].AR.mediumAR;
-    modalContainer.querySelector(`#rangedWeaponsAttackRatingFarAR`).value =
-      characterData[type][indexItem].AR.farAR;
-    modalContainer.querySelector(`#rangedWeaponsAttackRatingExtremeAR`).value =
-      characterData[type][indexItem].AR.extremeAR;
-
-    modalContainer.querySelector(`#singleShot`).checked =
-      characterData[type][indexItem].firingModes.singleShot;
-    modalContainer.querySelector(`#semiAutomatic`).checked =
-      characterData[type][indexItem].firingModes.semiAutomatic;
-    modalContainer.querySelector(`#burstFire`).checked =
-      characterData[type][indexItem].firingModes.burstFire;
-    modalContainer.querySelector(`#fullAutomatic`).checked =
-      characterData[type][indexItem].firingModes.fullAutomatic;
-  }
-
-  if (type === "meleeWeapons") {
-    console.log("meleeWeapons : ", type);
-
+  if (
+    type === "rangedWeapons" ||
+    type === "meleeWeapons" ||
+    type === "grenades"
+  ) {
     const fields = [
       "Type",
       "Skill",
@@ -2224,6 +2031,10 @@ function handleItemClick(type, indexItem) {
       "Description",
     ];
 
+    if (type === "rangedWeapons") {
+      fields.push("AmmunitionMax", "loadingMechanism");
+    }
+
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
       if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
@@ -2231,21 +2042,21 @@ function handleItemClick(type, indexItem) {
       }
     });
 
-    modalContainer.querySelector(`#meleeWeaponsDamageValue`).value =
+    modalContainer.querySelector(`#${type}DamageValue`).value =
       characterData[type][indexItem].damage.value;
-    modalContainer.querySelector(`#meleeWeaponsDamageType`).value =
+    modalContainer.querySelector(`#${type}DamageType`).value =
       characterData[type][indexItem].damage.type;
-    modalContainer.querySelector(`#meleeWeaponsSpecialDamageType`).value =
+    modalContainer.querySelector(`#${type}SpecialDamageType`).value =
       characterData[type][indexItem].damage.special;
-    modalContainer.querySelector(`#meleeWeaponsAttackRatingCloseAR`).value =
+    modalContainer.querySelector(`#${type}AttackRatingCloseAR`).value =
       characterData[type][indexItem].AR.closeAR;
-    modalContainer.querySelector(`#meleeWeaponsAttackRatingNearAR`).value =
+    modalContainer.querySelector(`#${type}AttackRatingNearAR`).value =
       characterData[type][indexItem].AR.nearAR;
-    modalContainer.querySelector(`#meleeWeaponsAttackRatingMediumAR`).value =
+    modalContainer.querySelector(`#${type}AttackRatingMediumAR`).value =
       characterData[type][indexItem].AR.mediumAR;
-    modalContainer.querySelector(`#meleeWeaponsAttackRatingFarAR`).value =
+    modalContainer.querySelector(`#${type}AttackRatingFarAR`).value =
       characterData[type][indexItem].AR.farAR;
-    modalContainer.querySelector(`#meleeWeaponsAttackRatingExtremeAR`).value =
+    modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value =
       characterData[type][indexItem].AR.extremeAR;
   }
 
@@ -2363,68 +2174,11 @@ function handleItemClick(type, indexItem) {
           updateQualitiesKarma();
         }
 
-        if (type === "rangedWeapons") {
-          console.log("rangedWeapons : ", type);
-
-          const fields = [
-            "Type",
-            "Skill",
-            "BaseConcealability",
-            "AmmunitionMax",
-            "loadingMechanism",
-            "Legality",
-            "Availability",
-            "Price",
-            "Description",
-          ];
-
-          fields.forEach((field) => {
-            const element = modalContainer.querySelector(`#${type}${field}`);
-            if (element) {
-              characterData[type][indexItem][
-                field.charAt(0).toLowerCase() + field.slice(1)
-              ] = element.value;
-            }
-          });
-
-          modalContainer.querySelector(`#rangedWeaponsDamageValue`).value =
-            characterData[type][indexItem].damage.value;
-          modalContainer.querySelector(`#rangedWeaponsDamageType`).value =
-            characterData[type][indexItem].damage.type;
-          modalContainer.querySelector(
-            `#rangedWeaponsSpecialDamageType`
-          ).value = characterData[type][indexItem].damage.special;
-          modalContainer.querySelector(
-            `#rangedWeaponsAttackRatingCloseAR`
-          ).value = characterData[type][indexItem].AR.closeAR;
-          modalContainer.querySelector(
-            `#rangedWeaponsAttackRatingNearAR`
-          ).value = characterData[type][indexItem].AR.nearAR;
-          modalContainer.querySelector(
-            `#rangedWeaponsAttackRatingMediumAR`
-          ).value = characterData[type][indexItem].AR.mediumAR;
-          modalContainer.querySelector(
-            `#rangedWeaponsAttackRatingFarAR`
-          ).value = characterData[type][indexItem].AR.farAR;
-          modalContainer.querySelector(
-            `#rangedWeaponsAttackRatingExtremeAR`
-          ).value = characterData[type][indexItem].AR.extremeAR;
-
-          modalContainer.querySelector(`#singleShot`).checked =
-            characterData[type][indexItem].firingModes.singleShot;
-          modalContainer.querySelector(`#semiAutomatic`).checked =
-            characterData[type][indexItem].firingModes.semiAutomatic;
-          modalContainer.querySelector(`#burstFire`).checked =
-            characterData[type][indexItem].firingModes.burstFire;
-          modalContainer.querySelector(`#fullAutomatic`).checked =
-            characterData[type][indexItem].firingModes.fullAutomatic;
-
-          updateRangedWeaponsDisplay();
-        }
-
-        if (type === "meleeWeapons") {
-          console.log("meleeWeapons : ", type);
-
+        if (
+          type === "rangedWeapons" ||
+          type === "meleeWeapons" ||
+          type === "grenades"
+        ) {
           const fields = [
             "Type",
             "Skill",
@@ -2435,6 +2189,10 @@ function handleItemClick(type, indexItem) {
             "Description",
           ];
 
+          if (type === "rangedWeapons") {
+            fields.push("AmmunitionMax", "loadingMechanism");
+          }
+
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
             if (element) {
@@ -2444,28 +2202,24 @@ function handleItemClick(type, indexItem) {
             }
           });
 
-          modalContainer.querySelector(`#meleeWeaponsDamageValue`).value =
+          modalContainer.querySelector(`#${type}DamageValue`).value =
             characterData[type][indexItem].damage.value;
-          modalContainer.querySelector(`#meleeWeaponsDamageType`).value =
+          modalContainer.querySelector(`#${type}DamageType`).value =
             characterData[type][indexItem].damage.type;
-          modalContainer.querySelector(`#meleeWeaponsSpecialDamageType`).value =
+          modalContainer.querySelector(`#${type}SpecialDamageType`).value =
             characterData[type][indexItem].damage.special;
-          modalContainer.querySelector(
-            `#meleeWeaponsAttackRatingCloseAR`
-          ).value = characterData[type][indexItem].AR.closeAR;
-          modalContainer.querySelector(
-            `#meleeWeaponsAttackRatingNearAR`
-          ).value = characterData[type][indexItem].AR.nearAR;
-          modalContainer.querySelector(
-            `#meleeWeaponsAttackRatingMediumAR`
-          ).value = characterData[type][indexItem].AR.mediumAR;
-          modalContainer.querySelector(`#meleeWeaponsAttackRatingFarAR`).value =
+          modalContainer.querySelector(`#${type}AttackRatingCloseAR`).value =
+            characterData[type][indexItem].AR.closeAR;
+          modalContainer.querySelector(`#${type}AttackRatingNearAR`).value =
+            characterData[type][indexItem].AR.nearAR;
+          modalContainer.querySelector(`#${type}AttackRatingMediumAR`).value =
+            characterData[type][indexItem].AR.mediumAR;
+          modalContainer.querySelector(`#${type}AttackRatingFarAR`).value =
             characterData[type][indexItem].AR.farAR;
-          modalContainer.querySelector(
-            `#meleeWeaponsAttackRatingExtremeAR`
-          ).value = characterData[type][indexItem].AR.extremeAR;
+          modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value =
+            characterData[type][indexItem].AR.extremeAR;
 
-          updateMeleeWeaponsDisplay();
+          updateWeaponsDisplay(type);
         }
 
         if (type === "languages" || type === "knowledges") {
@@ -2508,11 +2262,12 @@ function removeModalClick(type, indexItem) {
   if (type === "contacts") {
     updateContactDisplay();
   }
-  if (type === "rangedWeapons") {
-    updateRangedWeaponsDisplay();
-  }
-  if (type === "meleeWeapons") {
-    updateMeleeWeaponsDisplay();
+  if (
+    type === "rangedWeapons" ||
+    type === "meleeWeapons" ||
+    type === "grenades"
+  ) {
+    updateWeaponsDisplay(type);
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -2715,23 +2470,24 @@ function updateDisplay() {
   updateQualitiesDisplay();
   updateQualitiesKarma();
   updateContactDisplay();
-  updateRangedWeaponsDisplay();
-  updateMeleeWeaponsDisplay();
+  updateWeaponsDisplay("rangedWeapons");
+  updateWeaponsDisplay("meleeWeapons");
+  updateWeaponsDisplay("grenades");
 }
 
-function updateRangedWeaponsDisplay() {
-  var rangedWeaponsTableBody = $("#rangedWeaponsTable tbody");
+function updateWeaponsDisplay(type) {
+  var weaponsTableBody = $(`#${type}Table tbody`);
 
   // Effacez le contenu actuel du corps du tableau
-  rangedWeaponsTableBody.empty();
+  weaponsTableBody.empty();
 
   // Vérifiez si characterData.qualities existe
-  if (characterData.rangedWeapons) {
+  if (characterData[type].length > 0) {
     // Parcourez chaque qualité dans characterData.qualities
-    var rangedWeapons = [];
-    rangedWeapons = sortKeys(characterData.rangedWeapons);
+    var weapons = [];
+    weapons = sortKeys(characterData[type]);
 
-    rangedWeapons.forEach(function (weapon) {
+    weapons.forEach(function (weapon) {
       // Générez une nouvelle ligne pour chaque qualité
       var row = `
       <tr>
@@ -2747,62 +2503,13 @@ function updateRangedWeaponsDisplay() {
       )}/${parseInt(weapon.AR.farAR)}/${parseInt(weapon.AR.extremeAR)}</td>
           <td class="price-column">${parseInt(weapon.price)}</td>
       <td class="handler-column">
-      <i class="bi bi-pencil-fill" onclick="handleItemClick('rangedWeapons','${characterData.rangedWeapons.indexOf(
-        weapon
-      )}')"></i>
-      <i class="bi bi-eraser-fill" onclick="removeModalClick('rangedWeapons','${characterData.rangedWeapons.indexOf(
-        weapon
-      )}')"></i>
-      <div id="modalContainerrangedWeapons${characterData.rangedWeapons.indexOf(
-        weapon
-      )}"></div>
-      </td>
-      </tr>
-      `;
-
-      // Ajoutez la ligne au corps du tableau
-      rangedWeaponsTableBody.append(row);
-    });
-  }
-
-  saveData();
-}
-
-function updateMeleeWeaponsDisplay() {
-  var meleeWeaponsTableBody = $("#meleeWeaponsTable tbody");
-
-  // Effacez le contenu actuel du corps du tableau
-  meleeWeaponsTableBody.empty();
-
-  // Vérifiez si characterData.qualities existe
-  if (characterData.meleeWeapons) {
-    // Parcourez chaque qualité dans characterData.qualities
-    var meleeWeapons = [];
-    meleeWeapons = sortKeys(characterData.meleeWeapons);
-
-    meleeWeapons.forEach(function (weapon) {
-      // Générez une nouvelle ligne pour chaque qualité
-      var row = `
-      <tr>
-          <td class="name-column">${weapon.key}</td>
-          <td class="type-column">${capitalized(terms[weapon.type])}</td>
-          <td class="damageValue-column">${weapon.damage.value}${
-        terms[weapon.damage.type + "_short"]
-      }</td>
-          <td class="attackRating-column">${parseInt(
-            weapon.AR.closeAR
-          )}/${parseInt(weapon.AR.nearAR)}/${parseInt(
-        weapon.AR.mediumAR
-      )}/${parseInt(weapon.AR.farAR)}/${parseInt(weapon.AR.extremeAR)}</td>
-          <td class="price-column">${parseInt(weapon.price)}</td>
-      <td class="handler-column">
-      <i class="bi bi-pencil-fill" onclick="handleItemClick('meleeWeapons','${characterData.meleeWeapons.indexOf(
-        weapon
-      )}')"></i>
-      <i class="bi bi-eraser-fill" onclick="removeModalClick('meleeWeapons','${characterData.meleeWeapons.indexOf(
-        weapon
-      )}')"></i>
-      <div id="modalContainermeleeWeapons${characterData.meleeWeapons.indexOf(
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('${type}','${characterData[
+        type
+      ].indexOf(weapon)}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('${type}','${characterData[
+        type
+      ].indexOf(weapon)}')"></i>
+      <div id="modalContainer${type}${characterData[type].indexOf(
         weapon
       )}"></div>
       </td>
@@ -2810,7 +2517,7 @@ function updateMeleeWeaponsDisplay() {
       `;
 
       // Ajoutez la ligne au corps du tableau
-      meleeWeaponsTableBody.append(row);
+      weaponsTableBody.append(row);
     });
   }
 
@@ -4270,6 +3977,12 @@ function assignData() {
             },
           },
         };
+        if (
+          weaponsToSpecializations[characterData.rangedWeapons[weapon].type] ===
+          "thrownWeapon"
+        ) {
+          w.system.type = "archery";
+        }
         foundryData.items.push(w);
       }
     }
@@ -4329,6 +4042,68 @@ function assignData() {
             test: {
               linkedSkill: item.skill,
               linkedSpecialization: weaponsToSpecializations[item.type],
+            },
+          },
+        };
+        foundryData.items.push(w);
+      }
+    }
+  }
+
+  if (characterData.grenades) {
+    for (let weapon in characterData.grenades) {
+      if (characterData.grenades.hasOwnProperty(weapon)) {
+        var item = characterData.grenades[weapon];
+
+        var w = {
+          name: item.key,
+          type: "weapon",
+          system: {
+            info: {
+              description: item.description,
+            },
+            conceablity: {
+              base: item.baseConcealability,
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+            },
+            legality: item.legality,
+            type: "grenade",
+            typeSub: item.type,
+            attackRating: {
+              range: {
+                close: {
+                  base: item.AR.closeAR,
+                },
+                near: {
+                  base: item.AR.nearAR,
+                },
+                medium: {
+                  base: item.AR.mediumAR,
+                },
+                far: {
+                  base: item.AR.farAR,
+                },
+                extreme: {
+                  base: item.AR.extremeAR,
+                },
+              },
+            },
+            damage: {
+              value: {
+                base: item.damage.value,
+              },
+              type: item.damage.type,
+            },
+            test: {
+              linkedSkill: item.skill,
+              linkedSpecialization: "throwing",
             },
           },
         };
