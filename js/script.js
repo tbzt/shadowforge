@@ -1352,59 +1352,59 @@ function modalConstruct(type, newType, method) {
 
       specificType = `
         <div class="form-group row align-items-center mb-2">
-          <label for="rangedWeaponsType" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
+          <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
             terms.type
           )}${terms.colons}</label>
           <div class="col-sm-9 SR6_Select">
-            <select class="form-control" id="rangedWeaponsType">
+            <select class="form-control" id="${type}Type">
               <option value="">${capitalized(terms.select)}</option>
               ${weaponTypesOptions}
             </select>
           </div>
         </div>
         <div class="form-group row align-items-center mb-2">
-          <label for="rangedWeaponsSkill" class="col-sm-3 col-form-label">${capitalized(
+          <label for="${type}Skill" class="col-sm-3 col-form-label">${capitalized(
             terms.skill
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <select class="form-control SR6-Select" id="rangedWeaponsSkill">
+            <select class="form-control SR6-Select" id="${type}Skill">
               <option value="">${capitalized(terms.select)}</option>
               ${weaponSkillOptions}
             </select>
           </div>
         </div>
         <div class="form-group row align-items-center mb-2">  
-            <label for="rangedWeaponsBaseConcealability" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}BaseConcealability" class="col-sm-3 col-form-label">${capitalized(
               terms.baseConcealability
             )}${terms.colons}</label>
             <div class="col-sm-2">
-              <input type="number" class="form-control" id="rangedWeaponsBaseConcealability" aria-label="baseConcealability" value=0>
+              <input type="number" class="form-control" id="${type}BaseConcealability" aria-label="baseConcealability" value=0>
             </div>
         </div>
         <div class="SR6_headline mb-2">${allCapitalized(terms.damages)}</div>
         <div class="form-group row align-items-center mb-2">  
-            <label for="rangedWeaponsDamageValue" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}DamageValue" class="col-sm-3 col-form-label">${capitalized(
               terms.damageValue
             )}${terms.colons}</label>
             <div class="col-sm-2">
-              <input type="number" class="form-control" id="rangedWeaponsDamageValue" aria-label="damageValue" value=0>
+              <input type="number" class="form-control" id="${type}DamageValue" aria-label="damageValue" value=0>
             </div>
-            <label for="rangedWeaponsDamageType" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}DamageType" class="col-sm-3 col-form-label">${capitalized(
               terms.damageType
             )}${terms.colons}</label>
             <div class="col-sm-4">
-            <select class="form-control" id="rangedWeaponsDamageType">
+            <select class="form-control" id="${type}DamageType">
               <option value="">${capitalized(terms.select)}</option>
               ${weaponDamageTypeOptions}
             </select>
             </div>
         </div>
         <div class="form-group row align-items-center mb-2">
-          <label for="rangedWeaponsSpecialDamageType" class="col-sm-3 col-form-label">${capitalized(
+          <label for="${type}SpecialDamageType" class="col-sm-3 col-form-label">${capitalized(
             terms.specialDamageType
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <select class="form-control" id="rangedWeaponsSpecialDamageType">
+            <select class="form-control" id="${type}SpecialDamageType">
               <option value="">${capitalized(terms.select)}</option>
               ${weaponSpecialDamageTypeOptions}
             </select>
@@ -1414,25 +1414,25 @@ function modalConstruct(type, newType, method) {
           terms.attackRating
         )}</div>
         <div class="form-group row align-items-center">  
-            <label for="rangedWeaponsAttackRating" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}AttackRating" class="col-sm-3 col-form-label">${capitalized(
               terms.attackRating
             )}${terms.colons}</label>
             
             <div class="col-sm-9">
             <div class="row">
-            <label for="rangedWeaponsAttackRatingCloseAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+            <label for="${type}AttackRatingCloseAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.closeAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingNearAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+            <label for="${type}AttackRatingNearAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.nearAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingMediumAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+            <label for="${type}AttackRatingMediumAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.mediumAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingFarAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+            <label for="${type}AttackRatingFarAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.farAR
             )}</label>
-            <label for="rangedWeaponsAttackRatingExtremeAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
+            <label for="${type}AttackRatingExtremeAR" class="col-sm-2 col-form-label mx-1 px-1">${capitalized(
               terms.extremeAR
             )}</label>
             </div>
@@ -1444,24 +1444,24 @@ function modalConstruct(type, newType, method) {
             <div class="row smaller">
             
             <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="rangedWeaponsAttackRating" 
-              id="rangedWeaponsAttackRatingCloseAR" aria-label="rangedWeaponsAttackRating" value=0>
+              <input type="number" class="form-control" name="${type}AttackRating" 
+              id="${type}AttackRatingCloseAR" aria-label="${type}AttackRating" value=0>
             </div>
             <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="rangedWeaponsAttackRating"  
-              id="rangedWeaponsAttackRatingNearAR" aria-label="rangedWeaponsAttackRating" value=0>
+              <input type="number" class="form-control" name="${type}AttackRating"  
+              id="${type}AttackRatingNearAR" aria-label="${type}AttackRating" value=0>
             </div>
             <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="rangedWeaponsAttackRating"  
-              id="rangedWeaponsAttackRatingMediumAR" aria-label="rangedWeaponsAttackRating" value=0>
+              <input type="number" class="form-control" name="${type}AttackRating"  
+              id="${type}AttackRatingMediumAR" aria-label="${type}AttackRating" value=0>
             </div>
             <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="rangedWeaponsAttackRating"  
-              id="rangedWeaponsAttackRatingFarAR" aria-label="rangedWeaponsAttackRating" value=0>
+              <input type="number" class="form-control" name="${type}AttackRating"  
+              id="${type}AttackRatingFarAR" aria-label="${type}AttackRating" value=0>
             </div>    
             <div class="col-sm-2 mx-1 px-1">
-              <input type="number" class="form-control" name="rangedWeaponsAttackRating"  
-              id="rangedWeaponsAttackRatingExtremeAR" aria-label="rangedWeaponsAttackRating" value=0>
+              <input type="number" class="form-control" name="${type}AttackRating"  
+              id="${type}AttackRatingExtremeAR" aria-label="${type}AttackRating" value=0>
             </div>
 
             </div>
@@ -1471,25 +1471,25 @@ function modalConstruct(type, newType, method) {
           terms.firingModes
         )}</div>
         <div class="form-group row align-items-center mb-2">
-          <label for="rangedWeaponsFiringMods" class="col-sm-3 col-form-label">${capitalized(
+          <label for="${type}FiringMods" class="col-sm-3 col-form-label">${capitalized(
             terms.firingModes
           )}${terms.colons}</label>
-          <div class="col-sm-9" id="rangedWeaponsFiringMods">
+          <div class="col-sm-9" id="${type}FiringMods">
               ${weaponfiringModesOptions}
           </div>
         </div>
         <div class="form-group row align-items-center mb-2">  
-            <label for="rangedWeaponsAmmunitionMax" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}AmmunitionMax" class="col-sm-3 col-form-label">${capitalized(
               terms.ammunitionMax
             )}${terms.colons}</label>
             <div class="col-sm-2">
-              <input type="number" class="form-control" id="rangedWeaponsAmmunitionMax" aria-label="ammunitionMax" value=0>
+              <input type="number" class="form-control" id="${type}AmmunitionMax" aria-label="ammunitionMax" value=0>
             </div>
-            <label for="rangedWeaponsLoadingMechanism" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}LoadingMechanism" class="col-sm-3 col-form-label">${capitalized(
               terms.loadingMechanism
             )}${terms.colons}</label>
             <div class="col-sm-4">
-            <select class="form-control" id="rangedWeaponsLoadingMechanism">
+            <select class="form-control" id="${type}LoadingMechanism">
               <option value="">${capitalized(terms.select)}</option>
               ${weaponloadingMechanismOptions}
             </select>
@@ -1499,36 +1499,36 @@ function modalConstruct(type, newType, method) {
           terms.priceAndAvailability
         )}</div>
         <div class="form-group row align-items-center mb-2">  
-            <label for="rangedWeaponsPrice" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
               terms.price
             )}${terms.colons}</label>
             <div class="col-sm-3">
-              <input type="number" class="form-control" id="rangedWeaponsPrice" aria-label="price" value=0>
+              <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
             </div>
-            <label for="rangedWeaponsLegality" class="col-sm-2 col-form-label ">${capitalized(
+            <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
               terms.legality
             )}${terms.colons}</label>
             <div class="col-sm-4">
-            <select class="form-control" id="rangedWeaponsLegality">
+            <select class="form-control" id="${type}Legality">
               <option value="">${capitalized(terms.select)}</option>
               ${legalityOptions}
             </select>
             </div>
         </div>
         <div class="form-group row align-items-center mb-2">  
-            <label for="rangedWeaponsAvailability" class="col-sm-3 col-form-label">${capitalized(
+            <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
               terms.availability
             )}${terms.colons}</label>
             <div class="col-sm-3">
-              <input type="number" class="form-control" id="rangedWeaponsAvailability" aria-label="price" value=0>
+              <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
             </div>
       </div>
       <div class="form-group row align-items-center mb-4">
-          <label for="rangedWeaponsDescription" class="col-sm-3 col-form-label">${capitalized(
+          <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
             terms.description
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <textarea class="form-control" id="rangedWeaponsDescription" rows="4"></textarea>
+            <textarea class="form-control" id="${type}Description" rows="4"></textarea>
           </div>
       </div>`;
       break;
