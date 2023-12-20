@@ -4277,7 +4277,7 @@ function assignData() {
 
   if (characterData.meleeWeapons) {
     for (let weapon in characterData.meleeWeapons) {
-      if (characterData.Weapons.hasOwnProperty(weapon)) {
+      if (characterData.meleeWeapons.hasOwnProperty(weapon)) {
         var item = characterData.meleeWeapons[weapon];
 
         var w = {
