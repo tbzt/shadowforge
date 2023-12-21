@@ -235,6 +235,7 @@ function loadFromJSON(event) {
         augmentation: [],
         gear: [],
         weapon: [],
+        ammunition: [],
         armor: [],
         vehicle: [],
         ammunition: [],
@@ -404,6 +405,22 @@ function loadFromJSON(event) {
           };
           characterData.grenades.push(grenade);
         }
+      }
+
+      //AMMUNITIONS
+
+      for (let ammo in itemsByType.ammunition) {
+        var a = {
+          key: itemsByType.ammunition[ammo].name,
+          description: itemsByType.ammunition[ammo].system.info.description,
+          price: itemsByType.ammunition[ammo].system.goods.price.base,
+          availability:
+            itemsByType.ammunition[ammo].system.goods.availability.base,
+          legality: itemsByType.ammunition[ammo].system.legality,
+          type: itemsByType.ammunition[ammo].system.type,
+          weaponType: itemsByType.ammunition[ammo].system.class,
+        };
+        characterData.ammunitions.push(a);
       }
 
       console.log("loadFromJSON characterData : ", characterData);

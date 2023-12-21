@@ -1560,6 +1560,132 @@ function modalConstruct(type, newType, method) {
       </div>`;
       break;
     case "ammunitions":
+      const ammunitionsTypes = [
+        "apds",
+        "capsuleDmso",
+        "explosive",
+        "flechette",
+        "gel",
+        "injectionDart",
+        "regular",
+        "stickNShock",
+        "assaultCannon",
+        "taserDart",
+        "bolt",
+        "boltInjection",
+        "arrow",
+        "arrowInjection",
+        "shotgun",
+        "rocketAntiVehicle",
+        "rocketFragmentation",
+        "rocketGas",
+        "rocketHighExplosive",
+        "rocketSmoke",
+        "rocketSmokeThermal",
+        "missileAntiVehicle",
+        "missileFragmentation",
+        "missileGas",
+        "missileHighExplosive",
+        "missileSmoke",
+        "missileSmokeThermal",
+      ];
+      ammunitionsTypes.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const ammunitionsTypesOptions = ammunitionsTypes
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const weaponAmmunitionsTypes = [
+        "assaultCannon",
+        "crossbowHeavy",
+        "crossbowLight",
+        "crossbowMedium",
+        "bow",
+        "launcher",
+        "machineGunHeavy",
+        "machineGunLight",
+        "machineGunMedium",
+        "pistolMachine",
+        "pistolHeavy",
+        "pistolHoldOut",
+        "pistolLight",
+        "rifle",
+        "shotgun",
+        "rangedSpecial",
+        "submachineGun",
+        "taser",
+      ];
+      weaponAmmunitionsTypes.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const weaponAmmunitionsTypesOptions = weaponAmmunitionsTypes
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+        <div class="col-sm-9 SR6_Select">
+          <select class="form-control" id="${type}Type">
+            <option value="">${capitalized(terms.select)}</option>
+            ${ammunitionsTypesOptions}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}WeaponsType" class="col-sm-3 col-form-label">${capitalized(
+        terms.weaponsType
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <select class="form-control SR6-Select" id="${type}WeaponsType">
+            <option value="">${capitalized(terms.select)}</option>
+            ${weaponAmmunitionsTypesOptions}
+          </select>
+        </div>
+      </div>
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>`;
       break;
     case "augmentations":
       break;
@@ -1646,7 +1772,8 @@ function handleDropdownModal(type) {
       type === "languages" ||
       type === "rangedWeapons" ||
       type === "meleeWeapons" ||
-      type === "grenades"
+      type === "grenades" ||
+      type === "ammunitions"
     ) {
       newType = terms.newe;
     }
@@ -1889,6 +2016,28 @@ function handleDropdownModal(type) {
         console.log("newItem : ", newItem);
       }
 
+      if (type === "ammunitions") {
+        var ammoType = getValue("Type", type);
+        var weaponType = getValue("WeaponsType", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          type: ammoType,
+          weaponType: weaponType,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+
+        console.log("newItem : ", newItem);
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -1915,6 +2064,10 @@ function handleDropdownModal(type) {
         ) {
           characterData[type].push(newItem);
           updateWeaponsDisplay(type);
+        }
+        if (type === "ammunitions") {
+          characterData[type].push(newItem);
+          updateAmmunitionsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -1949,7 +2102,8 @@ function handleItemClick(type, indexItem) {
     type === "languages" ||
     type === "rangedWeapons" ||
     type === "meleeWeapons" ||
-    type === "grenades"
+    type === "grenades" ||
+    type === "ammunitions"
   )
     newType = terms.newe;
 
@@ -2058,6 +2212,24 @@ function handleItemClick(type, indexItem) {
       characterData[type][indexItem].AR.farAR;
     modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value =
       characterData[type][indexItem].AR.extremeAR;
+  }
+
+  if (type === "ammunitions") {
+    const fields = [
+      "Type",
+      "WeaponType",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
   }
 
   if (type === "languages") {
@@ -2222,6 +2394,28 @@ function handleItemClick(type, indexItem) {
           updateWeaponsDisplay(type);
         }
 
+        if (type === "ammunitions") {
+          const fields = [
+            "Type",
+            "WeaponType",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateAmmunitionsDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -2268,6 +2462,9 @@ function removeModalClick(type, indexItem) {
     type === "grenades"
   ) {
     updateWeaponsDisplay(type);
+  }
+  if (type === "ammunitions") {
+    updateAmmunitionsDisplay(type);
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -2473,6 +2670,7 @@ function updateDisplay() {
   updateWeaponsDisplay("rangedWeapons");
   updateWeaponsDisplay("meleeWeapons");
   updateWeaponsDisplay("grenades");
+  updateAmmunitionsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -2481,14 +2679,11 @@ function updateWeaponsDisplay(type) {
   // Effacez le contenu actuel du corps du tableau
   weaponsTableBody.empty();
 
-  // Vérifiez si characterData.qualities existe
   if (characterData[type].length > 0) {
-    // Parcourez chaque qualité dans characterData.qualities
     var weapons = [];
     weapons = sortKeys(characterData[type]);
 
     weapons.forEach(function (weapon) {
-      // Générez une nouvelle ligne pour chaque qualité
       var row = `
       <tr>
           <td class="name-column">${weapon.key}</td>
@@ -2518,6 +2713,47 @@ function updateWeaponsDisplay(type) {
 
       // Ajoutez la ligne au corps du tableau
       weaponsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateAmmunitionsDisplay() {
+  var ammunitionsTableBody = $(`#ammunitionsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  ammunitionsTableBody.empty();
+
+  if (characterData.ammunitions.length > 0) {
+    console.log("characterData.ammunitions : ", characterData.ammunitions);
+    var ammunitions = [];
+    ammunitions = sortKeys(characterData.ammunitions);
+
+    ammunitions.forEach(function (ammunition) {
+      var row = `
+      <tr>
+          <td class="name-column">${ammunition.key}</td>
+          <td class="type-column">${capitalized(
+            terms[ammunition.type]
+          )} (${capitalized(terms[ammunition.weaponType])})</td>
+          <td class="price-column">${parseInt(ammunition.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('ammunitions','${characterData.ammunitions.indexOf(
+        ammunition
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('ammunitions','${characterData.ammunitions.indexOf(
+        ammunition
+      )}')"></i>
+      <div id="modalContainerammunitions${characterData.ammunitions.indexOf(
+        ammunition
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      ammunitionsTableBody.append(row);
     });
   }
 
@@ -4108,6 +4344,39 @@ function assignData() {
           },
         };
         foundryData.items.push(w);
+      }
+    }
+  }
+
+  if (characterData.ammunitions) {
+    for (let ammunition in characterData.ammunitions) {
+      if (characterData.ammunitions.hasOwnProperty(ammunition)) {
+        var item = characterData.ammunitions[ammunition];
+
+        var a = {
+          name: terms[item.key] + "(" + item.type + ")",
+          type: "ammunition",
+          system: {
+            info: {
+              description: item.description,
+            },
+            type: item.key,
+            class: item.weaponType,
+            conceablity: {
+              base: item.baseConcealability,
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+            },
+            legality: item.legality,
+          },
+        };
+        foundryData.items.push(a);
       }
     }
   }
