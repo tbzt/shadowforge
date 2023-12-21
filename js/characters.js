@@ -423,6 +423,24 @@ function loadFromJSON(event) {
         characterData.ammunitions.push(a);
       }
 
+      //PROTECTIONS
+
+      for (let protection in itemsByType.armor) {
+        var a = {
+          key: itemsByType.armor[protection].name,
+          description: itemsByType.armor[protection].system.info.description,
+          price: itemsByType.armor[protection].system.goods.price.base,
+          availability:
+            itemsByType.armor[protection].system.goods.availability.base,
+          legality: itemsByType.armor[protection].system.legality,
+          defenseRating:
+            itemsByType.armor[protection].system.defenseRating.base,
+          socialRating: itemsByType.armor[protection].system.defenseRating.base,
+          capacity: itemsByType.armor[protection].system.capacity.provided.base,
+        };
+        characterData.protections.push(a);
+      }
+
       console.log("loadFromJSON characterData : ", characterData);
 
       // Chargez les données du personnage

@@ -1109,6 +1109,7 @@ function handleModals() {
     "meleeWeapons",
     "grenades",
     "ammunitions",
+    "protections",
     "augmentations",
     "vehicles",
     "drugs",
@@ -1374,7 +1375,16 @@ function modalConstruct(type, newType, method) {
         .join("\n");
 
       specificType = `
-        <div class="form-group row align-items-center mb-2">
+        
+      <div class="form-group row align-items-center mb-4">
+      <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+      <div class="col-sm-9">
+        <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+      </div>
+  </div>
+  <div class="form-group row align-items-center mb-2">
           <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
         terms.type
       )}${terms.colons}</label>
@@ -1549,14 +1559,6 @@ function modalConstruct(type, newType, method) {
             <div class="col-sm-3">
               <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
             </div>
-      </div>
-      <div class="form-group row align-items-center mb-4">
-          <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
-        terms.description
-      )}${terms.colons}</label>
-          <div class="col-sm-9">
-            <textarea class="form-control" id="${type}Description" rows="4"></textarea>
-          </div>
       </div>`;
       break;
     case "ammunitions":
@@ -1627,8 +1629,16 @@ function modalConstruct(type, newType, method) {
         )
         .join("\n");
 
-      specificType = `
-      <div class="form-group row align-items-center mb-2">
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+    <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+    <div class="col-sm-9">
+      <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+    </div>
+</div>
+<div class="form-group row align-items-center mb-2">
         <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
         terms.type
       )}${terms.colons}</label>
@@ -1677,15 +1687,70 @@ function modalConstruct(type, newType, method) {
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
           </div>
-    </div>
-    <div class="form-group row align-items-center mb-4">
-        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+    </div>`;
+      break;
+    case "protections":
+      specificType = `      
+      <div class="form-group row align-items-center mb-4">
+          <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
         terms.description
       )}${terms.colons}</label>
-        <div class="col-sm-9">
-          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+          <div class="col-sm-9">
+            <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+          </div>
+      </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}DefenseRating" class="col-sm-3 col-form-label">${capitalized(
+        terms.defenseRating
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}DefenseRating" aria-label="defenseRating" value=0>
+            </div>
         </div>
-    </div>`;
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}SocialRating" class="col-sm-3 col-form-label">${capitalized(
+        terms.socialRating
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}SocialRating" aria-label="socialRating" value=0>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Capacity" class="col-sm-3 col-form-label">${capitalized(
+        terms.capacity
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Capacity" aria-label="capacity" value=0>
+            </div>
+        </div>
+        <div class="SR6_headline mb-2">${allCapitalized(
+          terms.priceAndAvailability
+        )}</div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+            </div>
+            <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+            <div class="col-sm-4">
+            <select class="form-control" id="${type}Legality">
+              <option value="">${capitalized(terms.select)}</option>
+              ${legalityOptions}
+            </select>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+            </div>
+      </div>`;
       break;
     case "augmentations":
       break;
@@ -1773,7 +1838,8 @@ function handleDropdownModal(type) {
       type === "rangedWeapons" ||
       type === "meleeWeapons" ||
       type === "grenades" ||
-      type === "ammunitions"
+      type === "ammunitions" ||
+      type === "protections"
     ) {
       newType = terms.newe;
     }
@@ -2038,6 +2104,30 @@ function handleDropdownModal(type) {
         console.log("newItem : ", newItem);
       }
 
+      if (type === "protections") {
+        var defenseRating = getValue("DefenseRating", type);
+        var socialRating = getValue("SocialRating", type);
+        var capacity = getValue("Capacity", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          defenseRating: defenseRating,
+          socialRating: socialRating,
+          capacity: capacity,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+
+        console.log("newItem : ", newItem);
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -2068,6 +2158,10 @@ function handleDropdownModal(type) {
         if (type === "ammunitions") {
           characterData[type].push(newItem);
           updateAmmunitionsDisplay(type);
+        }
+        if (type === "protections") {
+          characterData[type].push(newItem);
+          updateProtectionsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -2103,7 +2197,8 @@ function handleItemClick(type, indexItem) {
     type === "rangedWeapons" ||
     type === "meleeWeapons" ||
     type === "grenades" ||
-    type === "ammunitions"
+    type === "ammunitions" ||
+    type === "protections"
   )
     newType = terms.newe;
 
@@ -2218,6 +2313,25 @@ function handleItemClick(type, indexItem) {
     const fields = [
       "Type",
       "WeaponType",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
+  if (type === "protections") {
+    const fields = [
+      "DefenseRating",
+      "SocialRating",
+      "Capacity",
       "Legality",
       "Availability",
       "Price",
@@ -2416,6 +2530,29 @@ function handleItemClick(type, indexItem) {
           updateAmmunitionsDisplay(type);
         }
 
+        if (type === "protections") {
+          const fields = [
+            "Type",
+            "DefenseRating",
+            "SocialRating",
+            "Capacity",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateProtectionsDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -2465,6 +2602,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "ammunitions") {
     updateAmmunitionsDisplay(type);
+  }
+  if (type === "protections") {
+    updateProtectionsDisplay(type);
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -2671,6 +2811,7 @@ function updateDisplay() {
   updateWeaponsDisplay("meleeWeapons");
   updateWeaponsDisplay("grenades");
   updateAmmunitionsDisplay();
+  updateProtectionsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -2754,6 +2895,51 @@ function updateAmmunitionsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       ammunitionsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateProtectionsDisplay() {
+  var protectionsTableBody = $(`#protectionsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  protectionsTableBody.empty();
+
+  if (characterData.protections.length > 0) {
+    console.log("characterData.protections : ", characterData.protections);
+    var protections = [];
+    protections = sortKeys(characterData.protections);
+
+    protections.forEach(function (protection) {
+      var row = `
+      <tr>
+          <td class="name-column">${protection.key}</td>
+          <td class="defenseRating-column">${parseInt(
+            protection.defenseRating
+          )}</td>
+          <td class="socialRating-column">${parseInt(
+            protection.socialRating
+          )}</td>
+          <td class="capacity-column">${parseInt(protection.capacity)}</td>
+          <td class="price-column">${parseInt(protection.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('protections','${characterData.protections.indexOf(
+        protection
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('protections','${characterData.protections.indexOf(
+        protection
+      )}')"></i>
+      <div id="modalContainerprotections${characterData.protections.indexOf(
+        protection
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      protectionsTableBody.append(row);
     });
   }
 
@@ -4362,9 +4548,6 @@ function assignData() {
             },
             type: item.key,
             class: item.weaponType,
-            conceablity: {
-              base: item.baseConcealability,
-            },
             goods: {
               price: {
                 base: item.price,
@@ -4377,6 +4560,46 @@ function assignData() {
           },
         };
         foundryData.items.push(a);
+      }
+    }
+  }
+
+  if (characterData.protections) {
+    for (let protection in characterData.protections) {
+      if (characterData.protections.hasOwnProperty(protection)) {
+        var item = characterData.protections[protection];
+
+        var p = {
+          name: item.key,
+          type: "armor",
+          system: {
+            info: {
+              description: item.description,
+            },
+            class: item.weaponType,
+            capacity: {
+              provided: {
+                base: item.capacity,
+              },
+            },
+            defenseRating: {
+              base: item.defenseRating,
+            },
+            socialRating: {
+              base: item.socialRating,
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(p);
       }
     }
   }
