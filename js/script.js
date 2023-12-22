@@ -2343,8 +2343,6 @@ function handleDropdownModal(type) {
     $(document).on("submit", `#add${capitalized(type)}Form`, function (e) {
       e.preventDefault();
 
-      console.log("type : ", type, " / ", $(`#${type}Input`));
-
       var newItem = {};
 
       if (type === "qualities") {
@@ -2395,10 +2393,8 @@ function handleDropdownModal(type) {
           return parseInt(val);
         }
         if (isCheckbox) {
-          console.log("ID : ", id, "val : ", val, " / ", $(`#${type}${id}`));
           return $(`#${type}${id}`).prop("checked");
         }
-        console.log("ID : ", id, "val : ", val, " / ", $(`#${type}${id}`));
         return val;
       }
 
@@ -2456,8 +2452,6 @@ function handleDropdownModal(type) {
           availability: availability,
           description: description,
         };
-
-        console.log("newItem : ", newItem);
       }
 
       if (type === "meleeWeapons" || type === "grenades") {
@@ -2500,8 +2494,6 @@ function handleDropdownModal(type) {
           availability: availability,
           description: description,
         };
-
-        console.log("newItem : ", newItem);
       }
 
       if (type === "ammunitions") {
@@ -2522,8 +2514,6 @@ function handleDropdownModal(type) {
           availability: availability,
           description: description,
         };
-
-        console.log("newItem : ", newItem);
       }
 
       if (type === "protections") {
@@ -2547,7 +2537,6 @@ function handleDropdownModal(type) {
           description: description,
         };
 
-        console.log("newItem : ", newItem);
       }
 
       if (type === "augmentations") {
@@ -2575,11 +2564,9 @@ function handleDropdownModal(type) {
           description: description,
         };
 
-        console.log("newItem : ", newItem);
       }
 
       if (type === "vehicles") {
-        console.log("type : ", type);
         var vehicleType = getValue("Type", type);
         var typeSub = getValue("TypeSub", type);
         var category = "";
@@ -2629,8 +2616,6 @@ function handleDropdownModal(type) {
           availability: availability,
           description: description,
         };
-
-        console.log("newItem : ", newItem);
       }
 
       if (type === "knowledges" || type === "languages") {
@@ -2723,7 +2708,6 @@ function handleItemClick(type, indexItem) {
   var modalContainer = document.getElementById(
     "modalContainer" + type + indexItem
   );
-  console.log("modalContainer : ", modalContainer);
   modalContainer.innerHTML = `
   <div>
     ${modal}
@@ -2895,10 +2879,7 @@ function handleItemClick(type, indexItem) {
   if (type === "vehicles") {
     function handleTypeChange(event, itemType) {
       var selectedType = itemType || event.target.value;
-      console.log("event.target : ", event.target);
-      console.log("selectedType : ", selectedType);
       const subTypes = vehiclesTypeSub[selectedType];
-      console.log("subTypes : ", subTypes);
 
       const subTypeSelect = modalContainer.querySelector(`#${type}TypeSub`);
       subTypeSelect.innerHTML = ""; // Clear existing options
@@ -2911,7 +2892,6 @@ function handleItemClick(type, indexItem) {
 
       // Add new options based on the selected type
       subTypes.forEach((subType) => {
-        console.log("subType : ", subType);
         const option = document.createElement("option");
         option.value = subType;
         option.text = capitalized(terms[subType]);
@@ -3080,7 +3060,6 @@ function handleItemClick(type, indexItem) {
     var radioButton = modalContainer.querySelector(`#chooseLevel${levelItem}`);
 
     if (radioButton) {
-      console.log("radioButton : ", radioButton);
       radioButton.checked = true;
     }
   }
@@ -3120,10 +3099,7 @@ function handleItemClick(type, indexItem) {
       function (e) {
         e.preventDefault();
 
-        console.log(type);
-
         const inputElement = modalContainer.querySelector(`#${type}Input`);
-        console.log(inputElement);
 
         if (inputElement) {
           characterData[type][indexItem].key = inputElement.value;
@@ -3282,7 +3258,6 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "vehicles") {
-          console.log("on submit type : ", type);
           const fields = [
             "Type",
             "Category",
@@ -3320,8 +3295,6 @@ function handleItemClick(type, indexItem) {
 
           characterData[type][indexItem].riggingInterface = modalContainer.querySelector(`#RiggingInterface`).checked;
 
-          console.log(characterData[type][indexItem]);
-
           updateVehiclesDisplay();
         }
 
@@ -3334,11 +3307,6 @@ function handleItemClick(type, indexItem) {
           }
           updateKnowledgeDisplay();
         }
-
-        console.log(
-          "characterData[type][index] : ",
-          characterData[type][indexItem]
-        );
         handleDropdownModal(type);
         saveData();
         // Fermer la modale
@@ -3647,7 +3615,6 @@ function updateAmmunitionsDisplay() {
   ammunitionsTableBody.empty();
 
   if (characterData.ammunitions.length > 0) {
-    console.log("characterData.ammunitions : ", characterData.ammunitions);
     var ammunitions = [];
     ammunitions = sortKeys(characterData.ammunitions);
 
@@ -3688,7 +3655,6 @@ function updateProtectionsDisplay() {
   protectionsTableBody.empty();
 
   if (characterData.protections.length > 0) {
-    console.log("characterData.protections : ", characterData.protections);
     var protections = [];
     protections = sortKeys(characterData.protections);
 
@@ -3733,7 +3699,6 @@ function updateAugmentationsDisplay() {
   augmentationsTableBody.empty();
 
   if (characterData.augmentations.length > 0) {
-    console.log("characterData.augmentations : ", characterData.augmentations);
     var augmentations = [];
     augmentations = sortKeys(characterData.augmentations);
 
@@ -3771,14 +3736,12 @@ function updateAugmentationsDisplay() {
 }
 
 function updateVehiclesDisplay() {
-  console.log("updateVehiclesDisplay : ", characterData.vehicles);
   var vehiclesTableBody = $(`#vehiclesTable tbody`);
 
   // Effacez le contenu actuel du corps du tableau
   vehiclesTableBody.empty();
 
   if (characterData.vehicles.length > 0) {
-    console.log("characterData.vehicles : ", characterData.vehicles);
     var vehicles = [];
     vehicles = sortKeys(characterData.vehicles);
 
@@ -4041,17 +4004,6 @@ function filterTable() {
     var karmaCost = parseInt($(this).find(".karmaCost-column").text(), 10);
     var book = $(this).find(".book-column").text().split(" ")[0].toLowerCase();
 
-    console.log(
-      "filter table : ",
-      book,
-      " this ",
-      $(this).find(".book-column").text().toLowerCase(),
-      " bookFilters ",
-      bookFilters,
-      " includes ",
-      bookFilters.includes(book)
-    );
-
     if (
       name.includes(nameFilter) &&
       (!typeFilter || type === typeFilter) &&
@@ -4114,14 +4066,6 @@ function updateQualitiesKarma() {
 }
 
 function modifyContact(type, contact, modificator) {
-  console.log(
-    "modifyContact : ",
-    type,
-    " contact ",
-    JSON.stringify(contact),
-    " modificator ",
-    modificator
-  );
 
   var contactSpent = characterData.points.contacts.spent;
 
@@ -4159,19 +4103,6 @@ function modifyValue(type, element, modificator, typeKarma) {
     increment = rank * 5;
   }
 
-  console.log(
-    "modifyValue : ",
-    type,
-    " characterData.selectAttributeType ",
-    characterData.selectAttributeType,
-    " characterData.selectSkillsType ",
-    characterData.selectSkillsType,
-    " typeKarma ",
-    typeKarma,
-    " selectCount ",
-    selectCount
-  );
-
   var added = characterData[type][element].added;
   if (modificator === "increment") {
     characterData[type][element].added = added + 1;
@@ -4188,10 +4119,6 @@ function modifyValue(type, element, modificator, typeKarma) {
   if (type === "skills" && characterData.selectSkillsType === "Karma")
     updatePoints("Karma", element, modificator);
   saveData();
-  console.log(
-    "Karma : ",
-    characterData.points.Karma.base - characterData.points.Karma.spent
-  );
 }
 
 function updateValues(type) {
@@ -4791,9 +4718,6 @@ function loadDataCharacter(character) {
   //console.log("loadDataCharacter : ", character);
   if (character) {
     characterData = character;
-
-    console.log("characterData.special load Character : ", characterData);
-
     handleCharacterData(characterData);
   }
 }
@@ -4817,7 +4741,6 @@ function newCharacterData() {
 }
 
 function handleCharacterData(characterData) {
-  console.log("characterData.special 1 : ", characterData);
 
   // Vérifiez si les propriétés existent avant d'y accéder
   if (
@@ -4857,7 +4780,6 @@ function handleCharacterData(characterData) {
   const metatypeButtons = document.querySelectorAll("#metatypeForm button");
   const specialButtons = document.querySelectorAll("#specialForm button");
 
-  console.log("characterData.special 2 : ", characterData);
   if (characterData.special) {
     updateButtonSelection(specialButtons, characterData.special);
     updateAttributesForSpecial(
@@ -5184,10 +5106,6 @@ function assignData() {
   if (characterData.rangedWeapons) {
     for (let weapon in characterData.rangedWeapons) {
       if (characterData.rangedWeapons.hasOwnProperty(weapon)) {
-        console.log(
-          "characterData.rangedWeapons[weapon].firingMode.singleShot : ",
-          characterData.rangedWeapons[weapon]
-        );
         var w = {
           name: characterData.rangedWeapons[weapon].key,
           type: "weapon",
