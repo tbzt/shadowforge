@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   menuSectionGenerate();
 });
 
-const currentVersion = "0.1.5"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
+const currentVersion = "0.1.8"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
 
 $(document).ready(function () {
   $("#collapseQualities").on("dragover", function (event) {
