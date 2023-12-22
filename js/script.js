@@ -1908,7 +1908,7 @@ function modalConstruct(type, newType, method) {
           });
 
           // Get the parent element where you want to add the category section
-          const parentElement = document.getElementById(`divType`).parentNode;
+          const parentElement = document.getElementById(`divType`);
 
           // Check if the category section already exists
           let categoryDiv = document.querySelector(`#${type}CategoryDiv`);
@@ -1932,13 +1932,13 @@ function modalConstruct(type, newType, method) {
               `;
 
               // Append the new div to the parent element
-              parentElement.appendChild(categoryDiv);
+              parentElement.insertAdjacentElement("afterend", categoryDiv);
             }
           } else {
             // If selectedType is not "drone", remove the category section if it exists
             categoryDiv = document.querySelector(`#${type}CategoryDiv`);
             if (categoryDiv) {
-              parentElement.removeChild(categoryDiv);
+              categoryDiv.remove();
             }
           }
         }
@@ -2023,7 +2023,7 @@ function modalConstruct(type, newType, method) {
       <textarea class="form-control" id="${type}Description" rows="4"></textarea>
     </div>
 </div>
-<div class="form-group row align-items-center mb-2" id="divType">
+<div class="form-group row align-items-center mb-2">
         <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
         terms.type
       )}${terms.colons}</label>
@@ -2037,7 +2037,7 @@ function modalConstruct(type, newType, method) {
       
       ${categorySection}
 
-      <div class="form-group row align-items-center mb-2">
+      <div class="form-group row align-items-center mb-2" id="divType">
         <label for="${type}TypeSub" class="col-sm-3 col-form-label">${capitalized(
         terms.typeSub
       )}${terms.colons}</label>
@@ -2059,7 +2059,6 @@ function modalConstruct(type, newType, method) {
           </select>
         </div>
       </div>  
-  </div> 
   <div class="SR6_headline mb-2">${allCapitalized(terms.attributes)}</div> 
       <div class="form-group row align-items-center mb-2">  
         <label for="${type}Handling" class="col-sm-3 col-form-label">${capitalized(
@@ -2580,6 +2579,7 @@ function handleDropdownModal(type) {
       }
 
       if (type === "vehicles") {
+        console.log("type : ", type);
         var vehicleType = getValue("Type", type);
         var typeSub = getValue("TypeSub", type);
         var category = "";
@@ -2893,6 +2893,133 @@ function handleItemClick(type, indexItem) {
   }
 
   if (type === "vehicles") {
+    function handleTypeChange(event, itemType) {
+      var selectedType = itemType || event.target.value;
+      console.log("event.target : ", event.target);
+      console.log("selectedType : ", selectedType);
+      const subTypes = vehiclesTypeSub[selectedType];
+      console.log("subTypes : ", subTypes);
+
+      const subTypeSelect = modalContainer.querySelector(`#${type}TypeSub`);
+      subTypeSelect.innerHTML = ""; // Clear existing options
+
+      // Add a default option
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.text = capitalized(terms.select);
+      subTypeSelect.add(defaultOption);
+
+      // Add new options based on the selected type
+      subTypes.forEach((subType) => {
+        console.log("subType : ", subType);
+        const option = document.createElement("option");
+        option.value = subType;
+        option.text = capitalized(terms[subType]);
+        subTypeSelect.add(option);
+      });
+
+      // Get the parent element where you want to add the category section
+      const parentElement = modalContainer.querySelector(`#divType`);
+
+      // Check if the category section already exists
+      let categoryDiv = modalContainer.querySelector(`#${type}CategoryDiv`);
+
+      if (selectedType === "drone") {
+        if (!categoryDiv) {
+          // If the category section does not exist, create it
+          categoryDiv = document.createElement("div");
+          categoryDiv.id = `${type}CategoryDiv`;
+          categoryDiv.className = "form-group row align-items-center mb-2";
+          categoryDiv.innerHTML = `
+              <label for="${type}Category" class="col-sm-3 col-form-label">${capitalized(
+            terms.category
+          )}${terms.colons}</label>
+              <div class="col-sm-9">
+                <select class="form-control SR6-Select" id="${type}Category">
+                  <option value="">${capitalized(terms.select)}</option>
+                  ${vehiclesCategoryOptions}
+                </select>
+              </div>
+            `;
+
+          // Append the new div to the parent element
+          parentElement.insertAdjacentElement("afterend", categoryDiv);
+        }
+      } else {
+        // If selectedType is not "drone", remove the category section if it exists
+        categoryDiv = modalContainer.querySelector(`#${type}CategoryDiv`);
+        if (categoryDiv) {
+          categoryDiv.remove();
+        }
+      }
+    }
+
+    var vehicleType = item.type;
+
+    const vehiclesTypeSub = {
+      vehicle: [
+        "car",
+        "experimental",
+        "fixedWingAircraft",
+        "glider",
+        "gravedrive",
+        "hovercraft",
+        "jetpack",
+        "LTAV",
+        "military",
+        "motorboat",
+        "motorcycle",
+        "powerboat",
+        "rotorcraft",
+        "sailboat",
+        "ship",
+        "submarine",
+        "submersible",
+        "truck",
+        "van",
+        "various",
+        "VTOL",
+      ],
+      drone: [
+        "largeDrone",
+        "mediumDrone",
+        "microdrone",
+        "minidrone",
+        "smallDrone",
+      ],
+    };
+
+    vehiclesTypeSub[vehicleType].sort((a, b) =>
+      terms[a].localeCompare(terms[b])
+    );
+
+    const vehiclesTypeSubOptions = vehiclesTypeSub[vehicleType]
+      .map(
+        (type) => `<option value="${type}">${capitalized(terms[type])}</option>`
+      )
+      .join("\n");
+
+    const vehiclesCategory = ["aerial", "anthroform", "aquatic", "ground"];
+    vehiclesCategory.sort((a, b) => terms[a].localeCompare(terms[b]));
+    const vehiclesCategoryOptions = vehiclesCategory
+      .map(
+        (type) => `<option value="${type}">${capitalized(terms[type])}</option>`
+      )
+      .join("\n");
+
+    // Call the function once at the start
+    handleTypeChange(
+      { target: modalContainer.querySelector(`#${type}Type`) },
+      item.type
+    );
+
+    // Then call it again every time the select changes
+    document.body.addEventListener("change", function (event) {
+      if (event.target.id === `${type}Type`) {
+        handleTypeChange(event);
+      }
+    });
+
     const fields = [
       "Type",
       "Category",
@@ -3068,36 +3195,20 @@ function handleItemClick(type, indexItem) {
             }
           });
 
-          modalContainer.querySelector(`#${type}DamageValue`).value =
-            characterData[type][indexItem].damage.value;
-          modalContainer.querySelector(`#${type}DamageType`).value =
-            characterData[type][indexItem].damage.type;
-          modalContainer.querySelector(`#${type}SpecialDamageType`).value =
-            characterData[type][indexItem].damage.special;
-          modalContainer.querySelector(`#${type}AttackRatingCloseAR`).value =
-            characterData[type][indexItem].AR.closeAR;
-          modalContainer.querySelector(`#${type}AttackRatingNearAR`).value =
-            characterData[type][indexItem].AR.nearAR;
-          modalContainer.querySelector(`#${type}AttackRatingMediumAR`).value =
-            characterData[type][indexItem].AR.mediumAR;
-          modalContainer.querySelector(`#${type}AttackRatingFarAR`).value =
-            characterData[type][indexItem].AR.farAR;
-          modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value =
-            characterData[type][indexItem].AR.extremeAR;
+          characterData[type][indexItem].damage.value = modalContainer.querySelector(`#${type}DamageValue`).value;
+          characterData[type][indexItem].damage.type = modalContainer.querySelector(`#${type}DamageType`).value;
+          characterData[type][indexItem].damage.special = modalContainer.querySelector(`#${type}SpecialDamageType`).value;
+          characterData[type][indexItem].AR.closeAR = modalContainer.querySelector(`#${type}AttackRatingCloseAR`).value;
+          characterData[type][indexItem].AR.nearAR = modalContainer.querySelector(`#${type}AttackRatingNearAR`).value;
+          characterData[type][indexItem].AR.mediumAR = modalContainer.querySelector(`#${type}AttackRatingMediumAR`).value;
+          characterData[type][indexItem].AR.farAR = modalContainer.querySelector(`#${type}AttackRatingFarAR`).value;
+          characterData[type][indexItem].AR.extremeAR = modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value;
 
-          modalContainer.querySelector(`#singleShot`).checked =
-            characterData[type][indexItem].firingModes.singleShot;
-          modalContainer.querySelector(`#semiAutomatic`).checked =
-            characterData[type][indexItem].firingModes.semiAutomatic;
-          modalContainer.querySelector(`#burstFire`).checked =
-            characterData[type][indexItem].firingModes.burstFire;
-          modalContainer.querySelector(`#fullAutomatic`).checked =
-            characterData[type][indexItem].firingModes.fullAutomatic;
-
-          console.log(
-            "characterData[type][index] : ",
-            characterData[type][indexItem]
-          );
+          
+          characterData[type][indexItem].firingModes.singleShot = modalContainer.querySelector(`#singleShot`).checked;
+          characterData[type][indexItem].firingModes.semiAutomatic = modalContainer.querySelector(`#semiAutomatic`).checked;
+          characterData[type][indexItem].firingModes.burstFire = modalContainer.querySelector(`#burstFire`).checked;
+          characterData[type][indexItem].firingModes.fullAutomatic = modalContainer.querySelector(`#fullAutomatic`).checked;
 
           updateWeaponsDisplay(type);
         }
@@ -3121,7 +3232,7 @@ function handleItemClick(type, indexItem) {
             }
           });
 
-          updateAmmunitionsDisplay(type);
+          updateAmmunitionsDisplay();
         }
 
         if (type === "protections") {
@@ -3167,10 +3278,11 @@ function handleItemClick(type, indexItem) {
             }
           });
 
-          updateAugmentationsDisplay(type);
+          updateAugmentationsDisplay();
         }
 
         if (type === "vehicles") {
+          console.log("on submit type : ", type);
           const fields = [
             "Type",
             "Category",
@@ -3187,41 +3299,30 @@ function handleItemClick(type, indexItem) {
           }
 
           fields.forEach((field) => {
-            var element = modalContainer.querySelector(`#${type}${field}`);
-            if (
-              element &&
-              item[field.charAt(0).toLowerCase() + field.slice(1)]
-            ) {
-              element.value =
-                item[field.charAt(0).toLowerCase() + field.slice(1)];
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
             }
           });
 
-          modalContainer.querySelector(`#${type}Handling`).value =
-            characterData[type][indexItem].attributes.handling;
-          modalContainer.querySelector(`#${type}HandlingOffRoad`).value =
-            characterData[type][indexItem].attributes.handlingOffRoad;
-          modalContainer.querySelector(`#${type}Acceleration`).value =
-            characterData[type][indexItem].attributes.acceleration;
-          modalContainer.querySelector(`#${type}SpeedInterval`).value =
-            characterData[type][indexItem].attributes.speedInterval;
-          modalContainer.querySelector(`#${type}TopSpeed`).value =
-            characterData[type][indexItem].attributes.topSpeed;
-          modalContainer.querySelector(`#${type}Body`).value =
-            characterData[type][indexItem].attributes.body;
-          modalContainer.querySelector(`#${type}Armor`).value =
-            characterData[type][indexItem].attributes.armor;
-          modalContainer.querySelector(`#${type}Pilot`).value =
-            characterData[type][indexItem].attributes.pilot;
-          modalContainer.querySelector(`#${type}Sensor`).value =
-            characterData[type][indexItem].attributes.sensor;
-          modalContainer.querySelector(`#${type}Seat`).value =
-            characterData[type][indexItem].attributes.seat;
+          characterData[type][indexItem].attributes.handling = modalContainer.querySelector(`#${type}Handling`).value;
+          characterData[type][indexItem].attributes.handlingOffRoad = modalContainer.querySelector(`#${type}HandlingOffRoad`).value;
+          characterData[type][indexItem].attributes.acceleration = modalContainer.querySelector(`#${type}Acceleration`).value;
+          characterData[type][indexItem].attributes.speedInterval = modalContainer.querySelector(`#${type}SpeedInterval`).value;
+          characterData[type][indexItem].attributes.topSpeed = modalContainer.querySelector(`#${type}TopSpeed`).value;
+          characterData[type][indexItem].attributes.body = modalContainer.querySelector(`#${type}Body`).value;
+          characterData[type][indexItem].attributes.armor = modalContainer.querySelector(`#${type}Armor`).value;
+          characterData[type][indexItem].attributes.pilot = modalContainer.querySelector(`#${type}Pilot`).value;
+          characterData[type][indexItem].attributes.sensor = modalContainer.querySelector(`#${type}Sensor`).value;
+          characterData[type][indexItem].attributes.seat = modalContainer.querySelector(`#${type}Seat`).value;
 
-          modalContainer.querySelector(`#RiggingInterface`).checked =
-            characterData[type][indexItem].riggingInterface;
+          characterData[type][indexItem].riggingInterface = modalContainer.querySelector(`#RiggingInterface`).checked;
 
-          updateVehiclesDisplay(type);
+          console.log(characterData[type][indexItem]);
+
+          updateVehiclesDisplay();
         }
 
         if (type === "languages" || type === "knowledges") {
@@ -3670,6 +3771,7 @@ function updateAugmentationsDisplay() {
 }
 
 function updateVehiclesDisplay() {
+  console.log("updateVehiclesDisplay : ", characterData.vehicles);
   var vehiclesTableBody = $(`#vehiclesTable tbody`);
 
   // Effacez le contenu actuel du corps du tableau
