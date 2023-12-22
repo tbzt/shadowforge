@@ -239,6 +239,7 @@ function loadFromJSON(event) {
         armor: [],
         vehicle: [],
         ammunition: [],
+        drug: [],
         SIN: [],
         lifestyle: [],
         contact: [],
@@ -501,6 +502,34 @@ function loadFromJSON(event) {
           },
         };
         characterData.vehicles.push(a);
+      }
+
+      //DRUGS
+
+      for (let drug in itemsByType.drug) {
+        var a = {
+          key: itemsByType.drug[drug].name,
+          description: itemsByType.drug[drug].system.info.description,
+          price: itemsByType.drug[drug].system.goods.price.base,
+          availability: itemsByType.drug[drug].system.goods.availability.base,
+          legality: itemsByType.drug[drug].system.legality,
+          power: itemsByType.drug[drug].system.power.base,
+          duration: {
+            value: itemsByType.drug[drug].system.duration.base,
+            period: itemsByType.drug[drug].system.duration.period,
+          },
+          speed: {
+            value: itemsByType.drug[drug].system.speed.base,
+            period: itemsByType.drug[drug].system.speed.period,
+          },
+          vectors: {
+            contact: itemsByType.drug[drug].system.vector.contact,
+            ingestion: itemsByType.drug[drug].system.vector.ingestion,
+            inhalation: itemsByType.drug[drug].system.vector.inhalation,
+            injection: itemsByType.drug[drug].system.vector.injection,
+          },
+        };
+        characterData.drugs.push(a);
       }
 
       console.log("loadFromJSON characterData : ", characterData);

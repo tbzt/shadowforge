@@ -2179,6 +2179,116 @@ function modalConstruct(type, newType, method) {
     </div>`;
       break;
     case "drugs":
+      const period = ["combatTurn", "minute", "hour", "day", "week", "month"];
+
+      const periodOptions = period
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const vectors = [
+        "vectorContact",
+        "vectorIngestion",
+        "vectorInhalation",
+        "vectorInjection",
+      ];
+      vectors.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const vectorsOptions = vectors
+        .map(
+          (type) => `
+        <div class="form-check d-flex justify-content-start">
+          <input class="form-check-input me-2" type="checkbox" value="${type}" id="${type}">
+          <label class="form-check-label" for="${type}">
+            ${capitalized(terms[type])}
+          </label>
+        </div>
+      `
+        )
+        .join("\n");
+
+      specificType = `      
+      <div class="form-group row align-items-center mb-4">
+          <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+          </div>
+      </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Speed" class="col-sm-3 col-form-label">${capitalized(
+        terms.speedToxin
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Speed" aria-label="speed" value=0>
+            </div>
+            <div class="col-sm-4">
+            <select class="form-control" id="${type}SpeedPeriod">
+              <option value="">${capitalized(terms.select)}</option>
+              ${periodOptions}
+            </select>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Power" class="col-sm-3 col-form-label">${capitalized(
+        terms.powerToxin
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Power" aria-label="power" value=0>
+            </div>
+        </div>   
+        
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Duration" class="col-sm-3 col-form-label">${capitalized(
+        terms.durationToxin
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Duration" aria-label="duration" value=0>
+            </div>
+            <div class="col-sm-4">
+            <select class="form-control" id="${type}DurationPeriod">
+              <option value="">${capitalized(terms.select)}</option>
+              ${periodOptions}
+            </select>
+            </div>
+        </div>     
+        <div class="SR6_headline mb-2">${allCapitalized(terms.vectors)}</div>
+        <div class="form-group row align-items-center mb-2">
+                  <div class="col-sm-9" id="${type}FiringMods">
+                      ${vectorsOptions}
+                  </div>
+                </div>
+        <div class="SR6_headline mb-2">${allCapitalized(
+          terms.priceAndAvailability
+        )}</div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+            </div>
+            <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+            <div class="col-sm-4">
+            <select class="form-control" id="${type}Legality">
+              <option value="">${capitalized(terms.select)}</option>
+              ${legalityOptions}
+            </select>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+            <div class="col-sm-3">
+              <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+            </div>
+      </div>`;
       break;
     case "SINS":
       break;
@@ -2536,7 +2646,6 @@ function handleDropdownModal(type) {
           availability: availability,
           description: description,
         };
-
       }
 
       if (type === "augmentations") {
@@ -2563,7 +2672,6 @@ function handleDropdownModal(type) {
           availability: availability,
           description: description,
         };
-
       }
 
       if (type === "vehicles") {
@@ -2618,6 +2726,46 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "drugs") {
+        var duration = getValue("Duration", type);
+        var durationPeriod = getValue("DurationPeriod", type);
+        var power = getValue("Power", type);
+        var speedPeriod = getValue("SpeedPeriod", type);
+        var speed = getValue("Speed", type);
+        var vectorContact = $(`#vectorContact`).prop("checked");
+        var vectorIngestion = $(`#vectorIngestion`).prop("checked");
+        var vectorInhalation = $(`#vectorInhalation`).prop("checked");
+        var vectorInjection = $(`#vectorInjection`).prop("checked");
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          power: power,
+          duration: {
+            value: duration,
+            period: durationPeriod,
+          },
+          speed: {
+            value: speed,
+            period: speedPeriod,
+          },
+          vectors: {
+            contact: vectorContact,
+            ingestion: vectorIngestion,
+            inhalation: vectorInhalation,
+            injection: vectorInjection,
+          },
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -2661,6 +2809,10 @@ function handleDropdownModal(type) {
           characterData[type].push(newItem);
           updateVehiclesDisplay(type);
         }
+        if (type === "drugs") {
+          characterData[type].push(newItem);
+          updateDrugsDisplay(type);
+        }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
           updateKnowledgeDisplay();
@@ -2697,7 +2849,8 @@ function handleItemClick(type, indexItem) {
     type === "grenades" ||
     type === "ammunitions" ||
     type === "protections" ||
-    type === "augmentations"
+    type === "augmentations" ||
+    type === "drugs"
   )
     newType = terms.newe;
 
@@ -3047,6 +3200,41 @@ function handleItemClick(type, indexItem) {
       characterData[type][indexItem].riggingInterface;
   }
 
+  if (type === "drugs") {
+    const fields = [
+      "Power",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+
+    modalContainer.querySelector(`#${type}Speed`).value =
+      characterData[type][indexItem].speed.value;
+    modalContainer.querySelector(`#${type}SpeedPeriod`).value =
+      characterData[type][indexItem].speed.period;
+    modalContainer.querySelector(`#${type}Duration`).value =
+      characterData[type][indexItem].duration.value;
+    modalContainer.querySelector(`#${type}DurationPeriod`).value =
+      characterData[type][indexItem].duration.period;
+
+    modalContainer.querySelector(`#vectorContact`).checked =
+      characterData[type][indexItem].vectors.contact;
+    modalContainer.querySelector(`#vectorIngestion`).checked =
+      characterData[type][indexItem].vectors.ingestion;
+    modalContainer.querySelector(`#vectorInhalation`).checked =
+      characterData[type][indexItem].vectors.inhalation;
+    modalContainer.querySelector(`#vectorInjection`).checked =
+      characterData[type][indexItem].vectors.injection;
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -3171,20 +3359,31 @@ function handleItemClick(type, indexItem) {
             }
           });
 
-          characterData[type][indexItem].damage.value = modalContainer.querySelector(`#${type}DamageValue`).value;
-          characterData[type][indexItem].damage.type = modalContainer.querySelector(`#${type}DamageType`).value;
-          characterData[type][indexItem].damage.special = modalContainer.querySelector(`#${type}SpecialDamageType`).value;
-          characterData[type][indexItem].AR.closeAR = modalContainer.querySelector(`#${type}AttackRatingCloseAR`).value;
-          characterData[type][indexItem].AR.nearAR = modalContainer.querySelector(`#${type}AttackRatingNearAR`).value;
-          characterData[type][indexItem].AR.mediumAR = modalContainer.querySelector(`#${type}AttackRatingMediumAR`).value;
-          characterData[type][indexItem].AR.farAR = modalContainer.querySelector(`#${type}AttackRatingFarAR`).value;
-          characterData[type][indexItem].AR.extremeAR = modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value;
+          characterData[type][indexItem].damage.value =
+            modalContainer.querySelector(`#${type}DamageValue`).value;
+          characterData[type][indexItem].damage.type =
+            modalContainer.querySelector(`#${type}DamageType`).value;
+          characterData[type][indexItem].damage.special =
+            modalContainer.querySelector(`#${type}SpecialDamageType`).value;
+          characterData[type][indexItem].AR.closeAR =
+            modalContainer.querySelector(`#${type}AttackRatingCloseAR`).value;
+          characterData[type][indexItem].AR.nearAR =
+            modalContainer.querySelector(`#${type}AttackRatingNearAR`).value;
+          characterData[type][indexItem].AR.mediumAR =
+            modalContainer.querySelector(`#${type}AttackRatingMediumAR`).value;
+          characterData[type][indexItem].AR.farAR =
+            modalContainer.querySelector(`#${type}AttackRatingFarAR`).value;
+          characterData[type][indexItem].AR.extremeAR =
+            modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value;
 
-          
-          characterData[type][indexItem].firingModes.singleShot = modalContainer.querySelector(`#singleShot`).checked;
-          characterData[type][indexItem].firingModes.semiAutomatic = modalContainer.querySelector(`#semiAutomatic`).checked;
-          characterData[type][indexItem].firingModes.burstFire = modalContainer.querySelector(`#burstFire`).checked;
-          characterData[type][indexItem].firingModes.fullAutomatic = modalContainer.querySelector(`#fullAutomatic`).checked;
+          characterData[type][indexItem].firingModes.singleShot =
+            modalContainer.querySelector(`#singleShot`).checked;
+          characterData[type][indexItem].firingModes.semiAutomatic =
+            modalContainer.querySelector(`#semiAutomatic`).checked;
+          characterData[type][indexItem].firingModes.burstFire =
+            modalContainer.querySelector(`#burstFire`).checked;
+          characterData[type][indexItem].firingModes.fullAutomatic =
+            modalContainer.querySelector(`#fullAutomatic`).checked;
 
           updateWeaponsDisplay(type);
         }
@@ -3282,20 +3481,70 @@ function handleItemClick(type, indexItem) {
             }
           });
 
-          characterData[type][indexItem].attributes.handling = modalContainer.querySelector(`#${type}Handling`).value;
-          characterData[type][indexItem].attributes.handlingOffRoad = modalContainer.querySelector(`#${type}HandlingOffRoad`).value;
-          characterData[type][indexItem].attributes.acceleration = modalContainer.querySelector(`#${type}Acceleration`).value;
-          characterData[type][indexItem].attributes.speedInterval = modalContainer.querySelector(`#${type}SpeedInterval`).value;
-          characterData[type][indexItem].attributes.topSpeed = modalContainer.querySelector(`#${type}TopSpeed`).value;
-          characterData[type][indexItem].attributes.body = modalContainer.querySelector(`#${type}Body`).value;
-          characterData[type][indexItem].attributes.armor = modalContainer.querySelector(`#${type}Armor`).value;
-          characterData[type][indexItem].attributes.pilot = modalContainer.querySelector(`#${type}Pilot`).value;
-          characterData[type][indexItem].attributes.sensor = modalContainer.querySelector(`#${type}Sensor`).value;
-          characterData[type][indexItem].attributes.seat = modalContainer.querySelector(`#${type}Seat`).value;
+          characterData[type][indexItem].attributes.handling =
+            modalContainer.querySelector(`#${type}Handling`).value;
+          characterData[type][indexItem].attributes.handlingOffRoad =
+            modalContainer.querySelector(`#${type}HandlingOffRoad`).value;
+          characterData[type][indexItem].attributes.acceleration =
+            modalContainer.querySelector(`#${type}Acceleration`).value;
+          characterData[type][indexItem].attributes.speedInterval =
+            modalContainer.querySelector(`#${type}SpeedInterval`).value;
+          characterData[type][indexItem].attributes.topSpeed =
+            modalContainer.querySelector(`#${type}TopSpeed`).value;
+          characterData[type][indexItem].attributes.body =
+            modalContainer.querySelector(`#${type}Body`).value;
+          characterData[type][indexItem].attributes.armor =
+            modalContainer.querySelector(`#${type}Armor`).value;
+          characterData[type][indexItem].attributes.pilot =
+            modalContainer.querySelector(`#${type}Pilot`).value;
+          characterData[type][indexItem].attributes.sensor =
+            modalContainer.querySelector(`#${type}Sensor`).value;
+          characterData[type][indexItem].attributes.seat =
+            modalContainer.querySelector(`#${type}Seat`).value;
 
-          characterData[type][indexItem].riggingInterface = modalContainer.querySelector(`#RiggingInterface`).checked;
+          characterData[type][indexItem].riggingInterface =
+            modalContainer.querySelector(`#RiggingInterface`).checked;
 
           updateVehiclesDisplay();
+        }
+
+        if (type === "drugs") {
+          const fields = [
+            "Power",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          characterData[type][indexItem].duration.value =
+            modalContainer.querySelector(`#${type}Duration`).value;
+          characterData[type][indexItem].duration.period =
+            modalContainer.querySelector(`#${type}DurationPeriod`).value;
+          characterData[type][indexItem].speed.value =
+            modalContainer.querySelector(`#${type}Speed`).value;
+          characterData[type][indexItem].speed.period =
+            modalContainer.querySelector(`#${type}SpeedPeriod`).value;
+
+          characterData[type][indexItem].vectors.contact =
+            modalContainer.querySelector(`#vectorContact`).checked;
+          characterData[type][indexItem].vectors.ingestion =
+            modalContainer.querySelector(`#vectorIngestion`).checked;
+          characterData[type][indexItem].vectors.inhalation =
+            modalContainer.querySelector(`#vectorInhalation`).checked;
+          characterData[type][indexItem].vectors.injection =
+            modalContainer.querySelector(`#vectorInjection`).checked;
+
+          updateDrugsDisplay(type);
         }
 
         if (type === "languages" || type === "knowledges") {
@@ -3351,6 +3600,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "vehicles") {
     updateVehiclesDisplay(type);
+  }
+  if (type === "drugs") {
+    updateDrugsDisplay(type);
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -3560,6 +3812,7 @@ function updateDisplay() {
   updateProtectionsDisplay();
   updateAugmentationsDisplay();
   updateVehiclesDisplay();
+  updateDrugsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -3771,6 +4024,58 @@ function updateVehiclesDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       vehiclesTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateDrugsDisplay() {
+  console.log("updateDrugsDisplay : ", characterData.drugs);
+  var drugsTableBody = $(`#drugsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  drugsTableBody.empty();
+
+  if (characterData.drugs.length > 0) {
+    var drugs = [];
+    drugs = sortKeys(characterData.drugs);
+
+    drugs.forEach(function (drug) {
+      const trueVectors = Object.keys(drug.vectors).filter(
+        (key) => drug.vectors[key] === true
+      );
+
+      var row = `
+      <tr>
+          <td class="name-column">${drug.key}</td>
+          <td class="speed-column">${drug.speed.value} ${
+        drug.speed.value > 1
+          ? terms[drug.speed.period + "Plural"]
+          : terms[drug.speed.period]
+      }</td>
+          <td class="power-column">${drug.power}</td>
+          <td class="vectors-column">${trueVectors.join(", ")}</td>
+          <td class="duration-column">${drug.duration.value} ${
+        drug.duration.value > 1
+          ? terms[drug.duration.period + "Plural"]
+          : terms[drug.duration.period]
+      }</td>
+          <td class="price-column">${parseInt(drug.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('drugs','${characterData.drugs.indexOf(
+        drug
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('drugs','${characterData.drugs.indexOf(
+        drug
+      )}')"></i>
+      <div id="modalContainerdrugs${characterData.drugs.indexOf(drug)}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      drugsTableBody.append(row);
     });
   }
 
@@ -4066,7 +4371,6 @@ function updateQualitiesKarma() {
 }
 
 function modifyContact(type, contact, modificator) {
-
   var contactSpent = characterData.points.contacts.spent;
 
   var base = characterData.contacts[contact][type];
@@ -4741,7 +5045,6 @@ function newCharacterData() {
 }
 
 function handleCharacterData(characterData) {
-
   // Vérifiez si les propriétés existent avant d'y accéder
   if (
     characterData.prioritiesSelected &&
@@ -5489,6 +5792,51 @@ function assignData() {
           },
         };
         foundryData.items.push(p);
+      }
+    }
+  }
+
+  if (characterData.drugs) {
+    for (let drug in characterData.drugs) {
+      if (characterData.drugs.hasOwnProperty(drug)) {
+        var item = characterData.drugs[drug];
+
+        var d = {
+          name: item.key,
+          type: "drug",
+          system: {
+            info: {
+              description: item.description,
+            },
+            power: {
+              base: item.power,
+            },
+            duration: {
+              base: item.duration.value,
+              period: item.duration.period,
+            },
+            speed: {
+              base: item.speed.value,
+              period: item.speed.period,
+            },
+            vector: {
+              contact: item.vectors.contact,
+              ingestion: item.vectors.ingestion,
+              inhalation: item.vectors.inhalation,
+              injection: item.vectors.injection,
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(d);
       }
     }
   }
