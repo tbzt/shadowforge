@@ -1,10 +1,10 @@
 function setLang(language) {
   // Utilisez le tableau de traduction correspondant à la langue
-  console.log("setLang(",language,")");
+  console.log("setLang(", language, ")");
 
   terms = translations[language];
 
-  console.log("setLang(",language,") : terms : ", terms);
+  console.log("setLang(", language, ") : terms : ", terms);
 }
 
 function setLanguage(language) {
@@ -19,165 +19,171 @@ function setLanguage(language) {
 
 function changeLang(language) {
   // Utilisez le tableau de traduction correspondant à la langue
-  console.log("setLang(",language,")");
+  console.log("setLang(", language, ")");
 
   setLang(language);
   setLanguage(language);
 
-  $("#define, #shape").find("input[type='checkbox']").prop('checked', false);
-  $("#container").find(".collapse").collapse('hide');
+  $("#define, #shape").find("input[type='checkbox']").prop("checked", false);
+  $("#container").find(".collapse").collapse("hide");
 
-  
   handleSIN();
   handleAttributes();
   handleSkills();
-  updateKnowledgePoints() ;
+  updateKnowledgePoints();
   handleDropdownModal("knowledges");
   handleDropdownModal("languages");
 
   idToUpdate = [
     {
-      id:"title",
-      term: "title"
-    }, 
-    {
-      id:"identityTitle",
-      term: "identity"
-    }, 
-    {
-      id:"priorityTableTitle",
-      term: "priorityTable"
-    }, 
-    {
-      id:"metatypeTitle",
-      term: "metatypeChoice"
-    }, 
-    {
-      id:"specialTitle",
-      term: "specialAttributeChoice"
-    }, 
-    {
-      id:"attributeTitle",
-      term: "attributes"
-    }, 
-    {
-      id:"skillTitle",
-      term: "skills"
-    }, 
-    {
-      id:"priorityTableAttributes",
-      term: "attributes"
-    }, 
-    {
-      id:"priorityTableSkills",
-      term: "skills"
-    }, 
-    {
-      id:"priorityTableResources",
-      term: "resources"
-    }, 
-    {
-      id:"resetButton",
-      term: "globalReinitialize"
-    }, 
-    {
-      id:"character",
-      term: "thisCharacter"
-    }, 
-    {
-      id:"exportButton",
-      term: "exportFoundry"
-    },  
-    {
-      id:"saveCharacter",
-      term: "saveCharacter"
-    },  
-    {
-      id:"newCharacter",
-      term: "newCharacter"
-    },  
-    {
-      id:"characters",
-      term: "shadows"
+      id: "title",
+      term: "title",
     },
     {
-      id:"attributesAttributes",
-      term: "attributes"
-    }, 
-    {
-      id:"attributesAdded",
-      term: "added"
-    }, 
-    {
-      id:"attributesActual",
-      term: "actual"
-    }, 
-    {
-      id:"attributesMaximum",
-      term: "maximum"
-    }, 
-    {
-      id:"skillsSkills",
-      term: "skills"
-    }, 
-    {
-      id:"skillsAdded",
-      term: "added"
-    }, 
-    {
-      id:"skillsDices",
-      term: "dices"
-    }, 
-    {
-      id:"qualitiesHeader",
-      term: "qualities"
+      id: "identityTitle",
+      term: "identity",
     },
     {
-      id:"descriptionQualities",
-      term: "descriptions"
-    }, 
-    {
-      id:"typeQualities",
-      term: "types"
-    }, 
-    {
-      id:"karmaCostQualities",
-      term: "karmaCost"
+      id: "priorityTableTitle",
+      term: "priorityTable",
     },
     {
-      id:"qualitiesTitle",
-      term: "qualities"
-    }, 
+      id: "metatypeTitle",
+      term: "metatypeChoice",
+    },
     {
-      id:"sumToTenTitle",
-      term: "sumToTen"
-    }]
-  
-    idToUpdate.forEach((element) => {
-      try {        
-      document.getElementById(element.id).innerText = capitalized(terms[element.term]);
-      }
-      catch (error) {
-        console.log("error : ", error, " for ", element);
-      }
-    }); 
-  document.getElementById("priorityTableMetatpeAdjustment").innerText = capitalized(terms.metatypes) + " (" + terms.adjustment + ")"; 
-  document.getElementById("priorityTableSpecial").innerText = capitalized(terms.magic) + "/" + capitalized(terms.resonance);
-  document.getElementById("firstname").placeholder = capitalized(terms.firstname);
+      id: "specialTitle",
+      term: "specialAttributeChoice",
+    },
+    {
+      id: "attributeTitle",
+      term: "attributes",
+    },
+    {
+      id: "skillTitle",
+      term: "skills",
+    },
+    {
+      id: "priorityTableAttributes",
+      term: "attributes",
+    },
+    {
+      id: "priorityTableSkills",
+      term: "skills",
+    },
+    {
+      id: "priorityTableResources",
+      term: "resources",
+    },
+    {
+      id: "resetButton",
+      term: "globalReinitialize",
+    },
+    {
+      id: "character",
+      term: "thisCharacter",
+    },
+    {
+      id: "exportButton",
+      term: "exportFoundry",
+    },
+    {
+      id: "saveCharacter",
+      term: "saveCharacter",
+    },
+    {
+      id: "newCharacter",
+      term: "newCharacter",
+    },
+    {
+      id: "characters",
+      term: "shadows",
+    },
+    {
+      id: "attributesAttributes",
+      term: "attributes",
+    },
+    {
+      id: "attributesAdded",
+      term: "added",
+    },
+    {
+      id: "attributesActual",
+      term: "actual",
+    },
+    {
+      id: "attributesMaximum",
+      term: "maximum",
+    },
+    {
+      id: "skillsSkills",
+      term: "skills",
+    },
+    {
+      id: "skillsAdded",
+      term: "added",
+    },
+    {
+      id: "skillsDices",
+      term: "dices",
+    },
+    {
+      id: "qualitiesHeader",
+      term: "qualities",
+    },
+    {
+      id: "descriptionQualities",
+      term: "descriptions",
+    },
+    {
+      id: "typeQualities",
+      term: "types",
+    },
+    {
+      id: "karmaCostQualities",
+      term: "karmaCost",
+    },
+    {
+      id: "qualitiesTitle",
+      term: "qualities",
+    },
+    {
+      id: "sumToTenTitle",
+      term: "sumToTen",
+    },
+  ];
+
+  idToUpdate.forEach((element) => {
+    try {
+      document.getElementById(element.id).innerText = capitalized(
+        terms[element.term]
+      );
+    } catch (error) {
+      console.log("error : ", error, " for ", element);
+    }
+  });
+  document.getElementById("priorityTableMetatpeAdjustment").innerText =
+    capitalized(terms.metatypes) + " (" + terms.adjustment + ")";
+  document.getElementById("priorityTableSpecial").innerText =
+    capitalized(terms.magic) + "/" + capitalized(terms.resonance);
+  document.getElementById("firstname").placeholder = capitalized(
+    terms.firstname
+  );
   document.getElementById("surname").placeholder = capitalized(terms.surname);
   document.getElementById("name").placeholder = capitalized(terms.name);
-  document.getElementById("knowledgeTitle").innerText = capitalized(terms.knowledges) + " & " + terms.languages ;
-function setButtonTitle(selector, title) {
-  var buttons = document.querySelectorAll(selector);
-  buttons.forEach(function(button) {
-    button.title = capitalized(title);
-  });
-}
+  document.getElementById("knowledgeTitle").innerText =
+    capitalized(terms.knowledges) + " & " + terms.languages;
+  function setButtonTitle(selector, title) {
+    var buttons = document.querySelectorAll(selector);
+    buttons.forEach(function (button) {
+      button.title = capitalized(title);
+    });
+  }
 
-setButtonTitle('a.load-button', terms.loadCharacter);
-setButtonTitle('a.export-button', terms.exportFoundry);
-setButtonTitle('a.delete-button', terms.deleteCharacter);
-  handleSIN(); 
+  setButtonTitle("a.load-button", terms.loadCharacter);
+  setButtonTitle("a.export-button", terms.exportFoundry);
+  setButtonTitle("a.delete-button", terms.deleteCharacter);
+  handleSIN();
   showPriorities();
   handleAttributes();
   showAttributesToSpend();
@@ -186,7 +192,6 @@ setButtonTitle('a.delete-button', terms.deleteCharacter);
   handleDropdownModal("languages");
   handleDropdownModal("qualities");
   handleDropdownModal("contacts");
-
 }
 
 let terms = [];
@@ -198,9 +203,11 @@ const translations = {
     name: "nom",
     surname: "surnom",
     metatypes: "métatypes",
+    metatype: "métatype",
     attributes: "attributs",
     adjustment: "ajustement",
     skills: "compétences",
+    skill: "compétence",
     magicOrResonance: "Magie/Résonance",
     resources: "ressources",
     body: "constitution",
@@ -214,6 +221,17 @@ const translations = {
     edge: "atout",
     magic: "magie",
     resonance: "résonance",
+    body_short: "CON",
+    agility_short: "AGI",
+    reaction_short: "REA",
+    strength_short: "FOR",
+    willpower_short: "VOL",
+    logic_short: "LOG",
+    intuition_short: "INT",
+    charisma_short: "CHA",
+    edge_short: "CHC",
+    magic_short: "MAG",
+    resonance_short: "RES",
     identity: "Identité",
     priorityTable: "Table des priorités",
     metatypeChoice: "Choix du métatype",
@@ -276,7 +294,7 @@ const translations = {
     naga: "naga",
     pixie: "pixie",
     sasquatch: "sasquatch",
-    merrow: "triton",    
+    merrow: "triton",
     formula: "formule",
     formulas: "formules",
     complexForm: "forme complexe",
@@ -289,9 +307,9 @@ const translations = {
     specialization: "spécialisation",
     specializations: "spécialisations",
     thisCharacter: "ce personnage",
-    globalReinitialize: "réinitialisation globale",
+    globalReinitialize: "tout supprimer",
     pointsToSpend: "points à dépenser",
-    new: "nouveau",    
+    new: "nouveau",
     newe: "nouvelle",
     astralCombat: "combat astral",
     astralSignatures: "signatures astrales",
@@ -376,6 +394,7 @@ const translations = {
     language: "langue",
     qualities: "traits",
     quality: "trait",
+    qualitie: "trait",
     description: "description",
     descriptions: "descriptions",
     type: "type",
@@ -393,7 +412,8 @@ const translations = {
     all: "tous",
     minKarma: "Karma minimum",
     maxKarma: "Karma maximum",
-    maximumQualities: "Vous avez dépassé le nombre maximum de Traits à la création (6).",
+    maximumQualities:
+      "Vous avez dépassé le nombre maximum de Traits à la création (6).",
     ldb: "Livre de base",
     seattleEmeraude: "Seattle : Cité d'Emeraude",
     tombeauOuvert: "À tombeau ouvert",
@@ -402,8 +422,9 @@ const translations = {
     voiesOccultes: "Voies occultes",
     feuNourri: "Feu nourri",
     source: "source",
-    exportFoundry: "exporter sur Foundry VTT",
-    tooMuchSpecializations: "Vous avez dépassé le nombre maximum de spécialisations à la création (2).",
+    exportFoundry: "Foundry VTT",
+    tooMuchSpecializations:
+      "Vous avez dépassé le nombre maximum de spécialisations à la création (2).",
     stuff: "équipement",
     magicStuff: "équipement magique",
     matrixStuff: "équipement matriciel",
@@ -412,10 +433,13 @@ const translations = {
     contacts: "contacts",
     connection: "réseau",
     loyalty: "loyauté",
-    tooMuchConnectionLoyalty: "Vous avez dépassé le maximum pour le réseau ou la loyauté à la création (Charisme) pour ",
-    legalDisclaimer: "Shadowrun et tous les logos et personnages associés sont la propriété de Topps Company, Inc. © 2020 Topps Company, Inc. Les traductions en français sont la propriété de Black Book Editions. Tous droits réservés. Ce site web n'est pas affilié, approuvé, sponsorisé ou approuvé par Topps Company, Inc., Black Book Editions ou l'une de leurs sociétés affiliées ou filiales. Si ce site web enfreint une marque ou une propriété, veuillez me contacter sur Github.",
+    tooMuchConnectionLoyalty:
+      "Vous avez dépassé le maximum pour le réseau ou la loyauté à la création (Charisme) pour ",
+    legalDisclaimer:
+      "Shadowrun et tous les logos et personnages associés sont la propriété de Topps Company, Inc. © 2020 Topps Company, Inc. Les traductions en français sont la propriété de Black Book Editions. Tous droits réservés. Ce site web n'est pas affilié, approuvé, sponsorisé ou approuvé par Topps Company, Inc., Black Book Editions ou l'une de leurs sociétés affiliées ou filiales. Si ce site web enfreint une marque ou une propriété, veuillez me contacter sur Github.",
     livingPersona: "persona incarné",
-    mismatchVersion: "La version de l'application a été modifiée. Votre personnage pourrait ne pas se charger correctement, si c'est le cas, cliquez sur le bouton rouge de réinitialisation.",
+    mismatchVersion:
+      "La version de l'application a été modifiée. Votre personnage pourrait ne pas se charger correctement, si c'est le cas, cliquez sur le bouton rouge de réinitialisation.",
     mismatchVersionTitle: "Différence de version",
     shadows: "ombres portées",
     loadCharacter: "Charger le personnage",
@@ -423,6 +447,255 @@ const translations = {
     saveCharacter: "Enregistrer",
     newCharacter: "Nouveau",
     sumToTen: "Système à 10 points",
+    chooseStuff: "Choisissez votre équipement",
+    combatWeapons: "combat & Armes",
+    vehicles: "véhicules et drones",
+    augmentations: "augmentations",
+    augmentation: "augmentation",
+    otherStuff: "Autres équipements",
+    rangedWeapons: "armes à distance",
+    meleeWeapons: "armes de mêlée",
+    rangedWeapon: "arme à distance",
+    meleeWeapon: "arme de mêlée",
+    grenades: "grenades",
+    grenade: "grenade",
+    protections: "protections",
+    protection: "protection",
+    ammunitions: "munitions",
+    ammunition: "munition",
+    SINS: "SINs",
+    SIN: "SIN",
+    lifestyles: "styles de vie",
+    lifestyle: "style de vie",
+    drugs: "drogues",
+    stuffs: "équipements",
+    drug: "drogue",
+    stuff: "équipement",
+    damageValue: "valeur de dommages",
+    damageType: "type de dommages",
+    physical: "physiques",
+    stun: "étourdissants",
+    attackRating: "score offensif",
+    defenseRating: "score défensif",
+    socialRating: "score social",
+    attackRatingSmall: "SO",
+    defenseRatingSmall: "SD",
+    socialRatingSmall: "SS",
+    capacity: "capacité",
+    quantity: "quantité",
+    essence: "essence",
+    essenceCost: "coût en Essence",
+    category: "catégorie",
+    drugSpeed: "rapidité",
+    drugPower: "virulence",
+    drugVectors: "vecteurs",
+    drugDuration: "durée",
+    rating: "indice",
+    price: "prix",
+    availability: "disponibilité",
+    spells: "sorts",
+    magicalStuff: "équipement magique",
+    magicalStuffTitle: "Équipement magique",
+    technoStuff: "équipement matriciel",
+    technoStuffTitle: "Équipement matriciel",
+    drainValue: "valeur de drain",
+    preparations: "préparations",
+    spirits: "esprits",
+    rituals: "rituels",
+    foci: "focus",
+    adeptPowers: "pouvoirs d'adepte",
+    metamagics: "métamagie",
+    complexForm: "forme complexe",
+    sprites: "sprites",
+    echoes: "échos",
+    assaultCannon: "canon d'assaut",
+    launcher: "lanceur",
+    machineGunHeavy: "mitrailleuse lourde",
+    machineGunLight: "mitrailleuse légère",
+    machineGunMedium: "mitrailleuse moyenne",
+    pistolMachine: "pistolet automatique",
+    pistolHeavy: "pistolet lourd",
+    pistolHoldOut: "pistolet de poche",
+    pistolLight: "pistolet léger",
+    rifle: "fusil",
+    shotgun: "shotgun",
+    rangedSpecial: "arme spéciale",
+    submachineGun: "mitraillette",
+    taser: "taser",
+    select: "sélectionnez",
+    baseConcealability: "dissimulation de base",
+    specialDamageType: "type de dommages spéciaux",
+    acid: "acide",
+    cold: "froid",
+    electricity: "électricité",
+    fire: "feu",
+    sound: "son",
+    toxin: "toxine",
+    water: "eau",
+    closeAR: "proche",
+    nearAR: "courte",
+    mediumAR: "moyenne",
+    farAR: "longue",
+    extremeAR: "extrême",
+    firingModes: "modes de tir",
+    singleShot: "coup par coup",
+    semiAutomatic: "semi-automatique",
+    burstFire: "tir en rafale",
+    fullAutomatic: "tir automatique",
+    ammunitionMax: "munitions maximum",
+    loadingMechanism: "mécanisme de chargement",
+    legality: "légalité",
+    belt: "bande",
+    cylinder: "barillet",
+    breakAction: "canon bascoulant",
+    muzzle: "chargement par le canon",
+    clip: "chargeur",
+    internalMag: "magasin interne",
+    missile: "missile",
+    drum: "tambour",
+    forbidden: "interdit",
+    legal: "légal",
+    restricted: "limité",
+    stun_short: "E",
+    physical_short: "P",
+    informations: "informations générales",
+    damages: "dommages",
+    priceAndAvailability: "prix et disponibilité",
+    availability: "disponibilité",
+    exportPDF: "PDF",
+    rdd: "RDD",
+    deletionConfirmation: "Confirmation de suppression",
+    resetCharacter: "Voulez-vous supprimer le personnage",
+    reset: "Voulez-vous supprimer tous vos personnages ?",
+    JSONCharacter: "Importer JSON",
+    blade: "arme tranchante",
+    club: "arme contondante",
+    unarmed: "combat à mains nues",
+    meleeSpecial: "arme spéciale",
+    crossbowHeavy: "arbalète lourde",
+    crossbowLight: "arbalète légère",
+    crossbowMedium: "arbalète moyenne",
+    bow: "arc",
+    grenadeFlashPack: "Grenade (Flash-pak)",
+    grenadeFragmentation: "Grenade (Fragmentation)",
+    grenadeGas: "Grenade (Gaz)",
+    grenadeHighExplosive: "Grenade (Explosive)",
+    grenadeSmoke: "Grenade (Fumigène)",
+    grenadeSmokeThermal: "Grenade (Fumigène thermique)",
+    grenadeStun: "Grenade (Incapacitante)",
+    weaponsType: "type d'arme",
+    apds: "APDS",
+    capsuleDmso: "Capsule DMSO",
+    explosive: "Explosive",
+    flechette: "Fléchette",
+    gel: "Gel",
+    injectionDart: "Flèchette à injection",
+    regular: "Regular",
+    stickNShock: "Stick-n-Shock",
+    assaultCannon: "Cannon d'Assault",
+    taserDart: "Dard taser",
+    bolt: "Carreau",
+    boltInjection: "Carreau à injection",
+    arrow: "Flêche",
+    arrowInjection: "Flèche à injection",
+    rocketAntiVehicle: "Roquette (Anti-véhicule)",
+    rocketFragmentation: "Roquette (Fragmentation)",
+    rocketGas: "Roquette (Gaz)",
+    rocketHighExplosive: "Roquette (Explosive)",
+    rocketSmoke: "Roquette (Fumigène)",
+    rocketSmokeThermal: "Roquette (Fumigène thermique)",
+    missileAntiVehicle: "Missile (Anti-véhicule)",
+    missileFragmentation: "Missile (Fragmentation)",
+    missileGas: "Missile (Gaz)",
+    missileHighExplosive: "Missile (Explosive)",
+    missileSmoke: "Missile (Fumigène)",
+    missileSmokeThermal: "Missile (Fumigène thermique)",
+    grade: "gamme",
+    alphaware: "alphaware",
+    betaware: "betaware",
+    deltaware: "deltaware",
+    standard: "standard",
+    used: "occasion",
+    bioware: "bioware",
+    culturedBioware: "bioware de culture",
+    cyberware: "cyberware",
+    bodyware: "implants corporels",
+    cyberImplantWeapons: "armes cybernétiques",
+    cyberjack: "cyberjack",
+    cyberlimbs: "membres cybernétiques",
+    earware: "implants auriculaires",
+    eyeware: "implants occulaires",
+    headware: "implants cérébraux",
+    pilotSpecialization: "spécialisation de pilotage",
+    typeSub: "sous-type",
+    handling: "maniabilité",
+    handlingOffRoad: "maniabilité (hors route)",
+    acceleration: "accélération",
+    speedInterval: "intervalle de vitesse",
+    topSpeed: "vitesse max",
+    bodyVehicle: "résistance",
+    armorVehicle: "blindage",
+    pilotVehicle: "autopilote",
+    sensor: "senseur",
+    seat: "place",
+    accessories: "accessoires",
+    riggingInterface: "interface de rigging",
+    car: "Voiture",
+    experimental: "Expérimentaux",
+    fixedWingAircraft: "Avion à voilure fixe",
+    glider: "Planeur",
+    gravedrive: "GravDrive",
+    hovercraft: "Aéroglisseur",
+    jetpack: "Véhicule aérien personnel",
+    LTAV: "Dirigeable",
+    military: "Militaire",
+    motorboat: "Bateau à moteur",
+    motorcycle: "Motos",
+    powerboat: "Embarcations rapides",
+    rotorcraft: "Hélicoptère",
+    sailboat: "Voilier",
+    ship: "Navire",
+    submarine: "Sous-marin",
+    submersible: "Submersible",
+    truck: "Pick-up",
+    van: "Fourgon",
+    various: "Divers",
+    VTOL: "Appareils à décollage et atterrissage vertical",
+    aerial: "Aérien",
+    anthroform: "Anthropomorphe",
+    aquatic: "Aquatique",
+    ground: "Terrestre",
+    largeDrone: "Drone de grande taille",
+    mediumDrone: "Drone de taille moyenne",
+    microdrone: "Microdrone",
+    minidrone: "Minidrone",
+    smallDrone: "Drone de petite taille",
+    vehicle: "Véhicule",
+    drone: "Drone",
+    combatTurn: "tour de combat",
+    minute: "minute",
+    hour: "heure",
+    day: "jour",
+    week: "semaine",
+    month: "mois",
+    combatTurnPlural: "tours de combat",
+    minutePlural: "minutes",
+    hourPlural: "heures",
+    dayPlural: "jours",
+    weekPlural: "semaines",
+    monthPlural: "mois",
+    always: "toujours",
+    instantaneous: "instantané",
+    permanent: "permanent",
+    sustained: "maintenu",
+    speedToxin: "rapidité",
+    powerToxin: "virulence",
+    durationToxin: "durée",
+    vectors: "vecteurs",
+    vectorContact: "contact",
+    vectorIngestion: "ingestion",
+    vectorInhalation: "inhalation",
+    vectorInjection: "injection",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -430,9 +703,11 @@ const translations = {
     name: "Name",
     surname: "Surname",
     metatypes: "Metatypes",
-    attributes: "attributes",    
+    metatype: "Metatype",
+    attributes: "attributes",
     adjustment: "adjustment",
     skills: "skills",
+    skill: "skill",
     magicOrResonance: "Magic or Resonance",
     resources: "Resources",
     body: "Body",
@@ -446,6 +721,17 @@ const translations = {
     edge: "Edge",
     magic: "Magic",
     resonance: "Resonance",
+    body_short: "BOD",
+    agility_short: "AGI",
+    reaction_short: "REA",
+    strength_short: "STR",
+    willpower_short: "WIL",
+    logic_short: "LOG",
+    intuition_short: "INT",
+    charisma_short: "CHA",
+    edge_short: "EDG",
+    magic_short: "MAG",
+    resonance_short: "RES",
     identity: "Identity",
     priorityTable: "Priority Table",
     metatypeChoice: "Metatype Choice",
@@ -505,7 +791,7 @@ const translations = {
     naga: "naga",
     pixie: "pixie",
     sasquatch: "sasquatch",
-    merrow: "merrow",   
+    merrow: "merrow",
     formula: "formula",
     formulas: "formulas",
     complexForm: "complex form",
@@ -518,7 +804,7 @@ const translations = {
     specialization: "specialization",
     specializations: "specializations",
     thisCharacter: "this character",
-    globalReinitialize: "global reinitialize",
+    globalReinitialize: "delete all",
     pointsToSpend: "Points to Spend",
     new: "new",
     newe: "new",
@@ -605,6 +891,7 @@ const translations = {
     language: "language",
     qualities: "qualities",
     quality: "quality",
+    qualitie: "quality",
     description: "description",
     descriptions: "descriptions",
     type: "type",
@@ -622,7 +909,8 @@ const translations = {
     all: "all",
     minKarma: "minimum Karma",
     maxKarma: "maximum Karma",
-    maximumQualities: "you have exceeded the maximum number of Qualities for creation (6).",    
+    maximumQualities:
+      "you have exceeded the maximum number of Qualities for creation (6).",
     ldb: "Core Rulebook",
     seattleEmeraude: "Emerald City",
     tombeauOuvert: "Double Clutch",
@@ -632,7 +920,8 @@ const translations = {
     feuNourri: "Firing Squad",
     source: "source",
     exportFoundry: "export on Foundry VTT",
-    tooMuchSpecializations: "You have exceeded the maximum number of specializations for creation (2).",
+    tooMuchSpecializations:
+      "You have exceeded the maximum number of specializations for creation (2).",
     stuff: "stuff",
     magicStuff: "magic stuff",
     matrixStuff: "matrix stuff",
@@ -641,10 +930,13 @@ const translations = {
     contacts: "contacts",
     connection: "connection",
     loyalty: "loyalty",
-    tooMuchConnectionLoyalty: "You have exceeded the maximum for connection or loyalty at creation (Charisma) on ",
-    legalDisclaimer: "Shadowrun and all related marks, logos and characters are owned by Topps Company, Inc. © 2020 Topps Company, Inc. All Rights Reserved. This website is not affiliated with, endorsed, sponsored, or specifically approved by Topps Company, Inc. or any of its affiliates or subsidiaries. If this website infringes on any of Topps trademarks, please contact me on Github.",    
+    tooMuchConnectionLoyalty:
+      "You have exceeded the maximum for connection or loyalty at creation (Charisma) on ",
+    legalDisclaimer:
+      "Shadowrun and all related marks, logos and characters are owned by Topps Company, Inc. © 2020 Topps Company, Inc. All Rights Reserved. This website is not affiliated with, endorsed, sponsored, or specifically approved by Topps Company, Inc. or any of its affiliates or subsidiaries. If this website infringes on any of Topps trademarks, please contact me on Github.",
     livingPersona: "living persona",
-    mismatchVersion: "The version of the application has been modified. Your character may not load correctly, if so, click on the red reset button.",
+    mismatchVersion:
+      "The version of the application has been modified. Your character may not load correctly, if so, click on the red reset button.",
     mismatchVersionTitle: "Version mismatch",
     shadows: "shadows",
     loadCharacter: "load character",
@@ -652,5 +944,277 @@ const translations = {
     saveCharacter: "save",
     newCharacter: "new",
     sumToTen: "Sum to Ten",
+    chooseStuff: "Choose your stuff",
+    combatWeapons: "Combat & Weapons",
+    vehicles: "Vehicles & Drones",
+    augmentations: "Augmentations",
+    otherStuff: "Other stuff",
+    rangedWeapons: "Ranged Weapons",
+    meleeWeapons: "Melee Weapons",
+    rangedWeapon: "Ranged Weapon",
+    meleeWeapon: "Melee Weapon",
+    grenades: "Grenades",
+    protections: "Protections",
+    ammunitions: "Ammunitions",
+    SINS: "SINs",
+    lifestyles: "lifestyles",
+    drugs: "drugs",
+    stuffs: "stuffs",
+    grenade: "Grenade",
+    protection: "Protection",
+    ammunition: "Ammunition",
+    SIN: "SIN",
+    lifestyle: "lifestyle",
+    drug: "drug",
+    stuff: "stuff",
+    vehicle: "Vehicle & Drone",
+    augmentation: "Augmentation",
+    damageValue: "damage value",
+    damageType: "damage type",
+    physical: "physical",
+    stun: "stun",
+    attackRating: "attack rating",
+    defenseRating: "defense rating",
+    socialRating: "social rating",
+    attackRatingSmall: "AR",
+    defenseRatingSmall: "DR",
+    socialRatingSmall: "SR",
+    capacity: "capacity",
+    quantity: "quantity",
+    essence: "essence",
+    essenceCost: "essence cost",
+    category: "category",
+    drugSpeed: "speed",
+    drugPower: "power",
+    drugVectors: "vectors",
+    drugDuration: "duration",
+    rating: "rating",
+    price: "price",
+    availability: "availability",
+    spells: "spells",
+    magicalStuff: "magical stuff",
+    magicalStuffTitle: "Magical Stuff",
+    drainValue: "drain value",
+    preparations: "preparations",
+    spirits: "spirits",
+    rituals: "rituals",
+    foci: "foci",
+    adeptPowers: "adept powers",
+    metamagics: "metamagics",
+    complexForm: "complex form",
+    sprites: "sprites",
+    echoes: "echoes",
+    assaultCannon: "assault cannon",
+    launcher: "launcher",
+    machineGunHeavy: "machine gun (heavy)",
+    machineGunLight: "machine gun (light)",
+    machineGunMedium: "machine gun (medium)",
+    pistolMachine: "pistol machine",
+    pistolHeavy: "pistol (heavy)",
+    pistolHoldOut: "pistol (hold-out)",
+    pistolLight: "pistol (light)",
+    rifles: "rifles",
+    shotgun: "shotgun",
+    rangedSpecial: "special",
+    submachineGun: "submachine gun",
+    taser: "taser",
+    select: "select",
+    baseConcealability: "base concealability",
+    specialDamageType: "special damage type",
+    acid: "acid",
+    cold: "cold",
+    electricity: "electricity",
+    fire: "fire",
+    sound: "sound",
+    toxin: "toxin",
+    water: "water",
+    closeAR: "close",
+    nearAR: "near",
+    mediumAR: "medium",
+    farAR: "far",
+    extremeAR: "extreme",
+    firingModes: "firing modes",
+    singleShot: "single shot",
+    semiAutomatic: "semi-automatic",
+    burstFire: "burst fire",
+    fullAutomatic: "full automatic",
+    ammunitionMax: "max ammunition",
+    loadingMechanism: "loading mechanism",
+    legality: "legality",
+    belt: "belt",
+    cylinder: "cylinder",
+    breakAction: "break action",
+    muzzle: "muzzle",
+    clip: "clip",
+    internalMag: "internal mag",
+    missile: "missile",
+    drum: "drum",
+    forbidden: "forbidden",
+    legal: "legal",
+    restricted: "restricted",
+    stun_short: "S",
+    physical_short: "P",
+    informations: "general informations",
+    damages: "damages",
+    priceAndAvailability: "price and availability",
+    availability: "availability",
+    exportPDF: "export PDF",
+    rdd: "pool",
+    deletionConfirmation: "Deletion confirmation",
+    resetCharacter: "Do you want to delete the character",
+    reset: "Do you want to delete all your characters ?",
+    JSONCharacter: "Import JSON",
+    blade: "blade",
+    club: "club",
+    unarmed: "unarmed",
+    meleeSpecial: "special melee",
+    crossbowHeavy: "heavy crossbow",
+    crossbowLight: "light crossbow",
+    crossbowMedium: "medium crossbow",
+    bow: "bow",
+    grenadeFlashPack: "Grenade (Flash-pak)",
+    grenadeFragmentation: "Grenade (Fragmentation)",
+    grenadeGas: "Grenade (Gas)",
+    grenadeHighExplosive: "Grenade (High Explosive)",
+    grenadeSmoke: "Grenade (Smoke)",
+    grenadeSmokeThermal: "Grenade (Thermal smoke)",
+    grenadeStun: "Grenade (Stun)",
+    weaponsType: "weapon type",
+    apds: "APDS",
+    capsuleDmso: "Capsule DMSO",
+    explosive: "Explosive",
+    flechette: "Flechette",
+    gel: "Gel",
+    injectionDart: "Injection Dart",
+    regular: "Regular",
+    stickNShock: "Stick-n-Shock",
+    assaultCannon: "Assault Cannon",
+    taserDart: "Taser Dart",
+    bolt: "Bolt",
+    boltInjection: "Injection Bolt",
+    arrow: "Arrow",
+    arrowInjection: "Injection Arrow",
+    rocketAntiVehicle: "Rocket (Anti-Vehicle)",
+    rocketFragmentation: "Rocket (Fragmentation)",
+    rocketGas: "Rocket (Gas)",
+    rocketHighExplosive: "Rocket (High Explosive)",
+    rocketSmoke: "Rocket (Smoke)",
+    rocketSmokeThermal: "Rocket (Thermal Smoke)",
+    missileAntiVehicle: "Missile (Anti-Vehicle)",
+    missileFragmentation: "Missile (Fragmentation)",
+    missileGas: "Missile (Gas)",
+    missileHighExplosive: "Missile (High Explosive)",
+    missileSmoke: "Missile (Smoke)",
+    missileSmokeThermal: "Missile (Thermal Smoke)",
+    grade: "grade",
+    alphaware: "alphaware",
+    betaware: "betaware",
+    deltaware: "deltaware",
+    standard: "standard",
+    used: "used",
+    bioware: "bioware",
+    culturedBioware: "cultured bioware",
+    cyberware: "cyberware",
+    bodyware: "bodyware",
+    cyberImplantWeapons: "cyber implant weapons",
+    cyberjack: "cyberjack",
+    cyberlimbs: "cyberlimbs",
+    earware: "earware",
+    eyeware: "eyeware",
+    headware: "headware",
+    pilotSpecialization: "pilot specialization",
+    typeSub: "sub-type",
+    handling: "handling",
+    handlingOffRoad: "handling (off-road)",
+    acceleration: "acceleration",
+    speedInterval: "speed interval",
+    topSpeed: "top speed",
+    bodyVehicle: "body",
+    armorVehicle: "armor",
+    pilotVehicle: "pilot",
+    sensor: "sensor",
+    seat: "seat",
+    accessories: "accessories",
+    riggingInterface: "rigging interface",
+    car: "car",
+    experimental: "experimental",
+    fixedWingAircraft: "Fixed Wing Aircraft",
+    glider: "Glider",
+    gravedrive: "GravDrive",
+    hovercraft: "Hovercraft",
+    jetpack: "Jetpack",
+    LTAV: "LTAV",
+    military: "Military",
+    motorboat: "Motorboat",
+    motorcycle: "Motorcycle",
+    powerboat: "Powerboat",
+    rotorcraft: "Rotorcraft",
+    sailboat: "Sailboat",
+    ship: "Ship",
+    submarine: "Submarine",
+    submersible: "Submersible",
+    truck: "Truck",
+    van: "Van",
+    various: "Various",
+    VTOL: "VTOL",
+    aerial: "Aerial",
+    anthroform: "Anthroform",
+    aquatic: "Aquatic",
+    ground: "Ground",
+    largeDrone: "Large Drone",
+    mediumDrone: "Medium Drone",
+    microdrone: "Microdrone",
+    minidrone: "Minidrone",
+    smallDrone: "Small Drone",
+    vehicle: "Vehicle",
+    drone: "Drone",
+    combatTurn: "combat turn",
+    minute: "minute",
+    hour: "hour",
+    day: "day",
+    week: "week",
+    month: "month",
+    combatTurnPlural: "combat turns",
+    minutePlural: "minutes",
+    hourPlural: "hours",
+    dayPlural: "days",
+    weekPlural: "weeks",
+    monthPlural: "months",
+    always: "always",
+    instantaneous: "instantaneous",
+    permanent: "permanent",
+    sustained: "sustained",
+    speedToxin: "speed",
+    powerToxin: "power",
+    durationToxin: "duration",
+    vectors: "vectors",
+    vectorContact: "contact",
+    vectorIngestion: "ingestion",
+    vectorInhalation: "inhalation",
+    vectorInjection: "injection",
   },
+};
+
+weaponsToSpecializations = {
+  assaultCannon: ["assaultCannons"],
+  machineGunHeavy: ["machineGuns"],
+  machineGunLight: ["machineGuns"],
+  machineGunMedium: ["machineGuns"],
+  pistolMachine: ["machinePistols"],
+  pistolHeavy: ["heavyPistols"],
+  pistolHoldOut: ["holdOuts"],
+  pistolLight: ["lightPistols"],
+  rifle: ["rifles"],
+  shotgun: ["shotguns"],
+  submachineGun: ["submachineGuns"],
+  taser: ["tasers"],
+  launcher: [""],
+  rangedSpecial: [""],
+  bow: ["archery"],
+  crossbowHeavy: ["archery"],
+  crossbowLight: ["archery"],
+  crossbowMedium: ["archery"],
+  blade: ["blades"],
+  club: ["clubs"],
+  unarmed: ["unarmedCombat"],
 };
