@@ -1753,8 +1753,431 @@ function modalConstruct(type, newType, method) {
       </div>`;
       break;
     case "augmentations":
+      const augmentationsTypes = ["bioware", "culturedBioware", "cyberware"];
+      augmentationsTypes.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const augmentationsTypesOptions = augmentationsTypes
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const augmentationsCategory = [
+        "bodyware",
+        "cyberImplantWeapons",
+        "cyberjack",
+        "cyberlimbs",
+        "earware",
+        "eyeware",
+        "headware",
+      ];
+      augmentationsCategory.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const augmentationsCategoryOptions = augmentationsCategory
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const augmentationsGrade = [
+        "used",
+        "standard",
+        "alphaware",
+        "betaware",
+        "deltaware",
+      ];
+      const augmentationsGradeOptions = augmentationsGrade
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+    <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+    <div class="col-sm-9">
+      <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+    </div>
+</div>
+<div class="form-group row align-items-center mb-2">
+        <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+        <div class="col-sm-9 SR6_Select">
+          <select class="form-control" id="${type}Type">
+            <option value="">${capitalized(terms.select)}</option>
+            ${augmentationsTypesOptions}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}Category" class="col-sm-3 col-form-label">${capitalized(
+        terms.category
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <select class="form-control SR6-Select" id="${type}Category">
+            <option value="">${capitalized(terms.select)}</option>
+            ${augmentationsCategoryOptions}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}Grade" class="col-sm-3 col-form-label">${capitalized(
+        terms.grade
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <select class="form-control SR6-Select" id="${type}Grade">
+            <option value="">${capitalized(terms.select)}</option>
+            ${augmentationsGradeOptions}
+          </select>
+        </div>
+      </div>      
+      <div class="form-group row align-items-center mb-2">  
+      <label for="${type}EssenceCost" class="col-sm-3 col-form-label">${capitalized(
+        terms.essenceCost
+      )}${terms.colons}</label>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}EssenceCost" aria-label="capacity" value=0>
+      </div>
+  </div>      
+      <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Capacity" class="col-sm-3 col-form-label">${capitalized(
+        terms.capacity
+      )}${terms.colons}</label>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Capacity" aria-label="capacity" value=0>
+      </div>
+  </div>
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
       break;
     case "vehicles":
+      var categorySection = "";
+
+      document.body.addEventListener("change", function (event) {
+        if (event.target.id === `${type}Type`) {
+          const selectedType = event.target.value;
+          const subTypes = vehiclesTypeSub[selectedType];
+
+          const subTypeSelect = document.getElementById(`${type}TypeSub`);
+          subTypeSelect.innerHTML = ""; // Clear existing options
+
+          // Add a default option
+          const defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.text = capitalized(terms.select);
+          subTypeSelect.add(defaultOption);
+
+          // Add new options based on the selected type
+          subTypes.forEach((subType) => {
+            const option = document.createElement("option");
+            option.value = subType;
+            option.text = capitalized(terms[subType]);
+            subTypeSelect.add(option);
+          });
+
+          // Get the parent element where you want to add the category section
+          const parentElement = document.getElementById(`divType`).parentNode;
+
+          // Check if the category section already exists
+          let categoryDiv = document.querySelector(`#${type}CategoryDiv`);
+
+          if (selectedType === "drone") {
+            if (!categoryDiv) {
+              // If the category section does not exist, create it
+              categoryDiv = document.createElement("div");
+              categoryDiv.id = `${type}CategoryDiv`;
+              categoryDiv.className = "form-group row align-items-center mb-2";
+              categoryDiv.innerHTML = `
+                <label for="${type}Category" class="col-sm-3 col-form-label">${capitalized(
+                terms.category
+              )}${terms.colons}</label>
+                <div class="col-sm-9">
+                  <select class="form-control SR6-Select" id="${type}Category">
+                    <option value="">${capitalized(terms.select)}</option>
+                    ${vehiclesCategoryOptions}
+                  </select>
+                </div>
+              `;
+
+              // Append the new div to the parent element
+              parentElement.appendChild(categoryDiv);
+            }
+          } else {
+            // If selectedType is not "drone", remove the category section if it exists
+            categoryDiv = document.querySelector(`#${type}CategoryDiv`);
+            if (categoryDiv) {
+              parentElement.removeChild(categoryDiv);
+            }
+          }
+        }
+      });
+
+      var vehicleType = "vehicle";
+
+      const vehiclesTypeSub = {
+        vehicle: [
+          "car",
+          "experimental",
+          "fixedWingAircraft",
+          "glider",
+          "gravedrive",
+          "hovercraft",
+          "jetpack",
+          "LTAV",
+          "military",
+          "motorboat",
+          "motorcycle",
+          "powerboat",
+          "rotorcraft",
+          "sailboat",
+          "ship",
+          "submarine",
+          "submersible",
+          "truck",
+          "van",
+          "various",
+          "VTOL",
+        ],
+        drone: [
+          "largeDrone",
+          "mediumDrone",
+          "microdrone",
+          "minidrone",
+          "smallDrone",
+        ],
+      };
+
+      vehiclesTypeSub[vehicleType].sort((a, b) =>
+        terms[a].localeCompare(terms[b])
+      );
+
+      const vehiclesTypeSubOptions = vehiclesTypeSub[vehicleType]
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const vehiclesCategory = ["aerial", "anthroform", "aquatic", "ground"];
+      vehiclesCategory.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const vehiclesCategoryOptions = vehiclesCategory
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const vehiclesPilotSpecialization = [
+        "groundCraft",
+        "aircraft",
+        "watercraft",
+      ];
+      vehiclesPilotSpecialization.sort((a, b) =>
+        terms[a].localeCompare(terms[b])
+      );
+      const vehiclesPilotSpecializationOptions = vehiclesPilotSpecialization
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+    <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+    <div class="col-sm-9">
+      <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+    </div>
+</div>
+<div class="form-group row align-items-center mb-2" id="divType">
+        <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+        <div class="col-sm-9 SR6_Select">
+          <select class="form-control" id="${type}Type">
+            <option value="vehicle">${capitalized(terms.vehicle)}</option>
+            <option value="drone">${capitalized(terms.drone)}</option>
+          </select>
+        </div>
+      </div>
+      
+      ${categorySection}
+
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}TypeSub" class="col-sm-3 col-form-label">${capitalized(
+        terms.typeSub
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <select class="form-control SR6-Select" id="${type}TypeSub">
+            <option value="">${capitalized(terms.select)}</option>
+            ${vehiclesTypeSubOptions}
+          </select>
+        </div>
+      </div> 
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}PilotSpecialization" class="col-sm-3 col-form-label">${capitalized(
+        terms.pilotSpecialization
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <select class="form-control SR6-Select" id="${type}PilotSpecialization">
+            <option value="">${capitalized(terms.select)}</option>
+            ${vehiclesPilotSpecializationOptions}
+          </select>
+        </div>
+      </div>  
+  </div> 
+  <div class="SR6_headline mb-2">${allCapitalized(terms.attributes)}</div> 
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Handling" class="col-sm-3 col-form-label">${capitalized(
+        terms.handling
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Handling" aria-label="handling" value=0>
+        </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}HandlingOffRoad" class="col-sm-3 col-form-label">${capitalized(
+        terms.handlingOffRoad
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}HandlingOffRoad" aria-label="handlingOffRoad" value=0>
+        </div>
+        </div>
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Acceleration" class="col-sm-3 col-form-label">${capitalized(
+        terms.acceleration
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Acceleration" aria-label="acceleration" value=0>
+        </div>
+        </div>
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}SpeedInterval" class="col-sm-3 col-form-label">${capitalized(
+        terms.speedInterval
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}SpeedInterval" aria-label="speedInterval" value=0>
+        </div>
+        </div>
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}TopSpeed" class="col-sm-3 col-form-label">${capitalized(
+        terms.topSpeed
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}TopSpeed" aria-label="topSpeed" value=0>
+        </div>
+      </div> 
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Body" class="col-sm-3 col-form-label">${capitalized(
+        terms.bodyVehicle
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Body" aria-label="body" value=0>
+        </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Armor" class="col-sm-3 col-form-label">${capitalized(
+        terms.armorVehicle
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Armor" aria-label="armor" value=0>
+        </div>
+      </div>   
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Pilot" class="col-sm-3 col-form-label">${capitalized(
+        terms.pilotVehicle
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Pilot" aria-label="pilot" value=0>
+        </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Sensor" class="col-sm-3 col-form-label">${capitalized(
+        terms.sensor
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Sensor" aria-label="sensor" value=0>
+        </div>
+      </div>  
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Seat" class="col-sm-3 col-form-label">${capitalized(
+        terms.seat
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Seat" aria-label="seat" value=0>
+        </div>
+      </div>
+      <div class="SR6_headline mb-2">${allCapitalized(terms.accessories)}</div>
+
+        <div class="form-check d-flex justify-content-start">          
+          <input class="form-check-input me-2" type="checkbox" value="RiggingInterface" id="RiggingInterface">
+          <label class="form-check-label" for="RiggingInterface">
+            ${capitalized(terms.riggingInterface)}
+          </label>
+        </div>
+  
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
       break;
     case "drugs":
       break;
@@ -2128,6 +2551,88 @@ function handleDropdownModal(type) {
         console.log("newItem : ", newItem);
       }
 
+      if (type === "augmentations") {
+        var augmentationType = getValue("Type", type);
+        var category = getValue("Category", type);
+        var grade = getValue("Grade", type);
+        var essenceCost = getValue("EssenceCost", type);
+        var capacity = getValue("Capacity", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          type: augmentationType,
+          category: category,
+          grade: grade,
+          essenceCost: essenceCost,
+          capacity: capacity,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+
+        console.log("newItem : ", newItem);
+      }
+
+      if (type === "vehicles") {
+        var vehicleType = getValue("Type", type);
+        var typeSub = getValue("TypeSub", type);
+        var category = "";
+        var pilotSpecialization = getValue("PilotSpecialization", type);
+        var handling = getValue("Handling", type);
+        var handlingOffRoad = getValue("HandlingOffRoad", type);
+        var acceleration = getValue("Acceleration", type);
+        var speedInterval = getValue("SpeedInterval", type);
+        var topSpeed = getValue("TopSpeed", type);
+        var body = getValue("Body", type);
+        var armor = getValue("Armor", type);
+        var pilot = getValue("Pilot", type);
+        var sensor = getValue("Sensor", type);
+        var seat = getValue("Seat", type);
+        var riggingInterface = $(`#RiggingInterface`).prop("checked");
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        if (vehicleType === "drone") {
+          category = getValue("Category", type);
+        }
+
+        newItem = {
+          key: key,
+          type: vehicleType,
+          typeSub: typeSub,
+          category: category,
+          pilotSpecialization: pilotSpecialization,
+          attributes: {
+            handling: handling,
+            handlingOffRoad: handlingOffRoad,
+            acceleration: acceleration,
+            speedInterval: speedInterval,
+            topSpeed: topSpeed,
+            body: body,
+            armor: armor,
+            pilot: pilot,
+            sensor: sensor,
+            seat: seat,
+          },
+          riggingInterface: riggingInterface,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+
+        console.log("newItem : ", newItem);
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -2162,6 +2667,14 @@ function handleDropdownModal(type) {
         if (type === "protections") {
           characterData[type].push(newItem);
           updateProtectionsDisplay(type);
+        }
+        if (type === "augmentations") {
+          characterData[type].push(newItem);
+          updateAugmentationsDisplay(type);
+        }
+        if (type === "vehicles") {
+          characterData[type].push(newItem);
+          updateVehiclesDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -2198,7 +2711,8 @@ function handleItemClick(type, indexItem) {
     type === "meleeWeapons" ||
     type === "grenades" ||
     type === "ammunitions" ||
-    type === "protections"
+    type === "protections" ||
+    type === "augmentations"
   )
     newType = terms.newe;
 
@@ -2307,6 +2821,17 @@ function handleItemClick(type, indexItem) {
       characterData[type][indexItem].AR.farAR;
     modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value =
       characterData[type][indexItem].AR.extremeAR;
+
+    if (type === "rangedWeapons") {
+      modalContainer.querySelector(`#singleShot`).checked =
+        characterData[type][indexItem].firingModes.singleShot;
+      modalContainer.querySelector(`#semiAutomatic`).checked =
+        characterData[type][indexItem].firingModes.semiAutomatic;
+      modalContainer.querySelector(`#burstFire`).checked =
+        characterData[type][indexItem].firingModes.burstFire;
+      modalContainer.querySelector(`#fullAutomatic`).checked =
+        characterData[type][indexItem].firingModes.fullAutomatic;
+    }
   }
 
   if (type === "ammunitions") {
@@ -2344,6 +2869,75 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+  }
+
+  if (type === "augmentations") {
+    const fields = [
+      "Type",
+      "Category",
+      "Grade",
+      "EssenceCost",
+      "Capacity",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
+  if (type === "vehicles") {
+    const fields = [
+      "Type",
+      "Category",
+      "TypeSub",
+      "PilotSpecialization",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    if (item.type === "drone") {
+      fields.push("Category");
+    }
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+
+    modalContainer.querySelector(`#${type}Handling`).value =
+      characterData[type][indexItem].attributes.handling;
+    modalContainer.querySelector(`#${type}HandlingOffRoad`).value =
+      characterData[type][indexItem].attributes.handlingOffRoad;
+    modalContainer.querySelector(`#${type}Acceleration`).value =
+      characterData[type][indexItem].attributes.acceleration;
+    modalContainer.querySelector(`#${type}SpeedInterval`).value =
+      characterData[type][indexItem].attributes.speedInterval;
+    modalContainer.querySelector(`#${type}TopSpeed`).value =
+      characterData[type][indexItem].attributes.topSpeed;
+    modalContainer.querySelector(`#${type}Body`).value =
+      characterData[type][indexItem].attributes.body;
+    modalContainer.querySelector(`#${type}Armor`).value =
+      characterData[type][indexItem].attributes.armor;
+    modalContainer.querySelector(`#${type}Pilot`).value =
+      characterData[type][indexItem].attributes.pilot;
+    modalContainer.querySelector(`#${type}Sensor`).value =
+      characterData[type][indexItem].attributes.sensor;
+    modalContainer.querySelector(`#${type}Seat`).value =
+      characterData[type][indexItem].attributes.seat;
+
+    modalContainer.querySelector(`#RiggingInterface`).checked =
+      characterData[type][indexItem].riggingInterface;
   }
 
   if (type === "languages") {
@@ -2442,20 +3036,6 @@ function handleItemClick(type, indexItem) {
             "input[name='choosequalitiesType']:checked"
           ).value;
 
-          console.log(
-            "value : ",
-            modalContainer.querySelector(
-              "input[name='choosequalitiesType']:checked"
-            ).value
-          );
-
-          console.log(
-            "characterData[type][index].key : ",
-            characterData[type][indexItem].key,
-            " characterData[type][indexItem].type : ",
-            characterData[type][indexItem].type
-          );
-
           updateQualitiesDisplay();
           updateQualitiesKarma();
         }
@@ -2505,6 +3085,20 @@ function handleItemClick(type, indexItem) {
           modalContainer.querySelector(`#${type}AttackRatingExtremeAR`).value =
             characterData[type][indexItem].AR.extremeAR;
 
+          modalContainer.querySelector(`#singleShot`).checked =
+            characterData[type][indexItem].firingModes.singleShot;
+          modalContainer.querySelector(`#semiAutomatic`).checked =
+            characterData[type][indexItem].firingModes.semiAutomatic;
+          modalContainer.querySelector(`#burstFire`).checked =
+            characterData[type][indexItem].firingModes.burstFire;
+          modalContainer.querySelector(`#fullAutomatic`).checked =
+            characterData[type][indexItem].firingModes.fullAutomatic;
+
+          console.log(
+            "characterData[type][index] : ",
+            characterData[type][indexItem]
+          );
+
           updateWeaponsDisplay(type);
         }
 
@@ -2532,7 +3126,6 @@ function handleItemClick(type, indexItem) {
 
         if (type === "protections") {
           const fields = [
-            "Type",
             "DefenseRating",
             "SocialRating",
             "Capacity",
@@ -2551,6 +3144,84 @@ function handleItemClick(type, indexItem) {
           });
 
           updateProtectionsDisplay(type);
+        }
+
+        if (type === "augmentations") {
+          const fields = [
+            "Type",
+            "Category",
+            "Grade",
+            "EssenceCost",
+            "Capacity",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateAugmentationsDisplay(type);
+        }
+
+        if (type === "vehicles") {
+          const fields = [
+            "Type",
+            "Category",
+            "TypeSub",
+            "PilotSpecialization",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          if (item.type === "drone") {
+            fields.push("Category");
+          }
+
+          fields.forEach((field) => {
+            var element = modalContainer.querySelector(`#${type}${field}`);
+            if (
+              element &&
+              item[field.charAt(0).toLowerCase() + field.slice(1)]
+            ) {
+              element.value =
+                item[field.charAt(0).toLowerCase() + field.slice(1)];
+            }
+          });
+
+          modalContainer.querySelector(`#${type}Handling`).value =
+            characterData[type][indexItem].attributes.handling;
+          modalContainer.querySelector(`#${type}HandlingOffRoad`).value =
+            characterData[type][indexItem].attributes.handlingOffRoad;
+          modalContainer.querySelector(`#${type}Acceleration`).value =
+            characterData[type][indexItem].attributes.acceleration;
+          modalContainer.querySelector(`#${type}SpeedInterval`).value =
+            characterData[type][indexItem].attributes.speedInterval;
+          modalContainer.querySelector(`#${type}TopSpeed`).value =
+            characterData[type][indexItem].attributes.topSpeed;
+          modalContainer.querySelector(`#${type}Body`).value =
+            characterData[type][indexItem].attributes.body;
+          modalContainer.querySelector(`#${type}Armor`).value =
+            characterData[type][indexItem].attributes.armor;
+          modalContainer.querySelector(`#${type}Pilot`).value =
+            characterData[type][indexItem].attributes.pilot;
+          modalContainer.querySelector(`#${type}Sensor`).value =
+            characterData[type][indexItem].attributes.sensor;
+          modalContainer.querySelector(`#${type}Seat`).value =
+            characterData[type][indexItem].attributes.seat;
+
+          modalContainer.querySelector(`#RiggingInterface`).checked =
+            characterData[type][indexItem].riggingInterface;
+
+          updateVehiclesDisplay(type);
         }
 
         if (type === "languages" || type === "knowledges") {
@@ -2605,6 +3276,12 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "protections") {
     updateProtectionsDisplay(type);
+  }
+  if (type === "augmentations") {
+    updateAugmentationsDisplay(type);
+  }
+  if (type === "vehicles") {
+    updateVehiclesDisplay(type);
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -2812,6 +3489,8 @@ function updateDisplay() {
   updateWeaponsDisplay("grenades");
   updateAmmunitionsDisplay();
   updateProtectionsDisplay();
+  updateAugmentationsDisplay();
+  updateVehiclesDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -2940,6 +3619,93 @@ function updateProtectionsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       protectionsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateAugmentationsDisplay() {
+  var augmentationsTableBody = $(`#augmentationsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  augmentationsTableBody.empty();
+
+  if (characterData.augmentations.length > 0) {
+    console.log("characterData.augmentations : ", characterData.augmentations);
+    var augmentations = [];
+    augmentations = sortKeys(characterData.augmentations);
+
+    augmentations.forEach(function (augmentation) {
+      var row = `
+      <tr>
+          <td class="name-column">${augmentation.key}</td>
+          <td class="type-column">${capitalized(
+            terms[augmentation.category]
+          )} (${capitalized(terms[augmentation.grade])})</td>
+          <td class="essenceCost-column">${parseInt(
+            augmentation.essenceCost
+          )}</td>
+          <td class="price-column">${parseInt(augmentation.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('augmentations','${characterData.augmentations.indexOf(
+        augmentation
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('augmentations','${characterData.augmentations.indexOf(
+        augmentation
+      )}')"></i>
+      <div id="modalContaineraugmentations${characterData.augmentations.indexOf(
+        augmentation
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      augmentationsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateVehiclesDisplay() {
+  var vehiclesTableBody = $(`#vehiclesTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  vehiclesTableBody.empty();
+
+  if (characterData.vehicles.length > 0) {
+    console.log("characterData.vehicles : ", characterData.vehicles);
+    var vehicles = [];
+    vehicles = sortKeys(characterData.vehicles);
+
+    vehicles.forEach(function (vehicle) {
+      var row = `
+      <tr>
+          <td class="name-column">${vehicle.key}</td>
+          <td class="type-column">${capitalized(terms[vehicle.typeSub])} ${
+        vehicle.type === "drone"
+          ? `(${capitalized(terms[vehicle.category])})`
+          : ""
+      }</td>
+          <td class="price-column">${parseInt(vehicle.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('vehicles','${characterData.vehicles.indexOf(
+        vehicle
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('vehicles','${characterData.vehicles.indexOf(
+        vehicle
+      )}')"></i>
+      <div id="modalContainervehicles${characterData.vehicles.indexOf(
+        vehicle
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      vehiclesTableBody.append(row);
     });
   }
 
@@ -4587,6 +5353,109 @@ function assignData() {
             },
             socialRating: {
               base: item.socialRating,
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(p);
+      }
+    }
+  }
+
+  if (characterData.augmentations) {
+    for (let augmentation in characterData.augmentations) {
+      if (characterData.augmentations.hasOwnProperty(augmentation)) {
+        var item = characterData.augmentations[augmentation];
+
+        var p = {
+          name: item.key,
+          type: "augmentation",
+          system: {
+            info: {
+              description: item.description,
+            },
+            grade: item.grade,
+            type: item.type,
+            typeSub: item.category,
+            essenceCost: {
+              base: item.essenceCost,
+            },
+            capacity: {
+              provided: {
+                base: item.capacity,
+              },
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(p);
+      }
+    }
+  }
+
+  if (characterData.vehicles) {
+    for (let vehicle in characterData.vehicles) {
+      if (characterData.vehicles.hasOwnProperty(vehicle)) {
+        var item = characterData.vehicles[vehicle];
+
+        var p = {
+          name: item.key,
+          type: "vehicle",
+          system: {
+            info: {
+              description: item.description,
+            },
+            type: item.type,
+            typeSub: item.category,
+            category: item.typeSub,
+            pilotSkill: item.pilotSpecialization,
+            attributes: {
+              handling: {
+                base: item.attributes.handling,
+              },
+              handlingOffRoad: {
+                base: item.attributes.handlingOffRoad,
+              },
+              acceleration: {
+                base: item.attributes.acceleration,
+              },
+              speedInterval: {
+                base: item.attributes.speedInterval,
+              },
+              topSpeed: {
+                base: item.attributes.topSpeed,
+              },
+              body: {
+                base: item.attributes.body,
+              },
+              armor: {
+                base: item.attributes.armor,
+              },
+              pilot: {
+                base: item.attributes.pilot,
+              },
+              sensor: {
+                base: item.attributes.sensor,
+              },
+              seat: {
+                base: item.attributes.seat,
+              },
             },
             goods: {
               price: {

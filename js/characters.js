@@ -435,10 +435,72 @@ function loadFromJSON(event) {
           legality: itemsByType.armor[protection].system.legality,
           defenseRating:
             itemsByType.armor[protection].system.defenseRating.base,
-          socialRating: itemsByType.armor[protection].system.defenseRating.base,
+          socialRating: itemsByType.armor[protection].system.socialRating.base,
           capacity: itemsByType.armor[protection].system.capacity.provided.base,
         };
         characterData.protections.push(a);
+      }
+
+      //AUGMENTATIONS
+
+      for (let augmentation in itemsByType.augmentation) {
+        var a = {
+          key: itemsByType.augmentation[augmentation].name,
+          description:
+            itemsByType.augmentation[augmentation].system.info.description,
+          price: itemsByType.augmentation[augmentation].system.goods.price.base,
+          availability:
+            itemsByType.augmentation[augmentation].system.goods.availability
+              .base,
+          legality: itemsByType.augmentation[augmentation].system.legality,
+          type: itemsByType.augmentation[augmentation].system.type,
+          category: itemsByType.augmentation[augmentation].system.typeSub,
+          grade: itemsByType.augmentation[augmentation].system.grade,
+          essenceCost:
+            itemsByType.augmentation[augmentation].system.essenceCost.base,
+          capacity:
+            itemsByType.augmentation[augmentation].system.capacity.provided
+              .base,
+        };
+        characterData.augmentations.push(a);
+      }
+
+      //VEHICLES
+
+      for (let vehicle in itemsByType.vehicle) {
+        var a = {
+          key: itemsByType.vehicle[vehicle].name,
+          description: itemsByType.vehicle[vehicle].system.info.description,
+          price: itemsByType.vehicle[vehicle].system.goods.price.base,
+          availability:
+            itemsByType.vehicle[vehicle].system.goods.availability.base,
+          legality: itemsByType.vehicle[vehicle].system.legality,
+          type: itemsByType.vehicle[vehicle].system.type,
+          category: itemsByType.vehicle[vehicle].system.typeSub,
+          typeSub: itemsByType.vehicle[vehicle].system.category,
+          pilotSpecialization: itemsByType.vehicle[vehicle].system.pilotSkill,
+          riggingInterface:
+            itemsByType.vehicle[vehicle].system.modifications.riggerInterface,
+          attributes: {
+            handling:
+              itemsByType.vehicle[vehicle].system.attributes.handling.base,
+            handlingOffRoad:
+              itemsByType.vehicle[vehicle].system.attributes.handlingOffRoad
+                .base,
+            acceleration:
+              itemsByType.vehicle[vehicle].system.attributes.acceleration.base,
+            speedInterval:
+              itemsByType.vehicle[vehicle].system.attributes.speedInterval.base,
+            topSpeed:
+              itemsByType.vehicle[vehicle].system.attributes.topSpeed.base,
+            armor: itemsByType.vehicle[vehicle].system.attributes.armor.base,
+            body: itemsByType.vehicle[vehicle].system.attributes.body.base,
+            pilot: itemsByType.vehicle[vehicle].system.attributes.pilot.base,
+            sensor: itemsByType.vehicle[vehicle].system.attributes.sensor.base,
+            seat: itemsByType.vehicle[vehicle].system.attributes.seat.base,
+          },
+        };
+        characterData.vehicles.push(a);
       }
 
       console.log("loadFromJSON characterData : ", characterData);
