@@ -353,7 +353,7 @@ function handleMetatypeQualities(metatype) {
   if (metatype === "xapiri_thepe")
     return [
       "Allergie (polluants, moyenne)",
-      " Bioluminescence (spectre UV)",
+      "Bioluminescence (spectre UV)",
       "Photométabolisme",
       "Vision nocturne",
     ];
@@ -2290,6 +2290,54 @@ function modalConstruct(type, newType, method) {
             </div>
       </div>`;
       break;
+    case "stuffs":
+    
+    specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+      terms.description
+    )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
+    terms.rating
+  )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Rating" aria-label="rating" value=0>
+        </div>
+      </div>
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+      terms.price
+    )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+      terms.legality
+    )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+      terms.availability
+    )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
+      break;
     case "SINS":
       break;
     case "lifestyle":
@@ -2766,6 +2814,24 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "stuffs") {
+        var rating = getValue("Rating", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          rating: rating,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -2812,6 +2878,10 @@ function handleDropdownModal(type) {
         if (type === "drugs") {
           characterData[type].push(newItem);
           updateDrugsDisplay(type);
+        }
+        if (type === "stuffs") {
+          characterData[type].push(newItem);
+          updateStuffsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -3235,6 +3305,23 @@ function handleItemClick(type, indexItem) {
       characterData[type][indexItem].vectors.injection;
   }
 
+  if (type === "stuffs") {
+    const fields = [
+      "Rating",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -3547,6 +3634,27 @@ function handleItemClick(type, indexItem) {
           updateDrugsDisplay(type);
         }
 
+        if (type === "stuffs") {
+          const fields = [
+            "Rating",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateStuffsDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -3603,6 +3711,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "drugs") {
     updateDrugsDisplay(type);
+  }
+  if (type === "stuffs") {
+    updateStuffsDisplay(type);
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -3813,6 +3924,7 @@ function updateDisplay() {
   updateAugmentationsDisplay();
   updateVehiclesDisplay();
   updateDrugsDisplay();
+  updateStuffsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -4076,6 +4188,45 @@ function updateDrugsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       drugsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateStuffsDisplay() {
+  console.log("updateStuffsDisplay : ", characterData.stuffs);
+  var stuffsTableBody = $(`#stuffsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  stuffsTableBody.empty();
+
+  if (characterData.stuffs.length > 0) {
+    var stuffs = [];
+    stuffs = sortKeys(characterData.stuffs);
+
+    stuffs.forEach(function (stuff) {
+
+      var row = `
+      <tr>
+          <td class="name-column">${stuff.key}</td>          
+          <td class="description-column">${stuff.rating}</td>
+          <td class="description-column">${stuff.description}</td>
+          <td class="price-column">${parseInt(stuff.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('stuffs','${characterData.stuffs.indexOf(
+        stuff
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('stuffs','${characterData.stuffs.indexOf(
+        stuff
+      )}')"></i>
+      <div id="modalContainerstuffs${characterData.stuffs.indexOf(stuff)}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      stuffsTableBody.append(row);
     });
   }
 
@@ -5837,6 +5988,35 @@ function assignData() {
           },
         };
         foundryData.items.push(d);
+      }
+    }
+  }
+
+  if (characterData.stuffs) {
+    for (let stuff in characterData.stuffs) {
+      if (characterData.stuffs.hasOwnProperty(stuff)) {
+        var item = characterData.stuffs[stuff];
+
+        var i = {
+          name: item.key,
+          type: "gear",
+          system: {
+            info: {
+              description: item.description,
+            },
+            rating: item.rating,
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(i);
       }
     }
   }

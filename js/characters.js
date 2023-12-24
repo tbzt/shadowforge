@@ -532,6 +532,20 @@ function loadFromJSON(event) {
         characterData.drugs.push(a);
       }
 
+      //STUFFS
+
+      for (let stuff in itemsByType.gear) {
+        var a = {
+          key: itemsByType.gear[stuff].name,
+          description: itemsByType.gear[stuff].system.info.description,
+          price: itemsByType.gear[stuff].system.goods.price.base,
+          availability: itemsByType.gear[stuff].system.goods.availability.base,
+          legality: itemsByType.gear[stuff].system.legality,
+          rating: itemsByType.gear[stuff].system.rating,
+        };
+        characterData.stuffs.push(a);
+      }
+
       console.log("loadFromJSON characterData : ", characterData);
 
       // Chargez les données du personnage
