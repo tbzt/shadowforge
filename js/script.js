@@ -2409,7 +2409,7 @@ function modalConstruct(type, newType, method) {
       break;
     case "lifestyles":
       
-    const lifestyle = ["lifestyleStreet", "lifestyleSquatter", "lifestyleLow", "lifestyleMedium", "lifestyleHigh", "lifestyleLuxury"];
+    const lifestyle = ["streets", "squatter", "low", "medium", "high", "luxury"];
 
     const lifestyleOptions = lifestyle
       .map(
@@ -6489,8 +6489,8 @@ function assignData() {
 
   if (characterData.SINS) {
     for (let SIN in characterData.SINS) {
-      if (characterData.stuffs.hasOwnProperty(stuff)) {
-        var item = characterData.stuffs[stuff];
+      if (characterData.SINS.hasOwnProperty(SIN)) {
+        var item = characterData.SINS[SIN];
 
         var i = {
           name: item.key,
@@ -6500,8 +6500,38 @@ function assignData() {
               description: item.description,
             },
             rating: item.rating,
-            nationality: nationality,
-            accessories: licences,
+            nationality: item.nationality,
+            accessories: item.licences,
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.lifestyles) {
+    for (let lifestyle in characterData.lifestyles) {
+      if (characterData.lifestyles.hasOwnProperty(lifestyle)) {
+        var item = characterData.lifestyles[lifestyle];
+
+        var i = {
+          name: item.key,
+          type: "lifestyle",
+          system: {
+            info: {
+              description: item.description,
+            },
+            type: item.type,
+            linkedIdentity: item.linkedIdentity,
             goods: {
               price: {
                 base: item.price,
