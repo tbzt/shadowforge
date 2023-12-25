@@ -6294,4 +6294,35 @@ function assignData() {
       }
     }
   }
+
+  if (characterData.SINS) {
+    for (let SIN in characterData.SINS) {
+      if (characterData.stuffs.hasOwnProperty(stuff)) {
+        var item = characterData.stuffs[stuff];
+
+        var i = {
+          name: item.key,
+          type: "sin",
+          system: {
+            info: {
+              description: item.description,
+            },
+            rating: item.rating,
+            nationality: nationality,
+            accessories: licences,
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
 }

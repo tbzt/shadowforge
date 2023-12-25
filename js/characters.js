@@ -240,7 +240,7 @@ function loadFromJSON(event) {
         vehicle: [],
         ammunition: [],
         drug: [],
-        SIN: [],
+        sin: [],
         lifestyle: [],
         contact: [],
         spell: [],
@@ -546,11 +546,27 @@ function loadFromJSON(event) {
         characterData.stuffs.push(a);
       }
 
-      console.log("loadFromJSON characterData : ", characterData);
+    //SINS
 
-      // Chargez les données du personnage
-      saveCharacterData(characterData);
-    };
+    for (let sin in itemsByType.sin) {
+      var a = {
+        key: itemsByType.sin[sin].name,
+        description: itemsByType.sin[sin].system.info.description,
+        price: itemsByType.sin[sin].system.goods.price.base,
+        availability: itemsByType.sin[sin].system.goods.availability.base,
+        legality: itemsByType.sin[sin].system.legality,
+        rating: itemsByType.sin[sin].system.rating,
+        nationality: itemsByType.sin[sin].system.nationality,
+        licences: itemsByType.sin[sin].system.accessories,
+      };
+      characterData.SINS.push(a);
+    }
+
+    console.log("loadFromJSON characterData : ", characterData);
+
+    // Chargez les données du personnage
+    saveCharacterData(characterData);
+  };
 
     // Lisez le fichier en tant que texte
     reader.readAsText(file);
