@@ -176,7 +176,7 @@ function findKey(obj, value) {
   for (let key in obj) {
     if (obj[key] === value) {
       return key;
-    } else if (typeof obj[key] === 'object') {
+    } else if (typeof obj[key] === "object") {
       let result = findKey(obj[key], value);
       if (result) {
         return result;
@@ -202,7 +202,9 @@ function loadFromJSON(event) {
       console.log(
         "loadFromJSON metatype : ",
         JSONData.system.biography.metatypeVariant,
-        " / ", JSONData.system.biography.metatypeVariant.toLowerCase(), " / ",
+        " / ",
+        JSONData.system.biography.metatypeVariant.toLowerCase(),
+        " / ",
         findKey(terms, JSONData.system.biography.metatypeVariant.toLowerCase())
       );
 
@@ -213,13 +215,22 @@ function loadFromJSON(event) {
           identityCatalog: JSONData.name,
           surname: JSONData.system.biography.alias,
           metatype: JSONData.system.biography.metatype,
-          metatypeVariant:findKey(terms, JSONData.system.biography.metatypeVariant.toLowerCase()),
+          metatypeVariant: findKey(
+            terms,
+            JSONData.system.biography.metatypeVariant.toLowerCase()
+          ),
         },
-        metatype: findKey(terms, JSONData.system.biography.metatypeVariant.toLowerCase()),
+        metatype: findKey(
+          terms,
+          JSONData.system.biography.metatypeVariant.toLowerCase()
+        ),
         resources: JSONData.system.nuyen.actual.total,
       };
 
-      console.log("loadFromJSON characterData.metatype : ", characterData.metatype);
+      console.log(
+        "loadFromJSON characterData.metatype : ",
+        characterData.metatype
+      );
 
       //ATTRIBUTES
 
@@ -238,12 +249,12 @@ function loadFromJSON(event) {
       if (JSONData.system.attributes.magic.natural.base > 0) {
         characterData.isMagic = true;
         characterData.special = JSONData.system.magic.type;
-      };
+      }
 
       if (JSONData.system.attributes.resonance.natural.base > 0) {
         characterData.isTechno = true;
         characterData.special = "technomancer";
-      };
+      }
 
       //SKILLS
 
@@ -597,9 +608,29 @@ function loadFromJSON(event) {
             itemsByType.lifestyle[lifestyle].system.goods.availability.base,
           legality: itemsByType.lifestyle[lifestyle].system.legality,
           type: itemsByType.lifestyle[lifestyle].system.type,
-          linkedIdentity: itemsByType.lifestyle[lifestyle].system.linkedIdentity,
+          linkedIdentity:
+            itemsByType.lifestyle[lifestyle].system.linkedIdentity,
         };
         characterData.lifestyles.push(a);
+      }
+
+      //SPELLS
+
+      for (let spell in itemsByType.spell) {
+        var a = {
+          key: itemsByType.spell[spell].name,
+          description: itemsByType.spell[spell].system.info.description,
+          price: itemsByType.spell[spell].system.goods.price.base,
+          availability: itemsByType.spell[spell].system.goods.availability.base,
+          legality: itemsByType.spell[spell].system.legality,
+          type: itemsByType.spell[spell].system.type,
+          category: itemsByType.spell[spell].system.category,
+          categorySub: itemsByType.spell[spell].system.categorySub,
+          range: itemsByType.spell[spell].system.range,
+          duration: itemsByType.spell[spell].system.duration,
+          drainValue: itemsByType.spell[spell].system.drain.base,
+        };
+        characterData.spells.push(a);
       }
 
       console.log("loadFromJSON characterData : ", characterData);

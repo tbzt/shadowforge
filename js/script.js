@@ -2408,40 +2408,46 @@ function modalConstruct(type, newType, method) {
     </div>`;
       break;
     case "lifestyles":
-      
-    const lifestyle = ["streets", "squatter", "low", "medium", "high", "luxury"];
+      const lifestyle = [
+        "streets",
+        "squatter",
+        "low",
+        "medium",
+        "high",
+        "luxury",
+      ];
 
-    const lifestyleOptions = lifestyle
-      .map(
-        (type) =>
-          `<option value="${type}">${capitalized(terms[type])}</option>`
-      )
-      .join("\n");
+      const lifestyleOptions = lifestyle
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
 
-    const linkedIdentity = characterData.SINS;
-    console.log(linkedIdentity);
-    linkedIdentity.sort((a, b) => a.key.localeCompare(b.key));
+      const linkedIdentity = characterData.SINS;
+      console.log(linkedIdentity);
+      linkedIdentity.sort((a, b) => a.key.localeCompare(b.key));
 
-    const linkedIdentityOptions = linkedIdentity
-      .map(
-        (identity) =>
-          `<option value="${identity.key}">${identity.key}</option>`
-      )
-      .join("\n");
+      const linkedIdentityOptions = linkedIdentity
+        .map(
+          (identity) =>
+            `<option value="${identity.key}">${identity.key}</option>`
+        )
+        .join("\n");
 
-    specificType = `      
+      specificType = `      
     <div class="form-group row align-items-center mb-4">
         <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
-      terms.description
-    )}${terms.colons}</label>
+        terms.description
+      )}${terms.colons}</label>
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
     </div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
-      terms.type
-    )}${terms.colons}</label>
+        terms.type
+      )}${terms.colons}</label>
           <div class="col-sm-9">
           <select class="form-control" id="${type}Type">
             <option value="">${capitalized(terms.select)}</option>
@@ -2451,8 +2457,8 @@ function modalConstruct(type, newType, method) {
       </div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}LinkedIdentity" class="col-sm-3 col-form-label">${capitalized(
-      terms.linkedIdentity
-    )}${terms.colons}</label>
+        terms.linkedIdentity
+      )}${terms.colons}</label>
     <div class="col-sm-9">
     <select class="form-control" id="${type}LinkedIdentity">
       <option value="">${capitalized(terms.select)}</option>
@@ -2465,14 +2471,14 @@ function modalConstruct(type, newType, method) {
       )}</div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
-      terms.price
-    )}${terms.colons}</label>
+        terms.price
+      )}${terms.colons}</label>
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
           </div>
           <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
-      terms.legality
-    )}${terms.colons}</label>
+        terms.legality
+      )}${terms.colons}</label>
           <div class="col-sm-4">
           <select class="form-control" id="${type}Legality">
             <option value="">${capitalized(terms.select)}</option>
@@ -2482,14 +2488,149 @@ function modalConstruct(type, newType, method) {
       </div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
-      terms.availability
-    )}${terms.colons}</label>
+        terms.availability
+      )}${terms.colons}</label>
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
           </div>
     </div>`;
       break;
     case "spells":
+      const spellsCategory = [
+        "combatDirect",
+        "combatIndirect",
+        "detection",
+        "illusion",
+        "manipulation",
+        "health",
+      ];
+      spellsCategory.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const spellsCategoryOptions = spellsCategory
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const spellsType = ["physical", "mana"];
+      spellsType.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const spellsTypeOptions = spellsType
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const range = ["touch", "lineOfSight", "area", "personal", "special"];
+      range.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const rangeOptions = range
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const duration = ["instantaneous", "limited", "permanent", "sustained"];
+      duration.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const durationOptions = duration
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Category" class="col-sm-3 col-form-label">${capitalized(
+        terms.category
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Category">
+            <option value="">${capitalized(terms.select)}</option>
+            ${spellsCategoryOptions}
+          </select>
+          </div>
+      </div>
+      
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Type">
+            <option value="">${capitalized(terms.select)}</option>
+            ${spellsTypeOptions}
+          </select>
+          </div>
+      </div>
+      
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}range" class="col-sm-3 col-form-label">${capitalized(
+        terms.range
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Range">
+            <option value="">${capitalized(terms.select)}</option>
+            ${rangeOptions}
+          </select>
+          </div>
+      </div>
+      
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Duration" class="col-sm-3 col-form-label">${capitalized(
+        terms.duration
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Duration">
+            <option value="">${capitalized(terms.select)}</option>
+            ${durationOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}DrainValue" class="col-sm-3 col-form-label">${capitalized(
+        terms.drainValue
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}DrainValue" aria-label="price" value=0>
+          </div>
+    </div>
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
       break;
     case "preparations":
       break;
@@ -2558,8 +2699,10 @@ function addSubItem(type, subItem, indexItem) {
   var sub = document.getElementById(subItem);
 
   if (indexItem) {
-    modalContainer = document.getElementById("modalContainer" + type + indexItem);
-    sub = modalContainer.querySelector('#' + subItem);
+    modalContainer = document.getElementById(
+      "modalContainer" + type + indexItem
+    );
+    sub = modalContainer.querySelector("#" + subItem);
   }
 
   // Créez une nouvelle ligne
@@ -3080,6 +3223,39 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "spells") {
+        var category = getValue("Category", type);
+        var spellType = getValue("Type", type);
+        var range = getValue("Range", type);
+        var duration = getValue("Duration", type);
+        var drainValue = getValue("DrainValue", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var categorySub = "";
+        var key = $(`#${type}Input`).val();
+
+        if (category === "combatDirect" || category === "combatIndirect") {
+          categorySub = category.split("combat")[1].toLowerCase();
+          category = "combat";
+        }
+
+        newItem = {
+          key: key,
+          type: spellType,
+          range: range,
+          duration: duration,
+          drainValue: drainValue,
+          category: category,
+          categorySub: categorySub,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -3139,6 +3315,10 @@ function handleDropdownModal(type) {
         if (type === "lifestyles") {
           characterData[type].push(newItem);
           updateLifestylesDisplay(type);
+        }
+        if (type === "spells") {
+          characterData[type].push(newItem);
+          updateSpellsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -3645,6 +3825,31 @@ function handleItemClick(type, indexItem) {
     });
   }
 
+  if (type === "spells") {
+    if (item.category === "combat") {
+      item.category = `combat${capitalized(item.categorySub)}`;
+    }
+
+    const fields = [
+      "Type",
+      "Duration",
+      "Range",
+      "DrainValue",
+      "Category",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -4034,6 +4239,39 @@ function handleItemClick(type, indexItem) {
           updateLifestylesDisplay(type);
         }
 
+        if (type === "spells") {
+          const fields = [
+            "Type",
+            "Category",
+            "Duration",
+            "Range",
+            "DrainValue",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          if (
+            characterData[type][indexItem].category === "combatIndirect" ||
+            characterData[type][indexItem].category === "combatDirect"
+          ) {
+            characterData[type][indexItem].categorySub = item.category.slice(6);
+            characterData[type][indexItem].category = "combat";
+          }
+
+          updateSpellsDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -4099,6 +4337,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "lifestyles") {
     updateLifestylesDisplay();
+  }
+  if (type === "spells") {
+    updateSpellsDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -4312,6 +4553,7 @@ function updateDisplay() {
   updateStuffsDisplay();
   updateSINSDisplay();
   updateLifestylesDisplay();
+  updateSpellsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -4693,6 +4935,56 @@ function updateLifestylesDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       lifestylesTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateSpellsDisplay() {
+  console.log("updateSpellsDisplay : ", characterData.spells);
+  var spellsTableBody = $(`#spellsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  spellsTableBody.empty();
+
+  if (characterData.spells.length > 0) {
+    var spells = [];
+    spells = sortKeys(characterData.spells);
+
+    spells.forEach(function (spell) {
+      var row = `
+      <tr>
+          <td class="name-column">${spell.key}</td>          
+          <td class="category-column">${capitalized(
+            terms[spell.category]
+          )}</td>         
+          <td class="type-column">${capitalized(
+            terms[spell.type]
+          )}</td>         
+          <td class="range-column">${capitalized(
+            terms[spell.range + "Short"]
+          )}</td>         
+          <td class="duration-column">${capitalized(
+            terms[spell.duration + "Short"]
+          )}</td>
+          <td class="drain-column">${spell.drainValue}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('spells','${characterData.spells.indexOf(
+        spell
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('spells','${characterData.spells.indexOf(
+        spell
+      )}')"></i>
+      <div id="modalContainerspells${characterData.spells.indexOf(
+        spell
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      spellsTableBody.append(row);
     });
   }
 
@@ -6532,6 +6824,42 @@ function assignData() {
             },
             type: item.type,
             linkedIdentity: item.linkedIdentity,
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.spells) {
+    for (let lifestyle in characterData.spells) {
+      if (characterData.spells.hasOwnProperty(spell)) {
+        var item = characterData.spells[spell];
+
+        var i = {
+          name: item.key,
+          type: "spell",
+          system: {
+            info: {
+              description: item.description,
+            },
+            type: item.type,
+            category: item.category,
+            categorySub: item.categorySub,
+            range: item.range,
+            duration: item.duration,
+            drain: {
+              base: item.drainValue,
+            },
             goods: {
               price: {
                 base: item.price,
