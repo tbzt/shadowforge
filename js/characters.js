@@ -172,6 +172,20 @@ function updateCharacterList() {
   });
 }
 
+function findKey(obj, value) {
+  for (let key in obj) {
+    if (obj[key] === value) {
+      return key;
+    } else if (typeof obj[key] === 'object') {
+      let result = findKey(obj[key], value);
+      if (result) {
+        return result;
+      }
+    }
+  }
+  return null;
+}
+
 function loadFromJSON(event) {
   let file = event.target.files[0];
   if (file) {
@@ -188,8 +202,8 @@ function loadFromJSON(event) {
       console.log(
         "loadFromJSON metatype : ",
         JSONData.system.biography.metatypeVariant,
-        " / ",
-        translations.en[JSONData.system.biography.metatypeVariant.toLowerCase()]
+        " / ", JSONData.system.biography.metatypeVariant.toLowerCase(), " / ",
+        findKey(terms, JSONData.system.biography.metatypeVariant.toLowerCase())
       );
 
       var characterData = {
@@ -199,13 +213,13 @@ function loadFromJSON(event) {
           identityCatalog: JSONData.name,
           surname: JSONData.system.biography.alias,
           metatype: JSONData.system.biography.metatype,
-          metatypeVariant:
-            translations.en[
-              JSONData.system.biography.metatypeVariant.toLowerCase()
-            ],
+          metatypeVariant:findKey(terms, JSONData.system.biography.metatypeVariant.toLowerCase()),
         },
+        metatype: findKey(terms, JSONData.system.biography.metatypeVariant.toLowerCase()),
         resources: JSONData.system.nuyen.actual.total,
       };
+
+      console.log("loadFromJSON characterData.metatype : ", characterData.metatype);
 
       //ATTRIBUTES
 
@@ -214,12 +228,22 @@ function loadFromJSON(event) {
           console.log(
             attributesKey,
             " ",
-            JSONData.system.attributes[attributesKey].augmented.base
+            JSONData.system.attributes[attributesKey].natural.base
           );
           characterData.attributes[attributesKey].added =
-            JSONData.system.attributes[attributesKey].augmented.base - 1;
+            JSONData.system.attributes[attributesKey].natural.base - 1;
         }
       }
+
+      if (JSONData.system.attributes.magic.natural.base > 0) {
+        characterData.isMagic = true;
+        characterData.special = JSONData.system.magic.type;
+      };
+
+      if (JSONData.system.attributes.resonance.natural.base > 0) {
+        characterData.isTechno = true;
+        characterData.special = "technomancer";
+      };
 
       //SKILLS
 

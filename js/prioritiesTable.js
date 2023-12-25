@@ -75,7 +75,7 @@ function showPriorities() {
       attributes: "24",
       skills: "32",
       magicOrResonance1:
-        capitalized(terms.fullMagician) +
+        capitalized(terms.magician) +
         " & " +
         capitalized(terms.mysticAdept) +
         terms.colons +
@@ -121,7 +121,7 @@ function showPriorities() {
       attributes: "16",
       skills: "24",
       magicOrResonance1:
-        capitalized(terms.fullMagician) +
+        capitalized(terms.magician) +
         " & " +
         capitalized(terms.mysticAdept) +
         terms.colons +
@@ -165,7 +165,7 @@ function showPriorities() {
       attributes: "12",
       skills: "20",
       magicOrResonance1:
-        capitalized(terms.fullMagician) +
+        capitalized(terms.magician) +
         " & " +
         capitalized(terms.mysticAdept) +
         terms.colons +
@@ -206,7 +206,7 @@ function showPriorities() {
       attributes: "8",
       skills: "16",
       magicOrResonance1:
-        capitalized(terms.fullMagician) +
+        capitalized(terms.magician) +
         " & " +
         capitalized(terms.mysticAdept) +
         terms.colons +
@@ -323,7 +323,7 @@ function selectPriority(cell, categorie, priority) {
       [
         "adept",
         "mysticAdept",
-        "fullMagician",
+        "magician",
         "aspectedMagicianSorcery",
         "aspectedMagicianConjuring",
         "aspectedMagicianEnchanting",

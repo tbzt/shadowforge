@@ -470,7 +470,7 @@ function updateAttributesForSpecial(special, priority) {
   switch (priority) {
     case "A":
       switch (special) {
-        case "fullMagician":
+        case "magician":
         case "mysticAdept":
         case "adept":
           attributesData.magic.base = 4;
@@ -487,7 +487,7 @@ function updateAttributesForSpecial(special, priority) {
       break;
     case "B":
       switch (special) {
-        case "fullMagician":
+        case "magician":
         case "mysticAdept":
         case "adept":
           attributesData.magic.base = 3;
@@ -504,7 +504,7 @@ function updateAttributesForSpecial(special, priority) {
       break;
     case "C":
       switch (special) {
-        case "fullMagician":
+        case "magician":
         case "mysticAdept":
         case "adept":
           attributesData.magic.base = 2;
@@ -521,7 +521,7 @@ function updateAttributesForSpecial(special, priority) {
       break;
     case "D":
       switch (special) {
-        case "fullMagician":
+        case "magician":
         case "mysticAdept":
         case "adept":
           attributesData.magic.base = 1;
@@ -5320,7 +5320,7 @@ function menuSectionGenerate() {
           },
         ];
         break;
-      case "fullMagician":
+      case "magician":
         magicSection.items = [
           { id: "buttonSpells", target: "collapseSpells", label: "spells" },
           {
@@ -5686,7 +5686,7 @@ function handleCharacterData(characterData) {
       [
         "adept",
         "mysticAdept",
-        "fullMagician",
+        "magician",
         "aspectedMagicianSorcery",
         "aspectedMagicianConjuring",
         "aspectedMagicianEnchanting",
