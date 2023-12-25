@@ -698,6 +698,13 @@ const translations = {
     vectorInjection: "injection",
     nationality: "nationalité",
     licences: "licences",
+    linkedIdentity: "identité liée",
+    lifestyleHigh: "élevé",
+    lifestyleLow: "bas",
+    lifestyleMedium: "moyen",
+    lifestyleSquatter: "squatteur",
+    lifestyleStreet: "la rue",
+    lifestyleLuxury: "luxueux",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -1196,6 +1203,13 @@ const translations = {
     vectorInjection: "injection",
     nationality: "nationality",
     licences: "licences",
+    linkedIdentity: "linked identity",
+    lifestyleHigh: "high",
+    lifestyleLow: "low",
+    lifestyleMedium: "medium",
+    lifestyleSquatter: "squatter",
+    lifestyleStreet: "street",
+    lifestyleLuxury: "luxury",
   },
 };
 

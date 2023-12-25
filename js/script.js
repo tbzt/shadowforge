@@ -1115,7 +1115,7 @@ function handleModals() {
     "drugs",
     "stuffs",
     "SINS",
-    "lifestyle",
+    "lifestyles",
     "spells",
     "preparations",
     "spirits",
@@ -2407,7 +2407,87 @@ function modalConstruct(type, newType, method) {
           </div>
     </div>`;
       break;
-    case "lifestyle":
+    case "lifestyles":
+      
+    const lifestyle = ["lifestyleStreet", "lifestyleSquatter", "lifestyleLow", "lifestyleMedium", "lifestyleHigh", "lifestyleLuxury"];
+
+    const lifestyleOptions = lifestyle
+      .map(
+        (type) =>
+          `<option value="${type}">${capitalized(terms[type])}</option>`
+      )
+      .join("\n");
+
+    const linkedIdentity = characterData.SINS;
+    console.log(linkedIdentity);
+    linkedIdentity.sort((a, b) => a.key.localeCompare(b.key));
+
+    const linkedIdentityOptions = linkedIdentity
+      .map(
+        (identity) =>
+          `<option value="${identity.key}">${identity.key}</option>`
+      )
+      .join("\n");
+
+    specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+      terms.description
+    )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
+      terms.type
+    )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Type">
+            <option value="">${capitalized(terms.select)}</option>
+            ${lifestyleOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}LinkedIdentity" class="col-sm-3 col-form-label">${capitalized(
+      terms.linkedIdentity
+    )}${terms.colons}</label>
+    <div class="col-sm-9">
+    <select class="form-control" id="${type}LinkedIdentity">
+      <option value="">${capitalized(terms.select)}</option>
+      ${linkedIdentityOptions}
+    </select>
+    </div>
+      </div>  
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+      terms.price
+    )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+      terms.legality
+    )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+      terms.availability
+    )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
       break;
     case "spells":
       break;
@@ -2978,6 +3058,28 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "lifestyles") {
+        var rating = getValue("Rating", type);
+        var level = getValue("Type", type);
+        var linkedIdentity = getValue("LinkedIdentity", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          type: level,
+          linkedIdentity: linkedIdentity,
+          rating: rating,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -3033,6 +3135,10 @@ function handleDropdownModal(type) {
           characterData[type].push(newItem);
           console.log(characterData[type]);
           updateSINSDisplay(type);
+        }
+        if (type === "lifestyles") {
+          characterData[type].push(newItem);
+          updateLifestylesDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -3520,6 +3626,25 @@ function handleItemClick(type, indexItem) {
     <button type="button" class="btn btn-outline-primary btn-xs" onclick="addSubItem('SINS', 'licences','${indexItem}')"><i class="bi bi-plus-circle"></i></button>`;
   }
 
+  if (type === "lifestyles") {
+    const fields = [
+      "Type",
+      "LinkedIdentity",
+      "Rating",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -3886,6 +4011,29 @@ function handleItemClick(type, indexItem) {
           updateSINSDisplay(type);
         }
 
+        if (type === "lifestyles") {
+          const fields = [
+            "Type",
+            "LinkedIdentity",
+            "Rating",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateLifestylesDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -3948,6 +4096,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "SINS") {
     updateSINSDisplay();
+  }
+  if (type === "lifestyles") {
+    updateLifestylesDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -4160,6 +4311,7 @@ function updateDisplay() {
   updateDrugsDisplay();
   updateStuffsDisplay();
   updateSINSDisplay();
+  updateLifestylesDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -4501,6 +4653,46 @@ function updateSINSDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       SINSTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateLifestylesDisplay() {
+  console.log("updateLifestylesDisplay : ", characterData.lifestyles);
+  var lifestylesTableBody = $(`#lifestylesTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  lifestylesTableBody.empty();
+
+  if (characterData.lifestyles.length > 0) {
+    var lifestyles = [];
+    lifestyles = sortKeys(characterData.lifestyles);
+
+    lifestyles.forEach(function (lifestyle) {
+      var row = `
+      <tr>
+          <td class="name-column">${lifestyle.key}</td>          
+          <td class="type-column">${capitalized(terms[lifestyle.type])}</td>
+          <td class="SIN-column">${lifestyle.linkedIdentity}</td>
+          <td class="price-column">${parseInt(lifestyle.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('lifestyles','${characterData.lifestyles.indexOf(
+        lifestyle
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('lifestyles','${characterData.lifestyles.indexOf(
+        lifestyle
+      )}')"></i>
+      <div id="modalContainerlifestyles${characterData.lifestyles.indexOf(
+        lifestyle
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      lifestylesTableBody.append(row);
     });
   }
 
@@ -5072,9 +5264,9 @@ function menuSectionGenerate() {
       items: [
         { id: "buttonDrugs", target: "collapseDrugs", label: "drugs" },
         {
-          id: "buttonLifestyle",
-          target: "collapseLifestyle",
-          label: "lifestyle",
+          id: "buttonLifestyles",
+          target: "collapseLifestyles",
+          label: "lifestyles",
         },
         { id: "buttonSINS", target: "collapseSINS", label: "SINS" },
         { id: "buttonStuffs", target: "collapseStuffs", label: "stuffs" },

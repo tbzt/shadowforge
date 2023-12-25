@@ -818,37 +818,37 @@
                 </div>
 
                 <!-- Section : Choix de Style de vie -->
-                <div class="collapse" id="collapseLifestyle" ondragover="handleDragOver(event)"
+                <div class="collapse" id="collapseLifestyles" ondragover="handleDragOver(event)"
                   ondrop="handleDrop(event)">
                   <div class="card card-body">
 
 
-                    <label for="lifestyleTable" class="section-title">{{capitalized lifestyle}}{{colons}} </label>
+                    <label for="lifestylesTable" class="section-title">{{capitalized lifestyle}}{{colons}} </label>
                     <!-- Bouton de fermeture -->
                     <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0"
-                      aria-label="Close" data-bs-toggle="collapse" data-bs-target="#collapseLifestyle"></button>
+                      aria-label="Close" data-bs-toggle="collapse" data-bs-target="#collapseLifestyles"></button>
 
                     <div class="table-responsive-sm">
-                      <table id="lifestyleTable" class="table table-sm table-responsive-sm table-hover table-striped">
-                        <thead class="table-light" id="lifestyleDrop">
+                      <table id="lifestylesTable" class="table table-sm table-responsive-sm table-hover table-striped">
+                        <thead class="table-light" id="lifestylesDrop">
                           <tr>
-                            <th scope="col" id="lifestyleHeader" class="name-column h6">
+                            <th scope="col" id="lifestylesHeader" class="name-column h6">
                               {{capitalized name}}
                             </th>
-                            <th scope="col" id="lifestyleType" class="type-column">
+                            <th scope="col" id="lifestylesHeaderType" class="type-column">
                               {{capitalized type}}
                             </th>
-                            <th scope="col" id="lifestyleSIN" class="SIN-column">
-                              {{capitalized SINS}}
+                            <th scope="col" id="lifestylesHeaderSIN" class="SIN-column">
+                              {{capitalized SIN}}
                             </th>
-                            <th scope="col" id="lifestylePrice" class="price-column">
+                            <th scope="col" id="lifestylesHeaderPrice" class="price-column">
                               <i class="bi bi-currency-yen"></i>
                             </th>
-                            <th scope="col" id="lifestyleHandler" class="handle-column">
+                            <th scope="col" id="lifestylesHandler" class="handle-column">
                             </th>
                           </tr>
                         </thead>
-                        <tbody id="lifestyleBody"></tbody>
+                        <tbody id="lifestylesBody"></tbody>
                       </table>
                     </div>
                   </div>
