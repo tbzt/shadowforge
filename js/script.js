@@ -2291,20 +2291,19 @@ function modalConstruct(type, newType, method) {
       </div>`;
       break;
     case "stuffs":
-    
-    specificType = `      
+      specificType = `      
     <div class="form-group row align-items-center mb-4">
         <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
-      terms.description
-    )}${terms.colons}</label>
+        terms.description
+      )}${terms.colons}</label>
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
     </div>
     <div class="form-group row align-items-center mb-2">  
         <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
-    terms.rating
-  )}${terms.colons}</label>
+        terms.rating
+      )}${terms.colons}</label>
         <div class="col-sm-3">
           <input type="number" class="form-control" id="${type}Rating" aria-label="rating" value=0>
         </div>
@@ -2314,14 +2313,14 @@ function modalConstruct(type, newType, method) {
       )}</div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
-      terms.price
-    )}${terms.colons}</label>
+        terms.price
+      )}${terms.colons}</label>
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
           </div>
           <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
-      terms.legality
-    )}${terms.colons}</label>
+        terms.legality
+      )}${terms.colons}</label>
           <div class="col-sm-4">
           <select class="form-control" id="${type}Legality">
             <option value="">${capitalized(terms.select)}</option>
@@ -2331,14 +2330,82 @@ function modalConstruct(type, newType, method) {
       </div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
-      terms.availability
-    )}${terms.colons}</label>
+        terms.availability
+      )}${terms.colons}</label>
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
           </div>
     </div>`;
       break;
     case "SINS":
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
+        terms.rating
+      )}${terms.colons}</label>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Rating" aria-label="rating" value=0>
+        </div>
+      </div>      
+      <div class="form-group row align-items-center mb-4">
+          <label for="${type}Nationality" class="col-sm-3 col-form-label">${capitalized(
+        terms.nationality
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="${type}Nationality" >
+          </div>
+      </div>     
+      <div class="form-group row align-items-center">
+          <div class="col-sm-5">
+          ${allCapitalized(terms.licences)}
+          </div>
+          <div class="col-sm-2">
+          ${capitalized(terms.rating)}
+          </div>
+          <div class="col-sm-3">
+          ${capitalized(terms.price)}
+          </div>
+          <div class="col-sm-2" id="SINSLicencesButton">
+          <button type="button" class="btn btn-outline-primary btn-xs" onclick="addSubItem('SINS', 'licences')"><i class="bi bi-plus-circle"></i></button>
+          </div>
+      </div>
+      <div id="licences"></div>
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
       break;
     case "lifestyle":
       break;
@@ -2404,6 +2471,53 @@ function modalConstruct(type, newType, method) {
     </div>`;
 
   return modal;
+}
+
+function addSubItem(type, subItem, indexItem) {
+  // Trouvez l'élément "licences"
+  var sub = document.getElementById(subItem);
+
+  if (indexItem) {
+    modalContainer = document.getElementById("modalContainer" + type + indexItem);
+    sub = modalContainer.querySelector('#' + subItem);
+  }
+
+  // Créez une nouvelle ligne
+  const newRow = document.createElement("div");
+  newRow.classList.add("form-group", "row", "align-items-center", "mb-2");
+
+  // Créez les colonnes
+  const newCol1 = document.createElement("div");
+  newCol1.classList.add("col-sm-5");
+  const newInput1 = document.createElement("input");
+  newInput1.type = "text";
+  newInput1.classList.add("form-control");
+  newInput1.id = `${type}Name${subItem}${sub.children.length}`;
+  newCol1.appendChild(newInput1);
+
+  const newCol2 = document.createElement("div");
+  newCol2.classList.add("col-sm-2");
+  const newInput2 = document.createElement("input");
+  newInput2.type = "number";
+  newInput2.classList.add("form-control");
+  newInput2.id = `${type}Rating${subItem}${sub.children.length}`;
+  newCol2.appendChild(newInput2);
+
+  const newCol3 = document.createElement("div");
+  newCol3.classList.add("col-sm-3");
+  const newInput3 = document.createElement("input");
+  newInput3.type = "number";
+  newInput3.classList.add("form-control");
+  newInput3.id = `${type}Price${subItem}${sub.children.length}`;
+  newCol3.appendChild(newInput3);
+
+  // Ajoutez les colonnes à la nouvelle ligne
+  newRow.appendChild(newCol1);
+  newRow.appendChild(newCol2);
+  newRow.appendChild(newCol3);
+
+  // Ajoutez la nouvelle ligne à "licences"
+  sub.appendChild(newRow);
 }
 
 function handleDropdownModal(type) {
@@ -2832,6 +2946,38 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "SINS") {
+        var rating = getValue("Rating", type);
+        var nationality = getValue("Nationality", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        var licences = [];
+        const licencesDiv = document.getElementById("licences");
+        for (let i = 0; i < licencesDiv.children.length; i++) {
+          const licence = {
+            key: $(`#SINSNamelicences${i}`).val(),
+            rating: parseInt($(`#SINSRatinglicences${i}`).val()),
+            price: parseInt($(`#SINSPricelicences${i}`).val()),
+          };
+          licences.push(licence);
+        }
+
+        newItem = {
+          key: key,
+          rating: rating,
+          nationality: nationality,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+          licences: licences,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -2882,6 +3028,11 @@ function handleDropdownModal(type) {
         if (type === "stuffs") {
           characterData[type].push(newItem);
           updateStuffsDisplay(type);
+        }
+        if (type === "SINS") {
+          characterData[type].push(newItem);
+          console.log(characterData[type]);
+          updateSINSDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -3322,6 +3473,53 @@ function handleItemClick(type, indexItem) {
     });
   }
 
+  if (type === "SINS") {
+    const fields = [
+      "Nationality",
+      "Rating",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+
+    const licencesDiv = modalContainer.querySelector("#licences");
+    for (var i = 0; i < item.licences.length; i++) {
+      const licence = item.licences[i];
+      const licenceDiv = document.createElement("div");
+      licenceDiv.id = `SINSLicences${i}`;
+      licenceDiv.className = "form-group row align-items-center mb-2";
+      licenceDiv.innerHTML = `
+        <div class="col-sm-5">
+          <input type="text" class="form-control" id="SINSNamelicences${i}" placeholder="${capitalized(
+        terms.name
+      )}" value="${licence.key}">
+        </div>        
+        <div class="col-sm-2">
+          <input type="number" class="form-control" id="SINSRatinglicences${i}" value="${
+        licence.rating
+      }">
+        </div>        
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="SINSPricelicences${i}" value="${
+        licence.price
+      }">
+        </div>`;
+      licencesDiv.appendChild(licenceDiv);
+    }
+
+    var licencesButton = modalContainer.querySelector("#SINSLicencesButton");
+    licencesButton.innerHTML = `
+    <button type="button" class="btn btn-outline-primary btn-xs" onclick="addSubItem('SINS', 'licences','${indexItem}')"><i class="bi bi-plus-circle"></i></button>`;
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -3655,6 +3853,39 @@ function handleItemClick(type, indexItem) {
           updateStuffsDisplay(type);
         }
 
+        if (type === "SINS") {
+          const fields = [
+            "Nationality",
+            "Rating",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          const licencesDiv = modalContainer.querySelector("#licences");
+          item.licences = [];
+          for (var i = 0; i < licencesDiv.children.length; i++) {
+            const licence = {
+              key: $(`#SINSNamelicences${i}`).val(),
+              rating: parseInt($(`#SINSRatinglicences${i}`).val()),
+              price: parseInt($(`#SINSPricelicences${i}`).val()),
+            };
+            item.licences.push(licence);
+          }
+
+          updateSINSDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -3698,22 +3929,25 @@ function removeModalClick(type, indexItem) {
     updateWeaponsDisplay(type);
   }
   if (type === "ammunitions") {
-    updateAmmunitionsDisplay(type);
+    updateAmmunitionsDisplay();
   }
   if (type === "protections") {
-    updateProtectionsDisplay(type);
+    updateProtectionsDisplay();
   }
   if (type === "augmentations") {
-    updateAugmentationsDisplay(type);
+    updateAugmentationsDisplay();
   }
   if (type === "vehicles") {
-    updateVehiclesDisplay(type);
+    updateVehiclesDisplay();
   }
   if (type === "drugs") {
-    updateDrugsDisplay(type);
+    updateDrugsDisplay();
   }
   if (type === "stuffs") {
-    updateStuffsDisplay(type);
+    updateStuffsDisplay();
+  }
+  if (type === "SINS") {
+    updateSINSDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -3925,6 +4159,7 @@ function updateDisplay() {
   updateVehiclesDisplay();
   updateDrugsDisplay();
   updateStuffsDisplay();
+  updateSINSDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -4206,11 +4441,10 @@ function updateStuffsDisplay() {
     stuffs = sortKeys(characterData.stuffs);
 
     stuffs.forEach(function (stuff) {
-
       var row = `
       <tr>
           <td class="name-column">${stuff.key}</td>          
-          <td class="description-column">${stuff.rating}</td>
+          <td class="rating-column">${stuff.rating}</td>
           <td class="description-column">${stuff.description}</td>
           <td class="price-column">${parseInt(stuff.price)}</td>
       <td class="handler-column">
@@ -4220,13 +4454,53 @@ function updateStuffsDisplay() {
       <i class="bi bi-eraser-fill" onclick="removeModalClick('stuffs','${characterData.stuffs.indexOf(
         stuff
       )}')"></i>
-      <div id="modalContainerstuffs${characterData.stuffs.indexOf(stuff)}"></div>
+      <div id="modalContainerstuffs${characterData.stuffs.indexOf(
+        stuff
+      )}"></div>
       </td>
       </tr>
       `;
 
       // Ajoutez la ligne au corps du tableau
       stuffsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateSINSDisplay() {
+  console.log("updateSINSDisplay : ", characterData.SINS);
+  var SINSTableBody = $(`#SINSTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  SINSTableBody.empty();
+
+  if (characterData.SINS.length > 0) {
+    var SINS = [];
+    SINS = sortKeys(characterData.SINS);
+
+    SINS.forEach(function (SIN) {
+      var row = `
+      <tr>
+          <td class="name-column">${SIN.key}</td>          
+          <td class="rating-column">${SIN.rating}</td>
+          <td class="nationality-column">${SIN.nationality}</td>
+          <td class="price-column">${parseInt(SIN.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('SINS','${characterData.SINS.indexOf(
+        SIN
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('SINS','${characterData.SINS.indexOf(
+        SIN
+      )}')"></i>
+      <div id="modalContainerSINS${characterData.SINS.indexOf(SIN)}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      SINSTableBody.append(row);
     });
   }
 

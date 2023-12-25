@@ -696,6 +696,8 @@ const translations = {
     vectorIngestion: "ingestion",
     vectorInhalation: "inhalation",
     vectorInjection: "injection",
+    nationality: "nationalité",
+    licences: "licences",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -1192,6 +1194,8 @@ const translations = {
     vectorIngestion: "ingestion",
     vectorInhalation: "inhalation",
     vectorInjection: "injection",
+    nationality: "nationality",
+    licences: "licences",
   },
 };
 
