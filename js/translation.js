@@ -500,6 +500,7 @@ const translations = {
     technoStuffTitle: "Équipement matriciel",
     drainValue: "valeur de drain",
     preparations: "préparations",
+    preparation: "préparation alchimique",
     spirits: "esprits",
     rituals: "rituels",
     foci: "focus",
@@ -732,6 +733,11 @@ const translations = {
     permanentShort: "P",
     sustainedShort: "M",
     limitedShort: "L",
+    anchored: "ancré",
+    materialLink: "lien matériel",
+    minion: "serviteur",
+    spotter: "éclaireur",
+
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -1032,6 +1038,7 @@ const translations = {
     magicalStuffTitle: "Magical Stuff",
     drainValue: "drain value",
     preparations: "preparations",
+    preparation: "alchemical preparation",
     spirits: "spirits",
     rituals: "rituals",
     foci: "foci",
@@ -1264,6 +1271,10 @@ const translations = {
     permanentShort: "P",
     sustainedShort: "S",
     limitedShort: "L",
+    anchored: "anchored",
+    materialLink: "material link",
+    minion: "minion",
+    spotter: "spotter",
   },
 };
 

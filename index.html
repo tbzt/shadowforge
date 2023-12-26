@@ -374,38 +374,6 @@
                   </div>
                 </div>
 
-                <!-- Section : Choix des préparations -->
-                <div class="collapse" id="collapsePreparations" ondragover="handleDragOver(event)"
-                  ondrop="handleDrop(event)">
-                  <div class="card card-body">
-
-
-                    <label for="preparationsTable" class="section-title">{{capitalized preparations}}{{colons}} </label>
-                    <!-- Bouton de fermeture -->
-                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0"
-                      aria-label="Close" data-bs-toggle="collapse" data-bs-target="#collapsePreparations"></button>
-
-                    <div class="table-responsive-sm">
-                      <table id="preparationsTable"
-                        class="table table-sm table-responsive-sm table-hover table-striped">
-                        <thead class="table-light" id="preparationsDrop">
-                          <tr>
-                            <th scope="col" id="preparationsHeader" class="name-column h6">
-                              {{capitalized name}}
-                            </th>
-                            <th scope="col" id="preparationsPrice" class="handle-column">
-                              <i class="bi bi-currency-yen"></i>
-                            </th>
-                            <th scope="col" id="preparationsHandler" class="handle-column">
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody id="preparationsBody"></tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-
                 <!-- Section : Choix des esprits -->
                 <div class="collapse" id="collapseSpirits" ondragover="handleDragOver(event)"
                   ondrop="handleDrop(event)">
@@ -457,12 +425,6 @@
                           <tr>
                             <th scope="col" id="ritualsHeader" class="name-column h6">
                               {{capitalized name}}
-                            </th>
-                            <th scope="col" id="ritualsType" class="type-column">
-                              {{capitalized type}}
-                            </th>
-                            <th scope="col" id="ritualsPrice" class="price-column">
-                              <i class="bi bi-currency-yen"></i>
                             </th>
                             <th scope="col" id="ritualsHandler" class="handle-column">
                             </th>

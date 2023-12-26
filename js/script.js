@@ -1117,9 +1117,8 @@ function handleModals() {
     "SINS",
     "lifestyles",
     "spells",
-    "preparations",
-    "spirits",
     "rituals",
+    "spirits",
     "foci",
     "adeptPowers",
     "metamagics",
@@ -2257,10 +2256,10 @@ function modalConstruct(type, newType, method) {
         </div>     
         <div class="SR6_headline mb-2">${allCapitalized(terms.vectors)}</div>
         <div class="form-group row align-items-center mb-2">
-                  <div class="col-sm-9" id="${type}FiringMods">
+                  <div class="col-sm-9" id="${type}Vectors">
                       ${vectorsOptions}
                   </div>
-                </div>
+        </div>
         <div class="SR6_headline mb-2">${allCapitalized(
           terms.priceAndAvailability
         )}</div>
@@ -2603,6 +2602,12 @@ function modalConstruct(type, newType, method) {
             <input type="number" class="form-control" id="${type}DrainValue" aria-label="price" value=0>
           </div>
     </div>
+    <div class="form-check d-flex justify-content-start">          
+          <input class="form-check-input me-2" type="checkbox" value="Preparation" id="preparation">
+          <label class="form-check-label" for="preparation">
+            ${capitalized(terms.preparation)}
+          </label>
+        </div>
       <div class="SR6_headline mb-2">${allCapitalized(
         terms.priceAndAvailability
       )}</div>
@@ -2632,11 +2637,99 @@ function modalConstruct(type, newType, method) {
           </div>
     </div>`;
       break;
-    case "preparations":
+    case "rituals":
+      const ritualCategory = [
+        "minion",
+        "spotter",
+        "anchored",
+        "materialLink",
+      ];
+      ritualCategory.sort((a, b) => terms[a].localeCompare(terms[b]));      
+
+      const ritualCategoryOptions = ritualCategory
+        .map(
+          (type) => `
+        <div class="form-check d-flex justify-content-start">
+          <input class="form-check-input me-2" type="checkbox" value="${type}" id="${type}Category">
+          <label class="form-check-label" for="${type}Category">
+            ${capitalized(terms[type])}
+          </label>
+        </div>
+      `
+        )
+        .join("\n");
+
+      const ritualDuration = ["instantaneous", "limited", "permanent", "sustained"];
+      duration.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const ritualDurationOptions = ritualDuration
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">
+    
+      <div class="col-sm-9" id="${type}Category">
+        ${ritualCategoryOptions}
+      </div>
+    </div>
+            
+      <div class="form-group row align-items-center mb-2">  
+       
+      <label for="${type}Duration" class="col-sm-3 col-form-label">${capitalized(
+        terms.duration
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}DurationValue" aria-label="price" value=0>
+          </div>
+          <div class="col-sm-6">
+          <select class="form-control" id="${type}DurationType">
+            <option value="">${capitalized(terms.select)}</option>
+            ${durationOptions}
+          </select>
+          </div>
+      </div>
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
       break;
     case "spirits":
-      break;
-    case "rituals":
       break;
     case "foci":
       break;
@@ -3225,8 +3318,6 @@ function handleDropdownModal(type) {
 
       if (type === "spells") {
         var category = getValue("Category", type);
-        var spellType = getValue("Type", type);
-        var range = getValue("Range", type);
         var duration = getValue("Duration", type);
         var drainValue = getValue("DrainValue", type);
         var price = getValue("Price", type);
@@ -3234,6 +3325,7 @@ function handleDropdownModal(type) {
         var availability = getValue("Availability", type);
         var description = getValue("Description", type);
         var categorySub = "";
+        var preparation = $(`#Preparation`).prop("checked");
         var key = $(`#${type}Input`).val();
 
         if (category === "combatDirect" || category === "combatIndirect") {
@@ -3249,6 +3341,39 @@ function handleDropdownModal(type) {
           drainValue: drainValue,
           category: category,
           categorySub: categorySub,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+          preparation: preparation,
+        };
+      }
+
+      if (type === "rituals") {
+        var durationType = getValue("DurationType", type);
+        var durationValue = getValue("DurationValue", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+        var minion = $(`#minionCategory`).prop("checked");
+        var spotter = $(`#spotterCategory`).prop("checked");
+        var anchored = $(`#anchoredCategory`).prop("checked");
+        var materialLink = $(`#materialLinkCategory`).prop("checked");
+
+        newItem = {
+          key: key,
+          duration: {
+            value: durationValue,
+            type: durationType,
+          },
+          category: {
+            minion: minion,
+            anchored: anchored,
+            spotter: spotter,
+            materialLink: materialLink,
+          },
           price: price,
           legality: legality,
           availability: availability,
@@ -3319,6 +3444,10 @@ function handleDropdownModal(type) {
         if (type === "spells") {
           characterData[type].push(newItem);
           updateSpellsDisplay(type);
+        }
+        if (type === "rituals") {
+          characterData[type].push(newItem);
+          updateRitualsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -3848,6 +3977,39 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#Preparation`).checked =
+      characterData[type][indexItem].preparation;
+  }
+
+  if (type === "rituals") {
+    const fields = [
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+
+    modalContainer.querySelector(`#${type}DurationType`).value =
+      characterData[type][indexItem].duration.type;
+    modalContainer.querySelector(`#${type}DurationValue`).value =
+      characterData[type][indexItem].duration.value;
+
+    modalContainer.querySelector(`#minionCategory`).checked =
+      characterData[type][indexItem].category.minion;
+    modalContainer.querySelector(`#spotterCategory`).checked =
+      characterData[type][indexItem].category.spotter;
+    modalContainer.querySelector(`#anchoredCategory`).checked =
+      characterData[type][indexItem].category.anchored;
+    modalContainer.querySelector(`#materialLinkCategory`).checked =
+      characterData[type][indexItem].category.materialLink;
   }
 
   if (type === "languages") {
@@ -4269,7 +4431,44 @@ function handleItemClick(type, indexItem) {
             characterData[type][indexItem].category = "combat";
           }
 
+          characterData[type][indexItem].preparation =
+            modalContainer.querySelector(`#Preparation`).checked;
+
           updateSpellsDisplay(type);
+        }
+
+        if (type === "rituals") {
+          const fields = [
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          characterData[type][indexItem].duration.value =
+            modalContainer.querySelector(`#${type}DurationType`).value;
+          characterData[type][indexItem].duration.type =
+            modalContainer.querySelector(`#${type}DurationValue`).value;
+
+          characterData[type][indexItem].category.minion =
+            modalContainer.querySelector(`#minionCategory`).checked;
+          characterData[type][indexItem].category.spotter =
+            modalContainer.querySelector(`#spotterCategory`).checked;
+          characterData[type][indexItem].category.anchored =
+            modalContainer.querySelector(`#anchoredCategory`).checked;
+          characterData[type][indexItem].category.materialLink =
+            modalContainer.querySelector(`#materialLinkCategory`).checked;
+
+          updateRitualsDisplay(type);
         }
 
         if (type === "languages" || type === "knowledges") {
@@ -4340,6 +4539,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "spells") {
     updateSpellsDisplay();
+  }
+  if (type === "rituals") {
+    updateRitualsDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -4554,6 +4756,7 @@ function updateDisplay() {
   updateSINSDisplay();
   updateLifestylesDisplay();
   updateSpellsDisplay();
+  updateRitualsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -4985,6 +5188,43 @@ function updateSpellsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       spellsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateRitualsDisplay() {
+  console.log("updateRitualsDisplay : ", characterData.rituals);
+  var ritualsTableBody = $(`#ritualsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  ritualsTableBody.empty();
+
+  if (characterData.rituals.length > 0) {
+    var rituals = [];
+    rituals = sortKeys(characterData.rituals);
+
+    rituals.forEach(function (ritual) {
+      var row = `
+      <tr>
+          <td class="name-column">${ritual.key}</td> 
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('rituals','${characterData.rituals.indexOf(
+        ritual
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('rituals','${characterData.rituals.indexOf(
+        ritual
+      )}')"></i>
+      <div id="modalContainerrituals${characterData.rituals.indexOf(
+        ritual
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      ritualsTableBody.append(row);
     });
   }
 
@@ -5592,11 +5832,6 @@ function menuSectionGenerate() {
       case "mysticAdept":
         magicSection.items = [
           { id: "buttonSpells", target: "collapseSpells", label: "spells" },
-          {
-            id: "buttonPreparations",
-            target: "collapsePreparations",
-            label: "preparations",
-          },
           { id: "buttonSpirits", target: "collapseSpirits", label: "spirits" },
           { id: "buttonRituals", target: "collapseRituals", label: "rituals" },
           { id: "buttonFoci", target: "collapseFoci", label: "foci" },
@@ -5615,11 +5850,6 @@ function menuSectionGenerate() {
       case "magician":
         magicSection.items = [
           { id: "buttonSpells", target: "collapseSpells", label: "spells" },
-          {
-            id: "buttonPreparations",
-            target: "collapsePreparations",
-            label: "preparations",
-          },
           { id: "buttonSpirits", target: "collapseSpirits", label: "spirits" },
           { id: "buttonRituals", target: "collapseRituals", label: "rituals" },
           { id: "buttonFoci", target: "collapseFoci", label: "foci" },
@@ -5655,11 +5885,6 @@ function menuSectionGenerate() {
         break;
       case "aspectedMagicianEnchanting":
         magicSection.items = [
-          {
-            id: "buttonPreparations",
-            target: "collapsePreparations",
-            label: "preparations",
-          },
           { id: "buttonFoci", target: "collapseFoci", label: "foci" },
           {
             id: "buttonMetamagics",
@@ -6841,7 +7066,7 @@ function assignData() {
   }
 
   if (characterData.spells) {
-    for (let lifestyle in characterData.spells) {
+    for (let spell in characterData.spells) {
       if (characterData.spells.hasOwnProperty(spell)) {
         var item = characterData.spells[spell];
 
@@ -6860,6 +7085,42 @@ function assignData() {
             drain: {
               base: item.drainValue,
             },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.rituals) {
+    for (let ritual in characterData.rituals) {
+      if (characterData.rituals.hasOwnProperty(ritual)) {
+        var item = characterData.rituals[ritual];
+
+        var i = {
+          name: item.key,
+          type: "ritual",
+          system: {
+            info: {
+              description: item.description,
+            },
+            anchored: item.category.anchored,
+            minion: item.category.minion,
+            spotter: item.category.spotter,
+            materialLink: item.category.materialLink,
+            duration: {
+              value: item.duration.value,
+              period: item.duration.type,
+            },            
             goods: {
               price: {
                 base: item.price,
