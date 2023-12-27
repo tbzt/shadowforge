@@ -281,6 +281,8 @@ function loadFromJSON(event) {
         spell: [],
         ritual: [],
         focus: [],
+        poweradept: [],
+        metamagic: [],
         complexForm: [],
         quality: [],
         spirit: [],
@@ -665,8 +667,36 @@ function loadFromJSON(event) {
           type: itemsByType.focus[focus].system.type,
           force: itemsByType.focus[focus].system.rating,
         };
-        console.log("new focus : ", a)
+        console.log("new focus : ", a);
         characterData.foci.push(a);
+      }
+
+      //ADEPT POWERS
+
+      for (let adeptpower in itemsByType.adeptpower) {
+        var a = {
+          key: itemsByType.adeptpower[adeptpower].name,
+          description:
+            itemsByType.adeptpower[adeptpower].system.info.description,
+          activation: itemsByType.adeptpower[adeptpower].system.action,
+          rating: itemsByType.adeptpower[adeptpower].system.rating,
+          powerPointsCost:
+            itemsByType.adeptpower[adeptpower].system.powerPoint.base,
+        };
+        console.log("new adept power : ", a);
+        characterData.adeptPowers.push(a);
+      }
+
+      //METAMAGICS
+
+      for (let metamagic in itemsByType.metamagic) {
+        var a = {
+          key: itemsByType.metamagic[metamagic].name,
+          description: itemsByType.metamagic[metamagic].system.info.description,
+          rating: itemsByType.metamagic[metamagic].system.rating,
+        };
+        console.log("new metamagic : ", a);
+        characterData.metamagics.push(a);
       }
 
       console.log("loadFromJSON characterData : ", characterData);

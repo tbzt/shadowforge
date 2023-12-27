@@ -2845,8 +2845,73 @@ function modalConstruct(type, newType, method) {
     </div>`;
       break;
     case "adeptPowers":
+      const activation = ["minor", "major", "passive"];
+
+      activation.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const activationOptions = activation
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>      
+    <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
+        terms.rating
+      )}${terms.colons}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Rating" aria-label="rating" value=0>
+    </div>
+</div>
+    <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Activation" class="col-sm-3 col-form-label">${capitalized(
+        terms.activation
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Activation">
+            <option value="">${capitalized(terms.select)}</option>
+            ${activationOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}PowerPointsCost" class="col-sm-3 col-form-label">${capitalized(
+        terms.powerPointsCost
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}PowerPointsCost" aria-label="powerPointsCost" value=0>
+          </div>
+    </div>`;
       break;
     case "metamagics":
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>      
+    <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
+        terms.rating
+      )}${terms.colons}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Rating" aria-label="rating" value=0>
+    </div>
+</div>`;
       break;
     case "spirits":
       break;
@@ -3516,6 +3581,34 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "adeptPowers") {
+        var activation = getValue("Activation", type);
+        var powerPointsCost = getValue("powerPointsCost", type);
+        var rating = getValue("Rating", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          activation: activation,
+          powerPointsCost: powerPointsCost,
+          rating: rating,
+          description: description,
+        };
+      }
+
+      if (type === "metamagics") {
+        var rating = getValue("Rating", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          rating: rating,
+          description: description,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -3587,6 +3680,14 @@ function handleDropdownModal(type) {
         if (type === "foci") {
           characterData[type].push(newItem);
           updateFociDisplay(type);
+        }
+        if (type === "adeptPowers") {
+          characterData[type].push(newItem);
+          updateAdeptPowersDisplay(type);
+        }
+        if (type === "metamagics") {
+          characterData[type].push(newItem);
+          updateMetamagicsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -4164,6 +4265,28 @@ function handleItemClick(type, indexItem) {
     });
   }
 
+  if (type === "adeptPowers") {
+    const fields = ["PowerPointsCost", "Rating", "Activation", "Description"];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
+  if (type === "metamagics") {
+    const fields = ["Rating", "Description"];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -4640,6 +4763,44 @@ function handleItemClick(type, indexItem) {
           updateFociDisplay(type);
         }
 
+        if (type === "adeptPowers") {
+          const fields = [
+            "PowerPointsCost",
+            "Rating",
+            "Activation",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateAdeptPowersDisplay(type);
+        }
+
+        if (type === "metamagics") {
+          const fields = [
+            "Rating",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateMetamagicsDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -4714,6 +4875,12 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "foci") {
     updateFociDisplay();
+  }
+  if (type === "adeptPowers") {
+    updateAdeptPowersDisplay();
+  }
+  if (type === "metamagics") {
+    updateMetamagicsDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -4930,6 +5097,8 @@ function updateDisplay() {
   updateSpellsDisplay();
   updateRitualsDisplay();
   updateFociDisplay();
+  updateAdeptPowersDisplay();
+  updateMetamagicsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -5435,6 +5604,86 @@ function updateFociDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       fociTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateAdeptPowersDisplay() {
+  console.log("updateAdeptPowersDisplay : ", characterData.adeptPowers);
+  var adeptPowersTableBody = $(`#adeptPowersTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  adeptPowersTableBody.empty();
+
+  if (characterData.adeptPowers.length > 0) {
+    var adeptPowers = [];
+    adeptPowers = sortKeys(characterData.adeptPowers);
+
+    adeptPowers.forEach(function (poweradept) {
+      var row = `
+      <tr>
+          <td class="name-column">${poweradept.key}</td> 
+          <td class="rating-column">${poweradept.rating}</td> 
+          <td class="activation-column">${
+            terms[poweradept.activation + "Short"]
+          }</td>  
+          <td class="powerPoints-column">${poweradept.powerPointsCost}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('adeptPowers','${characterData.adeptPowers.indexOf(
+        poweradept
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('adeptPowers','${characterData.adeptPowers.indexOf(
+        poweradept
+      )}')"></i>
+      <div id="modalContaineradeptPowers${characterData.adeptPowers.indexOf(
+        poweradept
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      adeptPowersTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateMetamagicsDisplay() {
+  console.log("updateMetamagicsDisplay : ", characterData.metamagics);
+  var metamagicsTableBody = $(`#metamagicsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  metamagicsTableBody.empty();
+
+  if (characterData.metamagics.length > 0) {
+    var metamagics = [];
+    metamagics = sortKeys(characterData.metamagics);
+
+    metamagics.forEach(function (metamagic) {
+      var row = `
+      <tr>
+          <td class="name-column">${metamagic.key}</td> 
+          <td class="rating-column">${poweradept.rating}</td> 
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('metamagics','${characterData.metamagics.indexOf(
+        metamagic
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('metamagics','${characterData.metamagics.indexOf(
+        metamagic
+      )}')"></i>
+      <div id="modalContainermetamaics${characterData.metamagics.indexOf(
+        metamagic
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      metamagicsTableBody.append(row);
     });
   }
 
@@ -6029,7 +6278,7 @@ function menuSectionGenerate() {
           { id: "buttonFoci", target: "collapseFoci", label: "foci" },
           {
             id: "buttonAdeptPowers",
-            target: "collapseAdeptePowers",
+            target: "collapseAdeptPowers",
             label: "adeptPowers",
           },
           {
@@ -6047,7 +6296,7 @@ function menuSectionGenerate() {
           { id: "buttonFoci", target: "collapseFoci", label: "foci" },
           {
             id: "buttonAdeptPowers",
-            target: "collapseAdeptePowers",
+            target: "collapseAdeptPowers",
             label: "adeptPowers",
           },
           {
@@ -7350,7 +7599,7 @@ function assignData() {
   if (characterData.foci) {
     for (let focus in characterData.foci) {
       if (characterData.foci.hasOwnProperty(focus)) {
-        var item = characterData.focus[foci];
+        var item = characterData.foci[focus];
 
         var i = {
           name: item.key,
@@ -7370,6 +7619,50 @@ function assignData() {
               },
               legality: item.legality,
             },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.adeptPowers) {
+    for (let poweradept in characterData.adeptPowers) {
+      if (characterData.adeptPowers.hasOwnProperty(poweradept)) {
+        var item = characterData.adeptPowers[poweradept];
+
+        var i = {
+          name: item.key,
+          type: "poweradept",
+          system: {
+            info: {
+              description: item.description,
+            },
+            rating: item.rating,
+            action: item.activation,
+            powerPoint: {
+              base: powerPointsCost,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.metamagics) {
+    for (let metamagic in characterData.metamagics) {
+      if (characterData.metamagics.hasOwnProperty(metamagic)) {
+        var item = characterData.metamagics[metamagic];
+
+        var i = {
+          name: item.key,
+          type: "metamagic",
+          system: {
+            info: {
+              description: item.description,
+            },
+            rating: item.rating,
           },
         };
         foundryData.items.push(i);
