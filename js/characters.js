@@ -279,6 +279,8 @@ function loadFromJSON(event) {
         lifestyle: [],
         contact: [],
         spell: [],
+        ritual: [],
+        focus: [],
         complexForm: [],
         quality: [],
         spirit: [],
@@ -631,6 +633,40 @@ function loadFromJSON(event) {
           drainValue: itemsByType.spell[spell].system.drain.base,
         };
         characterData.spells.push(a);
+      }
+
+      //RITUALS
+
+      for (let ritual in itemsByType.ritual) {
+        var a = {
+          key: itemsByType.ritual[ritual].name,
+          description: itemsByType.ritual[ritual].system.info.description,
+          minion: itemsByType.ritual[ritual].system.minion,
+          anchored: itemsByType.ritual[ritual].system.anchored,
+          materialLink: itemsByType.ritual[ritual].system.materialLink,
+          spotter: itemsByType.ritual[ritual].system.spotter,
+          duration: {
+            value: itemsByType.ritual[ritual].system.duration.value,
+            type: itemsByType.ritual[ritual].system.duration.period,
+          },
+        };
+        characterData.rituals.push(a);
+      }
+
+      //FOCUS
+
+      for (let focus in itemsByType.focus) {
+        var a = {
+          key: itemsByType.focus[focus].name,
+          description: itemsByType.focus[focus].system.info.description,
+          price: itemsByType.focus[focus].system.goods.price.base,
+          availability: itemsByType.focus[focus].system.goods.availability.base,
+          legality: itemsByType.focus[focus].system.legality,
+          type: itemsByType.focus[focus].system.type,
+          force: itemsByType.focus[focus].system.rating,
+        };
+        console.log("new focus : ", a)
+        characterData.foci.push(a);
       }
 
       console.log("loadFromJSON characterData : ", characterData);

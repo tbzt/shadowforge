@@ -1118,13 +1118,13 @@ function handleModals() {
     "lifestyles",
     "spells",
     "rituals",
-    "spirits",
     "foci",
     "adeptPowers",
     "metamagics",
+    "spirits",
     "complexForms",
-    "sprites",
     "echoes",
+    "sprites",
   ];
 
   types.forEach((type) => handleDropdownModal(type));
@@ -2638,13 +2638,8 @@ function modalConstruct(type, newType, method) {
     </div>`;
       break;
     case "rituals":
-      const ritualCategory = [
-        "minion",
-        "spotter",
-        "anchored",
-        "materialLink",
-      ];
-      ritualCategory.sort((a, b) => terms[a].localeCompare(terms[b]));      
+      const ritualCategory = ["minion", "spotter", "anchored", "materialLink"];
+      ritualCategory.sort((a, b) => terms[a].localeCompare(terms[b]));
 
       const ritualCategoryOptions = ritualCategory
         .map(
@@ -2659,8 +2654,13 @@ function modalConstruct(type, newType, method) {
         )
         .join("\n");
 
-      const ritualDuration = ["instantaneous", "limited", "permanent", "sustained"];
-      duration.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const ritualDuration = [
+        "instantaneous",
+        "limited",
+        "permanent",
+        "sustained",
+      ];
+      ritualDuration.sort((a, b) => terms[a].localeCompare(terms[b]));
       const ritualDurationOptions = ritualDuration
         .map(
           (type) =>
@@ -2696,7 +2696,7 @@ function modalConstruct(type, newType, method) {
           <div class="col-sm-6">
           <select class="form-control" id="${type}DurationType">
             <option value="">${capitalized(terms.select)}</option>
-            ${durationOptions}
+            ${ritualDurationOptions}
           </select>
           </div>
       </div>
@@ -2729,17 +2729,132 @@ function modalConstruct(type, newType, method) {
           </div>
     </div>`;
       break;
-    case "spirits":
-      break;
     case "foci":
+      const fociCategory = [
+        "alchemical",
+        "banishing",
+        "centering",
+        "counterspelling",
+        "disenchanting",
+        "flexibleSignature",
+        "masking",
+        "power",
+        "qi",
+        "ritualSpellcasting",
+        "spellcasting",
+        "spellShaping",
+        "summoning",
+        "sustaining",
+        "weapon",
+      ];
+
+      fociCategory.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const fociCategoryOptions = fociCategory
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const subCategorySpells = [
+        "instantaneous",
+        "limited",
+        "permanent",
+        "sustained",
+      ];
+      subCategorySpells.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const subCategorySpellsOptions = subCategorySpells
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      const subCategorySpirits = [
+        "instantaneous",
+        "limited",
+        "permanent",
+        "sustained",
+      ];
+      subCategorySpirits.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const subCategorySpiritsOptions = subCategorySpirits
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Type">
+            <option value="">${capitalized(terms.select)}</option>
+            ${fociCategoryOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Force" class="col-sm-3 col-form-label">${capitalized(
+        terms.force
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Force" aria-label="force" value=0>
+          </div>
+    </div>
+        
+      <div class="SR6_headline mb-2">${allCapitalized(
+        terms.priceAndAvailability
+      )}</div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+          </div>
+          <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+          <div class="col-sm-4">
+          <select class="form-control" id="${type}Legality">
+            <option value="">${capitalized(terms.select)}</option>
+            ${legalityOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+          </div>
+    </div>`;
       break;
     case "adeptPowers":
       break;
     case "metamagics":
       break;
+    case "spirits":
+      break;
     case "complexForms":
       break;
     case "echoes":
+      break;
+    case "sprites":
       break;
     default:
       break;
@@ -3381,6 +3496,26 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "foci") {
+        var fociType = getValue("Type", type);
+        var force = getValue("Force", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          type: fociType,
+          force: force,
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -3448,6 +3583,10 @@ function handleDropdownModal(type) {
         if (type === "rituals") {
           characterData[type].push(newItem);
           updateRitualsDisplay(type);
+        }
+        if (type === "foci") {
+          characterData[type].push(newItem);
+          updateFociDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -3983,12 +4122,7 @@ function handleItemClick(type, indexItem) {
   }
 
   if (type === "rituals") {
-    const fields = [
-      "Legality",
-      "Availability",
-      "Price",
-      "Description",
-    ];
+    const fields = ["Legality", "Availability", "Price", "Description"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -4010,6 +4144,24 @@ function handleItemClick(type, indexItem) {
       characterData[type][indexItem].category.anchored;
     modalContainer.querySelector(`#materialLinkCategory`).checked =
       characterData[type][indexItem].category.materialLink;
+  }
+
+  if (type === "foci") {
+    const fields = [
+      "Type",
+      "Force",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
   }
 
   if (type === "languages") {
@@ -4438,12 +4590,7 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "rituals") {
-          const fields = [
-            "Legality",
-            "Availability",
-            "Price",
-            "Description",
-          ];
+          const fields = ["Legality", "Availability", "Price", "Description"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -4469,6 +4616,28 @@ function handleItemClick(type, indexItem) {
             modalContainer.querySelector(`#materialLinkCategory`).checked;
 
           updateRitualsDisplay(type);
+        }
+
+        if (type === "foci") {
+          const fields = [
+            "Type",
+            "Force",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateFociDisplay(type);
         }
 
         if (type === "languages" || type === "knowledges") {
@@ -4542,6 +4711,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "rituals") {
     updateRitualsDisplay();
+  }
+  if (type === "foci") {
+    updateFociDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -4757,6 +4929,7 @@ function updateDisplay() {
   updateLifestylesDisplay();
   updateSpellsDisplay();
   updateRitualsDisplay();
+  updateFociDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -5225,6 +5398,43 @@ function updateRitualsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       ritualsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateFociDisplay() {
+  console.log("updateFociDisplay : ", characterData.foci);
+  var fociTableBody = $(`#fociTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  fociTableBody.empty();
+
+  if (characterData.foci.length > 0) {
+    var foci = [];
+    foci = sortKeys(characterData.foci);
+
+    foci.forEach(function (focus) {
+      var row = `
+      <tr>
+          <td class="name-column">${focus.key}</td> 
+          <td class="force-column">${focus.force}</td> 
+          <td class="type-column">${capitalized(terms[focus.type])}</td> 
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('foci','${characterData.foci.indexOf(
+        focus
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('foci','${characterData.foci.indexOf(
+        focus
+      )}')"></i>
+      <div id="modalContainerfoci${characterData.foci.indexOf(focus)}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      fociTableBody.append(row);
     });
   }
 
@@ -7120,7 +7330,37 @@ function assignData() {
             duration: {
               value: item.duration.value,
               period: item.duration.type,
-            },            
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.foci) {
+    for (let focus in characterData.foci) {
+      if (characterData.foci.hasOwnProperty(focus)) {
+        var item = characterData.focus[foci];
+
+        var i = {
+          name: item.key,
+          type: "focus",
+          system: {
+            info: {
+              description: item.description,
+            },
+            rating: item.force,
+            type: item.type,
             goods: {
               price: {
                 base: item.price,
