@@ -770,6 +770,12 @@ const translations = {
     majorShort: "M",
     minorShort: "m",
     passiveShort: "P",
+    air: "air",
+    beasts: "bêtes",
+    earth: "terre",
+    fire: "feu",
+    kin: "aînés",
+    water: "eau",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -1341,6 +1347,12 @@ const translations = {
     majorShort: "M",
     minorShort: "m",
     passiveShort: "P",
+    air: "air",
+    beasts: "beasts",
+    earth: "earth",
+    fire: "fire",
+    kin: "kin",
+    water: "water",
   },
 };
 

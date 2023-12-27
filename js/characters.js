@@ -699,6 +699,19 @@ function loadFromJSON(event) {
         characterData.metamagics.push(a);
       }
 
+      //SPIRITS
+
+      for (let spirit in itemsByType.spirit) {
+        var a = {
+          key: itemsByType.spirit[spirit].name,
+          description: itemsByType.spirit[spirit].system.info.description,
+          type: itemsByType.spirit[spirit].system.type,
+          force: itemsByType.spirit[spirit].system.force,
+        };
+        console.log("new spirit : ", a);
+        characterData.spirits.push(a);
+      }
+
       console.log("loadFromJSON characterData : ", characterData);
 
       // Chargez les données du personnage

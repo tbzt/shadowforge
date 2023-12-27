@@ -2894,7 +2894,6 @@ function modalConstruct(type, newType, method) {
     </div>`;
       break;
     case "metamagics":
-
       specificType = `      
     <div class="form-group row align-items-center mb-4">
         <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
@@ -2914,6 +2913,45 @@ function modalConstruct(type, newType, method) {
 </div>`;
       break;
     case "spirits":
+      const spiritsType = ["air", "beasts", "earth", "fire", "kin", "water"];
+
+      spiritsType.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const spiritsTypeOptions = spiritsType
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+  <div class="form-group row align-items-center mb-4">
+      <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+      <div class="col-sm-9">
+        <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+      </div>
+  </div>  
+  <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+        <select class="form-control" id="${type}Type">
+          <option value="">${capitalized(terms.select)}</option>
+          ${spiritsTypeOptions}
+        </select>
+        </div>
+    </div>    
+    <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Force" class="col-sm-3 col-form-label">${capitalized(
+        terms.force
+      )}${terms.colons}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Force" aria-label="force" value=0>
+    </div>
+  </div>`;
       break;
     case "complexForms":
       break;
@@ -3609,6 +3647,20 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "spirits") {
+        var force = getValue("Force", type);
+        var spiritType = getValue("Type", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          force: force,
+          type: spiritType,
+          description: description,
+        };
+      }
+
       if (type === "knowledges" || type === "languages") {
         var levelItem = 0;
         if (type === "languages")
@@ -3688,6 +3740,10 @@ function handleDropdownModal(type) {
         if (type === "metamagics") {
           characterData[type].push(newItem);
           updateMetamagicsDisplay(type);
+        }
+        if (type === "spirits") {
+          characterData[type].push(newItem);
+          updateSpiritsDisplay(type);
         }
         if (type === "knowledges" || type === "languages") {
           characterData[type].push(newItem);
@@ -4287,6 +4343,17 @@ function handleItemClick(type, indexItem) {
     });
   }
 
+  if (type === "spirits") {
+    const fields = ["Force", "Type", "Description"];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -4784,10 +4851,7 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "metamagics") {
-          const fields = [
-            "Rating",
-            "Description",
-          ];
+          const fields = ["Rating", "Description"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -4799,6 +4863,21 @@ function handleItemClick(type, indexItem) {
           });
 
           updateMetamagicsDisplay(type);
+        }
+
+        if (type === "spirits") {
+          const fields = ["Force", "Type", "Description"];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateSpiritsDisplay(type);
         }
 
         if (type === "languages" || type === "knowledges") {
@@ -4881,6 +4960,9 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "metamagics") {
     updateMetamagicsDisplay();
+  }
+  if (type === "spirits") {
+    updateSpiritsDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -5099,6 +5181,7 @@ function updateDisplay() {
   updateFociDisplay();
   updateAdeptPowersDisplay();
   updateMetamagicsDisplay();
+  updateSpiritsDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -5667,7 +5750,7 @@ function updateMetamagicsDisplay() {
       var row = `
       <tr>
           <td class="name-column">${metamagic.key}</td> 
-          <td class="rating-column">${poweradept.rating}</td> 
+          <td class="rating-column">${metamagic.rating}</td> 
       <td class="handler-column">
       <i class="bi bi-pencil-fill" onclick="handleItemClick('metamagics','${characterData.metamagics.indexOf(
         metamagic
@@ -5675,7 +5758,7 @@ function updateMetamagicsDisplay() {
       <i class="bi bi-eraser-fill" onclick="removeModalClick('metamagics','${characterData.metamagics.indexOf(
         metamagic
       )}')"></i>
-      <div id="modalContainermetamaics${characterData.metamagics.indexOf(
+      <div id="modalContainermetamagics${characterData.metamagics.indexOf(
         metamagic
       )}"></div>
       </td>
@@ -5684,6 +5767,45 @@ function updateMetamagicsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       metamagicsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateSpiritsDisplay() {
+  console.log("updateSpiritsDisplay : ", characterData.spirits);
+  var spiritsTableBody = $(`#spiritsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  spiritsTableBody.empty();
+
+  if (characterData.spirits.length > 0) {
+    var spirits = [];
+    spirits = sortKeys(characterData.spirits);
+
+    spirits.forEach(function (spirit) {
+      var row = `
+      <tr>
+          <td class="name-column">${spirit.key}</td> 
+          <td class="force-column">${spirit.force}</td> 
+          <td class="type-column">${capitalized(terms[spirit.type])}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('spirits','${characterData.spirits.indexOf(
+        spirit
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('spirits','${characterData.spirits.indexOf(
+        spirit
+      )}')"></i>
+      <div id="modalContainerspirits${characterData.spirits.indexOf(
+        spirit
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      spiritsTableBody.append(row);
     });
   }
 
@@ -7663,6 +7785,27 @@ function assignData() {
               description: item.description,
             },
             rating: item.rating,
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.spirits) {
+    for (let spirit in characterData.spirits) {
+      if (characterData.spirits.hasOwnProperty(spirit)) {
+        var item = characterData.spirits[spirit];
+
+        var i = {
+          name: item.key,
+          type: "spirit",
+          system: {
+            info: {
+              description: item.description,
+            },
+            type: item.type,
+            force: item.force,
           },
         };
         foundryData.items.push(i);
