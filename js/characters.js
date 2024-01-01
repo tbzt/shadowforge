@@ -707,6 +707,11 @@ function loadFromJSON(event) {
           description: itemsByType.spirit[spirit].system.info.description,
           type: itemsByType.spirit[spirit].system.type,
           force: itemsByType.spirit[spirit].system.force,
+          isBounded: itemsByType.spirit[spirit].system.isBounded,
+          service: {
+            current: itemsByType.spirit[spirit].system.service.current,
+            max: itemsByType.spirit[spirit].system.service.max,
+          }
         };
         console.log("new spirit : ", a);
         characterData.spirits.push(a);

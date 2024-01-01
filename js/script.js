@@ -2813,8 +2813,7 @@ function modalConstruct(type, newType, method) {
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Force" aria-label="force" value=0>
           </div>
-    </div>
-        
+    </div>        
       <div class="SR6_headline mb-2">${allCapitalized(
         terms.priceAndAvailability
       )}</div>
@@ -2913,6 +2912,8 @@ function modalConstruct(type, newType, method) {
 </div>`;
       break;
     case "spirits":
+      console.log("modalConstruct : ", type, " ", method);
+
       const spiritsType = ["air", "beasts", "earth", "fire", "kin", "water"];
 
       spiritsType.sort((a, b) => terms[a].localeCompare(terms[b]));
@@ -2951,6 +2952,30 @@ function modalConstruct(type, newType, method) {
     <div class="col-sm-3">
       <input type="number" class="form-control" id="${type}Force" aria-label="force" value=0>
     </div>
+    </div>
+        
+    <div class="form-group row align-items-center mb-2">   
+    <label class="col-sm-3 col-form-label" for="IsBounded">
+      ${capitalized(terms.bounded)} ?
+    </label>  
+    <div class="col-sm-3">     
+    <input class="form-check-input" type="checkbox" value="IsBounded" id="IsBounded">
+    </div>
+  </div>
+  
+  <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Services" class="col-sm-3 col-form-label">${capitalized(
+        terms.services
+      )}${terms.colons}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Current" aria-label="current" value=0>
+    </div>
+    <div class="col-sm-1">
+      /
+    </div>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Max" aria-label="max" value=0>
+    </div>
   </div>`;
       break;
     case "complexForms":
@@ -2961,6 +2986,12 @@ function modalConstruct(type, newType, method) {
       break;
     default:
       break;
+  }
+
+  var button = "addTo";
+
+  if (method === "modify") {
+    button = "modify";
   }
 
   var modal = `<!-- Modal -->
@@ -2993,7 +3024,7 @@ function modalConstruct(type, newType, method) {
               ${specificType}
               <br>
               <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">${capitalized(
-                terms.addTo
+                terms[button]
               )}</button>
             </form>
 
@@ -3148,6 +3179,8 @@ function handleDropdownModal(type) {
 
     $(document).on("submit", `#add${capitalized(type)}Form`, function (e) {
       e.preventDefault();
+
+      console.log("onSubmit: ", type);
 
       var newItem = {};
 
@@ -3651,6 +3684,9 @@ function handleDropdownModal(type) {
         var force = getValue("Force", type);
         var spiritType = getValue("Type", type);
         var description = getValue("Description", type);
+        var isBounded = $(`#IsBounded`).prop("checked");
+        var current = getValue("Current", type);
+        var max = getValue("Max", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3658,7 +3694,14 @@ function handleDropdownModal(type) {
           force: force,
           type: spiritType,
           description: description,
+          isBounded: isBounded,
+          service: {
+            current: current,
+            max: max,
+          },
         };
+
+        console.log("onSubmit : ", type, " ", newItem);
       }
 
       if (type === "knowledges" || type === "languages") {
@@ -3742,6 +3785,7 @@ function handleDropdownModal(type) {
           updateMetamagicsDisplay(type);
         }
         if (type === "spirits") {
+          console.log("onSubmit /if : ", type, " ", newItem);
           characterData[type].push(newItem);
           updateSpiritsDisplay(type);
         }
@@ -3786,8 +3830,10 @@ function handleItemClick(type, indexItem) {
   )
     newType = terms.newe;
 
+  modify = terms.modify;
+
   // Générer la modale
-  var modal = modalConstruct(type, newType, "modify");
+  var modal = modalConstruct(type, modify, "modify");
 
   // Insérer la modale dans le DOM
   var modalContainer = document.getElementById(
@@ -4344,6 +4390,8 @@ function handleItemClick(type, indexItem) {
   }
 
   if (type === "spirits") {
+    console.log("handleItemClick : ", type, " ", item);
+
     const fields = ["Force", "Type", "Description"];
 
     fields.forEach((field) => {
@@ -4352,6 +4400,13 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Current`).value =
+      characterData[type][indexItem].service.current;
+    modalContainer.querySelector(`#${type}Max`).value =
+      characterData[type][indexItem].service.max;
+    modalContainer.querySelector(`#IsBounded`).checked =
+      characterData[type][indexItem].isBounded;
   }
 
   if (type === "languages") {
@@ -4866,6 +4921,8 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "spirits") {
+          console.log("Modify : ", type, " ", item);
+
           const fields = ["Force", "Type", "Description"];
 
           fields.forEach((field) => {
@@ -4876,6 +4933,13 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].service.current =
+            modalContainer.querySelector(`#${type}Current`).value;
+          characterData[type][indexItem].service.max =
+            modalContainer.querySelector(`#${type}Max`).value;
+          characterData[type][indexItem].isBounded =
+            modalContainer.querySelector(`#IsBounded`).checked;
 
           updateSpiritsDisplay(type);
         }
@@ -5787,9 +5851,12 @@ function updateSpiritsDisplay() {
     spirits.forEach(function (spirit) {
       var row = `
       <tr>
-          <td class="name-column">${spirit.key}</td> 
+          <td class="name-column">${spirit.isBounded ? '<i class="bi bi-link-45deg"></i> ' : ''}${spirit.key}</td>          
           <td class="force-column">${spirit.force}</td> 
-          <td class="type-column">${capitalized(terms[spirit.type])}</td>
+          <td class="type-column">${capitalized(terms[spirit.type])}</td> 
+          <td class="type-column">${spirit.service.current}/${
+        spirit.service.max
+      }</td>
       <td class="handler-column">
       <i class="bi bi-pencil-fill" onclick="handleItemClick('spirits','${characterData.spirits.indexOf(
         spirit
@@ -7806,6 +7873,11 @@ function assignData() {
             },
             type: item.type,
             force: item.force,
+            isBounded: item.isBounded,
+            service: {
+              current: item.service.current,
+              max: item.service.max,
+            },
           },
         };
         foundryData.items.push(i);

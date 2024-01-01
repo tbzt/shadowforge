@@ -503,6 +503,7 @@ const translations = {
     preparations: "préparations alchimiques",
     preparation: "préparation alchimique",
     spirits: "esprits",
+    spirit: "esprit",
     rituals: "rituels",
     ritual: "rituel",
     foc: "focus",
@@ -776,6 +777,10 @@ const translations = {
     fire: "feu",
     kin: "aînés",
     water: "eau",
+    service: "service",
+    services: "services",
+    bounded: "lié",
+    modify: "modifier",
   },
   en: {
     title: "Shadowrun 6 Character Creator",
@@ -1353,6 +1358,10 @@ const translations = {
     fire: "fire",
     kin: "kin",
     water: "water",
+    service: "service",
+    services: "services",
+    bounded: "bounded",
+    modify: "modify",
   },
 };
 
