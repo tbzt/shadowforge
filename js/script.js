@@ -7761,10 +7761,10 @@ function assignData() {
             info: {
               description: item.description,
             },
-            anchored: item.category.anchored,
-            minion: item.category.minion,
-            spotter: item.category.spotter,
-            materialLink: item.category.materialLink,
+            anchored: item.category?.anchored,
+            minion: item.category?.minion,
+            spotter: item.category?.spotter,
+            materialLink: item.category?.materialLink,
             duration: {
               value: item.duration.value,
               period: item.duration.type,
@@ -7830,7 +7830,7 @@ function assignData() {
             rating: item.rating,
             action: item.activation,
             powerPoint: {
-              base: powerPointsCost,
+              base: item.powerPointsCost,
             },
           },
         };
