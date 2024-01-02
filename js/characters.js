@@ -283,9 +283,10 @@ function loadFromJSON(event) {
         focus: [],
         poweradept: [],
         metamagic: [],
-        complexForm: [],
+        complexform: [],
         quality: [],
         spirit: [],
+        echo: [],
         sprite: [],
       };
 
@@ -711,10 +712,54 @@ function loadFromJSON(event) {
           service: {
             current: itemsByType.spirit[spirit].system.service.current,
             max: itemsByType.spirit[spirit].system.service.max,
-          }
+          },
         };
         console.log("new spirit : ", a);
         characterData.spirits.push(a);
+      }
+
+      //COMPLEX FORMS
+
+      for (let complexform in itemsByType.complexform) {
+        var a = {
+          key: itemsByType.complexform[complexform].name,
+          description:
+            itemsByType.complexform[complexform].system.info.description,
+          duration: itemsByType.complexform[complexform].system.duration,
+          fadeValue: itemsByType.complexform[complexform].system.drain.base,
+          skill: itemsByType.complexform[complexform].system.test.linkedSkill,
+        };
+        characterData.complexForms.push(a);
+      }
+
+      //ECHOES
+
+      for (let echo in itemsByType.echo) {
+        var a = {
+          key: itemsByType.echo[echo].name,
+          description: itemsByType.echo[echo].system.info.description,
+          rating: itemsByType.echo[echo].system.rating,
+        };
+        console.log("new echo : ", a);
+        characterData.echoes.push(a);
+      }
+
+      //SPRITES
+
+      for (let sprite in itemsByType.sprite) {
+        var a = {
+          key: itemsByType.sprite[sprite].name,
+          description: itemsByType.sprite[sprite].system.info.description,
+          type: itemsByType.sprite[sprite].system.type,
+          level: itemsByType.sprite[sprite].system.level,
+          isRegistered: itemsByType.sprite[sprite].system.isRegistered,
+          task: {
+            current: itemsByType.sprite[sprite].system.task.current,
+            max: itemsByType.sprite[sprite].system.task.max,
+          },
+        };
+        console.log("new sprite : ", a);
+        characterData.sprites.push(a);
       }
 
       console.log("loadFromJSON characterData : ", characterData);

@@ -1168,6 +1168,14 @@ function modalConstruct(type, newType, method) {
     )
     .join("\n");
 
+  const duration = ["instantaneous", "limited", "permanent", "sustained"];
+  duration.sort((a, b) => terms[a].localeCompare(terms[b]));
+  const durationOptions = duration
+    .map(
+      (type) => `<option value="${type}">${capitalized(terms[type])}</option>`
+    )
+    .join("\n");
+
   var idForm = `${method}${capitalized(type)}Form`;
 
   switch (type) {
@@ -2529,15 +2537,6 @@ function modalConstruct(type, newType, method) {
         )
         .join("\n");
 
-      const duration = ["instantaneous", "limited", "permanent", "sustained"];
-      duration.sort((a, b) => terms[a].localeCompare(terms[b]));
-      const durationOptions = duration
-        .map(
-          (type) =>
-            `<option value="${type}">${capitalized(terms[type])}</option>`
-        )
-        .join("\n");
-
       specificType = `      
     <div class="form-group row align-items-center mb-4">
         <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
@@ -2654,20 +2653,6 @@ function modalConstruct(type, newType, method) {
         )
         .join("\n");
 
-      const ritualDuration = [
-        "instantaneous",
-        "limited",
-        "permanent",
-        "sustained",
-      ];
-      ritualDuration.sort((a, b) => terms[a].localeCompare(terms[b]));
-      const ritualDurationOptions = ritualDuration
-        .map(
-          (type) =>
-            `<option value="${type}">${capitalized(terms[type])}</option>`
-        )
-        .join("\n");
-
       specificType = `      
     <div class="form-group row align-items-center mb-4">
         <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
@@ -2696,7 +2681,7 @@ function modalConstruct(type, newType, method) {
           <div class="col-sm-6">
           <select class="form-control" id="${type}DurationType">
             <option value="">${capitalized(terms.select)}</option>
-            ${ritualDurationOptions}
+            ${durationOptions}
           </select>
           </div>
       </div>
@@ -2912,8 +2897,6 @@ function modalConstruct(type, newType, method) {
 </div>`;
       break;
     case "spirits":
-      console.log("modalConstruct : ", type, " ", method);
-
       const spiritsType = ["air", "beasts", "earth", "fire", "kin", "water"];
 
       spiritsType.sort((a, b) => terms[a].localeCompare(terms[b]));
@@ -2979,10 +2962,140 @@ function modalConstruct(type, newType, method) {
   </div>`;
       break;
     case "complexForms":
+      console.log("modalConstruct : ", type, " ", method);
+      const complexFormsSkill = ["electronics", "cracking"];
+      complexFormsSkill.sort((a, b) => terms[a].localeCompare(terms[b]));
+      const complexFormsSkillOptions = complexFormsSkill
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>
+      
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Duration" class="col-sm-3 col-form-label">${capitalized(
+        terms.duration
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Duration">
+            <option value="">${capitalized(terms.select)}</option>
+            ${durationOptions}
+          </select>
+          </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}FadeValue" class="col-sm-3 col-form-label">${capitalized(
+        terms.fadeValue
+      )}${terms.colons}</label>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}FadeValue" aria-label="price" value=0>
+          </div>
+    </div>  
+    <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Skill" class="col-sm-3 col-form-label">${capitalized(
+        terms.skill
+      )}${terms.colons}</label>
+          <div class="col-sm-9">
+          <select class="form-control" id="${type}Skill">
+            <option value="">${capitalized(terms.select)}</option>
+            ${complexFormsSkillOptions}
+          </select>
+          </div>
+      </div>`;
       break;
     case "echoes":
+      specificType = `      
+    <div class="form-group row align-items-center mb-4">
+        <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+        </div>
+    </div>      
+    <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
+        terms.rating
+      )}${terms.colons}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Rating" aria-label="rating" value=0>
+    </div>
+</div>`;
       break;
     case "sprites":
+      const spritesType = ["courier", "crack", "data", "fault", "machine"];
+
+      spritesType.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+      const spritesTypeOptions = spritesType
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+  <div class="form-group row align-items-center mb-4">
+      <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+      <div class="col-sm-9">
+        <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+      </div>
+  </div>  
+  <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+        <div class="col-sm-9">
+        <select class="form-control" id="${type}Type">
+          <option value="">${capitalized(terms.select)}</option>
+          ${spritesTypeOptions}
+        </select>
+        </div>
+    </div>    
+    <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Level" class="col-sm-3 col-form-label">${capitalized(
+        terms.level
+      )}${terms.colons}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Level" aria-label="level" value=0>
+    </div>
+    </div>
+        
+    <div class="form-group row align-items-center mb-2">   
+    <label class="col-sm-3 col-form-label" for="IsRegistered">
+      ${capitalized(terms.registered)} ?
+    </label>  
+    <div class="col-sm-3">     
+    <input class="form-check-input" type="checkbox" value="IsRegistered" id="IsRegistered">
+    </div>
+  </div>
+  
+  <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Tasks" class="col-sm-3 col-form-label">${capitalized(
+        terms.tasks
+      )}${terms.colons}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Current" aria-label="current" value=0>
+    </div>
+    <div class="col-sm-1">
+      /
+    </div>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Max" aria-label="max" value=0>
+    </div>
+  </div>`;
       break;
     default:
       break;
@@ -3098,7 +3211,8 @@ function handleDropdownModal(type) {
       type === "meleeWeapons" ||
       type === "grenades" ||
       type === "ammunitions" ||
-      type === "protections"
+      type === "protections" ||
+      type === "complexForms"
     ) {
       newType = terms.newe;
     }
@@ -3180,9 +3294,9 @@ function handleDropdownModal(type) {
     $(document).on("submit", `#add${capitalized(type)}Form`, function (e) {
       e.preventDefault();
 
-      console.log("onSubmit: ", type);
-
       var newItem = {};
+
+      console.log("type : ", type);
 
       if (type === "qualities") {
         var qualityDescription = $("#qualitiesDescription").val();
@@ -3700,109 +3814,172 @@ function handleDropdownModal(type) {
             max: max,
           },
         };
-
-        console.log("onSubmit : ", type, " ", newItem);
       }
 
-      if (type === "knowledges" || type === "languages") {
-        var levelItem = 0;
-        if (type === "languages")
-          levelItem =
-            parseInt($("input[name='chooseLevelOptions']:checked").val()) || 0;
-        // Récupérez la valeur saisie par l'utilisateur
-        newItem = { key: $(`#${type}Input`).val(), level: levelItem };
-      }
+        if (type === "complexForms") {
+          var duration = getValue("Duration", type);
+          var skill = getValue("Skill", type);
+          var fadeValue = getValue("FadeValue", type);
+          var description = getValue("Description", type);
+          var key = $(`#${type}Input`).val();
 
-      if (newItem.key.trim() !== "") {
-        if (type === "qualities") {
-          characterData.qualities.push(newItem);
-          updateQualitiesDisplay();
-          updateQualitiesKarma();
+          newItem = {
+            key: key,
+            duration: duration,
+            skill: skill,
+            fadeValue: fadeValue,
+            description: description,
+          };
+
+          console.log("complexForms newItem : ", key);
         }
-        if (type === "contacts") {
-          characterData.contacts.push(newItem);
-          updateContactDisplay();
+
+        if (type === "echoes") {
+          var rating = getValue("Rating", type);
+          var description = getValue("Description", type);
+          var key = $(`#${type}Input`).val();
+
+          newItem = {
+            key: key,
+            rating: rating,
+            description: description,
+          };
         }
-        if (
-          type === "rangedWeapons" ||
-          type === "meleeWeapons" ||
-          type === "grenades"
-        ) {
-          characterData[type].push(newItem);
-          updateWeaponsDisplay(type);
+
+        if (type === "sprites") {
+          var level = getValue("Level", type);
+          var spriteType = getValue("Type", type);
+          var description = getValue("Description", type);
+          var isRegistered = $(`#IsRegistered`).prop("checked");
+          var current = getValue("Current", type);
+          var max = getValue("Max", type);
+          var key = $(`#${type}Input`).val();
+
+          newItem = {
+            key: key,
+            force: force,
+            type: spriteType,
+            description: description,
+            isRegistered: isRegistered,
+            task: {
+              current: current,
+              max: max,
+            },
+          };
         }
-        if (type === "ammunitions") {
-          characterData[type].push(newItem);
-          updateAmmunitionsDisplay(type);
-        }
-        if (type === "protections") {
-          characterData[type].push(newItem);
-          updateProtectionsDisplay(type);
-        }
-        if (type === "augmentations") {
-          characterData[type].push(newItem);
-          updateAugmentationsDisplay(type);
-        }
-        if (type === "vehicles") {
-          characterData[type].push(newItem);
-          updateVehiclesDisplay(type);
-        }
-        if (type === "drugs") {
-          characterData[type].push(newItem);
-          updateDrugsDisplay(type);
-        }
-        if (type === "stuffs") {
-          characterData[type].push(newItem);
-          updateStuffsDisplay(type);
-        }
-        if (type === "SINS") {
-          characterData[type].push(newItem);
-          console.log(characterData[type]);
-          updateSINSDisplay(type);
-        }
-        if (type === "lifestyles") {
-          characterData[type].push(newItem);
-          updateLifestylesDisplay(type);
-        }
-        if (type === "spells") {
-          characterData[type].push(newItem);
-          updateSpellsDisplay(type);
-        }
-        if (type === "rituals") {
-          characterData[type].push(newItem);
-          updateRitualsDisplay(type);
-        }
-        if (type === "foci") {
-          characterData[type].push(newItem);
-          updateFociDisplay(type);
-        }
-        if (type === "adeptPowers") {
-          characterData[type].push(newItem);
-          updateAdeptPowersDisplay(type);
-        }
-        if (type === "metamagics") {
-          characterData[type].push(newItem);
-          updateMetamagicsDisplay(type);
-        }
-        if (type === "spirits") {
-          console.log("onSubmit /if : ", type, " ", newItem);
-          characterData[type].push(newItem);
-          updateSpiritsDisplay(type);
-        }
+
         if (type === "knowledges" || type === "languages") {
-          characterData[type].push(newItem);
-          updateKnowledgeDisplay();
-          characterData.points.knowledges.spent =
-            characterData.points.knowledges.spent + 1;
-          updateKnowledgePoints();
+          var levelItem = 0;
+          if (type === "languages")
+            levelItem =
+              parseInt($("input[name='chooseLevelOptions']:checked").val()) ||
+              0;
+          // Récupérez la valeur saisie par l'utilisateur
+          newItem = { key: $(`#${type}Input`).val(), level: levelItem };
         }
-        handleDropdownModal(type);
-        saveData();
-      }
 
-      // Effacez le champ de saisie
-      $(`#${type}Input`).val("");
-    });
+        if (newItem.key.trim() !== "") {
+          if (type === "qualities") {
+            characterData.qualities.push(newItem);
+            updateQualitiesDisplay();
+            updateQualitiesKarma();
+          }
+          if (type === "contacts") {
+            characterData.contacts.push(newItem);
+            updateContactDisplay();
+          }
+          if (
+            type === "rangedWeapons" ||
+            type === "meleeWeapons" ||
+            type === "grenades"
+          ) {
+            characterData[type].push(newItem);
+            updateWeaponsDisplay(type);
+          }
+          if (type === "ammunitions") {
+            characterData[type].push(newItem);
+            updateAmmunitionsDisplay(type);
+          }
+          if (type === "protections") {
+            characterData[type].push(newItem);
+            updateProtectionsDisplay(type);
+          }
+          if (type === "augmentations") {
+            characterData[type].push(newItem);
+            updateAugmentationsDisplay(type);
+          }
+          if (type === "vehicles") {
+            characterData[type].push(newItem);
+            updateVehiclesDisplay(type);
+          }
+          if (type === "drugs") {
+            characterData[type].push(newItem);
+            updateDrugsDisplay(type);
+          }
+          if (type === "stuffs") {
+            characterData[type].push(newItem);
+            updateStuffsDisplay(type);
+          }
+          if (type === "SINS") {
+            characterData[type].push(newItem);
+            console.log(characterData[type]);
+            updateSINSDisplay(type);
+          }
+          if (type === "lifestyles") {
+            characterData[type].push(newItem);
+            updateLifestylesDisplay(type);
+          }
+          if (type === "spells") {
+            characterData[type].push(newItem);
+            updateSpellsDisplay(type);
+          }
+          if (type === "rituals") {
+            characterData[type].push(newItem);
+            updateRitualsDisplay(type);
+          }
+          if (type === "foci") {
+            characterData[type].push(newItem);
+            updateFociDisplay(type);
+          }
+          if (type === "adeptPowers") {
+            characterData[type].push(newItem);
+            updateAdeptPowersDisplay(type);
+          }
+          if (type === "metamagics") {
+            characterData[type].push(newItem);
+            updateMetamagicsDisplay(type);
+          }
+          if (type === "spirits") {
+            characterData[type].push(newItem);
+            updateSpiritsDisplay(type);
+          }
+          if (type === "complexForms") {
+            console.log("complexForms newItem : ", newItem);
+            characterData[type].push(newItem);
+            updateComplexFormsDisplay(type);
+          }
+          if (type === "echoes") {
+            characterData[type].push(newItem);
+            updateEchoesDisplay(type);
+          }
+          if (type === "sprites") {
+            characterData[type].push(newItem);
+            updateSpritesDisplay(type);
+          }
+          if (type === "knowledges" || type === "languages") {
+            characterData[type].push(newItem);
+            updateKnowledgeDisplay();
+            characterData.points.knowledges.spent =
+              characterData.points.knowledges.spent + 1;
+            updateKnowledgePoints();
+          }
+          handleDropdownModal(type);
+          saveData();
+        }
+
+        // Effacez le champ de saisie
+        $(`#${type}Input`).val("");
+      });
   } catch (error) {
     console.error(
       `Une erreur est survenue lors du traitement des données de type "${type}" :`,
@@ -3826,7 +4003,8 @@ function handleItemClick(type, indexItem) {
     type === "ammunitions" ||
     type === "protections" ||
     type === "augmentations" ||
-    type === "drugs"
+    type === "drugs" ||
+    type === "complexForms"
   )
     newType = terms.newe;
 
@@ -4409,6 +4587,54 @@ function handleItemClick(type, indexItem) {
       characterData[type][indexItem].isBounded;
   }
 
+  if (type === "complexForms") {
+    const fields = [
+      "Duration",
+      "Skill",
+      "FadeValue",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
+  if (type === "echoes") {
+    const fields = ["Rating", "Description"];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+  }
+
+  if (type === "sprites") {
+    const fields = ["Level", "Type", "Description"];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+
+    modalContainer.querySelector(`#${type}Current`).value =
+      characterData[type][indexItem].task.current;
+    modalContainer.querySelector(`#${type}Max`).value =
+      characterData[type][indexItem].task.max;
+    modalContainer.querySelector(`#IsRegistered`).checked =
+      characterData[type][indexItem].isRegistered;
+  }
+
   if (type === "languages") {
     var levelItem = item.level;
 
@@ -4944,6 +5170,66 @@ function handleItemClick(type, indexItem) {
           updateSpiritsDisplay(type);
         }
 
+        if (type === "complexForms") {
+          const fields = [
+            "Duration",
+            "Skill",
+            "FadeValue",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateComplexFormsDisplay(type);
+        }
+
+        if (type === "echoes") {
+          const fields = ["Rating", "Description"];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          updateEchoesDisplay(type);
+        }
+
+        if (type === "sprites") {
+          const fields = ["Level", "Type", "Description"];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          characterData[type][indexItem].task.current =
+            modalContainer.querySelector(`#${type}Current`).value;
+          characterData[type][indexItem].task.max =
+            modalContainer.querySelector(`#${type}Max`).value;
+          characterData[type][indexItem].isRegistered =
+            modalContainer.querySelector(`#IsRegistered`).checked;
+
+          updateSpritesDisplay(type);
+        }
+
         if (type === "languages" || type === "knowledges") {
           if (item.level) {
             var itemLevel = characterData[type][indexItem].level;
@@ -5027,6 +5313,15 @@ function removeModalClick(type, indexItem) {
   }
   if (type === "spirits") {
     updateSpiritsDisplay();
+  }
+  if (type === "complexForms") {
+    updateComplexFormsDisplay();
+  }
+  if (type === "echoes") {
+    updateEchoesDisplay();
+  }
+  if (type === "sprites") {
+    updateSpritesDisplay();
   }
   if (type === "knowledges" || type === "languages") {
     updateKnowledgeDisplay();
@@ -5246,6 +5541,9 @@ function updateDisplay() {
   updateAdeptPowersDisplay();
   updateMetamagicsDisplay();
   updateSpiritsDisplay();
+  updateComplexFormsDisplay();
+  updateEchoesDisplay();
+  updateSpritesDisplay();
 }
 
 function updateWeaponsDisplay(type) {
@@ -5851,7 +6149,9 @@ function updateSpiritsDisplay() {
     spirits.forEach(function (spirit) {
       var row = `
       <tr>
-          <td class="name-column">${spirit.isBounded ? '<i class="bi bi-link-45deg"></i> ' : ''}${spirit.key}</td>          
+          <td class="name-column">${
+            spirit.isBounded ? '<i class="bi bi-link-45deg"></i> ' : ""
+          }${spirit.key}</td>          
           <td class="force-column">${spirit.force}</td> 
           <td class="type-column">${capitalized(terms[spirit.type])}</td> 
           <td class="type-column">${spirit.service.current}/${
@@ -5873,6 +6173,126 @@ function updateSpiritsDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       spiritsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateComplexFormsDisplay() {
+  console.log("updateComplexFormsDisplay : ", characterData.complexForms);
+  var complexFormsTableBody = $(`#complexFormsTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  complexFormsTableBody.empty();
+
+  if (characterData.complexForms.length > 0) {
+    var complexForms = [];
+    complexForms = sortKeys(characterData.complexForms);
+
+    complexForms.forEach(function (complexForm) {
+      var row = `
+      <tr>
+          <td class="name-column">${complexForm.key}</td>  
+          <td class="description-column">${complexForm.description}</td>     
+          <td class="duration-column">${capitalized(
+            terms[complexForm.duration + "Short"]
+          )}</td>
+          <td class="fadeValue-column">${complexForm.fadeValue}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('complexForms','${characterData.complexForms.indexOf(
+        complexForm
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('complexForms','${characterData.complexForms.indexOf(
+        complexForm
+      )}')"></i>
+      <div id="modalContainercomplexForms${characterData.complexForms.indexOf(
+        complexForm
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      complexFormsTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateEchoesDisplay() {
+  console.log("updateEchoesDisplay : ", characterData.echoes);
+  var echoesTableBody = $(`#echoesTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  echoesTableBody.empty();
+
+  if (characterData.echoes.length > 0) {
+    var echoes = [];
+    echoes = sortKeys(characterData.echoes);
+
+    echoes.forEach(function (echo) {
+      var row = `
+      <tr>
+          <td class="name-column">${echo.key}</td> 
+          <td class="rating-column">${echo.rating}</td> 
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('echoes','${characterData.echoes.indexOf(
+        echo
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('echoes','${characterData.echoes.indexOf(
+        echo
+      )}')"></i>
+      <div id="modalContainerechoes${characterData.echoes.indexOf(echo)}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      echoesTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateSpritesDisplay() {
+  console.log("updateSpritesDisplay : ", characterData.sprites);
+  var spritesTableBody = $(`#spritesTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  spritesTableBody.empty();
+
+  if (characterData.sprites.length > 0) {
+    var sprites = [];
+    sprites = sortKeys(characterData.sprites);
+
+    sprites.forEach(function (sprite) {
+      var row = `
+      <tr>
+          <td class="name-column">${
+            sprite.isRegistered ? '<i class="bi bi-link-45deg"></i> ' : ""
+          }${sprite.key}</td>          
+          <td class="level-column">${sprite.level}</td> 
+          <td class="type-column">${capitalized(terms[sprite.type])}</td> 
+          <td class="task-column">${sprite.task.current}/${sprite.task.max}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('sprites','${characterData.sprites.indexOf(
+        sprite
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('sprites','${characterData.sprites.indexOf(
+        sprite
+      )}')"></i>
+      <div id="modalContainersprites${characterData.sprites.indexOf(
+        sprite
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      spritesTableBody.append(row);
     });
   }
 
@@ -7877,6 +8297,78 @@ function assignData() {
             service: {
               current: item.service.current,
               max: item.service.max,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.complexForms) {
+    for (let complexForm in characterData.complexForms) {
+      if (characterData.complexForms.hasOwnProperty(complexForm)) {
+        var item = characterData.complexForms[complexForm];
+
+        var i = {
+          name: item.key,
+          type: "complexForm",
+          system: {
+            info: {
+              description: item.description,
+            },
+            duration: item.duration,
+            drain: {
+              base: item.fadeValue,
+            },
+            test: {
+              linkedSkill: item.skill,
+            },
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.echoes) {
+    for (let echo in characterData.echoes) {
+      if (characterData.echoes.hasOwnProperty(echo)) {
+        var item = characterData.echoes[echo];
+
+        var i = {
+          name: item.key,
+          type: "echo",
+          system: {
+            info: {
+              description: item.description,
+            },
+            rating: item.rating,
+          },
+        };
+        foundryData.items.push(i);
+      }
+    }
+  }
+
+  if (characterData.sprites) {
+    for (let sprite in characterData.sprites) {
+      if (characterData.sprites.hasOwnProperty(sprite)) {
+        var item = characterData.sprites[sprite];
+
+        var i = {
+          name: item.key,
+          type: "sprite",
+          system: {
+            info: {
+              description: item.description,
+            },
+            type: item.type,
+            level: item.force,
+            isRegistered: item.isRegistered,
+            task: {
+              current: item.task.current,
+              max: item.task.max,
             },
           },
         };

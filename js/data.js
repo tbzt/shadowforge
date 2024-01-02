@@ -349,6 +349,9 @@ let characterData = {
   foci: [],
   adeptPowers: [],
   metamagics: [],
+  echoes: [],
+  complexForms: [],
+  sprites: [],
   points: {
     skills: {
       base: 0,
@@ -741,6 +744,9 @@ let characterDataBackup = {
   foci: [],
   adeptPowers: [],
   metamagics: [],
+  echoes: [],
+  complexForms: [],
+  sprites: [],
   points: {
     skills: {
       base: 0,
