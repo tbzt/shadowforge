@@ -1125,6 +1125,7 @@ function handleModals() {
     "complexForms",
     "echoes",
     "sprites",
+    "devices",
   ];
 
   types.forEach((type) => handleDropdownModal(type));
@@ -2185,6 +2186,115 @@ function modalConstruct(type, newType, method) {
           </div>
     </div>`;
       break;
+    case "devices":
+      const deviceType = [
+        "commlink",
+        "cyberdeck",
+        "riggerCommandConsole",
+        "livingPersona",
+      ];
+
+      const deviceTypeOptions = deviceType
+        .map(
+          (type) =>
+            `<option value="${type}">${capitalized(terms[type])}</option>`
+        )
+        .join("\n");
+
+      specificType = `      
+        <div class="form-group row align-items-center mb-4">
+            <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
+        terms.description
+      )}${terms.colons}</label>
+            <div class="col-sm-9">
+              <textarea class="form-control" id="${type}Description" rows="4"></textarea>
+            </div>
+        </div>
+        <div class="form-group row align-items-center mb-2">  
+            <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
+        terms.type
+      )}${terms.colons}</label>
+            <div class="col-sm-9">
+            <select class="form-control" id="${type}Type">
+              <option value="">${capitalized(terms.select)}</option>
+              ${deviceTypeOptions}
+            </select>
+            </div>
+        </div>
+          <div class="form-group row align-items-center mb-2">  
+              <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
+        terms.deviceRating
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}Rating" aria-label="rating" value=0>
+              </div>
+              <label for="${type}Slots" class="col-sm-3 col-form-label">${capitalized(
+        terms.programsSlots
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}Slots" aria-label="slots" value=0>
+              </div>
+          </div>
+          <div class="SR6_headline mb-2">${allCapitalized(
+            terms.matrixAttributes
+          )}</div>
+          <div class="form-group row align-items-center mb-2">  
+              <label for="${type}Attack" class="col-sm-3 col-form-label">${capitalized(
+        terms.attack
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}Attack" aria-label="attack" value=0>
+              </div> 
+              <label for="${type}Sleaze" class="col-sm-3 col-form-label">${capitalized(
+        terms.sleaze
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}Sleaze" aria-label="sleaze" value=0>
+              </div>
+          </div>
+          <div class="form-group row align-items-center mb-2">  
+              <label for="${type}Firewall" class="col-sm-3 col-form-label">${capitalized(
+        terms.firewall
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}Firewall" aria-label="firewall" value=0>
+              </div>  
+              <label for="${type}DataProcessing" class="col-sm-3 col-form-label">${capitalized(
+        terms.dataProcessing
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}DataProcessing" aria-label="dataProcessing" value=0>
+              </div>
+          </div>
+          <div class="SR6_headline mb-2">${allCapitalized(
+            terms.priceAndAvailability
+          )}</div>
+          <div class="form-group row align-items-center mb-2">  
+              <label for="${type}Price" class="col-sm-3 col-form-label">${capitalized(
+        terms.price
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}Price" aria-label="price" value=0>
+              </div>
+              <label for="${type}Legality" class="col-sm-2 col-form-label ">${capitalized(
+        terms.legality
+      )}${terms.colons}</label>
+              <div class="col-sm-4">
+              <select class="form-control" id="${type}Legality">
+                <option value="">${capitalized(terms.select)}</option>
+                ${legalityOptions}
+              </select>
+              </div>
+          </div>
+          <div class="form-group row align-items-center mb-2">  
+              <label for="${type}Availability" class="col-sm-3 col-form-label">${capitalized(
+        terms.availability
+      )}${terms.colons}</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="${type}Availability" aria-label="price" value=0>
+              </div>
+        </div>`;
+      break;
     case "drugs":
       const period = ["combatTurn", "minute", "hour", "day", "week", "month"];
 
@@ -3212,10 +3322,14 @@ function handleDropdownModal(type) {
       type === "grenades" ||
       type === "ammunitions" ||
       type === "protections" ||
+      type === "augmentations" ||
+      type === "drugs" ||
       type === "complexForms"
     ) {
       newType = terms.newe;
     }
+
+    if (type === "devices") newType = terms.newee;
 
     // Construire le tableau d'options
     var addOptions = [];
@@ -3609,6 +3723,38 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "devices") {
+        var deviceType = getValue("Type", type);
+        var rating = getValue("Rating", type);
+        var slots = getValue("Slots", type);
+        var attack = getValue("Attack", type);
+        var dataProcessing = getValue("DataProcessing", type);
+        var firewall = getValue("Firewall", type);
+        var sleaze = getValue("Sleaze", type);
+        var price = getValue("Price", type);
+        var legality = getValue("Legality", type);
+        var availability = getValue("Availability", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          type: deviceType,
+          rating: rating,
+          slots: slots,
+          attributes: {
+            attack: attack,
+            dataProcessing: dataProcessing,
+            firewall: firewall,
+            sleaze: sleaze,
+          },
+          price: price,
+          legality: legality,
+          availability: availability,
+          description: description,
+        };
+      }
+
       if (type === "stuffs") {
         var rating = getValue("Rating", type);
         var price = getValue("Price", type);
@@ -3768,7 +3914,7 @@ function handleDropdownModal(type) {
 
       if (type === "adeptPowers") {
         var activation = getValue("Activation", type);
-        var powerPointsCost = getValue("powerPointsCost", type);
+        var powerPointsCost = getValue("PowerPointsCost", type);
         var rating = getValue("Rating", type);
         var description = getValue("Description", type);
         var key = $(`#${type}Input`).val();
@@ -3911,6 +4057,10 @@ function handleDropdownModal(type) {
           characterData[type].push(newItem);
           updateVehiclesDisplay(type);
         }
+        if (type === "devices") {
+          characterData[type].push(newItem);
+          updateDevicesDisplay(type);
+        }
         if (type === "drugs") {
           characterData[type].push(newItem);
           updateDrugsDisplay(type);
@@ -4006,6 +4156,8 @@ function handleItemClick(type, indexItem) {
     type === "complexForms"
   )
     newType = terms.newe;
+
+  if (type === "devices") newType = terms.newee;
 
   modify = terms.modify;
 
@@ -4353,6 +4505,34 @@ function handleItemClick(type, indexItem) {
 
     modalContainer.querySelector(`#RiggingInterface`).checked =
       characterData[type][indexItem].riggingInterface;
+  }
+
+  if (type === "devices") {
+    const fields = [
+      "Type",
+      "Rating",
+      "Slots",
+      "Legality",
+      "Availability",
+      "Price",
+      "Description",
+    ];
+
+    fields.forEach((field) => {
+      var element = modalContainer.querySelector(`#${type}${field}`);
+      if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
+        element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
+      }
+    });
+
+    modalContainer.querySelector(`#${type}Attack`).value =
+      characterData[type][indexItem].attributes.attack;
+    modalContainer.querySelector(`#${type}DataProcessing`).value =
+      characterData[type][indexItem].attributes.dataProcessing;
+    modalContainer.querySelector(`#${type}Firewall`).value =
+      characterData[type][indexItem].attributes.firewall;
+    modalContainer.querySelector(`#${type}Sleaze`).value =
+      characterData[type][indexItem].attributes.sleaze;
   }
 
   if (type === "drugs") {
@@ -4907,6 +5087,38 @@ function handleItemClick(type, indexItem) {
           updateVehiclesDisplay();
         }
 
+        if (type === "devices") {
+          const fields = [
+            "Type",
+            "Rating",
+            "Slots",
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+          ];
+
+          fields.forEach((field) => {
+            const element = modalContainer.querySelector(`#${type}${field}`);
+            if (element) {
+              characterData[type][indexItem][
+                field.charAt(0).toLowerCase() + field.slice(1)
+              ] = element.value;
+            }
+          });
+
+          characterData[type][indexItem].attributes.attack =
+            modalContainer.querySelector(`#${type}Attack`).value;
+          characterData[type][indexItem].attributes.dataProcessing =
+            modalContainer.querySelector(`#${type}DataProcessing`).value;
+          characterData[type][indexItem].attributes.firewall =
+            modalContainer.querySelector(`#${type}Firewall`).value;
+          characterData[type][indexItem].attributes.sleaze =
+            modalContainer.querySelector(`#${type}Sleaze`).value;
+
+          updateDevicesDisplay(type);
+        }
+
         if (type === "drugs") {
           const fields = [
             "Power",
@@ -5283,6 +5495,9 @@ function removeModalClick(type, indexItem) {
   if (type === "vehicles") {
     updateVehiclesDisplay();
   }
+  if (type === "devices") {
+    updateDevicesDisplay();
+  }
   if (type === "drugs") {
     updateDrugsDisplay();
   }
@@ -5530,6 +5745,7 @@ function updateDisplay() {
   updateProtectionsDisplay();
   updateAugmentationsDisplay();
   updateVehiclesDisplay();
+  updateDevicesDisplay();
   updateDrugsDisplay();
   updateStuffsDisplay();
   updateSINSDisplay();
@@ -5754,6 +5970,61 @@ function updateVehiclesDisplay() {
 
       // Ajoutez la ligne au corps du tableau
       vehiclesTableBody.append(row);
+    });
+  }
+
+  saveData();
+}
+
+function updateDevicesDisplay() {
+  console.log("updateDevicesDisplay : ", characterData.devices);
+  var devicesTableBody = $(`#devicesTable tbody`);
+
+  // Effacez le contenu actuel du corps du tableau
+  devicesTableBody.empty();
+
+  if (characterData.devices.length > 0) {
+    var devices = [];
+    devices = sortKeys(characterData.devices);
+
+    devices.forEach(function (device) {
+      let attributes = [];
+      for (let key in device.attributes) {
+        if (device.attributes[key] > 0) {
+          let termShort = terms[key + "Short"];
+          let termColon = terms.colons;
+          if (termShort && termColon) {
+            attributes.push(
+              `${termShort}${termColon} ${device.attributes[key]}`
+            );
+          }
+        }
+      }
+      let attributesStr = attributes.join(" / ");
+
+      var row = `
+      <tr>
+          <td class="name-column">${device.key}</td>
+          <td class="type-column">${capitalized(terms[device.type])}</td>
+          <td class="rating-column">${device.rating}</td>
+          <td class="matrixAttributes-column">${attributesStr}</td>
+          <td class="price-column">${parseInt(device.price)}</td>
+      <td class="handler-column">
+      <i class="bi bi-pencil-fill" onclick="handleItemClick('devices','${characterData.devices.indexOf(
+        device
+      )}')"></i>
+      <i class="bi bi-eraser-fill" onclick="removeModalClick('devices','${characterData.devices.indexOf(
+        device
+      )}')"></i>
+      <div id="modalContainerdevices${characterData.devices.indexOf(
+        device
+      )}"></div>
+      </td>
+      </tr>
+      `;
+
+      // Ajoutez la ligne au corps du tableau
+      devicesTableBody.append(row);
     });
   }
 
@@ -6861,6 +7132,7 @@ function menuSectionGenerate() {
       label: "otherStuff",
       target: "collapseOtherStuff",
       items: [
+        { id: "buttonDevices", target: "collapseDevices", label: "devices" },
         { id: "buttonDrugs", target: "collapseDrugs", label: "drugs" },
         {
           id: "buttonLifestyles",
@@ -7116,7 +7388,7 @@ function showResults() {
 
   // Affichez la colonne des resources avec séparation des unités et le symbole ¥
   const resourcesValue = characterData.prioritiesSelected["resources"];
-  if (resourcesValue) {
+  if (resourcesValue || characterData.resources) {
     console.log("resourcesValue : ", resourcesValue);
     const resources = parseInt(characterData.resources); // Extrait la valeur numérique
     console.log("resources : ", resources);
@@ -7993,6 +8265,55 @@ function assignData() {
           },
         };
         foundryData.items.push(p);
+      }
+    }
+  }
+
+  if (characterData.devices) {
+    for (let device in characterData.devices) {
+      if (characterData.devices.hasOwnProperty(device)) {
+        var item = characterData.devices[device];
+
+        var d = {
+          name: item.key,
+          type: "device",
+          system: {
+            info: {
+              description: item.description,
+            },
+            type: item.type,
+            programs: {
+              base: item.slots,
+            },
+            matrix: {
+              deviceRating: item.rating,
+              attributes: {
+                dataProcessing: {
+                  base: item.attributes.dataProcessing,
+                },
+                firewall: {
+                  base: item.attributes.firewall,
+                },
+                sleaze: {
+                  base: item.attributes.sleaze,
+                },
+                attack: {
+                  base: item.attributes.attack,
+                },
+              },
+            },
+            goods: {
+              price: {
+                base: item.price,
+              },
+              availability: {
+                base: item.availability,
+              },
+              legality: item.legality,
+            },
+          },
+        };
+        foundryData.items.push(d);
       }
     }
   }

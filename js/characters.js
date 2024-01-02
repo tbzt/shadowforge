@@ -274,6 +274,7 @@ function loadFromJSON(event) {
         armor: [],
         vehicle: [],
         ammunition: [],
+        device: [],
         drug: [],
         sin: [],
         lifestyle: [],
@@ -542,6 +543,33 @@ function loadFromJSON(event) {
           },
         };
         characterData.vehicles.push(a);
+      }
+
+      //DEVICES
+
+      for (let device in itemsByType.device) {
+        var a = {
+          key: itemsByType.device[device].name,
+          description: itemsByType.device[device].system.info.description,
+          price: itemsByType.device[device].system.goods.price.base,
+          availability:
+            itemsByType.device[device].system.goods.availability.base,
+          legality: itemsByType.device[device].system.legality,
+          type: itemsByType.device[device].system.type,
+          rating: itemsByType.device[device].system.matrix.deviceRating,
+          slots: itemsByType.device[device].system.programs.base,
+          attributes: {
+            attack: itemsByType.device[device].system.matrix.attributes.attack.base,
+            dataProcessing:
+              itemsByType.device[device].system.matrix.attributes
+                .dataProcessing.base,
+            firewall:
+              itemsByType.device[device].system.matrix.attributes.firewall.base,
+            sleaze: itemsByType.device[device].system.matrix.attributes.sleaze.base,
+          },
+        };
+        console.log("new device : ", a);
+        characterData.devices.push(a);
       }
 
       //DRUGS

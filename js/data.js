@@ -352,6 +352,7 @@ let characterData = {
   echoes: [],
   complexForms: [],
   sprites: [],
+  devices: [],
   points: {
     skills: {
       base: 0,
@@ -747,6 +748,7 @@ let characterDataBackup = {
   echoes: [],
   complexForms: [],
   sprites: [],
+  devices: [],
   points: {
     skills: {
       base: 0,
