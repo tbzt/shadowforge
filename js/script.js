@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   menuSectionGenerate();
 });
 
-const currentVersion = "0.1.8"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
+const currentVersion = "0.2.0"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
 
 $(document).ready(function () {
   $("#collapseQualities").on("dragover", function (event) {
@@ -3816,170 +3816,169 @@ function handleDropdownModal(type) {
         };
       }
 
+      if (type === "complexForms") {
+        var duration = getValue("Duration", type);
+        var skill = getValue("Skill", type);
+        var fadeValue = getValue("FadeValue", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          duration: duration,
+          skill: skill,
+          fadeValue: fadeValue,
+          description: description,
+        };
+
+        console.log("complexForms newItem : ", key);
+      }
+
+      if (type === "echoes") {
+        var rating = getValue("Rating", type);
+        var description = getValue("Description", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          rating: rating,
+          description: description,
+        };
+      }
+
+      if (type === "sprites") {
+        var level = getValue("Level", type);
+        var spriteType = getValue("Type", type);
+        var description = getValue("Description", type);
+        var isRegistered = $(`#IsRegistered`).prop("checked");
+        var current = getValue("Current", type);
+        var max = getValue("Max", type);
+        var key = $(`#${type}Input`).val();
+
+        newItem = {
+          key: key,
+          force: force,
+          type: spriteType,
+          description: description,
+          isRegistered: isRegistered,
+          task: {
+            current: current,
+            max: max,
+          },
+        };
+      }
+
+      if (type === "knowledges" || type === "languages") {
+        var levelItem = 0;
+        if (type === "languages")
+          levelItem =
+            parseInt($("input[name='chooseLevelOptions']:checked").val()) || 0;
+        // Récupérez la valeur saisie par l'utilisateur
+        newItem = { key: $(`#${type}Input`).val(), level: levelItem };
+      }
+
+      if (newItem.key.trim() !== "") {
+        if (type === "qualities") {
+          characterData.qualities.push(newItem);
+          updateQualitiesDisplay();
+          updateQualitiesKarma();
+        }
+        if (type === "contacts") {
+          characterData.contacts.push(newItem);
+          updateContactDisplay();
+        }
+        if (
+          type === "rangedWeapons" ||
+          type === "meleeWeapons" ||
+          type === "grenades"
+        ) {
+          characterData[type].push(newItem);
+          updateWeaponsDisplay(type);
+        }
+        if (type === "ammunitions") {
+          characterData[type].push(newItem);
+          updateAmmunitionsDisplay(type);
+        }
+        if (type === "protections") {
+          characterData[type].push(newItem);
+          updateProtectionsDisplay(type);
+        }
+        if (type === "augmentations") {
+          characterData[type].push(newItem);
+          updateAugmentationsDisplay(type);
+        }
+        if (type === "vehicles") {
+          characterData[type].push(newItem);
+          updateVehiclesDisplay(type);
+        }
+        if (type === "drugs") {
+          characterData[type].push(newItem);
+          updateDrugsDisplay(type);
+        }
+        if (type === "stuffs") {
+          characterData[type].push(newItem);
+          updateStuffsDisplay(type);
+        }
+        if (type === "SINS") {
+          characterData[type].push(newItem);
+          console.log(characterData[type]);
+          updateSINSDisplay(type);
+        }
+        if (type === "lifestyles") {
+          characterData[type].push(newItem);
+          updateLifestylesDisplay(type);
+        }
+        if (type === "spells") {
+          characterData[type].push(newItem);
+          updateSpellsDisplay(type);
+        }
+        if (type === "rituals") {
+          characterData[type].push(newItem);
+          updateRitualsDisplay(type);
+        }
+        if (type === "foci") {
+          characterData[type].push(newItem);
+          updateFociDisplay(type);
+        }
+        if (type === "adeptPowers") {
+          characterData[type].push(newItem);
+          updateAdeptPowersDisplay(type);
+        }
+        if (type === "metamagics") {
+          characterData[type].push(newItem);
+          updateMetamagicsDisplay(type);
+        }
+        if (type === "spirits") {
+          characterData[type].push(newItem);
+          updateSpiritsDisplay(type);
+        }
         if (type === "complexForms") {
-          var duration = getValue("Duration", type);
-          var skill = getValue("Skill", type);
-          var fadeValue = getValue("FadeValue", type);
-          var description = getValue("Description", type);
-          var key = $(`#${type}Input`).val();
-
-          newItem = {
-            key: key,
-            duration: duration,
-            skill: skill,
-            fadeValue: fadeValue,
-            description: description,
-          };
-
-          console.log("complexForms newItem : ", key);
+          console.log("complexForms newItem : ", newItem);
+          characterData[type].push(newItem);
+          updateComplexFormsDisplay(type);
         }
-
         if (type === "echoes") {
-          var rating = getValue("Rating", type);
-          var description = getValue("Description", type);
-          var key = $(`#${type}Input`).val();
-
-          newItem = {
-            key: key,
-            rating: rating,
-            description: description,
-          };
+          characterData[type].push(newItem);
+          updateEchoesDisplay(type);
         }
-
         if (type === "sprites") {
-          var level = getValue("Level", type);
-          var spriteType = getValue("Type", type);
-          var description = getValue("Description", type);
-          var isRegistered = $(`#IsRegistered`).prop("checked");
-          var current = getValue("Current", type);
-          var max = getValue("Max", type);
-          var key = $(`#${type}Input`).val();
-
-          newItem = {
-            key: key,
-            force: force,
-            type: spriteType,
-            description: description,
-            isRegistered: isRegistered,
-            task: {
-              current: current,
-              max: max,
-            },
-          };
+          characterData[type].push(newItem);
+          updateSpritesDisplay(type);
         }
-
         if (type === "knowledges" || type === "languages") {
-          var levelItem = 0;
-          if (type === "languages")
-            levelItem =
-              parseInt($("input[name='chooseLevelOptions']:checked").val()) ||
-              0;
-          // Récupérez la valeur saisie par l'utilisateur
-          newItem = { key: $(`#${type}Input`).val(), level: levelItem };
+          characterData[type].push(newItem);
+          updateKnowledgeDisplay();
+          characterData.points.knowledges.spent =
+            characterData.points.knowledges.spent + 1;
+          updateKnowledgePoints();
         }
+        handleDropdownModal(type);
+        saveData();
+      }
 
-        if (newItem.key.trim() !== "") {
-          if (type === "qualities") {
-            characterData.qualities.push(newItem);
-            updateQualitiesDisplay();
-            updateQualitiesKarma();
-          }
-          if (type === "contacts") {
-            characterData.contacts.push(newItem);
-            updateContactDisplay();
-          }
-          if (
-            type === "rangedWeapons" ||
-            type === "meleeWeapons" ||
-            type === "grenades"
-          ) {
-            characterData[type].push(newItem);
-            updateWeaponsDisplay(type);
-          }
-          if (type === "ammunitions") {
-            characterData[type].push(newItem);
-            updateAmmunitionsDisplay(type);
-          }
-          if (type === "protections") {
-            characterData[type].push(newItem);
-            updateProtectionsDisplay(type);
-          }
-          if (type === "augmentations") {
-            characterData[type].push(newItem);
-            updateAugmentationsDisplay(type);
-          }
-          if (type === "vehicles") {
-            characterData[type].push(newItem);
-            updateVehiclesDisplay(type);
-          }
-          if (type === "drugs") {
-            characterData[type].push(newItem);
-            updateDrugsDisplay(type);
-          }
-          if (type === "stuffs") {
-            characterData[type].push(newItem);
-            updateStuffsDisplay(type);
-          }
-          if (type === "SINS") {
-            characterData[type].push(newItem);
-            console.log(characterData[type]);
-            updateSINSDisplay(type);
-          }
-          if (type === "lifestyles") {
-            characterData[type].push(newItem);
-            updateLifestylesDisplay(type);
-          }
-          if (type === "spells") {
-            characterData[type].push(newItem);
-            updateSpellsDisplay(type);
-          }
-          if (type === "rituals") {
-            characterData[type].push(newItem);
-            updateRitualsDisplay(type);
-          }
-          if (type === "foci") {
-            characterData[type].push(newItem);
-            updateFociDisplay(type);
-          }
-          if (type === "adeptPowers") {
-            characterData[type].push(newItem);
-            updateAdeptPowersDisplay(type);
-          }
-          if (type === "metamagics") {
-            characterData[type].push(newItem);
-            updateMetamagicsDisplay(type);
-          }
-          if (type === "spirits") {
-            characterData[type].push(newItem);
-            updateSpiritsDisplay(type);
-          }
-          if (type === "complexForms") {
-            console.log("complexForms newItem : ", newItem);
-            characterData[type].push(newItem);
-            updateComplexFormsDisplay(type);
-          }
-          if (type === "echoes") {
-            characterData[type].push(newItem);
-            updateEchoesDisplay(type);
-          }
-          if (type === "sprites") {
-            characterData[type].push(newItem);
-            updateSpritesDisplay(type);
-          }
-          if (type === "knowledges" || type === "languages") {
-            characterData[type].push(newItem);
-            updateKnowledgeDisplay();
-            characterData.points.knowledges.spent =
-              characterData.points.knowledges.spent + 1;
-            updateKnowledgePoints();
-          }
-          handleDropdownModal(type);
-          saveData();
-        }
-
-        // Effacez le champ de saisie
-        $(`#${type}Input`).val("");
-      });
+      // Effacez le champ de saisie
+      $(`#${type}Input`).val("");
+    });
   } catch (error) {
     console.error(
       `Une erreur est survenue lors du traitement des données de type "${type}" :`,
