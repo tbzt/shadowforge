@@ -8,7 +8,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -19,7 +19,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -30,7 +30,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -41,7 +41,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -52,7 +52,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -63,7 +63,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -74,7 +74,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -85,7 +85,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -96,7 +96,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -107,7 +107,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -118,7 +118,7 @@ const catalogData = {
         "Choisissez un type d’esprits ou de sprites quand vous optez pour ce trait.Vous bénéficiez d’une remise d’Atout de 1 lors de vos tests de Conjuration ou de Technomancie pour le type d’esprits/sprites que vous avez choisi. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois.",
       type: "positive",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -129,7 +129,7 @@ const catalogData = {
         "Quand vous utilisez une arme de mêlée ou attaquez à mains nues, la portée proche est de 5 mètres au lieu de 3.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -140,7 +140,7 @@ const catalogData = {
         "Aucune pénalité pour utiliser une arme avec votre main non directrice (voir p. 115).",
       type: "positive",
       karmaCost: "4",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -151,7 +151,7 @@ const catalogData = {
         "Au premier regard, vous avez une apparence humaine ce qui vous octroie une remise d’Atout de 1 lors de vos tests de Déguisement pour masquer votre métatype et passer pour un humain. Les humains et les trolls ne peuvent pas choisir ce trait.",
       type: "positive",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -162,7 +162,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -173,7 +173,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -184,7 +184,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -195,7 +195,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -206,7 +206,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -217,7 +217,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -228,7 +228,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -239,7 +239,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -250,7 +250,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -261,7 +261,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -272,7 +272,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -283,7 +283,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -294,7 +294,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -305,7 +305,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -316,7 +316,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -327,7 +327,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -338,7 +338,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -349,7 +349,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -360,7 +360,7 @@ const catalogData = {
         "Votre rang maximum pour la compétence sélectionnée est de 10 au lieu de 9 et votre rang de départ maximum est de 7 au lieu de 6.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -371,7 +371,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -382,7 +382,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -393,7 +393,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -404,7 +404,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -415,7 +415,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -426,7 +426,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -437,7 +437,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -448,7 +448,7 @@ const catalogData = {
         "Choisissez un attribut physique ou mental. Votre maximum dans cet attribut (mais pas votre rang actuel) est augmenté de 1. Ce trait ne peut être sélectionné qu’une seule fois par attribut.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -459,7 +459,7 @@ const catalogData = {
         "Quand vous effectuez un test de Bricolage (voir p. 103), vous bénéficiez d’une remise d’Atout de 1.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -470,7 +470,7 @@ const catalogData = {
         "Les personnages subissent un malus de -2 dés à leurs tests pour identifier votre aura ou votre signature astrale. Votre signature astrale s’estompe deux fois plus vite qu’à la normale (voir p. 162).",
       type: "positive",
       karmaCost: "9",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -481,7 +481,7 @@ const catalogData = {
         "Vous pouvez maintenir plusieurs sorts ou formes complexes sans malus. Pour chaque niveau, vous pouvez maintenir un sort ou une forme complexe supplémentaire sans subir le malus associé. Le sort ou la forme complexe ne peut avoir une valeur de Drain ou de Technodrain modifiée de 7 ou plus.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "73",
     },
     {
@@ -492,7 +492,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous vos tests impliquant des prises, de vous défaire de liens, une certaine flexibilité ou de tenir dans des espaces réduits.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -503,7 +503,7 @@ const catalogData = {
         "Vous gagnez 1 niveau d’Armure naturelle (cumulable avec toute autre armure). Vos attaques à mains nues infligent des dommages physiques.",
       type: "positive",
       karmaCost: "7",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -514,7 +514,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous vos tests de résistance aux dommages.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -525,7 +525,7 @@ const catalogData = {
         "Quand vous êtes blessé, réduisez de 1 point votre malus de blessures (minimum 0).",
       type: "positive",
       karmaCost: "7",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -536,7 +536,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tout test basé sur la Logique concernant la reconnaissance de motifs, l’analyse d’une preuve, la recherche d’indices ou la résolution d’énigmes. Cet avantage réduit également de moitié le temps nécessaire au personnage pour résoudre un problème.",
       type: "positive",
       karmaCost: "3",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -547,7 +547,7 @@ const catalogData = {
         "Vous gagnez les avantages indiqués avec la description de votre esprit mentor (voir p. 165). Si vous ne respectez pas ses dogmes, vous perdez la foi et le lien avec votre mentor et tous les avantages qu’il vous confère.",
       type: "positive",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -558,7 +558,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous vos tests d’équilibre, de chute et pour retomber sans vous blesser.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -569,7 +569,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous vos tests de réparation pour n’importe quel véhicule et vous pouvez dépenser de l’Atout pendant vos périodes de repos pour effectuer des tests étendus de réparation.",
       type: "positive",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -580,7 +580,7 @@ const catalogData = {
         "Réduisez de moitié l’intervalle de tout test de récupération naturelle (p. 125), ce qui signifie que vous pouvez soigner des dommages étourdissants au bout d’une demi-heure et des dommages physiques au bout d’une demi-journée.",
       type: "positive",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -591,7 +591,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous les tests utilisant la Volonté.",
       type: "positive",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "74",
     },
     {
@@ -602,7 +602,7 @@ const catalogData = {
         "les personnages subissent un malus de -2 dés à leurs tests de Mémoire (p. 106) pour se rappeler s’ils vous ont déjà vu et le seuil des tests pour remarquer que vous les suivez ou que vous les observez est augmenté de 1. Si vous acquérez un signe distinctif permanent (quelque chose d’évident, un cyberware peu commun, un tatouage unique, ce genre de choses) vous perdez ce trait. Si vous acquérez un signe distinctif temporaire, comme une coiffure extrême, les effets de ce trait sont annulés jusqu’à ce que vous vous débarrassiez de ce signe distinctif.",
       type: "positive",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -613,7 +613,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous les tests de Mémoire (p. 106).",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -624,7 +624,7 @@ const catalogData = {
         "Quand vous rencontrez quelqu’un pour la première fois, vous gagnez 2 points d’Atout pour vos tests sociaux et votre Pression ainsi que votre Réputation sont ignorées pour cette première rencontre.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -635,7 +635,7 @@ const catalogData = {
         "Pour chaque niveau de ce trait, vous gagnez deux cases supplémentaires de surplus de dommages (voir p. 123).",
       type: "positive",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -646,7 +646,7 @@ const catalogData = {
         "Vos tests de résistance aux dommages matriciels bénéficient d’une remise d’Atout de 1. De plus, quand vous subissez des dommages dans la Matrice, vous pouvez convertir jusqu’à deux cases de dommages matriciels en dommages étourdissants, protégeant ainsi votre persona aux dépens de votre corps physique.",
       type: "positive",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -657,7 +657,7 @@ const catalogData = {
         "Quand vous choisissez ce trait, choisissez un type de dommages élémentaires (p. 113). Quand vous subissez une attaque qui inflige ce type de dommages, vous bénéficiez d’une remise d’Atout de 1 sur votre test de défense.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -668,7 +668,7 @@ const catalogData = {
         "Quand vous choisissez ce trait, choisissez un type de dommages élémentaires (p. 113). Quand vous subissez une attaque qui inflige ce type de dommages, vous bénéficiez d’une remise d’Atout de 1 sur votre test de défense.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -679,7 +679,7 @@ const catalogData = {
         "Quand vous choisissez ce trait, choisissez un type de dommages élémentaires (p. 113). Quand vous subissez une attaque qui inflige ce type de dommages, vous bénéficiez d’une remise d’Atout de 1 sur votre test de défense.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -690,7 +690,7 @@ const catalogData = {
         "Quand vous choisissez ce trait, choisissez un type de dommages élémentaires (p. 113). Quand vous subissez une attaque qui inflige ce type de dommages, vous bénéficiez d’une remise d’Atout de 1 sur votre test de défense.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -701,7 +701,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous les tests de résistance à la magie. Cependant, quand on vous lance un sort de Santé, considérez que votre Essence est inférieure de 2 points à sa valeur réelle.",
       type: "positive",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -712,7 +712,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous vos tests de résistance aux pathogènes.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -723,7 +723,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous vos tests de résistance aux toxines.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "75",
     },
     {
@@ -734,7 +734,7 @@ const catalogData = {
         "Vous avez un nombre de cases supplémentaires sur votre Moniteur de dommages physiques égal à votre rang dans ce trait.",
       type: "positive",
       karmaCost: "4",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -745,7 +745,7 @@ const catalogData = {
         "Choisissez un quartier ou un serveur matriciel à chaque fois que vous choisissez ce trait. Les tests de Plein air et de Perception que vous effectuez sur votre territoire bénéficient d’une remise d’Atout de 1.",
       type: "positive",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -756,7 +756,7 @@ const catalogData = {
         "Vous bénéficiez d’une remise d’Atout de 1 sur tous vos tests pour résister à l’Intimidation ou aux effets qui provoquent l’état Effrayé.",
       type: "positive",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -767,7 +767,7 @@ const catalogData = {
         "Vous voyez clairement, quel que soit le niveau de luminosité à l’exception de l’obscurité totale (voir Environnement et visibilité, p. 115).",
       type: "positive",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -778,7 +778,7 @@ const catalogData = {
         "Vous pouvez voir la chaleur des choses dans l’obscurité totale (si elles sont plus chaudes ou plus froides que la température ambiante), ce qui vous permet d’agir dans ces conditions.",
       type: "positive",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -789,7 +789,7 @@ const catalogData = {
         "Tant que vous êtes en manque, vous ne pouvez d’aucune manière gagner ou dépenser de l’Atout. Le temps de sevrage (le temps qui s’écoule avant d’être en manque et d’avoir besoin d’une dose) est basé sur votre niveau d’addiction comme indiqué sur la synthanol Temps de sevrage. Quand vous êtes en manque, vous subissez un malus de -2 dés à tous vos tests ; augmentez ce malus de 1 point à chaque fois que s’écoule une autre période égale au temps de sevrage sans avoir consommé.",
       type: "negative",
       karmaCost: "2",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -800,7 +800,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -2 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "11",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -811,7 +811,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -2 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -822,7 +822,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -2 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "5",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -833,7 +833,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -2 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "2",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -844,7 +844,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -855,7 +855,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "11",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -866,7 +866,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -877,7 +877,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte.",
       type: "negative",
       karmaCost: "5",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -888,7 +888,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte. Vous subissez également 1 case de dommages physiques auxquels vous ne pouvez pas résister par minute d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "17",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -899,7 +899,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte. Vous subissez également 1 case de dommages physiques auxquels vous ne pouvez pas résister par minute d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -910,7 +910,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte. Vous subissez également 1 case de dommages physiques auxquels vous ne pouvez pas résister par minute d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "11",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -921,7 +921,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -4 à votre réserve de dés pour tout test avec un attribut physique tant que l’allergène vous affecte. Vous subissez également 1 case de dommages physiques auxquels vous ne pouvez pas résister par minute d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -932,7 +932,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -6 à votre réserve de dés pour toutes vos actions et subissez 1 case de dommages physiques auxquels vous ne pouvez pas résister par 30 secondes d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "20",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -943,7 +943,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -6 à votre réserve de dés pour toutes vos actions et subissez 1 case de dommages physiques auxquels vous ne pouvez pas résister par 30 secondes d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "17",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -954,7 +954,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -6 à votre réserve de dés pour toutes vos actions et subissez 1 case de dommages physiques auxquels vous ne pouvez pas résister par 30 secondes d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "14",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -965,7 +965,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous êtes soumis à votre allergène. Pour chaque niveau de sévérité, vous subissez également les effets secondaires indiqués. Vous subissez un malus de -6 à votre réserve de dés pour toutes vos actions et subissez 1 case de dommages physiques auxquels vous ne pouvez pas résister par 30 secondes d’exposition à l’allergène.",
       type: "negative",
       karmaCost: "11",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "76",
     },
     {
@@ -976,7 +976,7 @@ const catalogData = {
         "Vous ne pouvez pas dépenser de l’Atout sur vos tests utilisant le Charisme.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "77",
     },
     {
@@ -987,7 +987,7 @@ const catalogData = {
         "Vous êtes considéré comme Inexpérimenté pour tous vos tests de Furtivité sur le plan astral. Vous ne pouvez jamais choisir la métamagie Camouflage. Les tests d’Observation astrale effectués contre vous bénéficient d’une remise d’Atout de 1 et leurs seuils sont réduits de 1. Les tests de pistage astral effectués contre vous bénéficient d’une remise d’Atout de 2 et leurs seuils sont réduits de moitié.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "77",
     },
     {
@@ -998,7 +998,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1009,7 +1009,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1020,7 +1020,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1031,7 +1031,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1042,7 +1042,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1053,7 +1053,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1064,7 +1064,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1075,7 +1075,7 @@ const catalogData = {
         "Vous ne pouvez dépenser ou gagner de l’Atout pendant vingt-quatre heures après avoir enfreint un principe de votre code. Si le même principe n’est pas respecté plusieurs fois ou une nouvelle fois au cours de cette période de vingt-quatre heures, chaque infraction ajoute quarante-huit heures de plus aux vingt-quatre heures initiales. Si un principe différent n’est pas respecté, les vingt-quatre heures de cette infraction s’ajoutent aux vingt-quatre heures de précédentes infractions et la même règle s’applique pour des violations additionnelles.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1086,7 +1086,7 @@ const catalogData = {
         "Au cours d’une rencontre, le runner doit effectuer un test de Volonté (2) avec une action mineure. En cas d’échec, il ne peut gagner ou dépenser de l’Atout pendant toute la rencontre.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1097,7 +1097,7 @@ const catalogData = {
         "Vous ne pouvez dépenser de l’Atout quand vous êtes connecté à la Matrice. Cela inclut une connexion par l’intermédiaire d’un commlink, d’un smartlink et toute autre source de transmission de données à partir de l’éther.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1108,7 +1108,7 @@ const catalogData = {
         "Quand vous dépensez du Karma pour obtenir de l’argent, chaque point vous rapporte 5 000 nuyens au lieu de 2 000. Chaque point de Karma dépensé augmente également votre dette de 5 000 nuyens auprès de quelqu’un de très dangereux et capable de venir réclamer son argent. Vous devez payer des intérêts égaux à 500 nuyens par mois, en plus d’un éventuel remboursement de capital. Si vous ne payez pas les intérêts, les prêteurs viennent vous voir. Si vous payez votre dette, vous pouvez vous débarrasser de ce trait, sans avoir besoin de dépenser de Karma. Ce trait ne peut être obtenu qu’au cours de la création d’un personnage pas en jeu.",
       type: "negative",
       karmaCost: "0",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "78",
     },
     {
@@ -1119,7 +1119,7 @@ const catalogData = {
         "A chaque fois que vous utilisez un appareil, lancez 2d6. Si vous obtenez un 1 sur l’un des dés, l’appareil ne fonctionne pas correctement et on peut considérer qu’il s’agit d’une complication. L’appareil peut être rapidement réparé avec une action mineure et utilisé de nouveau. Si vous obtenez deux 1, l’appareil a subi une panne catastrophique et ce jet est considéré comme un échec critique. L’appareil est en panne pour de bon et il se peut que vous subissiez un choc électrique ou un biofeedback.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1130,7 +1130,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1141,7 +1141,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1152,7 +1152,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1163,7 +1163,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1174,7 +1174,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1185,7 +1185,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1196,7 +1196,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1207,7 +1207,7 @@ const catalogData = {
         "La valeur maximale que le personnage peut atteindre dans l’attribut choisi est réduite de 2 jusqu’à un minimum de 2.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1218,7 +1218,7 @@ const catalogData = {
         "Les esprits de l'Air bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les esprits de l'Air vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1229,7 +1229,7 @@ const catalogData = {
         "Les esprits des Bêtes bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les esprits des Bêtes vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1240,7 +1240,7 @@ const catalogData = {
         "Les esprits de Terre bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les esprits de Terre vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1251,7 +1251,7 @@ const catalogData = {
         "Les esprits du Feu  bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les esprits du Feu vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1262,7 +1262,7 @@ const catalogData = {
         "Les esprits de l'Eau bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les esprits de l'Eau vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1273,7 +1273,7 @@ const catalogData = {
         "Les esprits de cette catégorie bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les esprits du type choisi vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1284,7 +1284,7 @@ const catalogData = {
         "Les sprites de cette catégorie bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les sprites du type choisi vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1295,7 +1295,7 @@ const catalogData = {
         "Les sprites de cette catégorie bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les sprites du type choisi vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1306,7 +1306,7 @@ const catalogData = {
         "Les sprites de cette catégorie bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les sprites du type choisi vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1317,7 +1317,7 @@ const catalogData = {
         "Les sprites de cette catégorie bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les sprites du type choisi vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1328,7 +1328,7 @@ const catalogData = {
         "Les sprites de cette catégorie bénéficient d’une remise d’Atout de 1 pour résister à vos tentatives de Conjuration ou de Technomancie. Ce trait peut être choisi plusieurs fois en optant pour un autre type d’esprits/sprites à chaque fois. En combat, les sprites du type choisi vous attaquent en premier et avec acharnement, souvent jusqu’au point de s’en prendre à votre cadavre ou de bricker votre deck s’ils n’ont rien d’autre à faire.",
       type: "negative",
       karmaCost: "12",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1339,7 +1339,7 @@ const catalogData = {
         "Vous ne pouvez pas dépenser de l’Atout sur vos tests utilisant la Logique.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1350,7 +1350,7 @@ const catalogData = {
         "Vous ne pouvez pas dépenser de l’Atout pour résister à une infection. Le seuil pour combattre les infections auxquelles vous êtes exposé est augmenté de 1. Pendant que vous subissez les symptômes d’une maladie, vous avez un malus de -1 dé.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1361,7 +1361,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1372,7 +1372,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1383,7 +1383,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1394,7 +1394,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1405,7 +1405,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1416,7 +1416,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1427,7 +1427,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1438,7 +1438,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1449,7 +1449,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1460,7 +1460,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1471,7 +1471,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1482,7 +1482,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1493,7 +1493,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1504,7 +1504,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1515,7 +1515,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1526,7 +1526,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1537,7 +1537,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1548,7 +1548,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1559,7 +1559,7 @@ const catalogData = {
         "Quand vous sélectionnez ce trait, choisissez une compétence. Vous ne pouvez pas gagner de rangs dans cette compétence. Vous ne pouvez pas être incompétent dans des compétences que vous n’avez pas eu l’occasion d’essayer ; aussi, vous ne pouvez pas choisir ce trait pour des compétences de Magie si vous n’avez pas d’attribut Magie et vous ne pouvez pas le choisir pour la compétence Technomancie si vous n’avez pas d’indice de Résonance. Cette compétence ne peut être choisie qu’une seule fois.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1570,7 +1570,7 @@ const catalogData = {
         "Sans un repos correct, vous ne pouvez pas regagner de l’Atout ou en dépenser comme vous le voudriez. Chaque jour le runner doit effectuer un test de Constitution + Volonté (3) pour parvenir à passer une bonne nuit. S’il échoue, il ne peut gagner plus de deux points d’Atout par jour, quelle que soit la manière de les obtenir. De plus, il ne peut pas dépenser plus de 2 points d’Atout pour un même test, avant remise éventuelle. L’achat et l’utilisation d’un régulateur de sommeil réduisent le seuil du test de 1 point. Le runner peut aussi se procurer des médicaments (50 nuyens par dose) qui réduisent le seuil de 2 points.",
       type: "negative",
       karmaCost: "4",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "79",
     },
     {
@@ -1581,7 +1581,7 @@ const catalogData = {
         "Vous avez une case de dommages étourdissants de moins pour chaque niveau de ce trait jusqu’à un minimum de 2 cases.",
       type: "negative",
       karmaCost: "4",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1592,7 +1592,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout quand vous accédez à la Matrice en RV. Vous subissez également l’état Nauséeux (p. 57) pendant une heure après vous être déconnecté de la Matrice.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1603,7 +1603,7 @@ const catalogData = {
         "Les complications se produisent plus souvent. Comptez les dés affichant des 1 et des 2 pour déterminer quand il y a une complication. Cela n’affecte pas les échecs critiques, uniquement les complications normales.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1614,7 +1614,7 @@ const catalogData = {
         "Vous ne pouvez pas dépenser de l’Atout pour des tests sociaux. Si vous participez à un test d’équipe pour aider au cours d’un test social, personne ne peut dépenser de l’Atout et l’individu adverse bénéficie d’une remise d’Atout de 1",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1625,7 +1625,7 @@ const catalogData = {
         "Votre ScoreRulebook d’Initiative est réduit de moitié au début d’un combat. Vous ne pouvez pas choisir les actions Se déplacer et Sprinter au premier round et vous agissez en dernier au cours de ce round. Après le premier round, vous vous déplacez normalement, mais votre ScoreRulebook d’Initiative ne change pas.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1636,7 +1636,7 @@ const catalogData = {
         "Le coût en Essence est doublé pour tout cyberware, bioware et nanoware. Il n’y a aucun malus pour le geneware. Vous ne pouvez avoir ce trait si vous avez un indice de Magie ou de Résonance (notez que le nanoware et le geneware seront abordés dans de futurs suppléments).",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1647,7 +1647,7 @@ const catalogData = {
         "Personne(s) à charge de niveau 1 est l’équivalent d’un membre de la famille qui ne vit pas avec vous, mais qui a besoin d’être soutenu financièrement. 5 % de vos gains sont attribués à cette personne. Pour ce trait, le pourcentage s’applique à tous vos revenus. Vos gains pour des boulots, le recel de biens volés ou de données de valeur et même vos gains au jeu. Les personnes qui comptent pour vous prospèrent en même temps que vous.",
       type: "negative",
       karmaCost: "4",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1658,7 +1658,7 @@ const catalogData = {
         "Les personnages du métatype imité bénéficient d’une remise d’Atout pour influencer le poseur. De plus, les gens qui identifient le poseur comme tel peuvent potentiellement devenir condescendants ou méprisant. Dans ce cas, le poseur ne peut plus gagner d’Atout lors de ses interactions sociales avec eux.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "80",
     },
     {
@@ -1669,7 +1669,7 @@ const catalogData = {
         "Choisissez un groupe ou un type d’individus. Vous êtes incapable de gagner ou d’utiliser l’Atout tant que l’objet de vos préjugés est présent (sauf si vous vous opposez directement à lui).",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "81",
     },
     {
@@ -1679,7 +1679,7 @@ const catalogData = {
       gameEffects: "Tous les modificateurs de blessure sont doublés.",
       type: "negative",
       karmaCost: "10",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "81",
     },
     {
@@ -1690,7 +1690,7 @@ const catalogData = {
         "Vous payez des impôts à l’entité qui a émis le SIN, qu’il s’agisse d’une mégacorporation ou d’une nation. Cela représente une augmentation de 10 % du coût de votre style de vie. En raison des données enregistrées dans le Registre Mondial des SIN, il est plus facile de vous traquer ou de vous identifier, ce qui octroie à vos adversaires une remise d’Atout de 1 à chaque fois qu’ils tentent l’action Traquer une icône contre vous.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "81",
     },
     {
@@ -1701,7 +1701,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout si vous n’affichez pas votre style distinctif. Les autres ont un bonus de +2 dés pour leurs tests de Mémoire (p. 106) afin de se souvenir de votre apparence ou se rappeler s’ils vous ont déjà vu.",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "81",
     },
     {
@@ -1712,7 +1712,7 @@ const catalogData = {
         "Choisissez un traumatisme social précis. Quand vous y êtes confronté, vous devez effectuer un test de Charisme (2) en tant qu’action mineure. Si vous échouez, vous ne pouvez pas gagner ou dépenser de l’Atout tant que vous n’avez pas réussi. Vous pouvez choisir de ne pas effectuer ce test, mais, dans ce cas, tous les tests dirigés contre vous bénéficient d’un point d’Atout bonus.",
       type: "negative",
       karmaCost: "8",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "81",
     },
     {
@@ -1723,7 +1723,7 @@ const catalogData = {
         "Vous ne pouvez pas dépenser de l’Atout pour des tests utilisant l’Agilité et qui nécessitent l’utilisation de vos mains (c’est à dire un test de Furtivité pour effectuer un tour de passe-passe impliquant directement les mains ainsi qu’un test d’attaque avec une arme en main, mais pas un test d’Athlétisme pour courir même si vous bougez les mains dans ce cas).",
       type: "negative",
       karmaCost: "6",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "81",
     },
     {
@@ -1734,7 +1734,7 @@ const catalogData = {
         "Vous ne pouvez pas gagner ou dépenser de l’Atout quand vous utilisez n’importe quelle forme de RA. Vous gagnez aussi l’état Nauséeux (p. 57) quand vous utilisez la RA et pendant une heure après avoir quitté ce mode.",
       type: "negative",
       karmaCost: "4",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "81",
     },
     {
@@ -3851,7 +3851,7 @@ const catalogData = {
       description:
         "L’AK-97 est indémodable surtout parce que ce modèle ressemble à son prédécesseur du XXe siècle. Conçue pour être fiable et endurante, ce n’est pas la plus belle des armes, mais elle en a dans le ventre.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -3879,7 +3879,7 @@ const catalogData = {
       description:
         "Rendu célèbre par les forces spéciales Ares Firewatch, l’Alpha a connu un succès foudroyant auprès des forces spéciales des UCAS et des CAS, mais aussi d’une myriade d’unités de combat des Desert Wars. C’est une arme spéciale grâce à son lance-grenade intégré sous le canon, son smartgun et une conception innovante pour renforcer sa maniabilité.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -3907,7 +3907,7 @@ const catalogData = {
       description:
         "L’Antioch II est un lance-grenades classique doté d’un système smartgun et d’un programmateur d’explosion en vol intégrés. Une seconde gâchette permet l’activation sans fil des projectiles lancés.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "0",
       type: "launcher",
@@ -3935,7 +3935,7 @@ const catalogData = {
       description:
         "Un chargeur généreux et une prise en mains aisée font de l’Ares Crusader II l’une des armes les plus populaires de sa catégorie. La marque Ares est synonyme de fonctionnalités et le Crusader II intègre un compensateur de recul pneumatique ainsi qu’un dispositif smartgun.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "263",
       baseConceability: "3",
       type: "pistolMachine",
@@ -3963,7 +3963,7 @@ const catalogData = {
       description:
         "« Le Desert Strike pour les Desert Wars » est le slogan du moment. Conçu pour être utilisé dans les environnements extrêmes, le Desert Strike est équipé d’une crosse rigide avec un rembourrage antichoc et d’une lunette de visée détachable.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -3991,7 +3991,7 @@ const catalogData = {
       description:
         "La gamme Light Fire est conçue pour les agents spéciaux. Le modèle 70 est couramment utilisé dans les rues tandis qu’il est difficile de se procurer le modèle 75 auprès des revendeurs réguliers ou par le biais des canaux légaux. Mais quel runner peut bien se préoccuper des canaux légaux ? L’intégration d’un silencieux sur le canon rend ces deux modèles presque aussi silencieux que dans les films. Le 75 est pré-équipé d’un smartlink et de son logiciel et les deux modèles sont équipés d’une visée laser. Le silencieux de ces armes augmente le seuil des tests de Perception de 3 points et coûte 750 ¥.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "3",
       type: "pistolLight",
@@ -4019,7 +4019,7 @@ const catalogData = {
       description:
         "La gamme Light Fire est conçue pour les agents spéciaux. Le modèle 70 est couramment utilisé dans les rues tandis qu’il est difficile de se procurer le modèle 75 auprès des revendeurs réguliers ou par le biais des canaux légaux. Mais quel runner peut bien se préoccuper des canaux légaux ? L’intégration d’un silencieux sur le canon rend ces deux modèles presque aussi silencieux que dans les films. Le 75 est pré-équipé d’un smartlink et de son logiciel et les deux modèles sont équipés d’une visée laser. Le silencieux de ces armes augmente le seuil des tests de Perception de 3 points et coûte 750 ¥.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "3",
       type: "pistolLight",
@@ -4047,7 +4047,7 @@ const catalogData = {
       description:
         "Le Predator V se reposait sur les lauriers de son nom. Le Predator VI est une véritable innovation dans un design classique. Reprenant la même conception que le Predator d’origine, le VI est équipé du smartgun habituel, mais il est aussi capable de tirs en rafale et dispose d’un nouveau système de munitions variables, autant d’éléments qui en feront de nouveau l’arme reine des rues et des zones de guerre ; cependant ces innovations ont un coût non négligeable. Le système de munitions variables permet d’utiliser un chargeur spécialisé (30 ¥ pièce) et de le charger avec différentes munitions. Le smartgun est utilisé pour sélectionner le type de munitions et en charger autant que nécessaire (et de disponibles) dans la chambre de tir. S’il n’y a pas assez de munitions d’un certain type, le compteur de munitions indique que le chargeur est vide et l’arme cesse de tirer.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "263",
       baseConceability: "3",
       type: "pistolHeavy",
@@ -4075,7 +4075,7 @@ const catalogData = {
       description:
         "Un nom épouvantable. Tout le monde pense que le Super Squirt est une sorte de pistolet à eau, mais il s’agit en fait d’une sorte de fusil paintball qui projette des capsules de gel de diméthylsulfoxyde (DMSO). Le DMSO force la peau à absorber les autres produits chimiques sélectionnés par le tireur. L’attaque elle-même ne cause aucun dommage, mais, si la cible est touchée, le DMSO fait pénétrer la substance directement dans le système sanguin de la cible, comme une toxine avec un Vecteur contact (voir Toxines et drogues, p. 125). On applique pour cela la règle des armes à injection (voir p. 116). Le Super Squirt accepte les accessoires montés au-dessus de l’arme ou en dessous du canon.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "3",
       type: "rangedSpecial",
@@ -4103,7 +4103,7 @@ const catalogData = {
       description:
         "Même s’il est classé avec les pistolets lourds, le Slivergun est une arme très particulière. Elle tire des aiguilles de métal équivalentes à des munitions fléchettes et on les achète en tant que telles sans qu’il soit possible de les utiliser avec une autre arme à fléchettes. Sa capacité à tirer en rafale, son silencieux intégré dans son canon et sa grande capacité de munitions en font une terreur dans les rues.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "3",
       type: "pistolHeavy",
@@ -4131,7 +4131,7 @@ const catalogData = {
       description:
         "Ce sont des lance-grenades semi-automatiques dans un style proche de celui d’un pistolet ou d’un fusil bullpup et qui peuvent projeter très rapidement un bon paquet de mauvaises nouvelles.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "0",
       type: "launcher",
@@ -4159,7 +4159,7 @@ const catalogData = {
       description:
         "Ce sont des lance-grenades semi-automatiques dans un style proche de celui d’un pistolet ou d’un fusil bullpup et qui peuvent projeter très rapidement un bon paquet de mauvaises nouvelles.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "0",
       type: "launcher",
@@ -4187,7 +4187,7 @@ const catalogData = {
       description:
         "Mortel et jetable, le Striker n’est pas sans évoquer les runners. Le tube de lancement peut être réutilisé, ce qui est une bonne nouvelle, étant donné la récente envolée des prix.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "0",
       type: "launcher",
@@ -4215,7 +4215,7 @@ const catalogData = {
       description:
         "Parfois, vous avez besoin de tirer sur un ennemi ; parfois, vous devez lui tirer dessus alors qu’il est à l’intérieur d’un véhicule blindé. Le Barret Model 122 est particulièrement efficace pour perforer le métal afin de toucher des cibles protégées, traversant la structure des véhicules dans un horrible bruit de déchirement qui est une véritable musique aux oreilles du tireur. Il est doté d’un silencieux, d’un système smartgun et d’un bipied repliable.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -4243,7 +4243,7 @@ const catalogData = {
       description:
         "Armes de poing préférées de nombreux membres des forces de sécurité du monde entier, les Beretta T sont considérés comme des pistolets légers même si le modèle 201 peut être utilisé en automatique, ce qui en fait une arme de choix dans les pays limitant la possession des armes lourdes et des pistolets automatiques. Puisque les deux modèles ont la même armature, on peut facilement faire passer le 201 pour un modèle 101. Le 201 est aussi équipé d’une crosse d’épaule détachable bien que celle-ci soit souvent manquante quand l’arme se retrouve en vente dans la rue.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "3",
       type: "pistolLight",
@@ -4271,7 +4271,7 @@ const catalogData = {
       description:
         "Armes de poing préférées de nombreux membres des forces de sécurité du monde entier, les Beretta T sont considérés comme des pistolets légers même si le modèle 201 peut être utilisé en automatique, ce qui en fait une arme de choix dans les pays limitant la possession des armes lourdes et des pistolets automatiques. Puisque les deux modèles ont la même armature, on peut facilement faire passer le 201 pour un modèle 101. Le 201 est aussi équipé d’une crosse d’épaule détachable bien que celle-ci soit souvent manquante quand l’arme se retrouve en vente dans la rue.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "3",
       type: "pistolLight",
@@ -4299,7 +4299,7 @@ const catalogData = {
       description:
         "Autrefois principal rival du Predator pour le titre de meilleur pistolet lourd du monde, l’Ultra Power n’est plus dans la course, car ses constructeurs n’ont pas été capables de rivaliser avec les innovations technologiques du Predator VI. Le Browning est cependant moins cher et intègre une visée laser sur le dessus de l’arme.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "3",
       type: "pistolHeavy",
@@ -4327,7 +4327,7 @@ const catalogData = {
       description:
         "Cavalier a pris un gros risque en proposant un fusil de précision capable de tirer en rafales. Le Crockett EBR reste précis à longue portée, mais en mode rafale il ne peut maintenir sa précision. Il est équipé d’une crosse rigide avec rembourrage antichoc et d’une lunette de visée détachable.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -4355,7 +4355,7 @@ const catalogData = {
       description:
         "Petit et mortel, mais peu esthétique. Cette arme est capable de tirer en rafales et elle est aussi dotée d’une crosse pliable intégrée.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "263",
       baseConceability: "3",
       type: "pistolMachine",
@@ -4383,7 +4383,7 @@ const catalogData = {
       description:
         "Hommage à une marque de réputation mondiale, le Colt L36 est bon marché, facilement dissimulable et très répandu dans les rues. Pour être facilement échangeable entre les débutants des services de sécurité, l’arme est dotée d’un système de transfert de propriété dont les flics et les truands abusent souvent. C’est une parfaite arme jetable.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "3",
       type: "pistolLight",
@@ -4411,7 +4411,7 @@ const catalogData = {
       description:
         "Colt aime la variété et met en valeur toutes les options de sa gamme Colt Cobra TZ. Le 100 est le modèle de base avec une crosse pliable intégrée.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "2",
       type: "machineGunLight",
@@ -4439,7 +4439,7 @@ const catalogData = {
       description:
         "Colt aime la variété et met en valeur toutes les options de sa gamme Colt Cobra TZ. Le 100 est le modèle de base avec une crosse pliable intégrée, le 110 ajoute une visée laser montée sur le dessus à la crosse pliable intégrée du 100.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "2",
       type: "machineGunLight",
@@ -4467,7 +4467,7 @@ const catalogData = {
       description:
         "Colt aime la variété et met en valeur toutes les options de sa gamme Colt Cobra TZ. Le 120 est équipé d’une crosse pliable, d’une visée laser montée sur le dessus et d’un compensateur de recul pneumatique sur le canon ce qui en fait une arme appréciée des forces de sécurité du monde entier, mais aussi des producteurs de spectacles tridéo qui aiment beaucoup tous ces accessoires.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "2",
       type: "machineGunLight",
@@ -4495,7 +4495,7 @@ const catalogData = {
       description:
         "Dans le grand jeu de la corruption, les gouvernements ont besoin de contrats d’armements, aussi avoir un nouveau modèle au bout d’à peine dix ans paraît à peu près normal. Les modèles 2066 et leur tir électronique ont été remisés dans les placards à cause de la crainte inspirée par les technomanciens et les hackers dans les années 60. Le modèle 2076 fait un bond en arrière en s’inspirant du Manhunter classique (en fait le modèle avec un système smartgun intégré porte ce nom) et il est livré avec une visée laser intégrée.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "3",
       type: "pistolHeavy",
@@ -4523,7 +4523,7 @@ const catalogData = {
       description:
         "Dans le grand jeu de la corruption, les gouvernements ont besoin de contrats d’armements, aussi avoir un nouveau modèle au bout d’à peine dix ans paraît à peu près normal. Les modèles 2066 et leur tir électronique ont été remisés dans les placards à cause de la crainte inspirée par les technomanciens et les hackers dans les années 60. Le modèle 2076 fait un bond en arrière en s’inspirant du Manhunter classique (en fait le modèle avec un système smartgun intégré porte ce nom) et il est livré avec une visée laser intégrée.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "3",
       type: "pistolHeavy",
@@ -4551,7 +4551,7 @@ const catalogData = {
       description:
         "Ce fusil d’assaut modulable, produit en masse et peu cher, est universellement utilisé que ce soit par des gangers, des pirates ou même par des agents gouvernementaux de niveau delta. Le M23 peut accepter deux autres accessoires à monter sous le canon pour un total de trois.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -4580,7 +4580,7 @@ const catalogData = {
         "Ce puissant taser peut tirer jusqu’à 4 dards reliés à des câbles de 20 mètres de long. La connexion filaire à la batterie permet un choc plus puissant, mais limite la portée. Il peut aussi être utilisé en combat rapproché et inflige les mêmes dommages. ",
       gameEffects:
         "Après une attaque réussie, si la cible ne retire par le dard du câble d’alimentation, l’attaquant peut utiliser une action majeure pour de nouveau infliger les dommages de base de l’arme en ouvrant une autre série de condensateurs.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "261",
       baseConceability: "3",
       type: "taser",
@@ -4608,7 +4608,7 @@ const catalogData = {
       description:
         "Arme de rue robuste, ce shotgun semi-automatique existe avec un canon de taille normale ou un canon court. Le chargement est automatique, mais un système secondaire à pompe est aussi prévu pour les situations dans lesquelles éviter un enrayement est plus important que de tirer rapidement un second coup (l’arme peut être désenrayée avec une action mineure).",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "1",
       type: "shotgun",
@@ -4636,7 +4636,7 @@ const catalogData = {
       description:
         "Arme de rue robuste, ce shotgun semi-automatique existe avec un canon de taille normale ou un canon court. Le chargement est automatique, mais un système secondaire à pompe est aussi prévu pour les situations dans lesquelles éviter un enrayement est plus important que de tirer rapidement un second coup (l’arme peut être désenrayée avec une action mineure). La version à canon court a un seuil de Dissimulation de 3.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "3",
       type: "shotgun",
@@ -4664,7 +4664,7 @@ const catalogData = {
       description:
         "Conçu pour être une arme de poing légère pour les forces de sécurité, le Security 600 dispose d’un chargeur de trente balles qui leur permet de rater de nombreux tirs sans avoir à s’inquiéter de ne plus avoir de munitions. Ce pistolet est livré avec une crosse pliable détachable et une visée laser.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "3",
       type: "pistolLight",
@@ -4693,7 +4693,7 @@ const catalogData = {
         "L’élégance ne nuit pas forcément à la létalité. Alliant les techniques d’armurerie de Fichetti au style de Tiffani, le Needler est l’arme de poing de designer la plus populaire du monde. Le modèle de base est gris mat, mais son revêtement capable de changer de couleur peut être activé par un signal sans fil avec un choix presque infini de designs. Avec ce revêtement, votre arme peut s’accorder à vos chaussures, votre sac à main où à votre tenue de travail. ",
       gameEffects:
         "Le Needler n’accepte que des balles fléchettes sans douille qui sont déjà prises en compte dans son code de dommages.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "4",
       type: "pistolHoldOut",
@@ -4721,7 +4721,7 @@ const catalogData = {
       description:
         "Fabrique Nationale est un nom à redouter quand on est confronté aux forces de sécurité privée et aux équipes corporatistes d’intervention à haut risque du monde entier. L’arme dispose d’une visée laser et d’un compensateur de recul pneumatique.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -4749,7 +4749,7 @@ const catalogData = {
       description:
         "Avec son design bullpup inimitable, le Praetor provoque la peur chez tous ceux qui voient cette arme dans les mains des forces de sécurité corporatistes. L’arme dispose d’une crosse rigide intégrée, d’une visée laser et d’une lampe torche avec trois réglages pour la vision nocturne, la vision thermographique et la vision normale.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "2",
       type: "machineGunLight",
@@ -4777,7 +4777,7 @@ const catalogData = {
       description:
         "Heckler & Koch sait concevoir des mitraillettes puisque le modèle 227 utilise la même armature (celle du vénérable MP5) depuis plus d’un siècle. Premier choix des forces de sécurité corporatistes ou militaires, le HK-227 est équipé d’une crosse rétractable, d’un système smartgun intégré et d’un silencieux intégré dans le canon.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "2",
       type: "machineGunLight",
@@ -4805,7 +4805,7 @@ const catalogData = {
       description:
         "Les samouraïs des rues sont souvent à l’origine de réputations légendaires qui ne sont pas toujours justifiées, mais le Smartgun a conservé son statut d’arme de première catégorie pendant des dizaines d’années. Reconnue comme l’arme de choix de nombreux samouraïs des rues légendaires depuis les années 2050, l’Ingram Smartgun dispose d’un compensateur de recul pneumatique, d’un smartgun et d’un silencieux intégré.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "2",
       type: "machineGunLight",
@@ -4833,7 +4833,7 @@ const catalogData = {
       description:
         "Cette mitrailleuse légère équipe les unités mercenaires du monde entier. Elle est dotée d’une crosse rigide avec rembourrage antichoc, d’une visée laser et d’un compensateur de recul pneumatique monté sur le canon.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "0",
       type: "machineGunLight",
@@ -4861,7 +4861,7 @@ const catalogData = {
       description:
         "Cette mitrailleuse légère équipe les unités mercenaires du monde entier. Elle est dotée d’une crosse rigide avec rembourrage antichoc, d’une visée laser et d’un compensateur de recul pneumatique monté sur le canon.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "0",
       type: "machineGunLight",
@@ -4889,7 +4889,7 @@ const catalogData = {
       description:
         "Ce shotgun d’assaut est une arme classique. Elle peut être équipée d’un chargeur de dix balles ou d’un tambour de vingt-quatre munitions. Ses meilleures caractéristiques sont un mode de tir en rafale et une visée laser installée sur le dessus de l’arme.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "1",
       type: "shotgun",
@@ -4917,7 +4917,7 @@ const catalogData = {
       description:
         "Ce shotgun d’assaut est une arme classique. Elle peut être équipée d’un chargeur de dix balles ou d’un tambour de vingt-quatre munitions. Ses meilleures caractéristiques sont un mode de tir en rafale et une visée laser installée sur le dessus de l’arme.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "1",
       type: "shotgun",
@@ -4945,7 +4945,7 @@ const catalogData = {
       description:
         "Saeder-Krupp a conçu ce lance-missiles polyvalent pour les forces militaires. Il dispose de deux canons et chambres séparés et peut donc être chargé avec deux missiles simultanément, pas forcément du même type. On ne peut tirer les deux projectiles en même temps même si certains désactivent cette sécurité au grand désarroi de la cible... mais aussi du tireur. Il dispose d’un smartgun intégré qui contrôle le système de sécurité. Utiliser les deux canons déclenche la mise à feu des deux projectiles. Répartissez la réserve de dés d’attaque entre les deux projectiles et résolvez chaque attaque séparément. Quand il utilise les deux tubes, le tireur doit résister à une attaque infligeant des dommages de Feu d’une VD 6P.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "0",
       type: "launcher",
@@ -4973,7 +4973,7 @@ const catalogData = {
       description:
         "Encombrant, laid, mortel et destructeur. Le canon d’assaut Panther XXL est une arme de cauchemar dans les rues. Pour que chaque tir compte, l’arme est équipée d’un système smartgun intégré.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "0",
       type: "assaultCannon",
@@ -5001,7 +5001,7 @@ const catalogData = {
       description:
         "Abattant des trolls depuis des dizaines d’années avec un peu de plastique, de l’acier et des cocktails chimiques, Parashield définit la norme industrielle en matière d’armes à fléchettes. Le modèle pistolet ne peut accepter que des accessoires montés au-dessus de l’arme. Le fusil est doté d’une lunette de visée sur le dessus et peut accepter des accessoires fixés dessus et sous le canon. Ces armes ne tirent que des fléchettes à injection et utilisent la règle des armes à injection (voir p. 116).",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "1",
       type: "rangedSpecial",
@@ -5029,7 +5029,7 @@ const catalogData = {
       description:
         "Abattant des trolls depuis des dizaines d’années avec un peu de plastique, de l’acier et des cocktails chimiques, Parashield définit la norme industrielle en matière d’armes à fléchettes. Le modèle pistolet ne peut accepter que des accessoires montés au-dessus de l’arme. Le fusil est doté d’une lunette de visée sur le dessus et peut accepter des accessoires fixés dessus et sous le canon. Ces armes ne tirent que des fléchettes à injection et utilisent la règle des armes à injection (voir p. 116).",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "268",
       baseConceability: "3",
       type: "rangedSpecial",
@@ -5057,7 +5057,7 @@ const catalogData = {
       description:
         "Les gens riches ont aussi des shotguns. Produit en petites quantités, et généralement acheté par de riches chasseurs européens ou adeptes de balltrap, c’est un instrument de mort attaché à un certain statut. Le modèle 55 a une crosse rigide équipée d’un rembourrage antichoc intégré. On peut tirer avec les deux canons simultanément avec une rafale courte.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "1",
       type: "shotgun",
@@ -5085,7 +5085,7 @@ const catalogData = {
       description:
         "Rangers Arms n’a jamais perdu de vue la raison d’être de sa gamme SM : neutraliser silencieusement des cibles. Ce fusil de précision dispose d’un silencieux, d’une lunette de visée, d’un système smartgun et d’une crosse rigide avec rembourrage antichoc. Comme les autres modèles de la gamme, le SM-6 peut être déployé rapidement et rangé tout aussi rapidement pour décrocher. Il tient dans une mallette standard ; le monter ou le démonter nécessite un test étendu d’Armes à feu + Logique (6, action majeure). Le modèle SM-6 ne souffre pas du problème de fragilité des autres armes de la gamme et une fois assemblé on peut l’utiliser dans n’importe quel mode.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "266",
       baseConceability: "1",
       type: "rifle",
@@ -5113,7 +5113,7 @@ const catalogData = {
       description:
         "C’est un fusil de chasse de grande puissance à mécanisme à verrou avec une armature classique en bois. Le modèle de base est vendu avec une lunette de visée sur le dessus de l’arme, mais il n’accepte pas d’accessoires sous le canon.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "1",
       type: "rifle",
@@ -5141,7 +5141,7 @@ const catalogData = {
       description:
         "Se maniant comme un pistolet et dotée de deux canons, cette arme est le présage de sérieux problèmes quand elle est dégainée. Si vous n’appréciez pas trop les fléchettes, chargez quelques balles de pistolet lourd dans le Roomsweeper et il vous servira de canon à main peu précis.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "1",
       type: "shotgun",
@@ -5169,7 +5169,7 @@ const catalogData = {
       description:
         "Cette mitrailleuse lourde est utilisée par les armées de différents pays d’Europe de l’est et d’Asie. Elle est équipée d’un trépied détachable, car quand elle n’est pas montée sur un véhicule, la RPK s’utilise en position allongée, assise ou à genoux.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "0",
       type: "machineGunHeavy",
@@ -5197,7 +5197,7 @@ const catalogData = {
       description:
         "Cette mitrailleuse lourde est utilisée par les armées de différents pays d’Europe de l’est et d’Asie. Elle est équipée d’un trépied détachable, car quand elle n’est pas montée sur un véhicule, la RPK s’utilise en position allongée, assise ou à genoux.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "0",
       type: "machineGunHeavy",
@@ -5225,7 +5225,7 @@ const catalogData = {
       description:
         "Ce fusil de sport alimenté par gaz à l’allure futuriste est l’arme favorite de nombreux chasseurs professionnels et amateurs. Il dispose d’une lunette de visée intégrée et d’une crosse rigide avec rembourrage antichoc.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "1",
       type: "rifle",
@@ -5253,7 +5253,7 @@ const catalogData = {
       description:
         "Ce revolver robuste est le frère cadet du légendaire Super Warhawk. Conçu pour être une arme précise utilisable pour le loisir, le Redhawk est doté d’un sélecteur de tir révolutionnaire. Le mode double action classique autorise un tir à chaque fois que vous pressez la détente (semi-automatique) tandis que le mode simple action vous permet de jouer les pistoleros en n’utilisant que le chien de l’arme pour « ventiler » (tir en rafale).",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "263",
       baseConceability: "3",
       type: "pistolLight",
@@ -5281,7 +5281,7 @@ const catalogData = {
       description:
         "Bruyant et clinquant ! C’est comme ça qu’on qualifie cette arme dans les rues. Le revolver est aussi brillant que du chrome et fait des trous aussi gros que le poing d’un troll. Avec les bonnes munitions ou les bons accessoires, ces trous peuvent même être très précis.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "264",
       baseConceability: "3",
       type: "pistolHeavy",
@@ -5309,7 +5309,7 @@ const catalogData = {
       description:
         "Shin Chou Kyogo a fait du Model 100 l’équivalent corporatiste de l’Ingram Smartgun avec l’aide des Samouraïs rouges. Les forces de sécurité des corpos japonaises sont équipées de SCK 100. Ce modèle dispose d’un système smartgun interne et d’une crosse pliable.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "2",
       type: "machineGunLight",
@@ -5337,7 +5337,7 @@ const catalogData = {
       description:
         "Même si la combinaison d’une structure légère en polymère et d’un tir automatique n’est pas vraiment idéale, le TMP a été conçu pour tirer un grand nombre de balles pour que tout le monde se mette à couvert. L’arme est équipée d’une visée laser montée sur le dessus pour faire croire à ses utilisateurs qu’ils pourront viser avec.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "263",
       baseConceability: "3",
       type: "pistolMachine",
@@ -5365,7 +5365,7 @@ const catalogData = {
       description:
         "Cette mitrailleuse moyenne offre une puissance de feu remarquable et on la retrouve souvent entre les mains de trolls n’ayant aucune notion de subtilité. C’est une arme simple, mais ceux qui ont le goût de la complexité peuvent toujours lui associer quelques accessoires.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "0",
       type: "machineGunMedium",
@@ -5393,7 +5393,7 @@ const catalogData = {
       description:
         "Cette mitrailleuse moyenne offre une puissance de feu remarquable et on la retrouve souvent entre les mains de trolls n’ayant aucune notion de subtilité. C’est une arme simple, mais ceux qui ont le goût de la complexité peuvent toujours lui associer quelques accessoires.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "0",
       type: "machineGunMedium",
@@ -5421,7 +5421,7 @@ const catalogData = {
       description:
         "Conçu pour être imprimé à faible coût par des nano-imprimantes 3D, le Streetline Special est constitué de matériaux composites et il est plus difficile à détecter avec des scanners magnétiques.",
       gameEffects: "(seuil de détection augmenté de 1 point)",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "5",
       type: "pistolHoldOut",
@@ -5449,7 +5449,7 @@ const catalogData = {
       description:
         "Un nouveau design pour un nouveau monde. Le dernier modèle de Uzi de Spinrad global a fait une entrée fracassante sur le marché. Le modèle V incorpore une crosse pliable intégrée et une visée laser intégrée fixée sur le dessus.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "265",
       baseConceability: "2",
       type: "machineGunLight",
@@ -5477,7 +5477,7 @@ const catalogData = {
       description:
         "Avec le Palm Pistol, Walther a conservé au XXIe siècle le design classique du Derringer à double canon, l’un placé au-dessus de l’autre. Capable de tirer en rafale en utilisant les deux canons en même temps, ses munitions limitées n’autorisent que six tirs, aussi faites attention à ne pas abuser des rafales.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "262",
       baseConceability: "4",
       type: "pistolHoldOut",
@@ -5505,7 +5505,7 @@ const catalogData = {
       description:
         "Le Pulsar utilise des condensateurs sans fil lui octroyant une plus grande portée par rapport aux tasers filaires. En revanche, il est un peu moins puissant que ces modèles utilisant des câbles, mais il tire plus vite et peut le faire de manière répétée. ",
       gameEffects: "Le Pulsar I ne peut être utilisé en mêlée.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "261",
       baseConceability: "3",
       type: "taser",
@@ -5534,7 +5534,7 @@ const catalogData = {
         "Le Pulsar utilise des condensateurs sans fil lui octroyant une plus grande portée par rapport aux tasers filaires. En revanche, il est un peu moins puissant que ces modèles utilisant des câbles, mais il tire plus vite et peut le faire de manière répétée. ",
       gameEffects:
         "Le Pulsar II est doté de contacteurs à la base de la poignée ce qui lui permet d’être utilisé en combat rapproché (considérez qu’il s’agit d’une attaque de Combat rapproché d’arme contondante).",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "261",
       baseConceability: "3",
       type: "taser",
@@ -5562,7 +5562,7 @@ const catalogData = {
       description:
         "Tandis qu’Ares a mis au point l’Alpha, les corpos japonaises, par l’intermédiaire de Yamaha, ont développé le Raiden. Ce modèle dispose d’une mise à feu électronique et il est exceptionnellement précis. Les forces de sécurité des corpos japonaises et les soldats du corps des marines impériaux japonais ne jurent plus que par cette arme. Elle dispose d’un silencieux intégré, d’un système smartgun et d’un lance-grenades ou shotgun (selon le modèle) installé sous le canon.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "1",
       type: "rifle",
@@ -5590,7 +5590,7 @@ const catalogData = {
       description:
         "Tandis qu’Ares a mis au point l’Alpha, les corpos japonaises, par l’intermédiaire de Yamaha, ont développé le Raiden. Ce modèle dispose d’une mise à feu électronique et il est exceptionnellement précis. Les forces de sécurité des corpos japonaises et les soldats du corps des marines impériaux japonais ne jurent plus que par cette arme. Elle dispose d’un silencieux intégré, d’un système smartgun et d’un lance-grenades ou shotgun (selon le modèle) installé sous le canon.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "267",
       baseConceability: "1",
       type: "shotgun",
@@ -7070,7 +7070,7 @@ const catalogData = {
         "Prenez un long bâton, choisissez parmi une dizaine de lames différentes celle qui vous convient et fixez-la à une extrémité et vous obtenez une arme d’hast. Conçues pour garder un adversaire à distance ou frapper une cible montée sur un véhicule ou un animal, ce ne sont pas des armes très répandues dans les rues. ",
       gameEffects:
         "Il est impossible de les dissimuler même pour un troll, mais elles sont très utiles pour garder les problèmes à distance.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "258",
       baseConceability: "0",
       type: "blade",
@@ -7092,7 +7092,7 @@ const catalogData = {
       description:
         "« Parle doucement et porte un gros bâton. » Voici le gros bâton évoqué. Il existe des modèles en composites, en bois, en acier renforcé et en d’autres matériaux.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "259",
       baseConceability: "0",
       type: "club",
@@ -7114,7 +7114,7 @@ const catalogData = {
       description:
         "Un petit bâton qui devient grand. Ce bâton en métal et en matériaux composites peut être rétracté pour ne pas être plus grand qu’une électromatraque ou qu’une épée. Il peut être déployé en le faisant tourner ou en donnant un coup sec et en le verrouillant dans cette position en tordant la poignée. Ou on peut aussi utiliser un signal sans fil. ",
       gameEffects: "La rétracter ou la déployer demande une action mineure.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "259",
       baseConceability: "0",
       type: "club",
@@ -7137,7 +7137,7 @@ const catalogData = {
         "Les go-gangs adorent utiliser les pièces détachées de leurs anciennes motos pour frapper les gens avec. Ces chaînes en métal assez lourdes sont des armes brutales, surtout si on les utilise en conduisant une moto. ",
       gameEffects:
         "Avec cette arme, une fois par round, vous pouvez effectuer l’action Faire trébucher sans dépenser l’action mineure normalement requise.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "2",
       type: "unarmed",
@@ -7159,7 +7159,7 @@ const catalogData = {
       description:
         "Désignant aussi bien un rouleau de pièces de monnaie serré dans la paume (il y a encoreRulebook des gens qui se trimbalent avec ça ?), un coup de poing américain classique ou les gants Hardliner d’Ares, ces armes changent un poing en arme probablement létale en renforçant sa structure avec des matériaux métalliques ou composites.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "4",
       type: "unarmed",
@@ -7182,7 +7182,7 @@ const catalogData = {
         "Un terme générique pour désigner différentes petites armes tranchantes. Vous choisissez votre style d’arme, mais les caractéristiques sont les mêmes. ",
       gameEffects:
         "Les couteaux peuvent être lancés jusqu’à une portée de 20 mètres en utilisant la compétence Athlétisme.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "258",
       baseConceability: "3",
       type: "blade",
@@ -7205,7 +7205,7 @@ const catalogData = {
         "Spécifiquement conçu avec d’un côté une lame tranchante et de l’autre une lame en dents de scie, le véritable élément de « survie » de ce couteau est son manche avec ses accessoires. Dans sa poignée vous trouverez un écran GPS, un mini outil multi-usage et un mini briquet. ",
       gameEffects:
         "La lame est enduite d’un revêtement photovoltaïque qui la rend noire afin d’éviter les reflets non désirés ; on peut activer la lame pour qu’elle fournisse deux heures de lumière. Les couteaux de combat sont assez similaires, il s’agit aussi d’instruments de mort simples, élégants et efficaces avec une pointe biseautée pour traverser les armures. La lame a également un revêtement carbone noir pour éviter tout reflet.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "258",
       baseConceability: "3",
       type: "blade",
@@ -7228,7 +7228,7 @@ const catalogData = {
         "Spécifiquement conçu avec d’un côté une lame tranchante et de l’autre une lame en dents de scie, le véritable élément de « survie » de ce couteau est son manche avec ses accessoires. Dans sa poignée vous trouverez un écran GPS, un mini outil multi-usage et un mini briquet. ",
       gameEffects:
         "La lame est enduite d’un revêtement photovoltaïque qui la rend noire afin d’éviter les reflets non désirés ; on peut activer la lame pour qu’elle fournisse deux heures de lumière. Les couteaux de survie et de combat peuvent être lancés jusqu’à une portée de 20 mètres en utilisant la compétence Athlétisme.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "258",
       baseConceability: "3",
       type: "blade",
@@ -7251,7 +7251,7 @@ const catalogData = {
         "Des gants isolés avec un système intégré qui, s’il est activé, libère un courant électrique en cas de contact. ",
       gameEffects:
         "Les gants infligent l’état Électrocuté (p. 56) et disposent de dix charges avant de devoir être rechargés (au rythme d’une charge toutes les dix secondes). La charge est activée par contraction musculaire ou grâce à un signal sans fil ce qui nécessite une action mineure.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "4",
       type: "unarmed",
@@ -7274,7 +7274,7 @@ const catalogData = {
         "Arme antiémeute incontournable, elle est considérée comme un symbole des oppresseurs corporatistes et gouvernementaux ; elle est aussi très utilisée par tous ceux qui œuvrent dans les Ombres. ",
       gameEffects:
         "L’électromatraque dispose de dix charges et, quand elle est branchée, elle en récupère une toutes les dix secondes.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "259",
       baseConceability: "2",
       type: "club",
@@ -7296,7 +7296,7 @@ const catalogData = {
       description:
         "Une lame lourde fixée à une poignée à une main qui existe dans une large variété de styles. L’arme de combat la plus utilisée au monde jusqu’à l’apparition des armes à feu.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "258",
       baseConceability: "1",
       type: "blade",
@@ -7319,7 +7319,7 @@ const catalogData = {
         "C’est la lanière en cuir classique utilisée pendant des siècles pour le bétail et d’autres « troupeaux ». Dangereux contre de la chair nue, cette arme n’a pas grand effet contre un adversaire en armure, mais peut encoreRulebook le faire tomber. ",
       gameEffects:
         "Avec cette arme, une fois par round, vous pouvez effectuer l’action Faire trébucher sans dépenser l’action mineure normalement requise. Le ScoreRulebook Offensif du fouet est basé sur la Réaction et non la Force.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "2",
       type: "meleeSpecial",
@@ -7342,7 +7342,7 @@ const catalogData = {
         "Depuis les années 2050, cette arme frappe de terreur quiconque a déjà aperçu sa lueur sinueuse. Entre les mains d’un utilisateur expérimenté, chaque millimètre du câble monofilament de deux mètres de cette arme terrifiante peut trancher une armure, la chair et les os aussi facilement que du beurre. À la moindre maladresse, ce câble peut vous envoyer droit chez un doc des rues pour qu’il vous remplace un membre. Le fouet est stocké dans un compartiment spécial situé dans le manche avec un petit lest qui se détache quand l’arme est activée.",
       gameEffects:
         "Le dé libre est toujours utilisé avec cette arme, remplaçant un dé de la réserve de l'attaquant. Un échec critique oblige toujours son utilisateur à résister aux dommages de base de l’arme. Le ScoreRulebook Offensif du fouet monofilament est basé sur la Réaction et non la Force. Bonus sans-fil: le fouet utilise votre visuel sur la cible pour corriger votre visée afin d’ajuster sa trajectoire. Cela augmente son ScoreRulebook Offensif de 2 points. De plus, en cas d’échec critique, au lieu que vous soyez touché par le câble, le système de sécurité interne du fouet le rétracte automatiquement.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "2",
       type: "meleeSpecial",
@@ -7364,7 +7364,7 @@ const catalogData = {
       description:
         "Que vous soyez Neal le pompier ou Neil le barbare ork, vous pouvez manier une hache aussi bien pour son côté utilitaire que pour son aspect un peu plus violent. Une hache de combat est dotée d’une ou deux lames et d’une pointe rétractable pour briser des vitres ou réserver une désagréable surprise. Mais entre les mains des guerriers des rues de 2080 aux capacités physiques surdéveloppées, une hache peut s’avérer aussi mortelle qu’une arme à feu.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "259",
       baseConceability: "1",
       type: "blade",
@@ -7386,7 +7386,7 @@ const catalogData = {
       description:
         "La célèbre épée à deux mains des samouraïs est devenue l’arme standard des shadowrunners des séries tridéos. Dans les rues, cette arme mortelle rappelle que même si elle est devenue un peu cliché, elle n’en est pas moins efficace.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "259",
       baseConceability: "1",
       type: "blade",
@@ -7409,7 +7409,7 @@ const catalogData = {
         "Vous n’appréciez pas les implants, mais vous aimeriez tout de même avoir trois lames tranchantes qui jaillissent de votre avant-bras ? Cette arme est pour vous. ",
       gameEffects:
         "Les lames se déploient ou se rétractent soit en contractant un muscle, soit grâce à un signal sans fil. Dans les deux cas, il faut une action mineure.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "259",
       baseConceability: "2",
       type: "blade",
@@ -7431,7 +7431,7 @@ const catalogData = {
       description:
         "Les caractéristiques indiquées peuvent être utilisées pour différents objets y compris le manche d’une hache, une clef à molette, une batte de baseball, un pied-de-biche, un démonte-pneu et même une planche avec des clous. Le prix indiqué est pour une matraque de police, mais il est très facile de se procurer gratuitement une arme faisant office de massue.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "2",
       type: "club",
@@ -7454,7 +7454,7 @@ const catalogData = {
         "Cette matraque se déploie d’un coup sec du poignet ou à l’aide d’un signal sans fil. ",
       gameEffects:
         "Rétractée elle est plus facile à dissimuler (seuil de Dissimulation 2 déployée, 4 quand elle est rétractée). La rétracter ou la déployer demande une action mineure.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "2",
       type: "club",
@@ -7477,7 +7477,7 @@ const catalogData = {
         "Aussi connu sous le nom de blackjack ou sap, c’est un petit gourdin souple ou une pièce de métal ou de plomb enveloppée par du cuir ou encoreRulebook un petit sac de sable que l’on utilise pour frapper à la tête. ",
       gameEffects:
         "L’arme est prévue pour être dissimulée et tient souvent dans la paume d’une main (seuil de Dissimulation 4).",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "260",
       baseConceability: "4",
       type: "club",
@@ -8383,7 +8383,7 @@ const catalogData = {
         "Le Pulsar utilise des condensateurs sans fil lui octroyant une plus grande portée par rapport aux tasers filaires. En revanche, il est un peu moins puissant que ces modèles utilisant des câbles, mais il tire plus vite et peut le faire de manière répétée. ",
       gameEffects:
         "Le Pulsar II est doté de contacteurs à la base de la poignée ce qui lui permet d’être utilisé en combat rapproché (considérez qu’il s’agit d’une attaque de Combat rapproché d’arme contondante).",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "261",
       baseConceability: "3",
       type: "club",
@@ -8406,7 +8406,7 @@ const catalogData = {
         "Cousin du bouclier balistique, ce modèle en plastacier transparent ajoute la possibilité d’effectuer une attaque électrique.",
       gameEffects:
         "Utilisez la compétence de Combat rapproché pour l’attaque et les caractéristiques de l’électromatraque. Le taser dispose de 10 charges ; quand il est branché sur secteur, il se recharge au rythme d’une charge toutes les dix secondes. Bonus sans fil : le bouclier se recharge par induction au rythme d’une charge par heure.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "274",
       baseConceability: "0",
       type: "club",
@@ -8428,7 +8428,7 @@ const catalogData = {
       description:
         "Cet impressionnant bouclier opaque est utilisé par les équipes SWAT et dans les combats urbains. Il dispose d’une fenêtre en plastacier transparent et une échelle est intégrée pour permettre de franchir de petits obstacles.",
       gameEffects: "Utilisez la compétence de Combat rapproché pour l’attaque.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "275",
       baseConceability: "0",
       type: "club",
@@ -8452,7 +8452,7 @@ const catalogData = {
       description:
         "Ces grenades classiques sont conçues pour projeter des shrapnels sur une vaste zone.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "272",
       baseConceability: "",
       skill: "athletics",
@@ -8473,7 +8473,7 @@ const catalogData = {
       description:
         "Elles peuvent libérer n’importe quel type de substance chimique ou de toxines (Toxines et drogues, p. 125). Le nuage libéré dure environ 10 rounds de combat et suit les règles des attaques de gaz, p. 121.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "272",
       baseConceability: "",
       skill: "athletics",
@@ -8494,7 +8494,7 @@ const catalogData = {
       description:
         "Ces grenades sont conçues pour libérer un puissant effet de souffle sur une zone plus réduite.",
       gameEffects: "",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "272",
       baseConceability: "",
       skill: "athletics",
@@ -8516,7 +8516,7 @@ const catalogData = {
         "Similaires aux grenades à gaz, les grenades fumigènes répandent un nuage de fumée au lieu d’un gaz toxique. ",
       gameEffects:
         "Le nuage obscurcit la vision, infligeant l’état Aveuglé I à tous ceux qui veulent agir contre quelque chose dissimulé par la fumée et l’état Aveuglé II à tous ceux qui se trouvent dans la fumée. Le fumigène affecte uniquement les personnages et créatures dotées de vision normale et nocturne. Le nuage libéré dure environ 10 rounds de combat et suit les règles des attaques de gaz, p. 121, en considérant que réduire de moitié un état Aveuglé II en fait un état Aveuglé I et que toute réduction supplémentaire fait disparaître l’effet.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "272",
       baseConceability: "",
       skill: "athletics",
@@ -8538,7 +8538,7 @@ const catalogData = {
         "Similaires aux grenades à gaz, les grenades fumigènes répandent un nuage de fumée au lieu d’un gaz toxique.",
       gameEffects:
         "Le nuage obscurcit la vision, infligeant l’état Aveuglé I à tous ceux qui veulent agir contre quelque chose dissimulé par la fumée et l’état Aveuglé II à tous ceux qui se trouvent dans la fumée. Le fumigène affecte uniquement les personnages et créatures dotées de vision normale et nocturne. Le fumigène thermique affecte en plus ceux dotés de vision thermographique. Le nuage libéré dure environ 10 rounds de combat et suit les règles des attaques de gaz, p. 121, en considérant que réduire de moitié un état Aveuglé II en fait un état Aveuglé I et que toute réduction supplémentaire fait disparaître l’effet.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "272",
       baseConceability: "",
       skill: "athletics",
@@ -8560,7 +8560,7 @@ const catalogData = {
         "Souvent appelées flash-bangs, ces grenades explosent en libérant une onde de choc aveuglante et assourdissante qui étourdit et fait chanceler les cibles situées à portée.",
       gameEffects:
         "En plus de dommages, ceux qui sont pris dans la zone de souffle subissent les états Aveuglé I, Assourdi I et Désorienté.",
-      book: "coreRulebookRulebook",
+      book: "coreRulebook",
       page: "272",
       baseConceability: "",
       skill: "athletics",

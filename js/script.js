@@ -4003,7 +4003,7 @@ function handleDropdownModal(type) {
         if (catalogData[type].some((item) => item.key === key)) {
           let item = catalogData[type].find((item) => item.key === key);
           description = item.description;
-          type = item.type;
+          qualityType = item.type;
           karmaCost = item.karmaCost;
           book = item.book;
           page = item.page;
@@ -4033,8 +4033,8 @@ function handleDropdownModal(type) {
 
         characterData.points.contacts.spent =
           characterData.points.contacts.spent +
-          contactConnection +
-          contactLoyalty;
+          connection +
+          loyalty;
 
         var key = $(`#${type}Input`).val();
 
