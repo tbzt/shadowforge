@@ -1169,6 +1169,15 @@ function modalConstruct(type, newType, method) {
     )
     .join("\n");
 
+  const book = ["assassinsNight", "astralWays", "coreRulebook", "coreRulebookSeattle", "collapsingNow", "cuttingBlack", "doubleClutch", "emeraldCity", "firingSquad", "freeSeattle", "hackNSlash", "nullValue", "powerPlays", "roguesGallery", "shootStraight", "sixthWorldCompanion", "slipStreams", "streetWyrd", "theKechibiCode", "theThirdParallel", "thirtyNights", "whisperNets"];
+  book.sort((a, b) => terms[a].localeCompare(terms[b]));
+
+  const bookOptions = book
+    .map(
+      (type) => `<option value="${type}">${capitalized(terms[type])}</option>`
+    )
+    .join("\n");
+
   const duration = ["instantaneous", "limited", "permanent", "sustained"];
   duration.sort((a, b) => terms[a].localeCompare(terms[b]));
   const durationOptions = duration
@@ -1209,13 +1218,40 @@ function modalConstruct(type, newType, method) {
     case "qualities":
       specificType = `
       <div class="form-group row align-items-center mb-2">
-          <label for="qualitiesDescription" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          <label for="${type}Description" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
             terms.description
           )}${terms.colons}</label>
           <div class="col-sm-9">
-          <textarea class="form-control flex-grow-1" id="qualitiesDescription" rows="4"></textarea>
+          <textarea class="form-control flex-grow-1" id="${type}Description" rows="4"></textarea>
           </div>
         </div>
+
+        <div class="form-group row align-items-center mb-2">
+          <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+              terms.gameEffects
+            )}${terms.colons}
+          </label>
+          <div class="col-sm-9">
+          <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+          </div>
+        </div>
+          
+        <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+            terms.source
+            )}${terms.colons}
+          </label>
+          <div class="col-sm-4">
+            <select class="form-control" id="${type}Book">
+              <option value="">${capitalized(terms.select)}</option>
+              ${bookOptions}
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+          </div>
+        </div>
+
         <div class="form-group row align-items-center mb-2">
           <label for="qualityType" class="col-sm-3 col-form-label">${capitalized(
             terms.type
@@ -1233,44 +1269,70 @@ function modalConstruct(type, newType, method) {
           </div>
         </div>
         <div class="form-group row align-items-center mb-2">
-          <label for="qualitiesKarmaCost" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          <label for="${type}KarmaCost" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
             terms.karmaCost
           )}${terms.colons}</label>
           <div class="col-sm-3">
-          <input type="number" class="form-control" id="qualitiesKarmaCost" aria-label="Karma cost for the quality" style="width: 3em;">
+          <input type="number" class="form-control" id="${type}KarmaCost" aria-label="Karma cost for the quality" style="width: 3em;">
           </div>
         </div>`;
       break;
     case "contacts":
       specificType = `
       <div class="form-group row align-items-center mb-2">
-          <label for="contactsType" class="col-sm-3 col-form-label">${capitalized(
+          <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
             terms.type
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <textarea class="form-control" id="contactsType" rows="4"></textarea>
+            <textarea class="form-control" id="${type}Type" rows="4"></textarea>
           </div>
       </div>
       <div class="form-group row align-items-center mb-4">
-          <label for="contactsDescription" class="col-sm-3 col-form-label">${capitalized(
+          <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
             terms.description
           )}${terms.colons}</label>
           <div class="col-sm-9">
-            <textarea class="form-control" id="contactsDescription" rows="4"></textarea>
+            <textarea class="form-control" id="${type}Description" rows="4"></textarea>
           </div>
       </div>
+
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+            terms.gameEffects
+          )}${terms.colons}
+        </label>
+        <div class="col-sm-9">
+        <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+        </div>
+      </div>
+        
       <div class="form-group row align-items-center mb-2">  
-          <label for="contactsConnection" class="col-sm-3 col-form-label">${capitalized(
+        <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+          terms.source
+          )}${terms.colons}
+        </label>
+        <div class="col-sm-4">
+          <select class="form-control" id="${type}Book">
+            <option value="">${capitalized(terms.select)}</option>
+            ${bookOptions}
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+        </div>
+      </div>
+      <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Connection" class="col-sm-3 col-form-label">${capitalized(
             terms.connection
           )}${terms.colons}</label>
           <div class="col-sm-3">
-            <input type="number" class="form-control" id="contactsConnection" aria-label="Connections" value=0>
+            <input type="number" class="form-control" id="${type}Connection" aria-label="Connections" value=0>
           </div>
-          <label for="contactsLoyalty" class="col-sm-3 col-form-label">${capitalized(
+          <label for="${type}Loyalty" class="col-sm-3 col-form-label">${capitalized(
             terms.loyalty
           )}${terms.colons}</label>
           <div class="col-sm-3">
-            <input type="number" class="form-control" id="contactsLoyalty" aria-label="Loyalties" value=0>
+            <input type="number" class="form-control" id="${type}Loyalty" aria-label="Loyalties" value=0>
           </div>
       </div>`;
       break;
@@ -1391,6 +1453,32 @@ function modalConstruct(type, newType, method) {
       <div class="col-sm-9">
         <textarea class="form-control" id="${type}Description" rows="4"></textarea>
       </div>
+  </div>
+
+  <div class="form-group row align-items-center mb-2">
+    <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+        terms.gameEffects
+      )}${terms.colons}
+    </label>
+    <div class="col-sm-9">
+    <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+    </div>
+  </div>
+    
+  <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+      terms.source
+      )}${terms.colons}
+    </label>
+    <div class="col-sm-4">
+      <select class="form-control" id="${type}Book">
+        <option value="">${capitalized(terms.select)}</option>
+        ${bookOptions}
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+    </div>
   </div>
   <div class="form-group row align-items-center mb-2">
           <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
@@ -1646,6 +1734,32 @@ function modalConstruct(type, newType, method) {
       <textarea class="form-control" id="${type}Description" rows="4"></textarea>
     </div>
 </div>
+
+<div class="form-group row align-items-center mb-2">
+  <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+      terms.gameEffects
+    )}${terms.colons}
+  </label>
+  <div class="col-sm-9">
+  <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+  </div>
+</div>
+  
+<div class="form-group row align-items-center mb-2">  
+  <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+    terms.source
+    )}${terms.colons}
+  </label>
+  <div class="col-sm-4">
+    <select class="form-control" id="${type}Book">
+      <option value="">${capitalized(terms.select)}</option>
+      ${bookOptions}
+    </select>
+  </div>
+  <div class="col-sm-3">
+    <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+  </div>
+</div>
 <div class="form-group row align-items-center mb-2">
         <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
         terms.type
@@ -1706,6 +1820,32 @@ function modalConstruct(type, newType, method) {
           <div class="col-sm-9">
             <textarea class="form-control" id="${type}Description" rows="4"></textarea>
           </div>
+      </div>
+
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+            terms.gameEffects
+          )}${terms.colons}
+        </label>
+        <div class="col-sm-9">
+        <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+        </div>
+      </div>
+        
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+          terms.source
+          )}${terms.colons}
+        </label>
+        <div class="col-sm-4">
+          <select class="form-control" id="${type}Book">
+            <option value="">${capitalized(terms.select)}</option>
+            ${bookOptions}
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+        </div>
       </div>
         <div class="form-group row align-items-center mb-2">  
             <label for="${type}DefenseRating" class="col-sm-3 col-form-label">${capitalized(
@@ -1811,6 +1951,32 @@ function modalConstruct(type, newType, method) {
     <div class="col-sm-9">
       <textarea class="form-control" id="${type}Description" rows="4"></textarea>
     </div>
+</div>
+
+<div class="form-group row align-items-center mb-2">
+  <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+      terms.gameEffects
+    )}${terms.colons}
+  </label>
+  <div class="col-sm-9">
+  <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+  </div>
+</div>
+  
+<div class="form-group row align-items-center mb-2">  
+  <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+    terms.source
+    )}${terms.colons}
+  </label>
+  <div class="col-sm-4">
+    <select class="form-control" id="${type}Book">
+      <option value="">${capitalized(terms.select)}</option>
+      ${bookOptions}
+    </select>
+  </div>
+  <div class="col-sm-3">
+    <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+  </div>
 </div>
 <div class="form-group row align-items-center mb-2">
         <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
@@ -2031,6 +2197,32 @@ function modalConstruct(type, newType, method) {
       <textarea class="form-control" id="${type}Description" rows="4"></textarea>
     </div>
 </div>
+
+<div class="form-group row align-items-center mb-2">
+  <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+      terms.gameEffects
+    )}${terms.colons}
+  </label>
+  <div class="col-sm-9">
+  <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+  </div>
+</div>
+  
+<div class="form-group row align-items-center mb-2">  
+  <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+    terms.source
+    )}${terms.colons}
+  </label>
+  <div class="col-sm-4">
+    <select class="form-control" id="${type}Book">
+      <option value="">${capitalized(terms.select)}</option>
+      ${bookOptions}
+    </select>
+  </div>
+  <div class="col-sm-3">
+    <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+  </div>
+</div>
 <div class="form-group row align-items-center mb-2">
         <label for="${type}Type" class="col-sm-3 col-form-label SR6_Flex2">${capitalized(
         terms.type
@@ -2210,6 +2402,32 @@ function modalConstruct(type, newType, method) {
               <textarea class="form-control" id="${type}Description" rows="4"></textarea>
             </div>
         </div>
+
+        <div class="form-group row align-items-center mb-2">
+          <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+              terms.gameEffects
+            )}${terms.colons}
+          </label>
+          <div class="col-sm-9">
+          <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+          </div>
+        </div>
+          
+        <div class="form-group row align-items-center mb-2">  
+          <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+            terms.source
+            )}${terms.colons}
+          </label>
+          <div class="col-sm-4">
+            <select class="form-control" id="${type}Book">
+              <option value="">${capitalized(terms.select)}</option>
+              ${bookOptions}
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+          </div>
+        </div>
         <div class="form-group row align-items-center mb-2">  
             <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
         terms.type
@@ -2335,6 +2553,32 @@ function modalConstruct(type, newType, method) {
             <textarea class="form-control" id="${type}Description" rows="4"></textarea>
           </div>
       </div>
+
+      <div class="form-group row align-items-center mb-2">
+        <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+            terms.gameEffects
+          )}${terms.colons}
+        </label>
+        <div class="col-sm-9">
+        <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+        </div>
+      </div>
+        
+      <div class="form-group row align-items-center mb-2">  
+        <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+          terms.source
+          )}${terms.colons}
+        </label>
+        <div class="col-sm-4">
+          <select class="form-control" id="${type}Book">
+            <option value="">${capitalized(terms.select)}</option>
+            ${bookOptions}
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+        </div>
+      </div>
         <div class="form-group row align-items-center mb-2">  
             <label for="${type}Speed" class="col-sm-3 col-form-label">${capitalized(
         terms.speedToxin
@@ -2417,6 +2661,32 @@ function modalConstruct(type, newType, method) {
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
     </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
+    </div>
     <div class="form-group row align-items-center mb-2">  
         <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
         terms.rating
@@ -2463,6 +2733,32 @@ function modalConstruct(type, newType, method) {
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
+    </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
     </div>
     <div class="form-group row align-items-center mb-2">  
         <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
@@ -2561,6 +2857,32 @@ function modalConstruct(type, newType, method) {
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
     </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
+    </div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
         terms.type
@@ -2655,6 +2977,32 @@ function modalConstruct(type, newType, method) {
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
+    </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
     </div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Category" class="col-sm-3 col-form-label">${capitalized(
@@ -2771,6 +3119,32 @@ function modalConstruct(type, newType, method) {
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
+    </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
     </div>
       
     <div class="form-group row align-items-center mb-2">
@@ -2889,6 +3263,32 @@ function modalConstruct(type, newType, method) {
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
     </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
+    </div>
       
     <div class="form-group row align-items-center mb-2">  
           <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
@@ -2958,6 +3358,32 @@ function modalConstruct(type, newType, method) {
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
+    </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
     </div>      
     <div class="form-group row align-items-center mb-2">  
     <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
@@ -2996,6 +3422,32 @@ function modalConstruct(type, newType, method) {
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
+    </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
     </div>      
     <div class="form-group row align-items-center mb-2">  
     <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
@@ -3026,6 +3478,32 @@ function modalConstruct(type, newType, method) {
       <div class="col-sm-9">
         <textarea class="form-control" id="${type}Description" rows="4"></textarea>
       </div>
+  </div>
+
+  <div class="form-group row align-items-center mb-2">
+    <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+        terms.gameEffects
+      )}${terms.colons}
+    </label>
+    <div class="col-sm-9">
+    <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+    </div>
+  </div>
+    
+  <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+      terms.source
+      )}${terms.colons}
+    </label>
+    <div class="col-sm-4">
+      <select class="form-control" id="${type}Book">
+        <option value="">${capitalized(terms.select)}</option>
+        ${bookOptions}
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+    </div>
   </div>  
   <div class="form-group row align-items-center mb-2">  
         <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
@@ -3091,6 +3569,32 @@ function modalConstruct(type, newType, method) {
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
     </div>
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
+    </div>
       
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Duration" class="col-sm-3 col-form-label">${capitalized(
@@ -3132,7 +3636,33 @@ function modalConstruct(type, newType, method) {
         <div class="col-sm-9">
           <textarea class="form-control" id="${type}Description" rows="4"></textarea>
         </div>
-    </div>      
+    </div> 
+
+    <div class="form-group row align-items-center mb-2">
+      <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+          terms.gameEffects
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-9">
+      <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+      </div>
+    </div>
+      
+    <div class="form-group row align-items-center mb-2">  
+      <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+        terms.source
+        )}${terms.colons}
+      </label>
+      <div class="col-sm-4">
+        <select class="form-control" id="${type}Book">
+          <option value="">${capitalized(terms.select)}</option>
+          ${bookOptions}
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+      </div>
+    </div>     
     <div class="form-group row align-items-center mb-2">  
     <label for="${type}Rating" class="col-sm-3 col-form-label">${capitalized(
         terms.rating
@@ -3162,6 +3692,32 @@ function modalConstruct(type, newType, method) {
       <div class="col-sm-9">
         <textarea class="form-control" id="${type}Description" rows="4"></textarea>
       </div>
+  </div>
+
+  <div class="form-group row align-items-center mb-2">
+    <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
+        terms.gameEffects
+      )}${terms.colons}
+    </label>
+    <div class="col-sm-9">
+    <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
+    </div>
+  </div>
+    
+  <div class="form-group row align-items-center mb-2">  
+    <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
+      terms.source
+      )}${terms.colons}
+    </label>
+    <div class="col-sm-4">
+      <select class="form-control" id="${type}Book">
+        <option value="">${capitalized(terms.select)}</option>
+        ${bookOptions}
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <input type="number" class="form-control" id="${type}Page" aria-label="page" value=0>
+    </div>
   </div>  
   <div class="form-group row align-items-center mb-2">  
         <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
@@ -3412,31 +3968,36 @@ function handleDropdownModal(type) {
 
       console.log("type : ", type);
 
-      if (type === "qualities") {
-        var qualityDescription = $("#qualitiesDescription").val();
-
-        var qualityType = $("input[name='choosequalitiesType']:checked").val();
-
-        var qualityKarmaCost = parseInt($("#qualitiesKarmaCost").val());
-
+      if (type === "qualities") {       
+        var description = getValue("Description", type);
+        var qualityType = $("input[name='choosequalitiesType']:checked").val();    
+        var karmaCost = getValue("Karmacost", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
           key: key,
-          description: qualityDescription,
+          description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
           type: qualityType,
-          karmaCost: qualityKarmaCost,
+          karmaCost: karmaCost,
         };
       }
 
       if (type === "contacts") {
-        var contactType = $("#contactsType").val();
-
-        var contactDescription = $("#contactsDescription").val();
-
-        var contactConnection = parseInt($("#contactsConnection").val());
-
-        var contactLoyalty = parseInt($("#contactsLoyalty").val());
+        var contactType = $("#contactsType").val();       
+        var description = getValue("Description", type);       
+        var connection = getValue("Connection", type);       
+        var loyalty = getValue("Loyalty", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
 
         characterData.points.contacts.spent =
           characterData.points.contacts.spent +
@@ -3448,9 +4009,14 @@ function handleDropdownModal(type) {
         newItem = {
           key: key,
           type: contactType,
-          description: contactDescription,
-          connection: contactConnection,
-          loyalty: contactLoyalty,
+          description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
+          connection: connection,
+          loyalty: loyalty,
         };
       }
 
@@ -3486,7 +4052,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3518,6 +4087,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3536,7 +4110,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3560,6 +4137,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3569,7 +4151,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3580,6 +4165,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3590,7 +4180,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3602,6 +4195,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3614,7 +4212,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3628,6 +4229,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3650,7 +4256,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         if (vehicleType === "drone") {
@@ -3680,6 +4289,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3696,7 +4310,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3720,6 +4337,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3734,7 +4356,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3752,6 +4377,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3760,7 +4390,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3770,6 +4403,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3779,7 +4417,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         var licences = [];
@@ -3801,6 +4442,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
           licences: licences,
         };
       }
@@ -3812,7 +4458,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3824,6 +4473,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3834,7 +4488,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var categorySub = "";
         var preparation = $(`#Preparation`).prop("checked");
         var key = $(`#${type}Input`).val();
@@ -3856,6 +4513,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
           preparation: preparation,
         };
       }
@@ -3866,7 +4528,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
         var minion = $(`#minionCategory`).prop("checked");
         var spotter = $(`#spotterCategory`).prop("checked");
@@ -3889,6 +4554,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3898,7 +4568,10 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3909,6 +4582,11 @@ function handleDropdownModal(type) {
           legality: legality,
           availability: availability,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
@@ -3916,7 +4594,10 @@ function handleDropdownModal(type) {
         var activation = getValue("Activation", type);
         var powerPointsCost = getValue("PowerPointsCost", type);
         var rating = getValue("Rating", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3925,25 +4606,41 @@ function handleDropdownModal(type) {
           powerPointsCost: powerPointsCost,
           rating: rating,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
       if (type === "metamagics") {
         var rating = getValue("Rating", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
           key: key,
           rating: rating,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
       if (type === "spirits") {
         var force = getValue("Force", type);
         var spiritType = getValue("Type", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var isBounded = $(`#IsBounded`).prop("checked");
         var current = getValue("Current", type);
         var max = getValue("Max", type);
@@ -3954,6 +4651,11 @@ function handleDropdownModal(type) {
           force: force,
           type: spiritType,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
           isBounded: isBounded,
           service: {
             current: current,
@@ -3966,7 +4668,10 @@ function handleDropdownModal(type) {
         var duration = getValue("Duration", type);
         var skill = getValue("Skill", type);
         var fadeValue = getValue("FadeValue", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
@@ -3975,6 +4680,11 @@ function handleDropdownModal(type) {
           skill: skill,
           fadeValue: fadeValue,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
 
         console.log("complexForms newItem : ", key);
@@ -3982,20 +4692,31 @@ function handleDropdownModal(type) {
 
       if (type === "echoes") {
         var rating = getValue("Rating", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
         newItem = {
           key: key,
           rating: rating,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
         };
       }
 
       if (type === "sprites") {
         var level = getValue("Level", type);
         var spriteType = getValue("Type", type);
-        var description = getValue("Description", type);
+        var description = getValue("Description", type);   
+        var gameEffects = getValue("GameEffects", type);   
+        var book = getValue("Book", type);   
+        var page = getValue("Page", type);
         var isRegistered = $(`#IsRegistered`).prop("checked");
         var current = getValue("Current", type);
         var max = getValue("Max", type);
@@ -4006,6 +4727,11 @@ function handleDropdownModal(type) {
           force: force,
           type: spriteType,
           description: description,
+          gameEffects: gameEffects,
+          source: {
+            book: book,
+            page: page,
+          },
           isRegistered: isRegistered,
           task: {
             current: current,
@@ -4185,6 +4911,7 @@ function handleItemClick(type, indexItem) {
     const fields = [
       "Type",
       "Description",
+      "GameEffects",
       "Loyalty",
       "Connection",
       "KarmaCost",
@@ -4196,6 +4923,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     if (type === "qualities") {
       var radioButtons = modalContainer.querySelectorAll(
@@ -4236,6 +4968,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     if (type === "rangedWeapons") {
@@ -4247,7 +4980,12 @@ function handleItemClick(type, indexItem) {
       if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
-    });
+    });    
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#${type}DamageValue`).value =
       characterData[type][indexItem].damage.value;
@@ -4286,6 +5024,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4294,6 +5033,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+    
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "protections") {
@@ -4305,6 +5049,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4313,6 +5058,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+    
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "augmentations") {
@@ -4326,6 +5076,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4334,6 +5085,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+    
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "vehicles") {
@@ -4469,6 +5225,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     if (item.type === "drone") {
@@ -4481,6 +5238,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#${type}Handling`).value =
       characterData[type][indexItem].attributes.handling;
@@ -4516,6 +5278,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4524,6 +5287,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#${type}Attack`).value =
       characterData[type][indexItem].attributes.attack;
@@ -4542,6 +5310,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4550,6 +5319,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#${type}Speed`).value =
       characterData[type][indexItem].speed.value;
@@ -4577,6 +5351,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4585,6 +5360,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "SINS") {
@@ -4595,6 +5375,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4603,6 +5384,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     const licencesDiv = modalContainer.querySelector("#licences");
     for (var i = 0; i < item.licences.length; i++) {
@@ -4643,6 +5429,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4651,6 +5438,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "spells") {
@@ -4668,6 +5460,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4676,6 +5469,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#Preparation`).checked =
       characterData[type][indexItem].preparation;
@@ -4690,6 +5488,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#${type}DurationType`).value =
       characterData[type][indexItem].duration.type;
@@ -4714,6 +5517,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -4722,10 +5526,16 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "adeptPowers") {
-    const fields = ["PowerPointsCost", "Rating", "Activation", "Description"];
+    const fields = ["PowerPointsCost", "Rating", "Activation", "Description", 
+    "GameEffects"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -4733,10 +5543,16 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "metamagics") {
-    const fields = ["Rating", "Description"];
+    const fields = ["Rating", "Description", 
+    "GameEffects"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -4744,12 +5560,18 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "spirits") {
     console.log("handleItemClick : ", type, " ", item);
 
-    const fields = ["Force", "Type", "Description"];
+    const fields = ["Force", "Type", "Description", 
+    "GameEffects"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -4757,6 +5579,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#${type}Current`).value =
       characterData[type][indexItem].service.current;
@@ -4775,6 +5602,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
+      "GameEffects"
     ];
 
     fields.forEach((field) => {
@@ -4783,10 +5611,15 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "echoes") {
-    const fields = ["Rating", "Description"];
+    const fields = ["Rating", "Description", "GameEffects"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -4794,10 +5627,15 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
   }
 
   if (type === "sprites") {
-    const fields = ["Level", "Type", "Description"];
+    const fields = ["Level", "Type", "Description", "GameEffects"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -4805,6 +5643,11 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
+
+    modalContainer.querySelector(`#${type}Book`).value =
+      characterData[type][indexItem].source.book;
+    modalContainer.querySelector(`#${type}Page`).value =
+      characterData[type][indexItem].source.page;
 
     modalContainer.querySelector(`#${type}Current`).value =
       characterData[type][indexItem].task.current;
@@ -4875,7 +5718,7 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "contacts") {
-          const fields = ["Type", "Description", "Connection", "Loyalty"];
+          const fields = ["Type", "Description", "Connection", "Loyalty", "GameEffects"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -4887,11 +5730,15 @@ function handleItemClick(type, indexItem) {
             }
           });
 
+            characterData[type][indexItem].source.book = modalContainer.querySelector(`#${type}Book`).value;
+            characterData[type][indexItem].source.page =
+              modalContainer.querySelector(`#${type}Page`).value;
+
           updateContactDisplay();
         }
 
         if (type === "qualities") {
-          const fields = ["Description", "KarmaCost"];
+          const fields = ["Description", "KarmaCost", "GameEffects"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -4901,6 +5748,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].type = modalContainer.querySelector(
             "input[name='choosequalitiesType']:checked"
@@ -4923,6 +5775,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           if (type === "rangedWeapons") {
@@ -4937,6 +5790,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].damage.value =
             modalContainer.querySelector(`#${type}DamageValue`).value;
@@ -4975,6 +5833,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -4985,6 +5844,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateAmmunitionsDisplay();
         }
@@ -4997,6 +5861,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5007,6 +5872,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateProtectionsDisplay(type);
         }
@@ -5021,6 +5891,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5031,6 +5902,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateAugmentationsDisplay();
         }
@@ -5045,6 +5921,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           if (item.type === "drone") {
@@ -5059,6 +5936,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].attributes.handling =
             modalContainer.querySelector(`#${type}Handling`).value;
@@ -5096,6 +5978,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5106,6 +5989,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].attributes.attack =
             modalContainer.querySelector(`#${type}Attack`).value;
@@ -5126,6 +6014,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5136,6 +6025,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].duration.value =
             modalContainer.querySelector(`#${type}Duration`).value;
@@ -5165,6 +6059,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5175,6 +6070,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateStuffsDisplay(type);
         }
@@ -5187,6 +6087,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5197,6 +6098,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           const licencesDiv = modalContainer.querySelector("#licences");
           item.licences = [];
@@ -5221,6 +6127,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5231,6 +6138,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateLifestylesDisplay(type);
         }
@@ -5246,6 +6158,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5256,6 +6169,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           if (
             characterData[type][indexItem].category === "combatIndirect" ||
@@ -5272,7 +6190,7 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "rituals") {
-          const fields = ["Legality", "Availability", "Price", "Description"];
+          const fields = ["Legality", "Availability", "Price", "Description", "GameEffects"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -5282,6 +6200,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].duration.value =
             modalContainer.querySelector(`#${type}DurationType`).value;
@@ -5308,6 +6231,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5318,6 +6242,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateFociDisplay(type);
         }
@@ -5328,6 +6257,7 @@ function handleItemClick(type, indexItem) {
             "Rating",
             "Activation",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5339,11 +6269,16 @@ function handleItemClick(type, indexItem) {
             }
           });
 
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
+
           updateAdeptPowersDisplay(type);
         }
 
         if (type === "metamagics") {
-          const fields = ["Rating", "Description"];
+          const fields = ["Rating", "Description", "GameEffects"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -5353,6 +6288,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateMetamagicsDisplay(type);
         }
@@ -5360,7 +6300,7 @@ function handleItemClick(type, indexItem) {
         if (type === "spirits") {
           console.log("Modify : ", type, " ", item);
 
-          const fields = ["Force", "Type", "Description"];
+          const fields = ["Force", "Type", "Description", "GameEffects"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -5370,6 +6310,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].service.current =
             modalContainer.querySelector(`#${type}Current`).value;
@@ -5390,6 +6335,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
+            "GameEffects"
           ];
 
           fields.forEach((field) => {
@@ -5401,11 +6347,16 @@ function handleItemClick(type, indexItem) {
             }
           });
 
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
+
           updateComplexFormsDisplay(type);
         }
 
         if (type === "echoes") {
-          const fields = ["Rating", "Description"];
+          const fields = ["Rating", "Description", "GameEffects"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -5415,12 +6366,17 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateEchoesDisplay(type);
         }
 
         if (type === "sprites") {
-          const fields = ["Level", "Type", "Description"];
+          const fields = ["Level", "Type", "Description", "GameEffects"];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -5430,6 +6386,11 @@ function handleItemClick(type, indexItem) {
               ] = element.value;
             }
           });
+
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           characterData[type][indexItem].task.current =
             modalContainer.querySelector(`#${type}Current`).value;
@@ -7812,15 +8773,19 @@ function assignData() {
   if (characterData.qualities) {
     for (let quality in characterData.qualities) {
       if (characterData.qualities.hasOwnProperty(quality)) {
+        var item = characterData.qualities[quality];
         var q = {
-          name: characterData.qualities[quality].key,
+          name: item.key,
           type: "quality",
           system: {
             info: {
-              description: characterData.qualities[quality].description,
+              description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
-            karmaCost: characterData.qualities[quality].karmaCost,
-            type: characterData.qualities[quality].type,
+            karmaCost: item.karmaCost,
+            type: item.type,
             isActive: true,
           },
         };
@@ -7842,16 +8807,17 @@ function assignData() {
   if (characterData.languages) {
     for (let language in characterData.languages) {
       if (characterData.languages.hasOwnProperty(language)) {
+        var item = characterData.languages[language];
         var l = {
-          name: characterData.languages[language].key,
+          name: item.key,
           type: "language",
           system: {
             isExpert:
-              characterData.languages[language].level === 2 ? true : false,
+            item.level === 2 ? true : false,
             isNative:
-              characterData.languages[language].level === 3 ? true : false,
+            item.level === 3 ? true : false,
             isSpecialist:
-              characterData.languages[language].level === 1 ? true : false,
+            item.level === 1 ? true : false,
           },
         };
         foundryData.items.push(l);
@@ -7862,16 +8828,20 @@ function assignData() {
   if (characterData.contacts) {
     for (let contact in characterData.contacts) {
       if (characterData.contacts.hasOwnProperty(contact)) {
+        var item = characterData.contacts[contact];
         var c = {
-          name: characterData.contacts[contact].key,
+          name: item.key,
           type: "contact",
           system: {
             info: {
-              description: characterData.contacts[contact].description,
+              description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
-            type: characterData.contacts[contact].type,
-            connection: characterData.contacts[contact].connection,
-            loyalty: characterData.contacts[contact].loyalty,
+            type: item.type,
+            connection: item.connection,
+            loyalty: item.loyalty,
           },
         };
         foundryData.items.push(c);
@@ -7882,81 +8852,85 @@ function assignData() {
   if (characterData.rangedWeapons) {
     for (let weapon in characterData.rangedWeapons) {
       if (characterData.rangedWeapons.hasOwnProperty(weapon)) {
+        var item = characterData.rangedWeapons[weapon];
         var w = {
-          name: characterData.rangedWeapons[weapon].key,
+          name: item.key,
           type: "weapon",
           system: {
             info: {
-              description: characterData.rangedWeapons[weapon].description,
+              description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             conceablity: {
-              base: characterData.rangedWeapons[weapon].baseConcealability,
+              base: item.baseConcealability,
             },
             goods: {
               price: {
-                base: characterData.rangedWeapons[weapon].price,
+                base: item.price,
               },
               availability: {
-                base: characterData.rangedWeapons[weapon].availability,
+                base: item.availability,
               },
             },
-            legality: characterData.rangedWeapons[weapon].legality,
+            legality: item.legality,
             type: "rangedWeapon",
-            typeSub: characterData.rangedWeapons[weapon].type,
+            typeSub: item.type,
             attackRating: {
               range: {
                 close: {
-                  base: characterData.rangedWeapons[weapon].AR.closeAR,
+                  base: item.AR.closeAR,
                 },
                 near: {
-                  base: characterData.rangedWeapons[weapon].AR.nearAR,
+                  base: item.AR.nearAR,
                 },
                 medium: {
-                  base: characterData.rangedWeapons[weapon].AR.mediumAR,
+                  base: item.AR.mediumAR,
                 },
                 far: {
-                  base: characterData.rangedWeapons[weapon].AR.farAR,
+                  base: item.AR.farAR,
                 },
                 extreme: {
-                  base: characterData.rangedWeapons[weapon].AR.extremeAR,
+                  base: item.AR.extremeAR,
                 },
               },
             },
             damage: {
               value: {
-                base: characterData.rangedWeapons[weapon].damage.value,
+                base: item.damage.value,
               },
-              type: characterData.rangedWeapons[weapon].damage.type,
+              type: item.damage.type,
             },
             ammo: {
-              max: characterData.rangedWeapons[weapon].ammunitionMax,
-              current: characterData.rangedWeapons[weapon].ammunitionMax,
+              max: item.ammunitionMax,
+              current: item.ammunitionMax,
               loadingMechanism:
-                characterData.rangedWeapons[weapon].loadingMechanism,
+              item.loadingMechanism,
             },
             firingMode: {
               singleShot: {
                 available:
-                  characterData.rangedWeapons[weapon].firingModes.singleShot,
+                item.firingModes.singleShot,
               },
               semiAutomatic: {
                 available:
-                  characterData.rangedWeapons[weapon].firingModes.semiAutomatic,
+                item.firingModes.semiAutomatic,
               },
               burstFire: {
                 available:
-                  characterData.rangedWeapons[weapon].firingModes.burstFire,
+                item.firingModes.burstFire,
               },
               fullyAutomatic: {
                 available:
-                  characterData.rangedWeapons[weapon].firingModes.fullAutomatic,
+                item.firingModes.fullAutomatic,
               },
             },
             test: {
-              linkedSkill: characterData.rangedWeapons[weapon].skill,
+              linkedSkill: item.skill,
               linkedSpecialization:
                 weaponsToSpecializations[
-                  characterData.rangedWeapons[weapon].type
+                  item.type
                 ],
             },
           },
@@ -7983,6 +8957,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             conceablity: {
               base: item.baseConcealability,
@@ -8045,6 +9022,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             conceablity: {
               base: item.baseConcealability,
@@ -8107,6 +9087,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             type: item.key,
             class: item.weaponType,
@@ -8137,6 +9120,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             class: item.weaponType,
             capacity: {
@@ -8177,6 +9163,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             grade: item.grade,
             type: item.type,
@@ -8216,6 +9205,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             type: item.type,
             typeSub: item.category,
@@ -8280,6 +9272,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             type: item.type,
             programs: {
@@ -8329,6 +9324,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             power: {
               base: item.power,
@@ -8374,6 +9372,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             rating: item.rating,
             goods: {
@@ -8403,6 +9404,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             rating: item.rating,
             nationality: item.nationality,
@@ -8434,6 +9438,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             type: item.type,
             linkedIdentity: item.linkedIdentity,
@@ -8464,6 +9471,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             type: item.type,
             category: item.category,
@@ -8500,6 +9510,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             anchored: item.category?.anchored,
             minion: item.category?.minion,
@@ -8536,6 +9549,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             rating: item.force,
             type: item.type,
@@ -8566,6 +9582,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             rating: item.rating,
             action: item.activation,
@@ -8590,6 +9609,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             rating: item.rating,
           },
@@ -8610,6 +9632,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             type: item.type,
             force: item.force,
@@ -8636,6 +9661,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             duration: item.duration,
             drain: {
@@ -8662,6 +9690,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             rating: item.rating,
           },
@@ -8682,6 +9713,9 @@ function assignData() {
           system: {
             info: {
               description: item.description,
+              gameEffects: item.gameEffects,
+              source: item.source.book,
+              page: item.source.page,
             },
             type: item.type,
             level: item.force,

@@ -301,150 +301,142 @@ function loadFromJSON(event) {
       //QUALITIES
 
       for (let quality in itemsByType.quality) {
+        var item = itemsByType.quality[quality];
         var q = {
-          key: itemsByType.quality[quality].name,
-          description: itemsByType.quality[quality].system.info.description,
-          type: itemsByType.quality[quality].system.type,
-          karmaCost: itemsByType.quality[quality].system.karmaCost.base,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          type: item.system.type,
+          karmaCost: item.system.karmaCost.base,
         };
+        console.log("Import new quality: ", a);
         characterData.qualities.push(q);
       }
 
       //CONTACTS
 
       for (let contact in itemsByType.contact) {
+        var item = itemsByType.contact[contact];
         var c = {
-          key: itemsByType.contact[contact].name,
-          description: itemsByType.contact[contact].system.info.description,
-          connection: itemsByType.contact[contact].system.connection,
-          loyalty: itemsByType.contact[contact].system.loyalty,
-          type: itemsByType.contact[contact].system.type,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          connection: item.system.connection,
+          loyalty: item.system.loyalty,
+          type: item.system.type,
         };
+        console.log("Import new contact: ", a);
         characterData.contacts.push(c);
       }
 
       //WEAPONS
 
       for (let weapon in itemsByType.weapon) {
-        console.log(itemsByType.weapon[weapon]);
-        if (itemsByType.weapon[weapon].system.type === "rangedWeapon") {
-          console.log(itemsByType.weapon[weapon]);
+        var item = itemsByType.weapon[weapon];
+        if (item.system.type === "rangedWeapon") {
           var rangedWeapon = {
-            key: itemsByType.weapon[weapon].name,
-            description: itemsByType.weapon[weapon].system.info.description,
-            skill: itemsByType.weapon[weapon].system.test.linkedSkill,
-            baseConcealability:
-              itemsByType.weapon[weapon].system.concealability.base,
-            price: itemsByType.weapon[weapon].system.goods.price.base,
-            availability:
-              itemsByType.weapon[weapon].system.goods.availability.base,
-            legality: itemsByType.weapon[weapon].system.legality,
-            type: itemsByType.weapon[weapon].system.typeSub,
+            key: item.name,
+            description: item.system.info.description,
+            gameEffects: item.system.info.gameEffects,
+            source: {
+              book: item.system.info.source,
+              page: item.system.info.page,
+            },
+            skill: item.system.test.linkedSkill,
+            baseConcealability: item.system.concealability.base,
+            price: item.system.goods.price.base,
+            availability: item.system.goods.availability.base,
+            legality: item.system.goods.legality,
+            type: item.system.typeSub,
             AR: {
-              closeAR:
-                itemsByType.weapon[weapon].system.attackRating.range.close.base,
-              nearAR:
-                itemsByType.weapon[weapon].system.attackRating.range.near.base,
-              mediumAR:
-                itemsByType.weapon[weapon].system.attackRating.range.medium
-                  .base,
-              farAR:
-                itemsByType.weapon[weapon].system.attackRating.range.far.base,
-              extremeAR:
-                itemsByType.weapon[weapon].system.attackRating.range.extreme
-                  .base,
+              closeAR: item.system.attackRating.range.close.base,
+              nearAR: item.system.attackRating.range.near.base,
+              mediumAR: item.system.attackRating.range.medium.base,
+              farAR: item.system.attackRating.range.far.base,
+              extremeAR: item.system.attackRating.range.extreme.base,
             },
             damage: {
-              value: itemsByType.weapon[weapon].system.damage.value.base,
-              type: itemsByType.weapon[weapon].system.damage.type,
+              value: item.system.damage.value.base,
+              type: item.system.damage.type,
             },
-            ammunitionMax: itemsByType.weapon[weapon].system.ammo.max,
-            loadingMechanism:
-              itemsByType.weapon[weapon].system.ammo.loadingMechanism,
+            ammunitionMax: item.system.ammo.max,
+            loadingMechanism: item.system.ammo.loadingMechanism,
             firingModes: {
-              singleShot:
-                itemsByType.weapon[weapon].system.firingMode.singleShot
-                  .available,
-              semiAutomatic:
-                itemsByType.weapon[weapon].system.firingMode.semiAutomatic
-                  .available,
-              burstFire:
-                itemsByType.weapon[weapon].system.firingMode.burstFire
-                  .available,
-              fullAutomatic:
-                itemsByType.weapon[weapon].system.firingMode.fullyAutomatic
-                  .available,
+              singleShot: item.system.firingMode.singleShot.available,
+              semiAutomatic: item.system.firingMode.semiAutomatic.available,
+              burstFire: item.system.firingMode.burstFire.available,
+              fullAutomatic: item.system.firingMode.fullyAutomatic.available,
             },
           };
-
+          console.log("Import new ranged Weapon: ", a);
           characterData.rangedWeapons.push(rangedWeapon);
         }
-        if (itemsByType.weapon[weapon].system.type === "meleeWeapon") {
-          console.log(itemsByType.weapon[weapon]);
+        if (item.system.type === "meleeWeapon") {
           var meleeWeapon = {
-            key: itemsByType.weapon[weapon].name,
-            description: itemsByType.weapon[weapon].system.info.description,
-            skill: itemsByType.weapon[weapon].system.test.linkedSkill,
-            baseConcealability:
-              itemsByType.weapon[weapon].system.concealability.base,
-            price: itemsByType.weapon[weapon].system.goods.price.base,
-            availability:
-              itemsByType.weapon[weapon].system.goods.availability.base,
-            legality: itemsByType.weapon[weapon].system.legality,
-            type: itemsByType.weapon[weapon].system.typeSub,
+            key: item.name,
+            description: item.system.info.description,
+            gameEffects: item.system.info.gameEffects,
+            source: {
+              book: item.system.info.source,
+              page: item.system.info.page,
+            },
+            skill: item.system.test.linkedSkill,
+            baseConcealability: item.system.concealability.base,
+            price: item.system.goods.price.base,
+            availability: item.system.goods.availability.base,
+            legality: item.system.goods.legality,
+            type: item.system.typeSub,
             AR: {
-              closeAR:
-                itemsByType.weapon[weapon].system.attackRating.range.close.base,
-              nearAR:
-                itemsByType.weapon[weapon].system.attackRating.range.near.base,
-              mediumAR:
-                itemsByType.weapon[weapon].system.attackRating.range.medium
-                  .base,
-              farAR:
-                itemsByType.weapon[weapon].system.attackRating.range.far.base,
-              extremeAR:
-                itemsByType.weapon[weapon].system.attackRating.range.extreme
-                  .base,
+              closeAR: item.system.attackRating.range.close.base,
+              nearAR: item.system.attackRating.range.near.base,
+              mediumAR: item.system.attackRating.range.medium.base,
+              farAR: item.system.attackRating.range.far.base,
+              extremeAR: item.system.attackRating.range.extreme.base,
             },
             damage: {
-              value: itemsByType.weapon[weapon].system.damage.value.base,
-              type: itemsByType.weapon[weapon].system.damage.type,
+              value: item.system.damage.value.base,
+              type: item.system.damage.type,
             },
           };
+          console.log("Import new melee Weapon: ", a);
           characterData.meleeWeapons.push(meleeWeapon);
         }
-        if (itemsByType.weapon[weapon].system.type === "grenade") {
-          console.log(itemsByType.weapon[weapon]);
+        if (item.system.type === "grenade") {
           var grenade = {
-            key: itemsByType.weapon[weapon].name,
-            description: itemsByType.weapon[weapon].system.info.description,
-            skill: itemsByType.weapon[weapon].system.test.linkedSkill,
-            baseConcealability:
-              itemsByType.weapon[weapon].system.concealability.base,
-            price: itemsByType.weapon[weapon].system.goods.price.base,
-            availability:
-              itemsByType.weapon[weapon].system.goods.availability.base,
-            legality: itemsByType.weapon[weapon].system.legality,
-            type: itemsByType.weapon[weapon].system.typeSub,
+            key: item.name,
+            description: item.system.info.description,
+            gameEffects: item.system.info.gameEffects,
+            source: {
+              book: item.system.info.source,
+              page: item.system.info.page,
+            },
+            skill: item.system.test.linkedSkill,
+            baseConcealability: item.system.concealability.base,
+            price: item.system.goods.price.base,
+            availability: item.system.goods.availability.base,
+            legality: item.system.goods.legality,
+            type: item.system.typeSub,
             AR: {
-              closeAR:
-                itemsByType.weapon[weapon].system.attackRating.range.close.base,
-              nearAR:
-                itemsByType.weapon[weapon].system.attackRating.range.near.base,
-              mediumAR:
-                itemsByType.weapon[weapon].system.attackRating.range.medium
-                  .base,
-              farAR:
-                itemsByType.weapon[weapon].system.attackRating.range.far.base,
-              extremeAR:
-                itemsByType.weapon[weapon].system.attackRating.range.extreme
-                  .base,
+              closeAR: item.system.attackRating.range.close.base,
+              nearAR: item.system.attackRating.range.near.base,
+              mediumAR: item.system.attackRating.range.medium.base,
+              farAR: item.system.attackRating.range.far.base,
+              extremeAR: item.system.attackRating.range.extreme.base,
             },
             damage: {
-              value: itemsByType.weapon[weapon].system.damage.value.base,
-              type: itemsByType.weapon[weapon].system.damage.type,
+              value: item.system.damage.value.base,
+              type: item.system.damage.type,
             },
           };
+          console.log("Import new grenade: ", a);
           characterData.grenades.push(grenade);
         }
       }
@@ -452,210 +444,255 @@ function loadFromJSON(event) {
       //AMMUNITIONS
 
       for (let ammo in itemsByType.ammunition) {
+        var item = itemsByType.ammunition[ammo];
         var a = {
-          key: itemsByType.ammunition[ammo].name,
-          description: itemsByType.ammunition[ammo].system.info.description,
-          price: itemsByType.ammunition[ammo].system.goods.price.base,
-          availability:
-            itemsByType.ammunition[ammo].system.goods.availability.base,
-          legality: itemsByType.ammunition[ammo].system.legality,
-          type: itemsByType.ammunition[ammo].system.type,
-          weaponType: itemsByType.ammunition[ammo].system.class,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          type: item.system.type,
+          weaponType: item.system.class,
         };
+        console.log("Import new ammunition: ", a);
         characterData.ammunitions.push(a);
       }
 
       //PROTECTIONS
 
       for (let protection in itemsByType.armor) {
+        var item = itemsByType.armor[protection];
         var a = {
-          key: itemsByType.armor[protection].name,
-          description: itemsByType.armor[protection].system.info.description,
-          price: itemsByType.armor[protection].system.goods.price.base,
-          availability:
-            itemsByType.armor[protection].system.goods.availability.base,
-          legality: itemsByType.armor[protection].system.legality,
-          defenseRating:
-            itemsByType.armor[protection].system.defenseRating.base,
-          socialRating: itemsByType.armor[protection].system.socialRating.base,
-          capacity: itemsByType.armor[protection].system.capacity.provided.base,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          defenseRating: item.system.defenseRating.base,
+          socialRating: item.system.socialRating.base,
+          capacity: item.system.capacity.provided.base,
         };
+        console.log("Import new protection: ", a);
         characterData.protections.push(a);
       }
 
       //AUGMENTATIONS
 
       for (let augmentation in itemsByType.augmentation) {
+        var item = itemsByType.augmentation[augmentation];
         var a = {
-          key: itemsByType.augmentation[augmentation].name,
-          description:
-            itemsByType.augmentation[augmentation].system.info.description,
-          price: itemsByType.augmentation[augmentation].system.goods.price.base,
-          availability:
-            itemsByType.augmentation[augmentation].system.goods.availability
-              .base,
-          legality: itemsByType.augmentation[augmentation].system.legality,
-          type: itemsByType.augmentation[augmentation].system.type,
-          category: itemsByType.augmentation[augmentation].system.typeSub,
-          grade: itemsByType.augmentation[augmentation].system.grade,
-          essenceCost:
-            itemsByType.augmentation[augmentation].system.essenceCost.base,
-          capacity:
-            itemsByType.augmentation[augmentation].system.capacity.provided
-              .base,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          type: item.system.type,
+          category: item.system.typeSub,
+          grade: item.system.grade,
+          essenceCost: item.system.essenceCost.base,
+          capacity: item.system.capacity.provided.base,
         };
+        console.log("Import new augmentation: ", a);
         characterData.augmentations.push(a);
       }
 
       //VEHICLES
 
       for (let vehicle in itemsByType.vehicle) {
+        var item = itemsByType.vehicle[vehicle];
         var a = {
-          key: itemsByType.vehicle[vehicle].name,
-          description: itemsByType.vehicle[vehicle].system.info.description,
-          price: itemsByType.vehicle[vehicle].system.goods.price.base,
-          availability:
-            itemsByType.vehicle[vehicle].system.goods.availability.base,
-          legality: itemsByType.vehicle[vehicle].system.legality,
-          type: itemsByType.vehicle[vehicle].system.type,
-          category: itemsByType.vehicle[vehicle].system.typeSub,
-          typeSub: itemsByType.vehicle[vehicle].system.category,
-          pilotSpecialization: itemsByType.vehicle[vehicle].system.pilotSkill,
-          riggingInterface:
-            itemsByType.vehicle[vehicle].system.modifications.riggerInterface,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          type: item.system.type,
+          category: item.system.typeSub,
+          typeSub: item.system.category,
+          pilotSpecialization: item.system.pilotSkill,
+          riggingInterface: item.system.modifications.riggerInterface,
           attributes: {
-            handling:
-              itemsByType.vehicle[vehicle].system.attributes.handling.base,
-            handlingOffRoad:
-              itemsByType.vehicle[vehicle].system.attributes.handlingOffRoad
-                .base,
-            acceleration:
-              itemsByType.vehicle[vehicle].system.attributes.acceleration.base,
-            speedInterval:
-              itemsByType.vehicle[vehicle].system.attributes.speedInterval.base,
-            topSpeed:
-              itemsByType.vehicle[vehicle].system.attributes.topSpeed.base,
-            armor: itemsByType.vehicle[vehicle].system.attributes.armor.base,
-            body: itemsByType.vehicle[vehicle].system.attributes.body.base,
-            pilot: itemsByType.vehicle[vehicle].system.attributes.pilot.base,
-            sensor: itemsByType.vehicle[vehicle].system.attributes.sensor.base,
-            seat: itemsByType.vehicle[vehicle].system.attributes.seat.base,
+            handling: item.system.attributes.handling.base,
+            handlingOffRoad: item.system.attributes.handlingOffRoad.base,
+            acceleration: item.system.attributes.acceleration.base,
+            speedInterval: item.system.attributes.speedInterval.base,
+            topSpeed: item.system.attributes.topSpeed.base,
+            armor: item.system.attributes.armor.base,
+            body: item.system.attributes.body.base,
+            pilot: item.system.attributes.pilot.base,
+            sensor: item.system.attributes.sensor.base,
+            seat: item.system.attributes.seat.base,
           },
         };
+        console.log("Import new vehicle: ", a);
         characterData.vehicles.push(a);
       }
 
       //DEVICES
 
       for (let device in itemsByType.device) {
+        var item = itemsByType.device[device];
         var a = {
-          key: itemsByType.device[device].name,
-          description: itemsByType.device[device].system.info.description,
-          price: itemsByType.device[device].system.goods.price.base,
-          availability:
-            itemsByType.device[device].system.goods.availability.base,
-          legality: itemsByType.device[device].system.legality,
-          type: itemsByType.device[device].system.type,
-          rating: itemsByType.device[device].system.matrix.deviceRating,
-          slots: itemsByType.device[device].system.programs.base,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          type: item.system.type,
+          rating: item.system.matrix.deviceRating,
+          slots: item.system.programs.base,
           attributes: {
-            attack: itemsByType.device[device].system.matrix.attributes.attack.base,
-            dataProcessing:
-              itemsByType.device[device].system.matrix.attributes
-                .dataProcessing.base,
-            firewall:
-              itemsByType.device[device].system.matrix.attributes.firewall.base,
-            sleaze: itemsByType.device[device].system.matrix.attributes.sleaze.base,
+            attack: item.system.matrix.attributes.attack.base,
+            dataProcessing: item.system.matrix.attributes.dataProcessing.base,
+            firewall: item.system.matrix.attributes.firewall.base,
+            sleaze: item.system.matrix.attributes.sleaze.base,
           },
         };
-        console.log("new device : ", a);
+        console.log("Import new device: ", a);
         characterData.devices.push(a);
       }
 
       //DRUGS
 
       for (let drug in itemsByType.drug) {
+        var item = itemsByType.drug[drug];
         var a = {
-          key: itemsByType.drug[drug].name,
-          description: itemsByType.drug[drug].system.info.description,
-          price: itemsByType.drug[drug].system.goods.price.base,
-          availability: itemsByType.drug[drug].system.goods.availability.base,
-          legality: itemsByType.drug[drug].system.legality,
-          power: itemsByType.drug[drug].system.power.base,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          power: item.system.power.base,
           duration: {
-            value: itemsByType.drug[drug].system.duration.base,
-            period: itemsByType.drug[drug].system.duration.period,
+            value: item.system.duration.base,
+            period: item.system.duration.period,
           },
           speed: {
-            value: itemsByType.drug[drug].system.speed.base,
-            period: itemsByType.drug[drug].system.speed.period,
+            value: item.system.speed.base,
+            period: item.system.speed.period,
           },
           vectors: {
-            contact: itemsByType.drug[drug].system.vector.contact,
-            ingestion: itemsByType.drug[drug].system.vector.ingestion,
-            inhalation: itemsByType.drug[drug].system.vector.inhalation,
-            injection: itemsByType.drug[drug].system.vector.injection,
+            contact: item.system.vector.contact,
+            ingestion: item.system.vector.ingestion,
+            inhalation: item.system.vector.inhalation,
+            injection: item.system.vector.injection,
           },
         };
+        console.log("Import new drug: ", a);
         characterData.drugs.push(a);
       }
 
       //STUFFS
 
       for (let stuff in itemsByType.gear) {
+        var item = itemsByType.gear[stuff];
         var a = {
-          key: itemsByType.gear[stuff].name,
-          description: itemsByType.gear[stuff].system.info.description,
-          price: itemsByType.gear[stuff].system.goods.price.base,
-          availability: itemsByType.gear[stuff].system.goods.availability.base,
-          legality: itemsByType.gear[stuff].system.legality,
-          rating: itemsByType.gear[stuff].system.rating,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          rating: item.system.rating,
         };
+        console.log("Import new drug: ", a);
         characterData.stuffs.push(a);
       }
 
       //SINS
 
       for (let sin in itemsByType.sin) {
+        var item = itemsByType.sin[sin];
         var a = {
-          key: itemsByType.sin[sin].name,
-          description: itemsByType.sin[sin].system.info.description,
-          price: itemsByType.sin[sin].system.goods.price.base,
-          availability: itemsByType.sin[sin].system.goods.availability.base,
-          legality: itemsByType.sin[sin].system.legality,
-          rating: itemsByType.sin[sin].system.rating,
-          nationality: itemsByType.sin[sin].system.nationality,
-          licences: itemsByType.sin[sin].system.accessories,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          rating: item.system.rating,
+          nationality: item.system.nationality,
+          licences: item.system.accessories,
         };
+        console.log("Import new SIN: ", a);
         characterData.SINS.push(a);
       }
 
       //LIFESTYLES
 
       for (let lifestyle in itemsByType.lifestyle) {
+        var item = itemsByType.lifestyle[lifestyle];
         var a = {
-          key: itemsByType.lifestyle[lifestyle].name,
-          description: itemsByType.lifestyle[lifestyle].system.info.description,
-          price: itemsByType.lifestyle[lifestyle].system.goods.price.base,
-          availability:
-            itemsByType.lifestyle[lifestyle].system.goods.availability.base,
-          legality: itemsByType.lifestyle[lifestyle].system.legality,
-          type: itemsByType.lifestyle[lifestyle].system.type,
-          linkedIdentity:
-            itemsByType.lifestyle[lifestyle].system.linkedIdentity,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          type: item.system.type,
+          linkedIdentity: item.system.linkedIdentity,
         };
+        console.log("Import new lifestyle: ", a);
         characterData.lifestyles.push(a);
       }
 
       //SPELLS
 
       for (let spell in itemsByType.spell) {
+        var item = itemsByType.spell[spell];
         var a = {
-          key: itemsByType.spell[spell].name,
-          description: itemsByType.spell[spell].system.info.description,
-          price: itemsByType.spell[spell].system.goods.price.base,
-          availability: itemsByType.spell[spell].system.goods.availability.base,
-          legality: itemsByType.spell[spell].system.legality,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
           type: itemsByType.spell[spell].system.type,
           category: itemsByType.spell[spell].system.category,
           categorySub: itemsByType.spell[spell].system.categorySub,
@@ -663,134 +700,182 @@ function loadFromJSON(event) {
           duration: itemsByType.spell[spell].system.duration,
           drainValue: itemsByType.spell[spell].system.drain.base,
         };
+        console.log("Import new spell: ", a);
         characterData.spells.push(a);
       }
 
       //RITUALS
 
       for (let ritual in itemsByType.ritual) {
+        var item = itemsByType.ritual[ritual];
         var a = {
-          key: itemsByType.ritual[ritual].name,
-          description: itemsByType.ritual[ritual].system.info.description,
-          minion: itemsByType.ritual[ritual].system.minion,
-          anchored: itemsByType.ritual[ritual].system.anchored,
-          materialLink: itemsByType.ritual[ritual].system.materialLink,
-          spotter: itemsByType.ritual[ritual].system.spotter,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          minion: item.system.minion,
+          anchored: item.system.anchored,
+          materialLink: item.system.materialLink,
+          spotter: item.system.spotter,
           duration: {
-            value: itemsByType.ritual[ritual].system.duration.value,
-            type: itemsByType.ritual[ritual].system.duration.period,
+            value: item.system.duration.value,
+            type: item.system.duration.period,
           },
         };
+        console.log("Import new ritual: ", a);
         characterData.rituals.push(a);
       }
 
       //FOCUS
 
       for (let focus in itemsByType.focus) {
+        var item = itemsByType.focus[focus];
         var a = {
-          key: itemsByType.focus[focus].name,
-          description: itemsByType.focus[focus].system.info.description,
-          price: itemsByType.focus[focus].system.goods.price.base,
-          availability: itemsByType.focus[focus].system.goods.availability.base,
-          legality: itemsByType.focus[focus].system.legality,
-          type: itemsByType.focus[focus].system.type,
-          force: itemsByType.focus[focus].system.rating,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          price: item.system.goods.price.base,
+          availability: item.system.goods.availability.base,
+          legality: item.system.goods.legality,
+          type: item.system.type,
+          force: item.system.rating,
         };
-        console.log("new focus : ", a);
+        console.log("Import new focus: ", a);
         characterData.foci.push(a);
       }
 
       //ADEPT POWERS
 
       for (let adeptpower in itemsByType.adeptpower) {
+        var item = itemsByType.adeptpower[adeptpower];
         var a = {
-          key: itemsByType.adeptpower[adeptpower].name,
-          description:
-            itemsByType.adeptpower[adeptpower].system.info.description,
-          activation: itemsByType.adeptpower[adeptpower].system.action,
-          rating: itemsByType.adeptpower[adeptpower].system.rating,
-          powerPointsCost:
-            itemsByType.adeptpower[adeptpower].system.powerPoint.base,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          activation: item.system.action,
+          rating: item.system.rating,
+          powerPointsCost: item.system.powerPoint.base,
         };
-        console.log("new adept power : ", a);
+        console.log("Import new adept power: ", a);
         characterData.adeptPowers.push(a);
       }
 
       //METAMAGICS
 
       for (let metamagic in itemsByType.metamagic) {
+        var item = itemsByType.metamagic[metamagic];
         var a = {
-          key: itemsByType.metamagic[metamagic].name,
-          description: itemsByType.metamagic[metamagic].system.info.description,
-          rating: itemsByType.metamagic[metamagic].system.rating,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          rating: item.system.rating,
         };
-        console.log("new metamagic : ", a);
+        console.log("Import new metamagic: ", a);
         characterData.metamagics.push(a);
       }
 
       //SPIRITS
 
       for (let spirit in itemsByType.spirit) {
+        var item = itemsByType.spirit[spirit];
         var a = {
-          key: itemsByType.spirit[spirit].name,
-          description: itemsByType.spirit[spirit].system.info.description,
-          type: itemsByType.spirit[spirit].system.type,
-          force: itemsByType.spirit[spirit].system.force,
-          isBounded: itemsByType.spirit[spirit].system.isBounded,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          type: item.system.type,
+          force: item.system.force,
+          isBounded: item.system.isBounded,
           service: {
-            current: itemsByType.spirit[spirit].system.service.current,
-            max: itemsByType.spirit[spirit].system.service.max,
+            current: item.system.service.current,
+            max: item.system.service.max,
           },
         };
-        console.log("new spirit : ", a);
+        console.log("Import new spirit: ", a);
         characterData.spirits.push(a);
       }
 
       //COMPLEX FORMS
 
       for (let complexform in itemsByType.complexform) {
+        var item = itemsByType.complexform[complexform];
         var a = {
-          key: itemsByType.complexform[complexform].name,
-          description:
-            itemsByType.complexform[complexform].system.info.description,
-          duration: itemsByType.complexform[complexform].system.duration,
-          fadeValue: itemsByType.complexform[complexform].system.drain.base,
-          skill: itemsByType.complexform[complexform].system.test.linkedSkill,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          duration: item.system.duration,
+          fadeValue: item.system.drain.base,
+          skill: item.system.test.linkedSkill,
         };
+        console.log("Import new complex form: ", a);
         characterData.complexForms.push(a);
       }
 
       //ECHOES
 
       for (let echo in itemsByType.echo) {
+        var item = itemsByType.echo[echo];
         var a = {
-          key: itemsByType.echo[echo].name,
-          description: itemsByType.echo[echo].system.info.description,
-          rating: itemsByType.echo[echo].system.rating,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          rating: item.system.rating,
         };
-        console.log("new echo : ", a);
+        console.log("Import new echo: ", a);
         characterData.echoes.push(a);
       }
 
       //SPRITES
 
       for (let sprite in itemsByType.sprite) {
+        var item = itemsByType.sprite[sprite];
         var a = {
-          key: itemsByType.sprite[sprite].name,
-          description: itemsByType.sprite[sprite].system.info.description,
-          type: itemsByType.sprite[sprite].system.type,
-          level: itemsByType.sprite[sprite].system.level,
-          isRegistered: itemsByType.sprite[sprite].system.isRegistered,
+          key: item.name,
+          description: item.system.info.description,
+          gameEffects: item.system.info.gameEffects,
+          source: {
+            book: item.system.info.source,
+            page: item.system.info.page,
+          },
+          type: item.system.type,
+          level: item.system.level,
+          isRegistered: item.system.isRegistered,
           task: {
-            current: itemsByType.sprite[sprite].system.task.current,
-            max: itemsByType.sprite[sprite].system.task.max,
+            current: item.system.task.current,
+            max: item.system.task.max,
           },
         };
-        console.log("new sprite : ", a);
+        console.log("Import new sprite: ", a);
         characterData.sprites.push(a);
       }
 
-      console.log("loadFromJSON characterData : ", characterData);
+      console.log("loadFromJSON characterData: ", characterData);
 
       // Chargez les données du personnage
       saveCharacterData(characterData);
