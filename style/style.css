@@ -347,7 +347,7 @@ td.selectable:hover,
   color: #ddd;
 }
 
-#catalogPanel {
+.catalogPanel {
   height: 90%;
   width: 0;
   position: fixed;
@@ -363,7 +363,7 @@ td.selectable:hover,
   overflow-x: auto;
 }
 
-#catalogPanel button {
+.catalogPanel button {
   margin-right: 2%;
   background-color: #333;
   color: #007bff;
@@ -372,7 +372,7 @@ td.selectable:hover,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-#catalogPanel.open {
+.catalogPanel.open {
   width: fit-content;
   max-width: 50%;
 }

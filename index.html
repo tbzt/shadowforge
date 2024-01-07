@@ -898,7 +898,8 @@
               </div>
             </div>
             <!-- Section : Choix des qualités -->
-            <div class="collapse" id="collapseQualities" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+            <div class="collapse" id="collapseQualities" ondragover="handleDragOver(event, 'collapseQualities')"
+              ondrop="handleDrop(event, 'qualities')">
               <div class="card card-body">
                 <!-- Affiche le namebre de points d'attributes à dépenser -->
                 <div id="qualitiesSpent"></div>
@@ -942,8 +943,9 @@
               <div class="card card-body stuffCard mb-3" id="combatWeapons">
 
                 <!-- Section : Choix des Armes à distance -->
-                <div class="collapse" id="collapseRangedWeapons" ondragover="handleDragOver(event)"
-                  ondrop="handleDrop(event)">
+                <div class="collapse" id="collapseRangedWeapons"
+                  ondragover="handleDragOver(event, 'collapseRangedWeapons')"
+                  ondrop="handleDrop(event, 'rangedWeapons')">
                   <div class="card card-body">
 
                     <label for="rangedWeaponsTable" class="section-title">{{capitalized rangedWeapons}}{{colons}}

@@ -412,6 +412,7 @@ const translations = {
     positive: "qualité",
     negative: "défaut",
     qualitiesCatalog: "Catalogue des Traits",
+    rangedWeaponsCatalog: "Catalogue des Armes à distance",
     filterName: "Filtrer par nom",
     all: "tous",
     minKarma: "Karma minimum",
