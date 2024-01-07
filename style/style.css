@@ -359,8 +359,77 @@ td.selectable:hover,
   transition: 1s;
   padding-top: 0.5em;
   margin-bottom: 2%;
-  color: #ddd;
   overflow-x: auto;
+  scrollbar-width: thin; /* pour Firefox */
+  scrollbar-color: #05f2db #333; /* pour Firefox */
+}
+
+/* Pour Chrome, Safari et Edge */
+.catalogPanel::-webkit-scrollbar {
+  width: 12px;
+}
+
+.catalogPanel::-webkit-scrollbar-track {
+  background: #333;
+}
+
+.catalogPanel::-webkit-scrollbar-thumb {
+  background-color: #05f2db;
+  border-radius: 6px;
+}
+
+.catalogPanel td {
+  color: #ddd;
+}
+
+.catalogPanelRight {
+  height: 90%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0; /* changé de 'left' à 'right' */
+  background-color: #333;
+  overflow-x: hidden;
+  transition: 1s;
+  padding-top: 0.5em;
+  margin-bottom: 2%;
+  overflow-x: auto;
+  scrollbar-width: thin; /* pour Firefox */
+  scrollbar-color: #05f2db #333; /* pour Firefox */
+}
+
+.catalogPanelRight .btn-close {
+  background-color: #05f2db; 
+  opacity: 0.8; 
+  border-radius: 50%; 
+  width: 30px; 
+  height: 30px;
+  border: none;
+  margin-right: 10px;
+}
+
+.catalogPanelRight .btn-close:hover {
+  opacity: 1; 
+  background-color: rgba(88, 2, 89, 0.75); 
+}
+
+/* Pour Chrome, Safari et Edge */
+.catalogPanelRight::-webkit-scrollbar {
+  width: 12px;
+}
+
+.catalogPanelRight::-webkit-scrollbar-track {
+  background: #333;
+}
+
+.catalogPanelRight::-webkit-scrollbar-thumb {
+  background-color: #05f2db;
+  border-radius: 6px;
+}
+
+.catalogPanelRight td {
+  color: #ddd;
 }
 
 .catalogPanel button {
@@ -372,9 +441,38 @@ td.selectable:hover,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.catalogPanelRight button {
+  margin-right: 2%;
+  background-color: #333;
+  color: #007bff;
+  border: 1px solid #555;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
 .catalogPanel.open {
   width: fit-content;
   max-width: 50%;
+}
+
+.catalogPanelRight.open {
+  width: fit-content;
+  max-width: 50%;
+}
+
+.catalogPanel .btn-close {
+  background-color: #05f2db; 
+  opacity: 0.8; 
+  border-radius: 50%; 
+  width: 30px; 
+  height: 30px;
+  border: none;
+  margin-right: 10px;
+}
+
+.catalogPanel .btn-close:hover {
+  opacity: 1; 
+  background-color: rgba(88, 2, 89, 0.75); 
 }
 
 #sumToTenTitle,

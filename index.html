@@ -29,9 +29,7 @@
   <script src="https://unpkg.com/jspdf"></script>
   <script src="https://unpkg.com/jspdf-autotable"></script>
 
-  <!-- Ajouter votre fichier JavaScript -->
   <script src="js/helpers.js"></script>
-  <!-- Lien vers le fichier JavaScript -->
 
 </head>
 
@@ -334,7 +332,8 @@
               <div class="card card-body stuffCard mb-3" id="magicalStuff">
 
                 <!-- Section : Choix des sorts -->
-                <div class="collapse" id="collapseSpells" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+                <div class="collapse" id="collapseSpells"  ondragover="handleDragOver(event, 'collapseSpells')"
+                ondrop="handleDrop(event, 'spells')">
                   <div class="card card-body">
 
                     <label for="spellsTable" class="section-title">{{capitalized spells}}{{colons}} </label>
@@ -1355,6 +1354,7 @@
 </div>
 <script src="js/translation.js"></script>
 <script src="js/data.js"></script>
+<script src="js/dragAndDrop.js"></script>
 <script src="js/foundry.js"></script>
 <script src="js/catalog.js"></script>
 <script src="js/fonts/roboto.js"></script>
