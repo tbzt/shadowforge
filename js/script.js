@@ -1169,7 +1169,30 @@ function modalConstruct(type, newType, method) {
     )
     .join("\n");
 
-  const book = ["assassinsNight", "astralWays", "coreRulebook", "coreRulebookSeattle", "collapsingNow", "cuttingBlack", "doubleClutch", "emeraldCity", "firingSquad", "freeSeattle", "hackNSlash", "nullValue", "powerPlays", "roguesGallery", "shootStraight", "sixthWorldCompanion", "slipStreams", "streetWyrd", "theKechibiCode", "theThirdParallel", "thirtyNights", "whisperNets"];
+  const book = [
+    "assassinsNight",
+    "astralWays",
+    "coreRulebook",
+    "coreRulebookSeattle",
+    "collapsingNow",
+    "cuttingBlack",
+    "doubleClutch",
+    "emeraldCity",
+    "firingSquad",
+    "freeSeattle",
+    "hackNSlash",
+    "nullValue",
+    "powerPlays",
+    "roguesGallery",
+    "shootStraight",
+    "sixthWorldCompanion",
+    "slipStreams",
+    "streetWyrd",
+    "theKechibiCode",
+    "theThirdParallel",
+    "thirtyNights",
+    "whisperNets",
+  ];
   book.sort((a, b) => terms[a].localeCompare(terms[b]));
 
   const bookOptions = book
@@ -1219,8 +1242,8 @@ function modalConstruct(type, newType, method) {
       specificType = `
       <div class="form-group row align-items-center mb-2">
           <label for="${type}Description" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-            terms.description
-          )}${terms.colons}</label>
+        terms.description
+      )}${terms.colons}</label>
           <div class="col-sm-9">
           <textarea class="form-control flex-grow-1" id="${type}Description" rows="4"></textarea>
           </div>
@@ -1228,8 +1251,8 @@ function modalConstruct(type, newType, method) {
 
         <div class="form-group row align-items-center mb-2">
           <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-              terms.gameEffects
-            )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
           </label>
           <div class="col-sm-9">
           <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -1238,8 +1261,8 @@ function modalConstruct(type, newType, method) {
           
         <div class="form-group row align-items-center mb-2">  
           <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-            terms.source
-            )}${terms.colons}
+        terms.source
+      )}${terms.colons}
           </label>
           <div class="col-sm-4">
             <select class="form-control" id="${type}Book">
@@ -1270,8 +1293,8 @@ function modalConstruct(type, newType, method) {
         </div>
         <div class="form-group row align-items-center mb-2">
           <label for="${type}KarmaCost" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-            terms.karmaCost
-          )}${terms.colons}</label>
+        terms.karmaCost
+      )}${terms.colons}</label>
           <div class="col-sm-3">
           <input type="number" class="form-control" id="${type}KarmaCost" aria-label="Karma cost for the quality" style="width: 3em;">
           </div>
@@ -1281,16 +1304,16 @@ function modalConstruct(type, newType, method) {
       specificType = `
       <div class="form-group row align-items-center mb-2">
           <label for="${type}Type" class="col-sm-3 col-form-label">${capitalized(
-            terms.type
-          )}${terms.colons}</label>
+        terms.type
+      )}${terms.colons}</label>
           <div class="col-sm-9">
             <textarea class="form-control" id="${type}Type" rows="4"></textarea>
           </div>
       </div>
       <div class="form-group row align-items-center mb-4">
           <label for="${type}Description" class="col-sm-3 col-form-label">${capitalized(
-            terms.description
-          )}${terms.colons}</label>
+        terms.description
+      )}${terms.colons}</label>
           <div class="col-sm-9">
             <textarea class="form-control" id="${type}Description" rows="4"></textarea>
           </div>
@@ -1298,8 +1321,8 @@ function modalConstruct(type, newType, method) {
 
       <div class="form-group row align-items-center mb-2">
         <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-            terms.gameEffects
-          )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
         </label>
         <div class="col-sm-9">
         <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -1308,8 +1331,8 @@ function modalConstruct(type, newType, method) {
         
       <div class="form-group row align-items-center mb-2">  
         <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-          terms.source
-          )}${terms.colons}
+        terms.source
+      )}${terms.colons}
         </label>
         <div class="col-sm-4">
           <select class="form-control" id="${type}Book">
@@ -1323,14 +1346,14 @@ function modalConstruct(type, newType, method) {
       </div>
       <div class="form-group row align-items-center mb-2">  
           <label for="${type}Connection" class="col-sm-3 col-form-label">${capitalized(
-            terms.connection
-          )}${terms.colons}</label>
+        terms.connection
+      )}${terms.colons}</label>
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Connection" aria-label="Connections" value=0>
           </div>
           <label for="${type}Loyalty" class="col-sm-3 col-form-label">${capitalized(
-            terms.loyalty
-          )}${terms.colons}</label>
+        terms.loyalty
+      )}${terms.colons}</label>
           <div class="col-sm-3">
             <input type="number" class="form-control" id="${type}Loyalty" aria-label="Loyalties" value=0>
           </div>
@@ -1467,7 +1490,7 @@ function modalConstruct(type, newType, method) {
     
   <div class="form-group row align-items-center mb-2">  
     <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-      terms.source
+        terms.source
       )}${terms.colons}
     </label>
     <div class="col-sm-4">
@@ -1737,8 +1760,8 @@ function modalConstruct(type, newType, method) {
 
 <div class="form-group row align-items-center mb-2">
   <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-      terms.gameEffects
-    )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
   </label>
   <div class="col-sm-9">
   <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -1747,8 +1770,8 @@ function modalConstruct(type, newType, method) {
   
 <div class="form-group row align-items-center mb-2">  
   <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-    terms.source
-    )}${terms.colons}
+        terms.source
+      )}${terms.colons}
   </label>
   <div class="col-sm-4">
     <select class="form-control" id="${type}Book">
@@ -1824,8 +1847,8 @@ function modalConstruct(type, newType, method) {
 
       <div class="form-group row align-items-center mb-2">
         <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-            terms.gameEffects
-          )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
         </label>
         <div class="col-sm-9">
         <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -1834,8 +1857,8 @@ function modalConstruct(type, newType, method) {
         
       <div class="form-group row align-items-center mb-2">  
         <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-          terms.source
-          )}${terms.colons}
+        terms.source
+      )}${terms.colons}
         </label>
         <div class="col-sm-4">
           <select class="form-control" id="${type}Book">
@@ -1955,8 +1978,8 @@ function modalConstruct(type, newType, method) {
 
 <div class="form-group row align-items-center mb-2">
   <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-      terms.gameEffects
-    )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
   </label>
   <div class="col-sm-9">
   <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -1965,8 +1988,8 @@ function modalConstruct(type, newType, method) {
   
 <div class="form-group row align-items-center mb-2">  
   <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-    terms.source
-    )}${terms.colons}
+        terms.source
+      )}${terms.colons}
   </label>
   <div class="col-sm-4">
     <select class="form-control" id="${type}Book">
@@ -2200,8 +2223,8 @@ function modalConstruct(type, newType, method) {
 
 <div class="form-group row align-items-center mb-2">
   <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-      terms.gameEffects
-    )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
   </label>
   <div class="col-sm-9">
   <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -2210,8 +2233,8 @@ function modalConstruct(type, newType, method) {
   
 <div class="form-group row align-items-center mb-2">  
   <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-    terms.source
-    )}${terms.colons}
+        terms.source
+      )}${terms.colons}
   </label>
   <div class="col-sm-4">
     <select class="form-control" id="${type}Book">
@@ -2405,8 +2428,8 @@ function modalConstruct(type, newType, method) {
 
         <div class="form-group row align-items-center mb-2">
           <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-              terms.gameEffects
-            )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
           </label>
           <div class="col-sm-9">
           <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -2415,8 +2438,8 @@ function modalConstruct(type, newType, method) {
           
         <div class="form-group row align-items-center mb-2">  
           <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-            terms.source
-            )}${terms.colons}
+        terms.source
+      )}${terms.colons}
           </label>
           <div class="col-sm-4">
             <select class="form-control" id="${type}Book">
@@ -2556,8 +2579,8 @@ function modalConstruct(type, newType, method) {
 
       <div class="form-group row align-items-center mb-2">
         <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-            terms.gameEffects
-          )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
         </label>
         <div class="col-sm-9">
         <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -2566,8 +2589,8 @@ function modalConstruct(type, newType, method) {
         
       <div class="form-group row align-items-center mb-2">  
         <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-          terms.source
-          )}${terms.colons}
+        terms.source
+      )}${terms.colons}
         </label>
         <div class="col-sm-4">
           <select class="form-control" id="${type}Book">
@@ -2664,8 +2687,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -2675,7 +2698,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -2737,8 +2760,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -2748,7 +2771,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -2860,8 +2883,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -2871,7 +2894,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -2981,8 +3004,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -2992,7 +3015,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -3060,7 +3083,7 @@ function modalConstruct(type, newType, method) {
           </div>
     </div>
     <div class="form-check d-flex justify-content-start">          
-          <input class="form-check-input me-2" type="checkbox" value="Preparation" id="preparation">
+          <input class="form-check-input me-2" type="checkbox" value="Preparation" id="Preparation">
           <label class="form-check-label" for="preparation">
             ${capitalized(terms.preparation)}
           </label>
@@ -3123,8 +3146,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -3134,7 +3157,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -3266,8 +3289,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -3277,7 +3300,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -3362,8 +3385,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -3373,7 +3396,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -3426,8 +3449,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -3437,7 +3460,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -3492,7 +3515,7 @@ function modalConstruct(type, newType, method) {
     
   <div class="form-group row align-items-center mb-2">  
     <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-      terms.source
+        terms.source
       )}${terms.colons}
     </label>
     <div class="col-sm-4">
@@ -3572,8 +3595,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -3583,7 +3606,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -3640,8 +3663,8 @@ function modalConstruct(type, newType, method) {
 
     <div class="form-group row align-items-center mb-2">
       <label for="${type}GameEffects" class="col-sm-3 col-form-label" style="white-space: nowrap;">${capitalized(
-          terms.gameEffects
-        )}${terms.colons}
+        terms.gameEffects
+      )}${terms.colons}
       </label>
       <div class="col-sm-9">
       <textarea class="form-control flex-grow-1" id="${type}GameEffects" rows="2"></textarea>
@@ -3651,7 +3674,7 @@ function modalConstruct(type, newType, method) {
     <div class="form-group row align-items-center mb-2">  
       <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
         terms.source
-        )}${terms.colons}
+      )}${terms.colons}
       </label>
       <div class="col-sm-4">
         <select class="form-control" id="${type}Book">
@@ -3706,7 +3729,7 @@ function modalConstruct(type, newType, method) {
     
   <div class="form-group row align-items-center mb-2">  
     <label for="${type}Source" class="col-sm-3 col-form-label">${capitalized(
-      terms.source
+        terms.source
       )}${terms.colons}
     </label>
     <div class="col-sm-4">
@@ -3968,14 +3991,23 @@ function handleDropdownModal(type) {
 
       console.log("type : ", type);
 
-      if (type === "qualities") {       
+      if (type === "qualities") {
         var description = getValue("Description", type);
-        var qualityType = $("input[name='choosequalitiesType']:checked").val();    
-        var karmaCost = getValue("Karmacost", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var qualityType = $("input[name='choosequalitiesType']:checked").val();
+        var karmaCost = getValue("Karmacost", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
+
+        if (catalogData[type].some((item) => item.key === key)) {
+          let item = catalogData[type].find((item) => item.key === key);
+          description = item.description;
+          type = item.type;
+          karmaCost = item.karmaCost;
+          book = item.book;
+          page = item.page;
+        }
 
         newItem = {
           key: key,
@@ -3991,12 +4023,12 @@ function handleDropdownModal(type) {
       }
 
       if (type === "contacts") {
-        var contactType = $("#contactsType").val();       
-        var description = getValue("Description", type);       
-        var connection = getValue("Connection", type);       
-        var loyalty = getValue("Loyalty", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var contactType = $("#contactsType").val();
+        var description = getValue("Description", type);
+        var connection = getValue("Connection", type);
+        var loyalty = getValue("Loyalty", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
 
         characterData.points.contacts.spent =
@@ -4052,11 +4084,42 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
+
+        if (
+          catalogData[type] &&
+          catalogData[type].some((item) => item && item.key === key)
+        ) {
+          let item = catalogData[type].find((item) => item && item.key === key);
+          weaponType = item.type;
+          skill = item.skill;
+          baseConcealability = item.baseConcealability;
+          damageValue = item.damageValue;
+          damageType = item.damageType;
+          specialDamageType = item.specialDamageType;
+          closeAR = item.closeAR || 0;
+          nearAR = item.nearAR || 0;
+          mediumAR = item.mediumAR || 0;
+          farAR = item.farAR || 0;
+          extremeAR = item.extremeAR || 0;
+          singleShot = item.singleShot;
+          semiAutomatic = item.semiAutomatic;
+          burstFire = item.burstFire;
+          fullAutomatic = item.fullAutomatic;
+          ammunitionMax = item.ammunitionMax;
+          loadingMechanism = item.loadingMechanism;
+          price = item.price;
+          legality = item.legality;
+          availability = item.availability;
+          description = item.description;
+          gameEffects = item.gameEffects;
+          book = item.book;
+          page = item.page;
+        }
 
         newItem = {
           key: key,
@@ -4110,11 +4173,36 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
+
+        if (
+          catalogData[type] &&
+          catalogData[type].some((item) => item && item.key === key)
+        ) {
+          let item = catalogData[type].find((item) => item && item.key === key);
+          weaponType = item.type;
+          skill = item.skill;
+          baseConcealability = item.baseConcealability;
+          damageValue = item.damageValue;
+          damageType = item.damageType;
+          specialDamageType = item.specialDamageType;
+          closeAR = item.closeAR || 0;
+          nearAR = item.nearAR || 0;
+          mediumAR = item.mediumAR || 0;
+          farAR = item.farAR || 0;
+          extremeAR = item.extremeAR || 0;
+          price = item.price;
+          legality = item.legality;
+          availability = item.availability || 0;
+          description = item.description;
+          gameEffects = item.gameEffects;
+          book = item.book;
+          page = item.page;
+        }
 
         newItem = {
           key: key,
@@ -4151,9 +4239,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4180,9 +4268,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4212,9 +4300,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4256,9 +4344,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4310,9 +4398,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4356,9 +4444,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4390,9 +4478,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4417,9 +4505,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4458,9 +4546,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4483,22 +4571,44 @@ function handleDropdownModal(type) {
 
       if (type === "spells") {
         var category = getValue("Category", type);
+        var spellType = getValue("Type", type);
+        var range = getValue("Range", type);
         var duration = getValue("Duration", type);
         var drainValue = getValue("DrainValue", type);
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var categorySub = "";
-        var preparation = $(`#Preparation`).prop("checked");
+        var preparation = $(`#Preparation`).prop("checked") || false;
         var key = $(`#${type}Input`).val();
 
         if (category === "combatDirect" || category === "combatIndirect") {
           categorySub = category.split("combat")[1].toLowerCase();
           category = "combat";
+        }
+
+        if (
+          catalogData[type] &&
+          catalogData[type].some((item) => item && item.key === key)
+        ) {
+          let item = catalogData[type].find((item) => item && item.key === key);
+          spellType = item.type;
+          category = item.category;
+          range = item.range;
+          duration = item.duration;
+          drainValue = item.drainValue;
+          categorySub = item.categorySub;
+          price = item.price || 0;
+          legality = item.legality;
+          availability = item.availability || 0;
+          description = item.description;
+          gameEffects = item.gameEffects;
+          book = item.book;
+          page = item.page;
         }
 
         newItem = {
@@ -4528,9 +4638,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
         var minion = $(`#minionCategory`).prop("checked");
@@ -4568,9 +4678,9 @@ function handleDropdownModal(type) {
         var price = getValue("Price", type);
         var legality = getValue("Legality", type);
         var availability = getValue("Availability", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4594,9 +4704,9 @@ function handleDropdownModal(type) {
         var activation = getValue("Activation", type);
         var powerPointsCost = getValue("PowerPointsCost", type);
         var rating = getValue("Rating", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4616,9 +4726,9 @@ function handleDropdownModal(type) {
 
       if (type === "metamagics") {
         var rating = getValue("Rating", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4637,9 +4747,9 @@ function handleDropdownModal(type) {
       if (type === "spirits") {
         var force = getValue("Force", type);
         var spiritType = getValue("Type", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var isBounded = $(`#IsBounded`).prop("checked");
         var current = getValue("Current", type);
@@ -4668,9 +4778,9 @@ function handleDropdownModal(type) {
         var duration = getValue("Duration", type);
         var skill = getValue("Skill", type);
         var fadeValue = getValue("FadeValue", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4692,9 +4802,9 @@ function handleDropdownModal(type) {
 
       if (type === "echoes") {
         var rating = getValue("Rating", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var key = $(`#${type}Input`).val();
 
@@ -4713,9 +4823,9 @@ function handleDropdownModal(type) {
       if (type === "sprites") {
         var level = getValue("Level", type);
         var spriteType = getValue("Type", type);
-        var description = getValue("Description", type);   
-        var gameEffects = getValue("GameEffects", type);   
-        var book = getValue("Book", type);   
+        var description = getValue("Description", type);
+        var gameEffects = getValue("GameEffects", type);
+        var book = getValue("Book", type);
         var page = getValue("Page", type);
         var isRegistered = $(`#IsRegistered`).prop("checked");
         var current = getValue("Current", type);
@@ -4972,7 +5082,7 @@ function handleItemClick(type, indexItem) {
     ];
 
     if (type === "rangedWeapons") {
-      fields.push("AmmunitionMax", "loadingMechanism");
+      fields.push("AmmunitionMax", "LoadingMechanism");
     }
 
     fields.forEach((field) => {
@@ -4980,7 +5090,7 @@ function handleItemClick(type, indexItem) {
       if (element && item[field.charAt(0).toLowerCase() + field.slice(1)]) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
-    });    
+    });
 
     modalContainer.querySelector(`#${type}Book`).value =
       characterData[type][indexItem].source.book;
@@ -5013,6 +5123,8 @@ function handleItemClick(type, indexItem) {
         characterData[type][indexItem].firingModes.burstFire;
       modalContainer.querySelector(`#fullAutomatic`).checked =
         characterData[type][indexItem].firingModes.fullAutomatic;
+      modalContainer.querySelector(`#fullAutomatic`).checked =
+        characterData[type][indexItem].firingModes.fullAutomatic;
     }
   }
 
@@ -5033,7 +5145,7 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
-    
+
     modalContainer.querySelector(`#${type}Book`).value =
       characterData[type][indexItem].source.book;
     modalContainer.querySelector(`#${type}Page`).value =
@@ -5058,7 +5170,7 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
-    
+
     modalContainer.querySelector(`#${type}Book`).value =
       characterData[type][indexItem].source.book;
     modalContainer.querySelector(`#${type}Page`).value =
@@ -5085,7 +5197,7 @@ function handleItemClick(type, indexItem) {
         element.value = item[field.charAt(0).toLowerCase() + field.slice(1)];
       }
     });
-    
+
     modalContainer.querySelector(`#${type}Book`).value =
       characterData[type][indexItem].source.book;
     modalContainer.querySelector(`#${type}Page`).value =
@@ -5534,8 +5646,13 @@ function handleItemClick(type, indexItem) {
   }
 
   if (type === "adeptPowers") {
-    const fields = ["PowerPointsCost", "Rating", "Activation", "Description", 
-    "GameEffects"];
+    const fields = [
+      "PowerPointsCost",
+      "Rating",
+      "Activation",
+      "Description",
+      "GameEffects",
+    ];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -5551,8 +5668,7 @@ function handleItemClick(type, indexItem) {
   }
 
   if (type === "metamagics") {
-    const fields = ["Rating", "Description", 
-    "GameEffects"];
+    const fields = ["Rating", "Description", "GameEffects"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -5570,8 +5686,7 @@ function handleItemClick(type, indexItem) {
   if (type === "spirits") {
     console.log("handleItemClick : ", type, " ", item);
 
-    const fields = ["Force", "Type", "Description", 
-    "GameEffects"];
+    const fields = ["Force", "Type", "Description", "GameEffects"];
 
     fields.forEach((field) => {
       var element = modalContainer.querySelector(`#${type}${field}`);
@@ -5602,7 +5717,7 @@ function handleItemClick(type, indexItem) {
       "Availability",
       "Price",
       "Description",
-      "GameEffects"
+      "GameEffects",
     ];
 
     fields.forEach((field) => {
@@ -5718,7 +5833,13 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "contacts") {
-          const fields = ["Type", "Description", "Connection", "Loyalty", "GameEffects"];
+          const fields = [
+            "Type",
+            "Description",
+            "Connection",
+            "Loyalty",
+            "GameEffects",
+          ];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -5730,9 +5851,10 @@ function handleItemClick(type, indexItem) {
             }
           });
 
-            characterData[type][indexItem].source.book = modalContainer.querySelector(`#${type}Book`).value;
-            characterData[type][indexItem].source.page =
-              modalContainer.querySelector(`#${type}Page`).value;
+          characterData[type][indexItem].source.book =
+            modalContainer.querySelector(`#${type}Book`).value;
+          characterData[type][indexItem].source.page =
+            modalContainer.querySelector(`#${type}Page`).value;
 
           updateContactDisplay();
         }
@@ -5775,11 +5897,11 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           if (type === "rangedWeapons") {
-            fields.push("AmmunitionMax", "loadingMechanism");
+            fields.push("AmmunitionMax", "LoadingMechanism");
           }
 
           fields.forEach((field) => {
@@ -5833,7 +5955,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -5861,7 +5983,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -5891,7 +6013,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -5921,7 +6043,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           if (item.type === "drone") {
@@ -5978,7 +6100,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6014,7 +6136,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6059,7 +6181,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6087,7 +6209,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6127,7 +6249,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6158,7 +6280,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6190,7 +6312,13 @@ function handleItemClick(type, indexItem) {
         }
 
         if (type === "rituals") {
-          const fields = ["Legality", "Availability", "Price", "Description", "GameEffects"];
+          const fields = [
+            "Legality",
+            "Availability",
+            "Price",
+            "Description",
+            "GameEffects",
+          ];
 
           fields.forEach((field) => {
             const element = modalContainer.querySelector(`#${type}${field}`);
@@ -6231,7 +6359,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6257,7 +6385,7 @@ function handleItemClick(type, indexItem) {
             "Rating",
             "Activation",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -6335,7 +6463,7 @@ function handleItemClick(type, indexItem) {
             "Availability",
             "Price",
             "Description",
-            "GameEffects"
+            "GameEffects",
           ];
 
           fields.forEach((field) => {
@@ -7179,10 +7307,10 @@ function updateSpellsDisplay() {
           <td class="name-column">${spell.key}</td>          
           <td class="category-column">${capitalized(
             terms[spell.category]
-          )}</td>         
+          )}</td>                
           <td class="type-column">${capitalized(
             terms[spell.type]
-          )}</td>         
+          )}</td>  
           <td class="range-column">${capitalized(
             terms[spell.range + "Short"]
           )}</td>         
@@ -8812,12 +8940,9 @@ function assignData() {
           name: item.key,
           type: "language",
           system: {
-            isExpert:
-            item.level === 2 ? true : false,
-            isNative:
-            item.level === 3 ? true : false,
-            isSpecialist:
-            item.level === 1 ? true : false,
+            isExpert: item.level === 2 ? true : false,
+            isNative: item.level === 3 ? true : false,
+            isSpecialist: item.level === 1 ? true : false,
           },
         };
         foundryData.items.push(l);
@@ -8905,33 +9030,25 @@ function assignData() {
             ammo: {
               max: item.ammunitionMax,
               current: item.ammunitionMax,
-              loadingMechanism:
-              item.loadingMechanism,
+              loadingMechanism: item.loadingMechanism,
             },
             firingMode: {
               singleShot: {
-                available:
-                item.firingModes.singleShot,
+                available: item.firingModes.singleShot,
               },
               semiAutomatic: {
-                available:
-                item.firingModes.semiAutomatic,
+                available: item.firingModes.semiAutomatic,
               },
               burstFire: {
-                available:
-                item.firingModes.burstFire,
+                available: item.firingModes.burstFire,
               },
               fullyAutomatic: {
-                available:
-                item.firingModes.fullAutomatic,
+                available: item.firingModes.fullAutomatic,
               },
             },
             test: {
               linkedSkill: item.skill,
-              linkedSpecialization:
-                weaponsToSpecializations[
-                  item.type
-                ],
+              linkedSpecialization: weaponsToSpecializations[item.type],
             },
           },
         };
