@@ -3919,7 +3919,7 @@ function handleDropdownModal(type) {
     );
 
     // Ajouter l'option "Catalogue"
-    if (characterData.SIN.name === "Platinium" && catalogData.qualities) {
+    if (characterData.SIN.name === "Platinium" && catalogData) {
       addOptions.push(
         `<li><a class="dropdown-item" href="#" onclick="openCatalogModal('${type}')">Catalogue</a></li>`
       );
@@ -3944,7 +3944,7 @@ function handleDropdownModal(type) {
 
     // Définir le bouton en fonction du type et de la présence du catalogue
     var button;
-    if (characterData.SIN.name === "Platinium" && catalogData.qualities) {
+    if (characterData.SIN.name === "Platinium" && catalogData) {
       button = `
       <div class="btn-group">
         <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" placement="right" type="button">+</button>
