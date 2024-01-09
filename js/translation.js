@@ -151,6 +151,74 @@ function changeLang(language) {
       id: "sumToTenTitle",
       term: "sumToTen",
     },
+    {
+      id: "name",
+      term: "name",
+    },
+    {
+      id: "realName",
+      term: "realName",
+    },
+    {
+      id: "alias",
+      term: "alias",
+    },
+    {
+      id: "ethnicalGroup",
+      term: "ethnicalGroup",
+    },
+    {
+      id: "skin",
+      term: "skin",
+    },
+    {
+      id: "gender",
+      term: "gender",
+    },
+    {
+      id: "nationality",
+      term: "nationality",
+    },
+    {
+      id: "birthplace",
+      term: "birthplace",
+    },
+    {
+      id: "age",
+      term: "age",
+    },
+    {
+      id: "familialStatus",
+      term: "familialStatus",
+    },
+    {
+      id: "dependants",
+      term: "dependants",
+    },
+    {
+      id: "weight",
+      term: "weight",
+    },
+    {
+      id: "height",
+      term: "height",
+    },
+    {
+      id: "hair",
+      term: "hair",
+    },
+    {
+      id: "eyes",
+      term: "eyes",
+    },
+    {
+      id: "characterDescription",
+      term: "description",
+    },
+    {
+      id: "characterDescription",
+      term: "background",
+    },
   ];
 
   idToUpdate.forEach((element) => {
@@ -166,11 +234,23 @@ function changeLang(language) {
     capitalized(terms.metatypes) + " (" + terms.adjustment + ")";
   document.getElementById("priorityTableSpecial").innerText =
     capitalized(terms.magic) + "/" + capitalized(terms.resonance);
-  document.getElementById("firstname").placeholder = capitalized(
-    terms.firstname
-  );
-  document.getElementById("surname").placeholder = capitalized(terms.surname);
   document.getElementById("name").placeholder = capitalized(terms.name);
+  document.getElementById("realName").placeholder = capitalized(terms.realName);
+  document.getElementById("alias").placeholder = capitalized(terms.alias);
+  document.getElementById("ethnicalGroup").placeholder = capitalized(terms.ethnicalGroup);
+  document.getElementById("skin").placeholder = capitalized(terms.skin);
+  document.getElementById("gender").placeholder = capitalized(terms.gender);
+  document.getElementById("nationality").placeholder = capitalized(terms.nationality);
+  document.getElementById("birthplace").placeholder = capitalized(terms.birthplace);
+  document.getElementById("age").placeholder = capitalized(terms.age);
+  document.getElementById("familialStatus").placeholder = capitalized(terms.familialStatus);
+  document.getElementById("dependants").placeholder = capitalized(terms.dependants);
+  document.getElementById("weight").placeholder = capitalized(terms.weight);
+  document.getElementById("height").placeholder = capitalized(terms.height);
+  document.getElementById("hair").placeholder = capitalized(terms.hair);
+  document.getElementById("eyes").placeholder = capitalized(terms.eyes);
+  document.getElementById("characterDescription").placeholder = capitalized(terms.description);
+  document.getElementById("characterBackground").placeholder = capitalized(terms.background);
   document.getElementById("knowledgeTitle").innerText =
     capitalized(terms.knowledges) + " & " + terms.languages;
   function setButtonTitle(selector, title) {
@@ -199,9 +279,25 @@ let terms = [];
 const translations = {
   fr: {
     title: "Créateur de Personnage Shadowrun 6",
-    firstname: "prénom",
-    name: "nom",
-    surname: "surnom",
+    personalData: "données personnelles",
+    firstname: "Prénom",
+    name: "Nom",
+    realName: "Véritable nom",
+    alias: "Pseudo",
+    ethnicalGroup: "Groupe ethnique",
+    skin: "Peau",
+    surname: "Surnom",
+    age: "âge",
+    gender: "genre",
+    nationality: "nationalité",
+    birthplace: "lieu de naissance",
+    familialStatus: "situation familiale",
+    dependants: "personnes à charge",
+    eyes: "yeux",
+    hair: "cheveux",
+    height: "taille",
+    weight: "poids",
+    background: "background",
     metatypes: "métatypes",
     metatype: "métatype",
     attributes: "attributs",
@@ -842,9 +938,25 @@ const translations = {
   },
   en: {
     title: "Shadowrun 6 Character Creator",
+    personalData: "personal data",
     firstname: "Firstname",
     name: "Name",
+    realName: "Real Name",
+    alias: "Alias",
+    ethnicalGroup: "Ethnical Group",
+    skin: "Skin",
     surname: "Surname",
+    age: "age",
+    gender: "gender",
+    nationality: "nationality",
+    birthplace: "birthplace",
+    familialStatus: "familiy situation",
+    dependants: "dependants",
+    eyes: "eyes",
+    hair: "hair",
+    height: "height",
+    weight: "weight",
+    background: "background",
     metatypes: "Metatypes",
     metatype: "Metatype",
     attributes: "attributes",

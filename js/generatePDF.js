@@ -29,7 +29,7 @@ function generatePDF(character) {
 
   // Ajouter du texte pour chaque propriété du personnage
   doc.text(
-    `${capitalized(terms.SIN)}${terms.colons} ${character.SIN.identityCatalog}`,
+    `${capitalized(terms.SIN)}${terms.colons} ${character.SIN.name}`,
     15,
     25
   );

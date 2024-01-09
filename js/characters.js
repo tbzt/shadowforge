@@ -7,11 +7,11 @@ function saveCharacterData(characterData) {
   // Récupérez le tableau de personnages du localStorage
   var characters = JSON.parse(localStorage.getItem("characters")) || [];
 
-  // Recherchez le personnage existant avec le même SIN.identity
+  // Recherchez le personnage existant avec le même SIN.name
   var existingCharacterIndex = characters.findIndex(function (character) {
     return (
       character.SIN &&
-      character.SIN.identityCatalog === characterData.SIN.identityCatalog
+      character.SIN.name === characterData.SIN.name
     );
   });
 
@@ -35,11 +35,11 @@ function saveCharacterDataLongTerm(characterData) {
   // Récupérez le tableau de personnages du localStorage
   var characters = JSON.parse(localStorage.getItem("characters")) || [];
 
-  // Recherchez le personnage existant avec le même SIN.identity
+  // Recherchez le personnage existant avec le même SIN.name
   var existingCharacterIndex = characters.findIndex(function (character) {
     return (
       character.SIN &&
-      character.SIN.identityCatalog === characterData.SIN.identityCatalog
+      character.SIN.name === characterData.SIN.name
     );
   });
 
@@ -81,7 +81,7 @@ function deleteCharacter(characterId) {
       "\n" +
       terms.resetCharacter +
       " " +
-      character.SIN.identityCatalog +
+      character.SIN.name +
       " ?"
   );
 
@@ -126,7 +126,7 @@ function updateCharacterList() {
 
     // Mettez à jour le titre et le texte de la carte
     characterCard.querySelector(".card-title").textContent =
-      character.SIN.identityCatalog;
+      character.SIN.name;
 
     // Ajoutez des gestionnaires d'événements pour les boutons de chargement, d'exportation et de suppression
     characterCard
@@ -211,9 +211,23 @@ function loadFromJSON(event) {
       var characterData = {
         ...characterDataBackup,
         SIN: {
-          firstname: JSONData.system.biography.realName,
-          identityCatalog: JSONData.name,
-          surname: JSONData.system.biography.alias,
+          name: JSONData.name,
+          realName: JSONData.system.biography.realName,
+          alias: JSONData.system.biography.alias,
+          ethnicalGroup: JSONData.system.biography.ethnicalGroup,
+          skin: JSONData.system.biography.skin,
+          gender: JSONData.system.biography.gender,
+          nationality: JSONData.system.biography.nationality,
+          birthplace: JSONData.system.biography.birthplace,
+          age: JSONData.system.biography.age,
+          familialStatus: JSONData.system.biography.familialStatus,
+          dependants: JSONData.system.biography.dependants,
+          weight: JSONData.system.biography.weight,
+          height: JSONData.system.biography.height,
+          hair: JSONData.system.biography.hair,
+          eyes: JSONData.system.biography.eyes,
+          description: JSONData.system.biography.description,
+          background: JSONData.system.biography.background,
           metatype: JSONData.system.biography.metatype,
           metatypeVariant: findKey(
             terms,

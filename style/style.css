@@ -3,6 +3,7 @@ body {
   font-family: "Roboto", Arial, sans-serif;
   background-color: #0a0f25;
   color: rgba(242, 5, 135, 0.75);
+  overflow-x: hidden;
 }
 
 .label {
@@ -64,6 +65,7 @@ input::placeholder {
   margin: 10px;
   height: auto;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .modal {

@@ -12,8 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   menuSectionGenerate();
 });
 
-const currentVersion = "0.2.1"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
-
+const currentVersion = "0.2.2"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
 
 let pointsAttributesSpent = 0;
 
@@ -73,83 +72,71 @@ function handleSIN() {
   console.log("handleSIN initialize");
 
   const inputs = {
-    firstname: document.getElementById("firstname"),
-    surname: document.getElementById("surname"),
     name: document.getElementById("name"),
+    realName: document.getElementById("realName"),
+    alias: document.getElementById("alias"),
+    ethnicalGroup: document.getElementById("ethnicalGroup"),
+    skin: document.getElementById("skin"),
+    gender: document.getElementById("gender"),
+    nationality: document.getElementById("nationality"),
+    birthplace: document.getElementById("birthplace"),
+    age: document.getElementById("age"),
+    familialStatus: document.getElementById("familialStatus"),
+    dependants: document.getElementById("dependants"),
+    weight: document.getElementById("weight"),
+    height: document.getElementById("height"),
+    hair: document.getElementById("hair"),
+    eyes: document.getElementById("eyes"),
+    description: document.getElementById("characterDescription"),
+    background: document.getElementById("characterBackground"),
   };
 
   Object.keys(inputs).forEach((key) => {
-    inputs[key].placeholder = capitalized(terms[key]);
+    console.log("handleSIN key : ", key);
+    if (inputs[key] && inputs[key].placeholder && inputs[key].placeholder.trim() !== '') {      
+      inputs[key].placeholder = capitalized(terms[key]);
+    }
     inputs[key].addEventListener("input", updateSINInfo);
     inputs[key].value = characterData.SIN?.[key] || "";
   });
-
-  updateSINInfo();
 }
 
 function updateSINInfo() {
   console.log("updateSINInfo initialize");
 
   const inputs = {
-    firstname: document.getElementById("firstname"),
-    surname: document.getElementById("surname"),
     name: document.getElementById("name"),
+    realName: document.getElementById("realName"),
+    alias: document.getElementById("alias"),
+    ethnicalGroup: document.getElementById("ethnicalGroup"),
+    skin: document.getElementById("skin"),
+    gender: document.getElementById("gender"),
+    nationality: document.getElementById("nationality"),
+    birthplace: document.getElementById("birthplace"),
+    age: document.getElementById("age"),
+    familialStatus: document.getElementById("familialStatus"),
+    dependants: document.getElementById("dependants"),
+    weight: document.getElementById("weight"),
+    height: document.getElementById("height"),
+    hair: document.getElementById("hair"),
+    eyes: document.getElementById("eyes"),
+    description: document.getElementById("characterDescription"),
+    background: document.getElementById("characterBackground"),
   };
-
-  const identityShow = document.getElementById("identity");
-  const metatypeType = characterData.metatype
-    ? capitalized(terms[characterData.metatype])
-    : "";
-  const specialType = characterData.special
-    ? capitalized(terms[characterData.special])
-    : "";
-  console.log("special : ", specialType);
-
-  let identityParts = [];
-  let identityName = [];
-  let identity = [];
 
   Object.keys(inputs).forEach((key, index) => {
     const value = inputs[key].value || characterData.SIN?.[key];
     if (value) {
-      let formattedValue = value;
-      if (key === "surname") {
-        formattedValue = `"${value}"`; // Mettez le surnom entre guillemets
-      }
-      if (index !== 0) {
-        formattedValue = " " + formattedValue; // Ajoutez un espace avant chaque partie sauf la première
-      }
-      identityParts.push(formattedValue);
-      identityName.push(formattedValue);
-      identity.push(value);
       characterData.SIN[key] = value;
     }
   });
-  if (metatypeType) {
-    identityParts.push(", " + metatypeType);
-  }
 
-  if (specialType) {
-    identityParts.push(", " + specialType);
-  }
-
-  let identitySIN = identityParts.join("");
-  let identityCatalog = identityName.join("");
-  let identity4Foundry = identity.join("");
-
-  identityShow.innerHTML = identitySIN
+  document.getElementById("identity").innerHTML = characterData.SIN.name
     ? `
     <h5>${terms.identity}${terms.colons}</h5>
-    <p>${identitySIN}</p>
+    <p>${characterData.SIN.name}</p>
   `
     : "";
-
-  characterData.SIN = {
-    ...characterData.SIN,
-    identityCatalog: identityCatalog,
-    identitySIN: identitySIN,
-    identity: identity4Foundry,
-  };
 
   saveData();
 }
@@ -8613,15 +8600,35 @@ function assignData() {
 
   let dateToday = `${day}/${month}/${year}`;
 
-  if (characterData.SIN.identity) {
-    foundryData.name = characterData.SIN.identityCatalog;
+  if (characterData.SIN.name) {
+    foundryData.name = characterData.SIN.name;
     foundryData.system.biography.metatype = characterData.SIN.metatype;
     foundryData.system.biography.metatypeVariant = capitalized(
       terms[characterData.SIN.metatypeVariant]
     );
-    foundryData.system.biography.alias = characterData.SIN.surname;
-    foundryData.system.biography.realName =
-      characterData.SIN.firstname + " " + characterData.SIN.name;
+    foundryData.system.biography.realName = characterData.SIN.realName || "";
+    foundryData.system.biography.alias = characterData.SIN.alias || "";
+    foundryData.system.biography.ethnicalGroup =
+      characterData.SIN.ethnicalGroup || "";
+    foundryData.system.biography.skin = characterData.SIN.skin || "";
+    foundryData.system.biography.gender = characterData.SIN.gender || "";
+    foundryData.system.biography.nationality =
+      characterData.SIN.nationality || "";
+    foundryData.system.biography.birthplace =
+      characterData.SIN.birthplace || "";
+    foundryData.system.biography.age = characterData.SIN.age || "";
+    foundryData.system.biography.familialStatus =
+      characterData.SIN.familialStatus || "";
+    foundryData.system.biography.dependants =
+      characterData.SIN.dependants || "";
+    foundryData.system.biography.weight = characterData.SIN.weight || "";
+    foundryData.system.biography.height = characterData.SIN.height || "";
+    foundryData.system.biography.hair = characterData.SIN.hair || "";
+    foundryData.system.biography.eyes = characterData.SIN.eyes || "";
+    foundryData.system.biography.description =
+      characterData.SIN.description || "";
+    foundryData.system.biography.background =
+      characterData.SIN.background || "";
   }
 
   if (characterData.resources) {
