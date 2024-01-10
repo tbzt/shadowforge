@@ -180,8 +180,8 @@ function changeLang(language) {
       term: "nationality",
     },
     {
-      id: "birthplace",
-      term: "birthplace",
+      id: "birthPlace",
+      term: "birthPlace",
     },
     {
       id: "age",
@@ -241,7 +241,7 @@ function changeLang(language) {
   document.getElementById("skin").placeholder = capitalized(terms.skin);
   document.getElementById("gender").placeholder = capitalized(terms.gender);
   document.getElementById("nationality").placeholder = capitalized(terms.nationality);
-  document.getElementById("birthplace").placeholder = capitalized(terms.birthplace);
+  document.getElementById("birthPlace").placeholder = capitalized(terms.birthPlace);
   document.getElementById("age").placeholder = capitalized(terms.age);
   document.getElementById("familialStatus").placeholder = capitalized(terms.familialStatus);
   document.getElementById("dependants").placeholder = capitalized(terms.dependants);
@@ -290,7 +290,7 @@ const translations = {
     age: "âge",
     gender: "genre",
     nationality: "nationalité",
-    birthplace: "lieu de naissance",
+    birthPlace: "lieu de naissance",
     familialStatus: "situation familiale",
     dependants: "personnes à charge",
     eyes: "yeux",
@@ -525,8 +525,8 @@ const translations = {
     feuNourri: "Feu nourri",
     assassinsNight: "Assassins Night",
     astralWays: "Astral Ways",
-    coreRulebook: "Livre de base",
-    coreRulebookSeattle: "Livre de base (édition Seattle)",
+    core: "Livre de base",
+    coreSeattle: "Livre de base (édition Seattle)",
     collapsingNow: "Menaces imminentes",
     cuttingBlack: "Noir total",
     doubleClutch: "A Tombeau ouvert",
@@ -949,7 +949,7 @@ const translations = {
     age: "age",
     gender: "gender",
     nationality: "nationality",
-    birthplace: "birthplace",
+    birthPlace: "birth place",
     familialStatus: "familiy situation",
     dependants: "dependants",
     eyes: "eyes",
@@ -1181,8 +1181,8 @@ const translations = {
     feuNourri: "Firing Squad",
     assassinsNight: "Assassins Night",
     astralWays: "Astral Ways",
-    coreRulebook: "Core Rulebook",
-    coreRulebookSeattle: "Core Rulebook (Seattle Edition)",
+    core: "Core Rulebook",
+    coreSeattle: "Core Rulebook (Seattle Edition)",
     collapsingNow: "Collapsing Now",
     cuttingBlack: "Cutting Black",
     doubleClutch: "Double Clutch",

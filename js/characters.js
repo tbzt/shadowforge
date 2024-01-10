@@ -218,7 +218,7 @@ function loadFromJSON(event) {
           skin: JSONData.system.biography.skin,
           gender: JSONData.system.biography.gender,
           nationality: JSONData.system.biography.nationality,
-          birthplace: JSONData.system.biography.birthplace,
+          birthPlace: JSONData.system.biography.birthPlace,
           age: JSONData.system.biography.age,
           familialStatus: JSONData.system.biography.familialStatus,
           dependants: JSONData.system.biography.dependants,

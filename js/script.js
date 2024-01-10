@@ -79,7 +79,7 @@ function handleSIN() {
     skin: document.getElementById("skin"),
     gender: document.getElementById("gender"),
     nationality: document.getElementById("nationality"),
-    birthplace: document.getElementById("birthplace"),
+    birthPlace: document.getElementById("birthPlace"),
     age: document.getElementById("age"),
     familialStatus: document.getElementById("familialStatus"),
     dependants: document.getElementById("dependants"),
@@ -93,7 +93,11 @@ function handleSIN() {
 
   Object.keys(inputs).forEach((key) => {
     console.log("handleSIN key : ", key);
-    if (inputs[key] && inputs[key].placeholder && inputs[key].placeholder.trim() !== '') {      
+    if (
+      inputs[key] &&
+      inputs[key].placeholder &&
+      inputs[key].placeholder.trim() !== ""
+    ) {
       inputs[key].placeholder = capitalized(terms[key]);
     }
     inputs[key].addEventListener("input", updateSINInfo);
@@ -112,7 +116,7 @@ function updateSINInfo() {
     skin: document.getElementById("skin"),
     gender: document.getElementById("gender"),
     nationality: document.getElementById("nationality"),
-    birthplace: document.getElementById("birthplace"),
+    birthPlace: document.getElementById("birthPlace"),
     age: document.getElementById("age"),
     familialStatus: document.getElementById("familialStatus"),
     dependants: document.getElementById("dependants"),
@@ -1143,8 +1147,8 @@ function modalConstruct(type, newType, method) {
   const book = [
     "assassinsNight",
     "astralWays",
-    "coreRulebook",
-    "coreRulebookSeattle",
+    "core",
+    "coreSeattle",
     "collapsingNow",
     "cuttingBlack",
     "doubleClutch",
@@ -3906,7 +3910,7 @@ function handleDropdownModal(type) {
     );
 
     // Ajouter l'option "Catalogue"
-    if (characterData.SIN.name === "Platinium" && catalogData) {
+    if (characterData.SIN.alias === "Platinium" && catalogData) {
       addOptions.push(
         `<li><a class="dropdown-item" href="#" onclick="openCatalogModal('${type}')">Catalogue</a></li>`
       );
@@ -3931,7 +3935,7 @@ function handleDropdownModal(type) {
 
     // Définir le bouton en fonction du type et de la présence du catalogue
     var button;
-    if (characterData.SIN.name === "Platinium" && catalogData) {
+    if (characterData.SIN.alias === "Platinium" && catalogData) {
       button = `
       <div class="btn-group">
         <button class="btn btn-outline-primary btn-xs dropdown-toggle" data-bs-toggle="dropdown" placement="right" type="button">+</button>
@@ -8592,6 +8596,35 @@ function downloadFoundryData() {
   linkElement.click();
 }
 
+function generateFoundryGender(gender) {
+  switch (gender.toLowerCase()) {
+    case "":
+      return "";
+      break;
+    case "male":
+    case "m":
+    case "man":
+    case "boy":
+    case "homme":
+    case "h":
+    case "garçon":
+    case "masculin":
+      return "male";
+      break;
+    case "female":
+    case "f":
+    case "woman":
+    case "girl":
+    case "femme":
+    case "fille":
+    case "féminin":
+      return "female";
+      break;
+    default:
+      return "other";
+  }
+}
+
 function assignData() {
   let today = new Date();
   let day = String(today.getDate()).padStart(2, "0");
@@ -8611,11 +8644,13 @@ function assignData() {
     foundryData.system.biography.ethnicalGroup =
       characterData.SIN.ethnicalGroup || "";
     foundryData.system.biography.skin = characterData.SIN.skin || "";
-    foundryData.system.biography.gender = characterData.SIN.gender || "";
+    foundryData.system.biography.gender = generateFoundryGender(
+      characterData.SIN.gender || ""
+    );
     foundryData.system.biography.nationality =
       characterData.SIN.nationality || "";
-    foundryData.system.biography.birthplace =
-      characterData.SIN.birthplace || "";
+    foundryData.system.biography.birthPlace =
+      characterData.SIN.birthPlace || "";
     foundryData.system.biography.age = characterData.SIN.age || "";
     foundryData.system.biography.familialStatus =
       characterData.SIN.familialStatus || "";
@@ -8649,6 +8684,7 @@ function assignData() {
   }
 
   if (characterData.isTechno) {
+    foundryData.system.magic.type = "";
     var persona = {
       name: terms.livingPersona,
       type: "device",
@@ -9562,7 +9598,7 @@ function assignData() {
 
         var i = {
           name: item.key,
-          type: "complexForm",
+          type: "complexform",
           system: {
             info: {
               description: item.description,
