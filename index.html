@@ -151,72 +151,17 @@
                     <label for="name" class="col-sm-2 col-form-label">{{capitalized name}}{{colons}}</label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="name" placeholder="{{capitalized name}}"
-                        aria-label="{{capitalized name}}" aria-describedby="nameHelp" />
+                        aria-label="{{capitalized name}}" aria-describedby="nameHelp" onfocus="this.select()"/>
                     </div>
                     <label for="realName" class="col-sm-2 col-form-label">{{capitalized realName}}{{colons}}</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control" id="realName" placeholder="{{capitalized realName}}"
-                        aria-label="{{capitalized realName}}" aria-describedby="realNameHelp" />
+                        aria-label="{{capitalized realName}}" aria-describedby="realNameHelp" onfocus="this.select()"/>
                     </div>
                     <label for="alias" class="col-sm-2 col-form-label">{{capitalized alias}}{{colons}}</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control" id="alias" placeholder="{{capitalized alias}}"
-                        aria-label="{{capitalized alias}}" aria-describedby="aliasHelp" />
-                    </div>
-                    <label for="ethnicalGroup" class="col-sm-2 col-form-label">{{capitalized
-                      ethnicalGroup}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="ethnicalGroup"
-                        placeholder="{{capitalized ethnicalGroup}}" aria-label="{{capitalized ethnicalGroup}}"
-                        aria-describedby="ethnicalGroupHelp" />
-                    </div>
-                    <label for="skin" class="col-sm-2 col-form-label">{{capitalized skin}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="skin" placeholder="{{capitalized skin}}"
-                        aria-label="{{capitalized skin}}" aria-describedby="skinHelp" />
-                    </div>
-                    <label for="gender" class="col-sm-2 col-form-label">{{capitalized gender}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="gender" placeholder="{{capitalized gender}}"
-                        aria-label="{{capitalized gender}}" aria-describedby="genderHelp" />
-                    </div>
-                    <label for="familialStatus" class="col-sm-2 col-form-label">{{capitalized
-                      familialStatus}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="familialStatus"
-                        placeholder="{{capitalized familialStatus}}" aria-label="{{capitalized familialStatus}}"
-                        aria-describedby="familialStatusHelp" />
-                    </div>
-                    <label for="nationality" class="col-sm-2 col-form-label">{{capitalized
-                      nationality}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="nationality" placeholder="{{capitalized nationality}}"
-                        aria-label="{{capitalized nationality}}" aria-describedby="nationalityHelp" />
-                    </div>
-                    <label for="birthPlace" class="col-sm-2 col-form-label">{{capitalized birthPlace}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="birthPlace" placeholder="{{capitalized birthPlace}}"
-                        aria-label="{{capitalized birthPlace}}" aria-describedby="birthPlaceHelp" />
-                    </div>
-                    <label for="age" class="col-sm-2 col-form-label">{{capitalized age}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="age" placeholder="{{capitalized age}}"
-                        aria-label="{{capitalized age}}" aria-describedby="ageHelp" />
-                    </div>
-                    <label for="dependants" class="col-sm-2 col-form-label">{{capitalized dependants}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" id="dependants" placeholder="{{capitalized dependants}}"
-                        aria-label="{{capitalized dependants}}" aria-describedby="dependantsHelp" />
-                    </div>
-                    <label for="weight" class="col-sm-2 col-form-label">{{capitalized weight}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="number" class="form-control" id="weight" placeholder="{{capitalized weight}}"
-                        aria-label="{{capitalized weight}}" aria-describedby="weightHelp" />
-                    </div>
-                    <label for="height" class="col-sm-2 col-form-label">{{capitalized height}}{{colons}}</label>
-                    <div class="col-sm-4">
-                      <input type="number" class="form-control" id="height" placeholder="{{capitalized height}}"
-                        aria-label="{{capitalized height}}" aria-describedby="heightHelp" />
+                        aria-label="{{capitalized alias}}" aria-describedby="aliasHelp" onfocus="this.select()"/>
                     </div>
                     <label for="hair" class="col-sm-2 col-form-label">{{capitalized hair}}{{colons}}</label>
                     <div class="col-sm-4">
@@ -227,6 +172,61 @@
                     <div class="col-sm-4">
                       <input type="text" class="form-control" id="eyes" placeholder="{{capitalized eyes}}"
                         aria-label="{{capitalized eyes}}" aria-describedby="eyesHelp" />
+                    </div>
+                    <label for="ethnicalGroup" class="col-sm-2 col-form-label">{{capitalized
+                      ethnicalGroup}}{{colons}}</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" id="ethnicalGroup"
+                        placeholder="{{capitalized ethnicalGroup}}" aria-label="{{capitalized ethnicalGroup}}"
+                        aria-describedby="ethnicalGroupHelp" />
+                    </div>
+                    <label for="skin" class="col-sm-2 col-form-label">{{capitalized skin}}{{colons}}</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" id="skin" placeholder="{{capitalized skin}}"
+                        aria-label="{{capitalized skin}}" aria-describedby="skinHelp" />
+                    </div>
+                    <label for="gender" class="col-sm-2 col-form-label">{{capitalized gender}}{{colons}}</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" id="gender" placeholder="{{capitalized gender}}"
+                        aria-label="{{capitalized gender}}" aria-describedby="genderHelp" />
+                    </div>
+                    <label for="familialStatus" class="col-sm-2 col-form-label">{{capitalized
+                      familialStatus}}{{colons}}</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" id="familialStatus"
+                        placeholder="{{capitalized familialStatus}}" aria-label="{{capitalized familialStatus}}"
+                        aria-describedby="familialStatusHelp" />
+                    </div>
+                    <label for="nationality" class="col-sm-2 col-form-label">{{capitalized
+                      nationality}}{{colons}}</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" id="nationality" placeholder="{{capitalized nationality}}"
+                        aria-label="{{capitalized nationality}}" aria-describedby="nationalityHelp" />
+                    </div>
+                    <label for="birthPlace" class="col-sm-2 col-form-label">{{capitalized birthPlace}}{{colons}}</label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" id="birthPlace" placeholder="{{capitalized birthPlace}}"
+                        aria-label="{{capitalized birthPlace}}" aria-describedby="birthPlaceHelp" />
+                    </div>
+                    <label for="age" class="col-sm-2 col-form-label">{{capitalized age}}{{colons}}</label>
+                    <div class="col-sm-1">
+                      <input type="text" class="form-control" id="age" placeholder="{{capitalized age}}"
+                        aria-label="{{capitalized age}}" aria-describedby="ageHelp" />
+                    </div>
+                    <label for="dependants" class="col-sm-2 col-form-label">{{capitalized dependants}}{{colons}}</label>
+                    <div class="col-sm-1">
+                      <input type="text" class="form-control" id="dependants" placeholder="{{capitalized dependants}}"
+                        aria-label="{{capitalized dependants}}" aria-describedby="dependantsHelp" />
+                    </div>
+                    <label for="weight" class="col-sm-2 col-form-label">{{capitalized weight}}{{colons}}</label>
+                    <div class="col-sm-1">
+                      <input type="number" class="form-control" id="weight" placeholder="{{capitalized weight}}"
+                        aria-label="{{capitalized weight}}" aria-describedby="weightHelp" />
+                    </div>
+                    <label for="height" class="col-sm-2 col-form-label">{{capitalized height}}{{colons}}</label>
+                    <div class="col-sm-1">
+                      <input type="number" class="form-control" id="height" placeholder="{{capitalized height}}"
+                        aria-label="{{capitalized height}}" aria-describedby="heightHelp" />
                     </div>
                   </div>
                 </div>
