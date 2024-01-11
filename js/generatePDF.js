@@ -3,64 +3,117 @@ const { jsPDF } = window.jspdf;
 function generatePDF(character) {
   let doc = new jsPDF();
 
-  // Définir la police et la taille de la police
-  // Les chaînes Base64 pour les fichiers de police Roboto
+  // Set Font
   const robotoRegular = robotoRegularFontBase64;
   const robotoItalic = robotoItalicFontBase64;
   const robotoBold = robotoBoldFontBase64;
 
-  // Ajoutez les fichiers de police au système de fichiers virtuel de jsPDF
   doc.addFileToVFS("Roboto-Regular.ttf", robotoRegular);
   doc.addFileToVFS("Roboto-Italic.ttf", robotoItalic);
   doc.addFileToVFS("Roboto-Bold.ttf", robotoBold);
 
-  // Ajoutez la police à jsPDF
   doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
   doc.addFont("Roboto-Italic.ttf", "Roboto", "italic");
   doc.addFont("Roboto-Bold.ttf", "Roboto", "bold");
 
-  // Maintenant, vous pouvez utiliser la police Roboto
   doc.setFont("Roboto");
   console.log(doc.getFontList());
-  doc.setFontSize(10);
 
-  // Charger l'image
-  let img = new Image();
-  img.crossOrigin = "anonymous"; // Demande une réponse CORS
-  img.src = "./style/img/sr6logo.png";
-
-  // Attendre que l'image soit chargée
-  img.onload = function () {
-    // Convertir l'image en format de données base64
-    let canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    let context = canvas.getContext("2d");
-    context.drawImage(img, 0, 0, img.width, img.height);
-    let imageData = canvas.toDataURL("image/png");
-
-    // Ajouter l'image au document
-    doc.addImage(imageData, "PNG", 10, 10, 50, 50); // Ajustez les coordonnées et la taille de l'image selon vos besoins
-  };
-
-  // Ajouter un en-tête
+  // Set Title
+  doc.setFontSize(15);
+  doc.setFont("Roboto", "bold");
+  doc.setTextColor(242, 5, 135);
   doc.text("SHADOWRUN 6", 105, 10, null, null, "center");
 
-  // Ajouter du texte pour chaque propriété du personnage
+  // PERSONAL DATA
+  doc.setFontSize(12);
+  doc.text(`${capitalized(terms.personalData)}`, 10, 20);
+
+  // Font size for personal data
+  doc.setFont("Roboto", "normal");
+  doc.setTextColor(0, 0, 0);
+  let fontSize = 8;
+  doc.setFontSize(fontSize);
+
+  // Name
   doc.text(
-    `${capitalized(terms.SIN)}${terms.colons} ${character.SIN.name}`,
+    `${capitalized(terms.name)}/${capitalized(terms.alias)}${terms.colons} ${
+      character.SIN.name
+    }${character.SIN.alias ? " AKA " + character.SIN.alias : ""}`,
     15,
     25
   );
-  doc.text(
-    `${capitalized(terms.metatype)}${terms.colons} ${capitalized(
-      terms[characterData.SIN.metatypeVariant]
-    )}`,
-    15,
-    30
-  );
+
+  // Metatype
+  let textMetatype = `${capitalized(terms.metatype)}${
+    terms.colons
+  } ${capitalized(terms[characterData.SIN.metatype])}${
+    characterData.SIN.metatypeVariant
+      ? " (" + capitalized(terms[characterData.SIN.metatypeVariant]) + ")"
+      : ""
+  }`;
+
+  doc.text(textMetatype, 15, 30);
+  let textMetatypeWidth =
+    (doc.getStringUnitWidth(textMetatype) * fontSize) /
+    doc.internal.scaleFactor;
+  let endMetatype = 15 + textMetatypeWidth;
+
+  // Age
+  let textAge = `${capitalized(terms.age)}${terms.colons} ${
+    characterData.SIN.age ? characterData.SIN.age : ""
+  }`;
+  doc.text(textAge, 15, 35);
+
+  // Calculer la position X où se termine le texte
+  let textAgeWidth =
+    (doc.getStringUnitWidth(textAge) * fontSize) / doc.internal.scaleFactor;
+  let endAge = 15 + textAgeWidth;
+
+  // Gender
+  let textGender = `${capitalized(terms.gender)}${terms.colons} ${
+    characterData.SIN.gender ? characterData.SIN.gender : ""
+  }`;
+  doc.text(textGender, endAge + 2, 35);
+
+  // Calculer la position X où se termine le texte
+  let textGenderWidth =
+    (doc.getStringUnitWidth(textGender) * fontSize) / doc.internal.scaleFactor;
+  let endGender = endAge + textGenderWidth + 2;
+
+  // Height
+  let textHeight = `${capitalized(terms.height)}${terms.colons} ${
+    characterData.SIN.height ? characterData.SIN.height : ""
+  }`;
+  doc.text(textHeight, endGender + 2, 35);
+
+  // Calculer la position X où se termine le texte
+  let textHeightWidth =
+    (doc.getStringUnitWidth(textHeight) * fontSize) / doc.internal.scaleFactor;
+  let endHeight = endGender + textHeightWidth + 2;
+
+  // Weight
+  let textWeight = `${capitalized(terms.weight)}${terms.colons} ${
+    characterData.SIN.weight ? characterData.SIN.weight : ""
+  }`;
+  doc.text(textWeight, endHeight + 2, 35);
+
+  // Calculer la position X où se termine le texte
+  let textWeightWidth =
+    (doc.getStringUnitWidth(textWeight) * fontSize) / doc.internal.scaleFactor;
+  let endWeight = 15 + textWeightWidth;
 
   // ATTRIBUTES
+  doc.setFontSize(12);
+  doc.setFont("Roboto", "bold");
+  doc.setTextColor(242, 5, 135);
+  doc.text(`${capitalized(terms.attributes)}`, 10, 43);
+
+  doc.setFont("Roboto", "normal");
+  doc.setTextColor(0, 0, 0);
+  fontSize = 8;
+  doc.setFontSize(8);
+
   let attributeKeys = Object.keys(character.attributes).filter((key) => {
     if (!character.isMagic && key === "magic") {
       return false;
@@ -84,8 +137,14 @@ function generatePDF(character) {
     head: [attributeTerms],
     body: [attributeValues],
     startX: 10,
-    startY: 40,
-    headStyles: { fillColor: [242, 5, 135], textColor: [255, 255, 255] },
+    startY: 45,
+    styles: { fontSize: 8, halign: "center" },
+    headStyles: {
+      fillColor: [242, 5, 135],
+      textColor: [255, 255, 255],
+      fontSize: 8,
+      halign: "center",
+    },
   });
 
   // SKILLS
@@ -124,9 +183,13 @@ function generatePDF(character) {
     body: skillsBody,
     startX: 10,
     startY: skillsStart + 5,
-    styles: { cellWidth: "wrap" },
-    columnStyles: { 0: { cellWidth: 40 }, 1: { cellWidth: 10 } },
-    headStyles: { fillColor: [242, 5, 135], textColor: [255, 255, 255] },
+    styles: { cellWidth: "wrap", fontSize: 8 },
+    columnStyles: { 0: { cellWidth: 40 }, 1: { cellWidth: 10, halign: "center" } },
+    headStyles: {
+      fillColor: [242, 5, 135],
+      textColor: [255, 255, 255],
+      fontSize: 8,
+    },
   });
 
   skillsEnd = doc.autoTable.previous.finalY;
@@ -141,10 +204,14 @@ function generatePDF(character) {
     head: [[capitalized(terms.knowledges)]],
     body: knowledgesAndLanguages,
     startY: skillsStart + 5, // Démarre le nouveau tableau à la même hauteur que le dernier tableau
-    styles: { cellWidth: "wrap" },
+    styles: { cellWidth: "wrap", fontSize: 8 },
     margin: { horizontal: 70 },
     columnStyles: { 0: { cellWidth: 40 } }, // Utilisez la largeur de colonne calculée
-    headStyles: { fillColor: [242, 5, 135], textColor: [255, 255, 255] },
+    headStyles: {
+      fillColor: [242, 5, 135],
+      textColor: [255, 255, 255],
+      fontSize: 8,
+    },
   });
 
   // QUALITIES
@@ -159,10 +226,14 @@ function generatePDF(character) {
       head: [[capitalized(terms.qualities), capitalized(terms.description)]],
       body: qualities,
       startY: skillsStart + 5, // Démarre le nouveau tableau à la même hauteur que le dernier tableau
-      styles: { cellWidth: "wrap" },
+      styles: { cellWidth: "wrap", fontSize: 8 },
       margin: { horizontal: 115 },
       columnStyles: { 0: { cellWidth: 30 }, 1: { cellWidth: 50 } }, // Utilisez la largeur de colonne calculée
-      headStyles: { fillColor: [242, 5, 135], textColor: [255, 255, 255] },
+      headStyles: {
+        fillColor: [242, 5, 135],
+        textColor: [255, 255, 255],
+        fontSize: 8,
+      },
     });
   }
 
@@ -179,7 +250,7 @@ function generatePDF(character) {
   // BIOTECH
 
   // Ajouter un pied de page
-  doc.setFontSize(10);
+  doc.setFontSize(8);
   doc.text("Générée par ShadowForge", 105, 280, null, null, "center");
 
   // Sauvegarder le PDF
