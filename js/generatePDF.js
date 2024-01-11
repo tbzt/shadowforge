@@ -24,6 +24,25 @@ function generatePDF(character) {
   console.log(doc.getFontList());
   doc.setFontSize(10);
 
+  // Charger l'image
+  let img = new Image();
+  img.crossOrigin = "anonymous"; // Demande une réponse CORS
+  img.src = "./style/img/sr6logo.png";
+
+  // Attendre que l'image soit chargée
+  img.onload = function () {
+    // Convertir l'image en format de données base64
+    let canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    let context = canvas.getContext("2d");
+    context.drawImage(img, 0, 0, img.width, img.height);
+    let imageData = canvas.toDataURL("image/png");
+
+    // Ajouter l'image au document
+    doc.addImage(imageData, "PNG", 10, 10, 50, 50); // Ajustez les coordonnées et la taille de l'image selon vos besoins
+  };
+
   // Ajouter un en-tête
   doc.text("SHADOWRUN 6", 105, 10, null, null, "center");
 
