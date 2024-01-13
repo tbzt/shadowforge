@@ -101,13 +101,25 @@ function generatePDF(character) {
   // Calculer la position X où se termine le texte
   let textWeightWidth =
     (doc.getStringUnitWidth(textWeight) * fontSize) / doc.internal.scaleFactor;
-  let endWeight = 15 + textWeightWidth;
+  let endWeight = endHeight + textWeightWidth + 2;
+
+  let x = -10;
+  let y = 15;
+  let width = 100;
+  let height = 22;
+  let radius = 3; // Rayon des coins arrondis
+
+  // Définir la couleur de la bordure
+  doc.setDrawColor(242, 5, 135);
+
+  // Dessiner un rectangle avec des coins arrondis
+  doc.roundedRect(x, y, width, height, radius, radius);
 
   // ATTRIBUTES
   doc.setFontSize(12);
   doc.setFont("Roboto", "bold");
   doc.setTextColor(242, 5, 135);
-  doc.text(`${capitalized(terms.attributes)}`, 10, 43);
+  doc.text(`${capitalized(terms.attributes)}`, 10, 45);
 
   doc.setFont("Roboto", "normal");
   doc.setTextColor(0, 0, 0);
@@ -115,10 +127,16 @@ function generatePDF(character) {
   doc.setFontSize(8);
 
   let attributeKeys = Object.keys(character.attributes).filter((key) => {
-    if (!character.isMagic && key === "magic") {
+    if (
+      key === "magic" &&
+      (!character.isMagic || character.attributes[key].value <= 1)
+    ) {
       return false;
     }
-    if (!character.isTechno && key === "resonance") {
+    if (
+      key === "resonance" &&
+      (!character.isTechno || character.attributes[key].value <= 1)
+    ) {
       return false;
     }
     return character.attributes[key].value > 0;
@@ -131,88 +149,240 @@ function generatePDF(character) {
     (key) => character.attributes[key].value
   );
 
-  console.log(character.attributes);
+  let attributes = attributeKeys.map((key) => [
+    [capitalized(terms[key])],
+    [character.attributes[key].value],
+  ]);
+
+  let attributeDerivedKeys = Object.keys(character.derivedAttributes).filter(
+    (key) => {
+      return character.derivedAttributes[key] >= 0;
+    }
+  );
+
+  console.log(attributeDerivedKeys);
+
+  let attributesDerived = attributeDerivedKeys.map((key) => [
+    [capitalized(terms[key])],
+    [character.derivedAttributes[key]],
+  ]);
+
+  console.log(attributesDerived);
+
+  var attributesStart = 10;
 
   doc.autoTable({
-    head: [attributeTerms],
-    body: [attributeValues],
-    startX: 10,
-    startY: 45,
-    styles: { fontSize: 8, halign: "center" },
-    headStyles: {
-      fillColor: [242, 5, 135],
-      textColor: [255, 255, 255],
+    body: attributesDerived,
+    startX: attributesStart,
+    startY: 48,
+    margin: { horizontal: 45 },
+    styles: {
+      cellWidth: "wrap",
       fontSize: 8,
-      halign: "center",
+      cellPadding: { top: 1, right: 0, bottom: 1, left: 0 },
+    },
+    columnStyles: {
+      0: { cellWidth: 30, halign: "right" },
+      1: { cellWidth: 10, halign: "center" },
+    },
+    didParseCell: function (data) {
+      // Appliquer une couleur de fond blanche à toutes les cellules
+      data.cell.styles.fillColor = [255, 255, 255];
+    },
+    didDrawCell: function (data) {
+      // Dessiner une bordure inférieure pour chaque cellule
+      if (data.section === "body") {
+        doc.line(
+          data.cell.x,
+          data.cell.y + data.cell.height,
+          data.cell.x + data.cell.width,
+          data.cell.y + data.cell.height
+        );
+      }
     },
   });
 
+  doc.autoTable({
+    body: attributes,
+    startX: attributesStart,
+    startY: 48,
+    styles: {
+      cellWidth: "wrap",
+      fontSize: 8,
+      cellPadding: { top: 1, right: 0, bottom: 1, left: 0 },
+      fillColor: [255, 255, 255],
+    },
+    columnStyles: {
+      0: { cellWidth: 20, halign: "right" },
+      1: { cellWidth: 10, halign: "center" },
+    },
+    didParseCell: function (data) {
+      // Appliquer une couleur de fond blanche à toutes les cellules
+      data.cell.styles.fillColor = [255, 255, 255];
+    },
+    didDrawCell: function (data) {
+      // Dessiner une bordure inférieure pour chaque cellule
+      if (data.section === "body") {
+        doc.line(
+          data.cell.x,
+          data.cell.y + data.cell.height,
+          data.cell.x + data.cell.width,
+          data.cell.y + data.cell.height
+        );
+      }
+    },
+  });
+
+  var endAttributeX = doc.autoTable.previous.finalX;
+  var endAttributeY = doc.autoTable.previous.finalY;
+
+  let xAttributes = -10;
+  let yAttributes = 40;
+  let widthAttributes = 100;
+  let heightAttributes = doc.autoTable.previous.finalY - 38;
+  let radiusAttributes = 3; // Rayon des coins arrondis
+
+  // Définir la couleur de la bordure
+  doc.setDrawColor(242, 5, 135);
+
+  // Dessiner un rectangle avec des coins arrondis
+  doc.roundedRect(
+    xAttributes,
+    yAttributes,
+    widthAttributes,
+    heightAttributes,
+    radiusAttributes,
+    radiusAttributes
+  );
+
   // SKILLS
+  doc.setFontSize(12);
+  doc.setFont("Roboto", "bold");
+  doc.setTextColor(242, 5, 135);
+  doc.text(`${capitalized(terms.skills)}`, 110, 45);
+
+  doc.setFont("Roboto", "normal");
+  doc.setTextColor(0, 0, 0);
+  fontSize = 8;
+  doc.setFontSize(8);
+
+  function generateSkillTerm(key) {
+    let term = `${capitalized(terms[key])} [${character.skills[key].value}]`;
+    character.skills[key].specializations.forEach((specialization, index) => {
+      term += index === 0 ? ` (${capitalized(terms[specialization])}` : ` / ${capitalized(terms[specialization])}`;
+    });
+    if (character.skills[key].specializations.length > 0) term += ')';
+    return term;
+  }
+
   let skillsKeys = Object.keys(character.skills).filter((key) => {
     if (key === "exoticWeapons") {
       return character.skills.exoticWeapons.specializations.length > 0;
-    } else {
-      return character.skills[key].rdd > 0;
     }
+    if (
+      character.skills[key].untrained === false &&
+      character.skills[key].value === 0
+    ) {
+      return false;
+    }
+    return character.skills[key].rdd > 0;
   });
 
-  let skillsTerms = skillsKeys.map((key) => {
-    let term = `${capitalized(terms[key])} [${character.skills[key].value}]`;
-    if (character.skills[key].specializations.length === 1) {
-      term += ` (${capitalized(
-        terms[character.skills[key].specializations[0]]
-      )})`;
-    }
-    if (character.skills[key].specializations.length === 2) {
-      term += ` (${capitalized(
-        terms[character.skills[key].specializations[0]]
-      )} / ${capitalized(terms[character.skills[key].specializations[1]])})`;
-    }
-    return term;
-  });
-  let sortSkillsTerms = skillsTerms.sort();
+  let skillsTerms = skillsKeys.map(generateSkillTerm);
+  let sortSkillsTerms = skillsTerms.sort((a, b) => a.localeCompare(b, 'fr'));
 
   let skillsValues = skillsKeys.map((key) => character.skills[key].rdd);
 
   let skillsBody = sortSkillsTerms.map((term, i) => [term, skillsValues[i]]);
 
-  skillsStart = doc.autoTable.previous.finalY;
-
   doc.autoTable({
-    head: [[capitalized(terms.skills), terms.rdd]],
     body: skillsBody,
-    startX: 10,
-    startY: skillsStart + 5,
+    startX: attributesStart,
+    startY: 48,
+    margin: { horizontal: 110 },
     styles: { cellWidth: "wrap", fontSize: 8 },
-    columnStyles: { 0: { cellWidth: 40 }, 1: { cellWidth: 10, halign: "center" } },
-    headStyles: {
-      fillColor: [242, 5, 135],
-      textColor: [255, 255, 255],
-      fontSize: 8,
+    columnStyles: {
+      0: { cellWidth: 40 },
+      1: { cellWidth: 10, halign: "center" },
+    },
+    didParseCell: function (data) {
+      // Appliquer une couleur de fond blanche à toutes les cellules
+      data.cell.styles.fillColor = [255, 255, 255];
+    },
+    didDrawCell: function (data) {
+      // Dessiner une bordure inférieure pour chaque cellule
+      if (data.section === "body") {
+        doc.line(
+          data.cell.x,
+          data.cell.y + data.cell.height,
+          data.cell.x + data.cell.width,
+          data.cell.y + data.cell.height
+        );
+      }
     },
   });
 
   skillsEnd = doc.autoTable.previous.finalY;
 
-  // KNOWLEDGES + LANGUAGES
-  let knowledgesKeys = character.knowledges.map((knowledge) => [knowledge.key]);
-  let languagesKeys = character.languages.map((language) => [language.key]);
+  var endSkillsX = doc.autoTable.previous.finalX;
+  var endSkillsY = doc.autoTable.previous.finalY;
 
-  let knowledgesAndLanguages = knowledgesKeys.concat(languagesKeys);
+  // KNOWLEDGES + LANGUAGES
+  let levels = {
+    0: terms.knowledge,
+    1: terms.specialist,
+    2: terms.expert,
+    3: terms.native,
+  };
+  let knowledgesKeys = character.knowledges.map((knowledge) => [knowledge.key]);
+  let languagesKeys = character.languages.map((language) => [
+    language.key + " (" + levels[language.level] + ")",
+  ]);
+
+  let knowledgesAndLanguages = knowledgesKeys.concat(languagesKeys).sort((a, b) => a.localeCompare(b, 'fr'));
 
   doc.autoTable({
-    head: [[capitalized(terms.knowledges)]],
     body: knowledgesAndLanguages,
-    startY: skillsStart + 5, // Démarre le nouveau tableau à la même hauteur que le dernier tableau
+    startX: attributesStart,
+    startY: 48,
     styles: { cellWidth: "wrap", fontSize: 8 },
-    margin: { horizontal: 70 },
-    columnStyles: { 0: { cellWidth: 40 } }, // Utilisez la largeur de colonne calculée
-    headStyles: {
-      fillColor: [242, 5, 135],
-      textColor: [255, 255, 255],
-      fontSize: 8,
+    margin: { horizontal: 165 },
+    columnStyles: { 0: { cellWidth: 40 } },
+    didParseCell: function (data) {
+      // Appliquer une couleur de fond blanche à toutes les cellules
+      data.cell.styles.fillColor = [255, 255, 255];
+    },
+    didDrawCell: function (data) {
+      // Dessiner une bordure inférieure pour chaque cellule
+      if (data.section === "body") {
+        doc.line(
+          data.cell.x,
+          data.cell.y + data.cell.height,
+          data.cell.x + data.cell.width,
+          data.cell.y + data.cell.height
+        );
+      }
     },
   });
+
+  let xSkills = 105;
+  let ySkills = 40;
+  let widthSkills = 130;
+  let heightSkills = endSkillsY - 35;
+  let radiusSkills = 3; // Rayon des coins arrondis
+
+  // Définir la couleur de la bordure
+  doc.setDrawColor(242, 5, 135);
+
+  // Dessiner un rectangle avec des coins arrondis
+  doc.roundedRect(
+    xSkills,
+    ySkills,
+    widthSkills,
+    heightSkills,
+    radiusSkills,
+    radiusSkills
+  );
 
   // QUALITIES
   if (character.qualities.length > 0) {
@@ -225,9 +395,9 @@ function generatePDF(character) {
     doc.autoTable({
       head: [[capitalized(terms.qualities), capitalized(terms.description)]],
       body: qualities,
-      startY: skillsStart + 5, // Démarre le nouveau tableau à la même hauteur que le dernier tableau
+      startX: 10, // Démarre le nouveau tableau à la même hauteur que le dernier tableau
+      startY: endAttributeY + 5, // Démarre le nouveau tableau à la même hauteur que le dernier tableau
       styles: { cellWidth: "wrap", fontSize: 8 },
-      margin: { horizontal: 115 },
       columnStyles: { 0: { cellWidth: 30 }, 1: { cellWidth: 50 } }, // Utilisez la largeur de colonne calculée
       headStyles: {
         fillColor: [242, 5, 135],

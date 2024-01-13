@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   menuSectionGenerate();
 });
 
-const currentVersion = "0.2.2"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
+const currentVersion = "0.2.3"; // Mettez à jour cette valeur chaque fois que vous modifiez le fichier
 
 let pointsAttributesSpent = 0;
 

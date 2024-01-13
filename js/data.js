@@ -69,6 +69,17 @@ let characterData = {
       max: 6,
     },
   },
+  derivedAttributes: {
+  essence: 0,
+  initiative: 0,
+  matrixInitiative: 0,
+  astralInitiative: 0,
+  judgeIntentions: 0,
+  memory: 0,
+  composure: 0,
+  liftAndCarry: 0,
+  movement: 0,
+  },
   skills: {
     firearms: {
       base: 0,
@@ -483,6 +494,17 @@ let characterDataBackup = {
       value: 1,
       max: 6,
     },
+  },
+  derivedAttributes: {
+  essence: 0,
+  initiative: 0,
+  matrixInitiative: 0,
+  astralInitiative: 0,
+  judgeIntentions: 0,
+  memory: 0,
+  composure: 0,
+  liftAndCarry: 0,
+  movement: 0,
   },
   skills: {
     firearms: {
