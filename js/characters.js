@@ -9,10 +9,7 @@ function saveCharacterData(characterData) {
 
   // Recherchez le personnage existant avec le même SIN.name
   var existingCharacterIndex = characters.findIndex(function (character) {
-    return (
-      character.SIN &&
-      character.SIN.name === characterData.SIN.name
-    );
+    return character.SIN && character.SIN.name === characterData.SIN.name;
   });
 
   if (existingCharacterIndex !== -1) {
@@ -37,10 +34,7 @@ function saveCharacterDataLongTerm(characterData) {
 
   // Recherchez le personnage existant avec le même SIN.name
   var existingCharacterIndex = characters.findIndex(function (character) {
-    return (
-      character.SIN &&
-      character.SIN.name === characterData.SIN.name
-    );
+    return character.SIN && character.SIN.name === characterData.SIN.name;
   });
 
   if (existingCharacterIndex !== -1) {
@@ -125,8 +119,7 @@ function updateCharacterList() {
     var characterCard = document.importNode(characterTemplate.content, true);
 
     // Mettez à jour le titre et le texte de la carte
-    characterCard.querySelector(".card-title").textContent =
-      character.SIN.name;
+    characterCard.querySelector(".card-title").textContent = character.SIN.name;
 
     // Ajoutez des gestionnaires d'événements pour les boutons de chargement, d'exportation et de suppression
     characterCard
@@ -269,6 +262,24 @@ function loadFromJSON(event) {
         characterData.isTechno = true;
         characterData.special = "technomancer";
       }
+
+      // DERIVED ATTRIBUTES
+
+      characterData.derivedAttributes.essence = 
+        JSONData.system.attributes.essence.natural.base;
+        characterData.derivedAttributes.initiative.rank = JSONData.system.initiatives.physical.rank.total;
+        characterData.derivedAttributes.initiative.dice = JSONData.system.initiatives.physical.dice.total;
+        characterData.derivedAttributes.matrixInitiative.rank = JSONData.system.initiatives.matrix.rank.total;
+        characterData.derivedAttributes.matrixInitiative.dice = JSONData.system.initiatives.matrix.dice.total;
+        characterData.derivedAttributes.astralInitiative.rank = JSONData.system.initiatives.astral.rank.total;
+        characterData.derivedAttributes.astralInitiative.dice = JSONData.system.initiatives.astral.dice.total;
+        characterData.derivedAttributes.judgeIntentions = JSONData.system.derivedAttributes.judgeIntentions.total;
+        characterData.derivedAttributes.memory = JSONData.system.derivedAttributes.memory.total;
+        characterData.derivedAttributes.composure = JSONData.system.derivedAttributes.composure.total;
+        characterData.derivedAttributes.liftAndCarry = JSONData.system.weights.lift.load.total;
+        characterData.derivedAttributes.movements.walk = JSONData.system.movements.walk.distance.total;
+        characterData.derivedAttributes.movements.sprint = JSONData.system.movements.sprint.distance.total;        
+        characterData.derivedAttributes.movements.extra = JSONData.system.movements.sprint.extra.total;
 
       //SKILLS
 
@@ -483,7 +494,7 @@ function loadFromJSON(event) {
         var item = itemsByType.armor[protection];
         var a = {
           key: item.name,
-          description: item.system.info.description,
+          description: item.system.info.description.replace(/<p>|<\/p>/g, ""),
           gameEffects: item.system.info.gameEffects,
           source: {
             book: item.system.info.source,
@@ -641,7 +652,7 @@ function loadFromJSON(event) {
           price: item.system.goods.price.base,
           availability: item.system.goods.availability.base,
           legality: item.system.goods.legality,
-          rating: item.system.rating,
+          rating: item.system.rating.base,
         };
         console.log("Import new drug: ", a);
         characterData.stuffs.push(a);
@@ -662,9 +673,13 @@ function loadFromJSON(event) {
           price: item.system.goods.price.base,
           availability: item.system.goods.availability.base,
           legality: item.system.goods.legality,
-          rating: item.system.rating,
+          rating: item.system.rating.base,
           nationality: item.system.nationality,
-          licences: item.system.accessories,
+          licences: item.system.accessories.map((accessory) => ({
+            key: accessory.name,
+            rating: accessory.rating,
+            price: accessory.price,
+          })),
         };
         console.log("Import new SIN: ", a);
         characterData.SINS.push(a);
@@ -759,7 +774,7 @@ function loadFromJSON(event) {
           availability: item.system.goods.availability.base,
           legality: item.system.goods.legality,
           type: item.system.type,
-          force: item.system.rating,
+          force: item.system.rating.base,
         };
         console.log("Import new focus: ", a);
         characterData.foci.push(a);
@@ -778,7 +793,7 @@ function loadFromJSON(event) {
             page: item.system.info.page,
           },
           activation: item.system.action,
-          rating: item.system.rating,
+          rating: item.system.rating.base,
           powerPointsCost: item.system.powerPoint.base,
         };
         console.log("Import new adept power: ", a);
@@ -797,7 +812,7 @@ function loadFromJSON(event) {
             book: item.system.info.source,
             page: item.system.info.page,
           },
-          rating: item.system.rating,
+          rating: item.system.rating.base,
         };
         console.log("Import new metamagic: ", a);
         characterData.metamagics.push(a);
@@ -859,7 +874,7 @@ function loadFromJSON(event) {
             book: item.system.info.source,
             page: item.system.info.page,
           },
-          rating: item.system.rating,
+          rating: item.system.rating.base,
         };
         console.log("Import new echo: ", a);
         characterData.echoes.push(a);
